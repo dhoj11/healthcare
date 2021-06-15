@@ -1,0 +1,45 @@
+.TimeTable_contain{
+  background-color: white;
+  margin: 0px 50px;
+  border-radius: 30px;
+  padding: 40px;
+  padding-top: 10px;
+  border:none;
+
+}
+.TimeTable_contain > table{
+  padding: 50px;
+  text-align: center;
+}
+.TimeTable_contain > table thead{
+  background-color: #e9ecef;
+}
+
+.TimeTable_contain > table th{
+  padding: 0.3rem;
+  border: 1px solid lightgrey;
+}
+.TimeTable_contain > table th:not(th:nth-child(1)){
+  width: 230px;
+}
+.TimeTable_contain >table tbody td{
+  height: 60px;
+  border: 1px solid lightgrey;
+}
+
+.date {
+  font-size: 30px;
+  font-weight: 500;
+}
+.date_contain{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.date_contain > .btn {
+  font-size: 20px;
+  font-weight: 900;
+  color: #adb5bd;
+  margin-left: 50px;
+  margin-right: 50px;
+}
