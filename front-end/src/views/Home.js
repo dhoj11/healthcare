@@ -15,7 +15,8 @@ function Home(props) {
         <p>sm test</p>
         <p>sm unho test</p>
         <p>dongho test</p>
-        <p>메롱메롱</p>
+        <p>sm test</p>
+        <p>sm teshjhjt.</p>
       </div>
     </div>
   );
