@@ -11,6 +11,8 @@ function Home(props) {
         <p>unho test</p>
         <p>unho test</p>
         <p>sm test</p>
+        <p>sm test</p>
+        <p>sm test</p>
         <p>dongho test</p>
       </div>
     </div>
