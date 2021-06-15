@@ -13,6 +13,7 @@ function Home(props) {
         <p>sm test</p>
         <p>sm test</p>
         <p>sm test</p>
+        <p>dongho test</p>
       </div>
     </div>
   );
