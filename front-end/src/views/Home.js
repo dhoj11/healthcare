@@ -8,7 +8,7 @@ function Home(props) {
         content
         <p>dongho test</p>
         <p>dongho test2</p>
-        <p>unho test</p>
+        <p>unho test.</p>
       </div>
     </div>
   );
