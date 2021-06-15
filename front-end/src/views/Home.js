@@ -7,6 +7,7 @@ function Home(props) {
       <div className="card-body">
         content
         <p>dongho test</p>
+        <p>dongho test2</p>
       </div>
     </div>
   );
