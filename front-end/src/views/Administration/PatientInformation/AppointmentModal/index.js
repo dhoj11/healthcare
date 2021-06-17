@@ -1,72 +1,51 @@
 import {Modal, Button} from "react-bootstrap";
 import {useState} from "react";
+import {getPatientList, getStaffList} from "../../data";
+import Calendar from "../../../Appointment/Calendar/Calendar"
 
 function AppointmentModal(props) {
+  const {patientId, isOpen, close} = props;
+  const staticPatientList = getPatientList();
+  const staticStaffList = getStaffList();
+  const filteredPatient = staticPatientList.filter(patient => (patient.patientId === patientId));
+  
+  const [startDate, setStartDate] = useState(new Date());
+  const [patient, setPatient] = useState(filteredPatient[0]);
 
-  const {isOpen, close} = props;
-
-  const [newPatient, setNewPatient] = useState({
-    patientId : "",
-    name: "",
-    birth: "",
-    gender: "",
-    tel: "",
-    medicine: "",
-    disease: "",
-    comment: ""
-  })
-
-  const handleChange = (event) => {
-    setNewPatient({
-      [event.target.name] : event.target.value
-    });
-  };
+  const changeDate = (date) => {
+    setStartDate(date);
+    console.log(date);
+  }
 
   return (
     <>
     {isOpen ? (
-      <Modal show={isOpen} onHide={close}>
+      <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
       <Modal.Header closeButton>
         <Modal.Title>진료 예약</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="register-form">
-          <div className="register-form-row">
-            <div className="border border-title ">이름</div>
-            <div>
-              <input className="form-control" value={newPatient.name} onChange={handleChange}/>
+        <div>
+          <div>환자이름 {patient.name}</div>
+          <div className="d-flex">
+            <div>진료의</div>
+            <div className="d-flex">
+              {staticStaffList.map(staff=>(
+                <div key={staff.staffId}>
+                  <input type="radio" name="staff"/> {staff.name}
+                </div>
+              ))}
             </div>
           </div>
-          <div className="register-form-row ">
-            <div className="border border-title ">생년월일</div>
-            <div className="register-form-birth">
-              <input type="text" className="form-control" placeholder="" value={newPatient.birth} onChange={handleChange}/> -
-              <input type="text" className="form-control" placeholder="" value={newPatient.gender} onChange={handleChange}/>
+          <div className="d-flex">
+            <div>진료내용</div>
+            <div>
+              <input type="text" />
             </div>
           </div>
-          <div className="register-form-row ">
-            <div className="border border-title ">연락처</div>
-            <div>
-              <input type="text" className="form-control" placeholder="'-' 없이 숫자만 입력" value={newPatient.tel} onChange={handleChange}/>
-            </div>
-          </div>
-          <div className="register-form-row">
-            <div className="border border-title ">복용약물</div>
-            <div>
-              <input type="text" className="form-control" placeholder="" value={newPatient.medicine} onChange={handleChange}/>
-            </div>
-          </div>
-          <div className="register-form-row">
-            <div className="border border-title ">만성질환</div>
-            <div>
-              <input type="text" className="form-control" placeholder="" value={newPatient.disease} onChange={handleChange}/>
-            </div>
-          </div>
-          <div className="register-form-row">
-            <div className="border border-title ">특이사항</div>
-            <div>
-              <input type="text" className="form-control" placeholder="" value={newPatient.comment} onChange={handleChange}/>
-            </div>
+          <div className="d-flex">
+            <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
+            <div>시간고르기</div>
           </div>
         </div>
       </Modal.Body>
@@ -75,7 +54,7 @@ function AppointmentModal(props) {
           취소
         </Button>
         <Button variant="primary" onClick={close}>
-          등록
+          확인
         </Button>
       </Modal.Footer>
     </Modal>

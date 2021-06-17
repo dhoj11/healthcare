@@ -1,28 +1,27 @@
-.first-content {
+.first_content {
   display: flex;
-  padding: 30px 30px;
   height: 100%;
 }
-.second-content {
+.second_content {
   display: flex;
   height: 50%;
 }
 
-.appointment-component {
+.appointment_component {
   padding-right: 30px;
   padding-bottom: 30px;
 }
 
-.reception-component {
+.reception_component {
   padding-right: 30px;
   padding-bottom: 30px;
 }
 
-.testlist-component {
+.testlist_component {
   height: 50%;
 }
 
-.search-patient-component {
+.search_patient_component {
   padding-bottom: 30px;
 }
 

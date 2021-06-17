@@ -11,14 +11,14 @@
   width: 50%;
 }
 
-.border {
+.appointment_border {
   width: 100px;
   height: 40px;
   text-align: center;
   line-height: 40px;
 }
 
-.appointment-item {
+.appointmentItem {
   width: 100px;
   height: 40px;
   text-align: center;
@@ -26,6 +26,6 @@
   padding-left: 5px;
 }
 
-.appointment-row:hover {
+.appointmentRow:hover {
   background-color:#edf2ff;
 }

@@ -1,4 +1,4 @@
-import "./PatientInformation.css";
+import styles from "./PatientInformation.module.css";
 import PatientInformationCard from "./PatientInformationCard";
 import { Tabs, Tab} from "react-bootstrap";
 import AppointmentTab from "./PatientInformationTab/AppointmentTab";
@@ -21,9 +21,9 @@ function PatientInformation(props) {
   };
 
   return (
-    <div className="patient-information">
-      <div className="patient-card"><PatientInformationCard patientId={"2"}/></div>
-      <div className="patient-information-tab">
+    <div className={styles.patient_information}>
+      <div><PatientInformationCard patientId={"2"}/></div>
+      <div className={styles.patient_information_tab}>
         <Tabs defaultActiveKey="appointmentTab">
           <Tab eventKey="appointmentTab" title="예약">
             <AppointmentTab patientId={"2"}/>
@@ -39,13 +39,13 @@ function PatientInformation(props) {
           </Tab>
         </Tabs>
       </div>
-      <div className="button-area">
+      <div className={styles.button_area}>
         <div>
           <button type="button" className="btn btn-outline-secondary mr-2" >진료접수</button>
         </div>
         <div>
           <button type="button" className="btn btn-outline-secondary mr-3" onClick={openModal}>진료예약</button>
-          <AppointmentModal isOpen={modalOpen} close={closeModal}/>
+          <AppointmentModal patientId={"2"} isOpen={modalOpen} close={closeModal}/>
         </div>
       </div>
     </div>

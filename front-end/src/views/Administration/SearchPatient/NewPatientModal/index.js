@@ -1,6 +1,6 @@
 import {Modal, Button} from "react-bootstrap";
 import {useState} from "react";
-import "./NewPatientModal.css"
+import styles from "./NewPatientModal.module.css"
 
 function NewPatientModal(props) {
 
@@ -38,39 +38,43 @@ function NewPatientModal(props) {
       </Modal.Header>
       <Modal.Body>
         <div className="register-form">
-          <div className="register-form-row">
-            <div className="border border-title ">이름</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>이름</div>
             <div>
               <input className="form-control" value={newPatient.name} onChange={handleChange}/>
             </div>
           </div>
-          <div className="register-form-row ">
-            <div className="border border-title ">생년월일</div>
-            <div className="register-form-birth">
-              <input type="text" className="form-control" placeholder="" value={newPatient.birth} onChange={handleChange}/> -
-              <input type="text" className="form-control" placeholder="" value={newPatient.gender} onChange={handleChange}/>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>생년월일</div>
+            <div className={styles.register_form_birth}>
+              <div className="d-flex">
+                <input type="text" className="form-control" placeholder="" value={newPatient.birth} onChange={handleChange}/> <span> &nbsp;-&nbsp;</span>
+              </div>
+              <div className="d-flex">
+                <input type="text" className={`${styles.form_gender}`} placeholder="" value={newPatient.gender} maxLength='1' onChange={handleChange}/><span>******</span>
+              </div>
             </div>
           </div>
-          <div className="register-form-row ">
-            <div className="border border-title ">연락처</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>연락처</div>
             <div>
               <input type="text" className="form-control" placeholder="'-' 없이 숫자만 입력" value={newPatient.tel} onChange={handleChange}/>
             </div>
           </div>
-          <div className="register-form-row">
-            <div className="border border-title ">복용약물</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>복용약물</div>
             <div>
               <input type="text" className="form-control" placeholder="" value={newPatient.medicine} onChange={handleChange}/>
             </div>
           </div>
-          <div className="register-form-row">
-            <div className="border border-title ">만성질환</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>만성질환</div>
             <div>
               <input type="text" className="form-control" placeholder="" value={newPatient.disease} onChange={handleChange}/>
             </div>
           </div>
-          <div className="register-form-row">
-            <div className="border border-title ">특이사항</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>특이사항</div>
             <div>
               <input type="text" className="form-control" placeholder="" value={newPatient.comment} onChange={handleChange}/>
             </div>

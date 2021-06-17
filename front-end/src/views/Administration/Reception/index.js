@@ -1,5 +1,5 @@
 import {getReceptionList} from "../data";
-import "./Reception.css";
+import styles from "./Reception.module.css";
 import { AutoSizer, List } from "react-virtualized";
 import {useState, useMemo} from "react";
 
@@ -7,29 +7,45 @@ function Reception(props) {
   let receptionList = [];
    receptionList = getReceptionList();
 
+   const handleStateChange = (event, patientId) => {
+
+   };
+
   const rowRenderer = ({index, key, style}) => {
     return (
-      <div key={key} style={style} className="border-bottom d-flex reception-row">
-        <span className="reception-item">
+      <div key={key} style={style} className={`${styles.reception_row} border-bottom d-flex`}>
+        <span className={styles.reception_item}>
         {receptionList[index].order}
       </span>
-      <span className="reception-item">
+      <span className={styles.reception_item}>
       {receptionList[index].time}
       </span>
-      <span className="reception-item">
+      <span className={styles.reception_item}>
       {receptionList[index].name}
       </span>
-      <span className="reception-item">
+      <span className={styles.reception_item}>
       {receptionList[index].treatmentComment}
       </span>
-      <span className="reception-item">
+      <span className={styles.reception_item}>
       {receptionList[index].doctor}
       </span>
       {
         { 
-           대기 : <span style={{color: "green"}}className="reception-item">{receptionList[index].state}</span>,
-           진료 : <span style={{color: "red"}}className="reception-item">{receptionList[index].state}</span>,
-           완료 : <span style={{color: "blue"}}className="reception-item">{receptionList[index].state}</span>
+          대기 : (<select style={{color: "green"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
+                    <option style={{color: "green"}} value="대기">대기</option>
+                    <option style={{color: "red"}} value="진료">진료</option>
+                    <option style={{color: "blue"}} value="완료">완료</option>
+                  </select>),
+          진료 : (<select style={{color: "red"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
+                    <option style={{color: "green"}} value="대기">대기</option>
+                    <option style={{color: "red"}} value="진료">진료</option>
+                    <option style={{color: "blue"}} value="완료">완료</option>
+                  </select>),
+          완료 : (<select style={{color: "blue"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
+                    <option style={{color: "green"}} value="대기">대기</option>
+                    <option style={{color: "red"}} value="진료">진료</option>
+                    <option style={{color: "blue"}} value="완료">완료</option>
+                  </select>)
         }[receptionList[index].state]
       }
       </div>
@@ -38,7 +54,7 @@ function Reception(props) {
 
   //const appointmentList = getReceptionList();
   return (
-    <div className="reception">
+    <div className={styles.reception}>
     <div className="mb-1 ml-2">
       <img className="mr-3" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-3">내원</span>
       <span style={{color : "#ffd43b"}}>전체 {receptionList.length} | </span>
@@ -47,22 +63,22 @@ function Reception(props) {
       <a href="#">대기 4 | </a>
     </div>
     <div className="d-flex bg-light">
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         순서
       </span>
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         접수시간
       </span>
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         이름
       </span>
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         진료내용
       </span>
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         담당의
       </span>
-      <span className="border">
+      <span className={`border ${styles.reception_border}`}>
         상태
       </span>
     </div>

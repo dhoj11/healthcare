@@ -1,7 +1,7 @@
 import { AutoSizer, List } from "react-virtualized";
 import {useState} from "react";
 import {getAppointmentList} from "../../data";
-import "./AppointmentTab.css";
+import styles from "./AppointmentTab.module.css";
 
 function AppointmentTab(props) {
   
@@ -9,22 +9,22 @@ function AppointmentTab(props) {
   const filteredAppointmentList = staticAppointmentList.filter(appointment => (appointment.patientId === props.patientId));
   const [appointmentList, setAppointmentList] = useState(filteredAppointmentList);
 
-  const rowRenderer = ({index, key}) => {
+  const rowRenderer = ({index, key, style}) => {
     return (
-      <div key={key} className="border-bottom d-flex appointment-row">
-        <span className="appointment-tab-item">
+      <div key={key} style={style} className={`${styles.appointment_row} border-bottom d-flex`}>
+        <span className={styles.appointment_tab_item}>
         {appointmentList[index].date}
       </span>
-      <span className="appointment-tab-item">
+      <span className={styles.appointment_tab_item}>
       {appointmentList[index].time}
       </span>
-      <span className="appointment-tab-item">
+      <span className={styles.appointment_tab_item}>
       {appointmentList[index].doctor}
       </span>
-      <span className="appointment-tab-item">
+      <span className={styles.appointment_tab_item}>
       {appointmentList[index].appointmentKind}
       </span>
-      <span className="appointment-tab-item">
+      <span className={styles.appointment_tab_item}>
       {appointmentList[index].state}
       </span>
       </div>
@@ -34,19 +34,19 @@ function AppointmentTab(props) {
   return (
     <div className="card-appointment-tab">
       <div className="d-flex bg-light">
-        <span className="appointment-tab-border">
+        <span className={styles.appointment_tab_border}>
           예약날짜
         </span>
-        <span className="appointment-tab-border">
+        <span className={styles.appointment_tab_border}>
           예약시간
         </span>
-        <span className="appointment-tab-border">
+        <span className={styles.appointment_tab_border}>
           담당의
         </span>
-        <span className="appointment-tab-border">
+        <span className={styles.appointment_tab_border}>
           예약내용
         </span>
-        <span className="appointment-tab-border">
+        <span className={styles.appointment_tab_border}>
           상태
         </span>
     </div>

@@ -1,4 +1,4 @@
-.test-list {
+.test_list {
   background-color: white;
   border-radius: 30px;
   border-color: white;
@@ -8,28 +8,29 @@
   display: flex;
 }
 
-.test-patient-list {
+.test_patient_list {
   width: 34rem;
   height: 100%;
 }
 
-.test-code-list {
+.test_code_list {
   width: 34rem;
   height: 100%;
   margin-left: 2rem;
 }
 
-.test-border {
+.test_border {
   width: 120px;
   height: 40px;
   text-align: center;
   line-height: 40px;
 }
-.patient-row:hover {
+
+.patient_row:hover {
   background-color:#edf2ff;
 
 }
-.test-patient-item {
+.test_patient_item {
   width: 120px;
   height: 40px;
   text-align: center;
@@ -37,14 +38,14 @@
   padding-left: 5px;
 }
 
-.test-code-border {
+.test_code_border {
   width: 200px;
   height: 40px;
   text-align: center;
   line-height: 40px;
 }
 
-.test-code-item {
+.test_code_item {
   width: 200px;
   height: 40px;
   text-align: center;
@@ -52,11 +53,11 @@
   padding-left: 5px;
 }
 
-.code-row:hover {
+.code_row:hover {
   background-color:#edf2ff;
 }
 
-.test-button {
+.test_button {
   display: flex;
   margin-left: 265px;
 }

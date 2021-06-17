@@ -1,39 +1,35 @@
-.patient-information-card {
+.patient_information_card {
   margin-top: 30px;
   margin-left: 50px;
   margin-bottom: 30px;
 }
 
-.first-card-row {
+.first_card_row {
   height: 100%;
   margin-bottom: 30px;
   display: flex;
 }
 
-.patient-icon {
+.patient_icon {
   height: 7rem;
   margin-right: 50px;
 }
 
-.patient-basic {
+.patient_basic {
   height: 7rem;
 }
 
-.patient-basic-information {
+.patient_basic_information {
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.second-card-row {
+.second_card_row {
   height: 100%;
 }
 
-.patient-detail {
-
-}
-
-.patient-detail-information {
+.patient_detail_information {
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 5px;

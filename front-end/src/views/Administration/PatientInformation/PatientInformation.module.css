@@ -1,4 +1,4 @@
-.patient-information {
+.patient_information {
   background-color: white;
   border-radius: 30px;
   border-color: white;
@@ -7,12 +7,12 @@
   height: 595px;
 }
 
-.patient-information-tab {
+.patient_information_tab {
   margin: 20px;
   height: 250px;
 }
 
-.button-area {
+.button_area {
   display: flex;
   float: right;
 }

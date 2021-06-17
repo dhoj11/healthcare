@@ -81,6 +81,14 @@ patientData = [
 let testPatientData = {};
 testPatientData = {"patientId":"2","name":"조운호", "gender":"남","birth":"1996.01.01","age":"25","tel": "010-2222-2222","recentVisit": "2021.06.16", "medicine": "당뇨", "disease": "당뇨", "comment": "특이 사항 없음"};
 
+let staffList = [];
+staffList = [
+  {"staffId":"1","name":"정의사", "tel": "010-1111-1111"},
+  {"staffId":"2","name":"조의사","tel": "010-2222-2222"},
+  {"staffId":"3","name":"박의사","tel": "010-1212-1212"},
+  {"staffId":"4","name":"김의사", "tel": "010-3333-3333"}
+]
+
 export function getAppointmentList() {
   var appointmentList = appointmentData;
   return appointmentList;
@@ -105,4 +113,8 @@ export function getPatientList() {
 
 export function getTestPatient() {
   return testPatientData;
+}
+
+export function getStaffList() {
+  return staffList;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import {getPatientList} from "../data";
-import "./SearchPatient.css";
+import styles from "./SearchPatient.module.css";
 import NewPatientModal from "./NewPatientModal";
 
 function SearchPatient(props) {
@@ -31,20 +31,20 @@ function SearchPatient(props) {
 
   const rowRenderer = ({index, key ,style}) => {
     return (
-      <div key={key} style={style} className="border-bottom d-flex search-patient-row">
-        <span className="patient-item">
+      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`}>
+        <span className={styles.patient_item}>
         {patientList[index].name}
       </span>
-      <span className="patient-item-gender">
+      <span className={styles.patient_item_gender}>
       {patientList[index].gender}
       </span>
-      <span className="patient-item">
+      <span className={styles.patient_item}>
       {patientList[index].birth}
       </span>
-      <span className="patient-item-tel">
+      <span className={styles.patient_item_tel}>
       {patientList[index].tel}
       </span>
-      <span className="patient-item">
+      <span className={styles.patient_item}>
       {patientList[index].recentVisit}
       </span>
       </div>
@@ -52,9 +52,9 @@ function SearchPatient(props) {
   };
 
   return (
-    <div className="search-patient">
-      <div className="search-first-content row">
-        <div className="search-second-content d-flex align-items-center">
+    <div className={styles.search_patient}>
+      <div className={`${styles.search_first_content} row`}>
+        <div className={styles.search_second_content}>
           <div className="col-3"><img className="mr-3" src="/resources/svg/people.svg"></img><span>환자검색</span></div>
           <div className="input-group col-7 d-flex">
             <input type="text" className="form-control" placeholder="name" value={patientName} onChange={changePatientName} />
@@ -70,19 +70,19 @@ function SearchPatient(props) {
       </div>
       <div className="patient-list mt-3">
         <div className="d-flex bg-light">
-          <span className="border search-border">
+          <span className={`border ${styles.search_border}`}>
             환자이름
           </span>
-          <span className="border search-border-gender">
+          <span className={`border ${styles.search_border_gender}`}>
             성별
           </span>
-          <span className="border search-border">
+          <span className={`border ${styles.search_border}`}>
             생년월일
           </span>
-          <span className="border search-border-tel">
+          <span className={`border ${styles.search_border_tel}`}>
             전화번호
           </span>
-          <span className="border search-border">
+          <span className={`border ${styles.search_border}`}>
             최근내원일
           </span>
         </div>
