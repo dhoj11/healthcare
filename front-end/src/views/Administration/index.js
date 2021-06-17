@@ -7,7 +7,7 @@ import SearchPatient from "./SearchPatient";
 
 function Administration(props) {
   return (
-    <div className="first-content row">
+    <div className="first-content">
       <div>
         <div className="second-content">
           <div className="appointment-component"><Appointment /></div>

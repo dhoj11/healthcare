@@ -1,0 +1,18 @@
+.patient-information {
+  background-color: white;
+  border-radius: 30px;
+  border-color: white;
+  padding: 5px;
+  width: 35rem;
+  height: 595px;
+}
+
+.patient-information-tab {
+  margin: 20px;
+  height: 250px;
+}
+
+.button-area {
+  display: flex;
+  float: right;
+}
