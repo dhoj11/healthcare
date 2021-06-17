@@ -1,0 +1,29 @@
+.first_content {
+  display: flex;
+  height: 100%;
+}
+.second_content {
+  display: flex;
+  height: 50%;
+}
+
+.appointment_component {
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.reception_component {
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.testlist_component {
+  height: 50%;
+}
+
+.search_patient_component {
+  padding-bottom: 30px;
+}
+
+.patient-information-component {
+}
