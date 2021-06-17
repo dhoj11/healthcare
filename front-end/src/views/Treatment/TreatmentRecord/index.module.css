@@ -1,0 +1,10 @@
+.treatmentRecord{
+  display:flex;
+  flex-direction: column;
+}
+
+.write{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;  
+}
