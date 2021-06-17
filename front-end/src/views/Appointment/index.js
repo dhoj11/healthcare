@@ -1,7 +1,7 @@
-import TodayAppointment from "./TodayAppointment/TodayAppointment";
+import TodayAppointment from "./TodayAppointment/index.";
 import "./index.css"
-import Calendar from "./Calendar/Calendar";
-import TimeTable from "./TimeTable/TimeTable";
+import Calendar from "./Calendar";
+import TimeTable from "./TimeTable";
 import { useState } from "react";
 
 

@@ -30,7 +30,6 @@
 .TimeTable_contain >table tbody td{
   height: 60px;
   border: 1px solid lightgrey;
-  box-sizing: border-box;
 }
 .TimeTable_contain > table tbody td:not(td:nth-child(1)){
   cursor: pointer;
