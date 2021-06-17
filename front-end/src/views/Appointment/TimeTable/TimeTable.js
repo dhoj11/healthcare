@@ -3,25 +3,11 @@ import { useState } from "react";
 import "./TimeTable.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PatientSearch from "./PatientSearch";
+import { getTimeTables } from "../data";
 function TimeTable(props) {
-  const [timetables,setTimetables]= useState([
-    {"시간":"10:00", "김의사":null,"나의사":4,"박의사":2,"정의사":null, "검사실":null},
-    {"시간":"10:30", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":4},
-    {"시간":"11:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"12:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"13:00", "김의사":null,"나의사":null,"박의사":null,"정의사":null, "검사실":null},
-    {"시간":"14:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"14:30", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"15:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"15:30", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"16:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"16:30", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3},
-    {"시간":"17:00", "김의사":null,"나의사":1,"박의사":2,"정의사":null, "검사실":3}
-  ]);
+  const [timetables,setTimetables]= useState(getTimeTables);
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
-
   const prevDate = () => {
     let date = new Date(props.startDate);
     date.setDate(date.getDate()-1);
@@ -58,9 +44,17 @@ function TimeTable(props) {
               return (
               <tr key={data.시간}>
                 {Object.values(data).map((value,index) => {
-                  return (
-                      <td key={index} onClick={() => appoint(data.시간,index,value)} className="{value}" >{value}</td>
-                  )
+                  if (value==="진료완료" || value==="검사완료") return (
+                      <td key={index} onClick={() => appoint(data.시간,index,value)} style={{backgroundColor:"#fff3bf"}}>{value}</td>
+                  );
+                  if (value==="예약") return (
+                    <td key={index} onClick={() => appoint(data.시간,index,value)} style={{backgroundColor:"#e7f5ff"}}>{value}</td>
+                  );
+                  if (value==="취소") return (
+                    <td key={index} onClick={() => appoint(data.시간,index,value)} style={{backgroundColor:"#ffc9c9"}}>{value}</td>
+                  );
+                  else return (<td key={index} onClick={() => appoint(data.시간,index,value)} >{value}</td>);
+                  // return <td key={index} onClick={() => appoint(data.시간,index,value)} >{value}</td>
                 })}
               </tr>
               )

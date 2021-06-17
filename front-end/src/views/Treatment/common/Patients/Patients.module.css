@@ -1,0 +1,98 @@
+.wrapper{
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 20px 10px;
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto 0;
+}
+
+.filter hr{
+  margin-bottom: 0px;
+}
+
+.filter div{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  font-size: 14px;
+  font-weight: 600;
+  color: #808080;
+  padding: 5px 25px;
+}
+
+.filter div:hover{
+  background: #0d4467;
+  color: #fff;
+}
+
+.patients{
+  height: 265px;
+  overflow: auto;
+}
+
+.patientItem{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  font-size: 14px;
+  font-weight: 600;
+  color: #808080;
+  padding: 5px 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.patientItem:hover{
+  background: #0d4467;
+  color: #fff;
+}
+
+.patient{
+  margin-top: 30px;
+  padding-top: 30px;
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  height: 425px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileIcon{
+  font-size: 100px;
+}
+
+.patientDescription{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.name{
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.subWrapper{
+  display:flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.subTitle{
+  width: 250px;
+  margin: 10px 0;
+  background: #F5F5F5;
+}

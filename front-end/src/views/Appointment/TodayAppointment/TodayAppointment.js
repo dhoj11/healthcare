@@ -1,5 +1,5 @@
 import { AutoSizer, List } from "react-virtualized";
-import "./TodayAppointment.css";
+import styles from "./TodayAppointment.module.css";
 function TodayAppointment(props) {
   let appointmentList = [
     {"no":"1","time":"10:30","patient_name":"아무개","staff_name":"김의사"},
@@ -26,9 +26,9 @@ function TodayAppointment(props) {
 
  
   return(
-    <div className="TodayAppointment_contain">
-      <div className="TodayAppointment_title">오늘의 예약</div>
-      <div className="table_t">
+    <div className={styles.TodayAppointment_contain}>
+      <div className={styles.TodayAppointment_title}>오늘의 예약</div>
+      <div className={styles.table_t}>
       <table>
           <thead>
             <tr>
