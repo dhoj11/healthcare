@@ -18,10 +18,8 @@
 }
 
 .TimeTable_contain > table th{
-  padding: 0.3rem;
   border: 1px solid lightgrey;
   font-weight: 700;
-
 }
 .TimeTable_contain > table th:nth-child(1){
   width: 20px;
@@ -32,6 +30,7 @@
 .TimeTable_contain >table tbody td{
   height: 60px;
   border: 1px solid lightgrey;
+  box-sizing: border-box;
 }
 .TimeTable_contain > table tbody td:not(td:nth-child(1)){
   cursor: pointer;
@@ -62,19 +61,4 @@
   align-items: center;
   margin-bottom: 1em;
 }
-.modal_footer > .cancel_btn{
-  background-color: gray;
-  color: white;
-  margin-right: 5px;
-  width: 100px;
-}
 
-.modal_footer > .btn:hover{
-  color: white;
-  opacity: 0.8;
-}
-.modal_footer > .appoint_btn{
-  background-color: #00253d;
-  color: white;
-  width: 100px;
-}
