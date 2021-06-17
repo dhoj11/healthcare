@@ -12,11 +12,12 @@ function Calendar(props) {
   return(
     <div>
        <DatePicker
-        selected={props.startDate}
         onChange={(date) => props.changeDate(date)}
         inline
         onMonthChange={(date) => props.changeDate(date)}
         className="calendar"
+        selected={props.startDate}
+
       />
     </div>
   );

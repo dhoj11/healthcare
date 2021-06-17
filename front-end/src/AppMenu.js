@@ -6,7 +6,7 @@ function AppMenu(props){
       <li className="nav-item mt-5">
         <Link to="/" className="nav-link mt-2"><i className="fas fa-home"></i></Link>
         <Link to="/Appointment" className="nav-link"><i className="far fa-calendar"></i></Link>
-        <Link to="#" className="nav-link"><i className="far fa-file-alt"></i></Link>
+        <Link to="/administration" className="nav-link"><i className="far fa-file-alt"></i></Link>
         <Link to="#" className="nav-link"><i className="fas fa-stethoscope"></i></Link>
         <Link to="#" className="nav-link"><i className="fas fa-vial"></i></Link>
       </li>

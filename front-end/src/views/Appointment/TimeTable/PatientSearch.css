@@ -1,0 +1,61 @@
+.search{
+  margin: 20px 20px;
+  text-align: center;
+}
+
+.search > input{
+  border-radius: 20px;
+  outline: 0;
+  text-align: right;
+  padding-right: 20px;
+  height: 40px;
+}
+input:focus::-webkit-input-placeholder {color:transparent; }
+
+
+.patient_table{
+  margin: 20px 20px;
+}
+.patient_table >.thead{
+  background-color: #00253d;
+  color: white;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+}
+.patient_table >.thead span{
+  display:inline-block;
+  font-size: large;
+  height: 100%;
+  padding-top: 7px;
+}
+.patient_table >.thead span:nth-child(1), span:nth-child(2){
+  width:10%;
+}
+.patient_table >.thead span:nth-child(4){
+  width:30%;
+}
+.patient_table >.thead span:nth-child(3), span:nth-child(5){
+  width:25%;
+}
+
+
+.patient_table .tbody{
+  cursor: pointer;
+}
+
+.patient_table .tbody span{
+  display:inline-block;
+  font-size: large;
+  text-align: center;
+  height: 50px;
+}
+.patient_table .tbody span:nth-child(1), span:nth-child(2){
+  width:10%;
+}
+.patient_table .tbody span:nth-child(4){
+  width:30%;
+}
+.patient_table .tbody span:nth-child(3), span:nth-child(5){
+  width:25%;
+}
