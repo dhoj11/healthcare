@@ -1,0 +1,64 @@
+.TimeTable_contain{
+  background-color: white;
+  margin-left:30px;
+  border-radius: 30px;
+  padding: 40px;
+  padding-top: 10px;
+  border:none;
+  width: 100%;
+  height: 100%;
+}
+.TimeTable_contain > table{
+  padding: 50px;
+  text-align: center;
+  width: 100%;
+}
+.TimeTable_contain > table thead{
+  background-color: #e9ecef;
+}
+
+.TimeTable_contain > table th{
+  border: 1px solid lightgrey;
+  font-weight: 700;
+}
+.TimeTable_contain > table th:nth-child(1){
+  width: 20px;
+}
+.TimeTable_contain > table th:not(th:nth-child(1)){
+  width: auto;
+}
+.TimeTable_contain >table tbody td{
+  height: 60px;
+  border: 1px solid lightgrey;
+  box-sizing: border-box;
+}
+.TimeTable_contain > table tbody td:not(td:nth-child(1)){
+  cursor: pointer;
+}
+.date {
+  font-size: 30px;
+  font-weight: 500;
+}
+.date_contain{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.date_contain > .btn {
+  font-size: 20px;
+  font-weight: 900;
+  color: #adb5bd;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.modal_body {
+  height: 400px;
+}
+.modal_footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
