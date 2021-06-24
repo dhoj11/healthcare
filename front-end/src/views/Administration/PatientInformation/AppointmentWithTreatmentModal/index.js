@@ -1,7 +1,9 @@
 import {Modal, Button} from "react-bootstrap";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {getPatientList, getStaffList} from "../../data";
 import Calendar from "../../../Appointment/Calendar/Calendar"
+import styles from "./AppointmentWithTreatmentModal.module.css";
+import TimeSelect from "../../common/TimeSelect";
 
 function AppointmentModal(props) {
   const {patientId, isOpen, close} = props;
@@ -10,7 +12,14 @@ function AppointmentModal(props) {
   const filteredPatient = staticPatientList.filter(patient => (patient.patientId === patientId));
   
   const [startDate, setStartDate] = useState(new Date());
-  const [patient, setPatient] = useState(filteredPatient[0]);
+  const [patient, setPatient] = useState({});
+
+  useEffect(() => {
+    setPatient(filteredPatient[0]);
+    return (() => {
+        console.log("진료 예약 언마운트시 실행");
+    });
+  },[props]);
 
   const changeDate = (date) => {
     setStartDate(date);
@@ -26,36 +35,42 @@ function AppointmentModal(props) {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <div>환자이름 {patient.name}</div>
-          <div className="d-flex">
-            <div>진료의</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`} >환자이름</div>
+            <div>{patient.name}</div>
+          </div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
               {staticStaffList.map(staff=>(
                 <div key={staff.staffId}>
-                  <input type="radio" name="staff"/> {staff.name}
+                  <input className="mr-2" type="radio" name="staff" value={staff.staffId}/>
+                  <label className="form-check-label mr-2">{staff.name}</label>
                 </div>
               ))}
             </div>
           </div>
-          <div className="d-flex">
-            <div>진료내용</div>
+          <div className={styles.register_form_row}>
+            <div className={`${styles.border_title} border`}>진료내용</div>
             <div>
-              <input type="text" />
+              <input type="text" className="form-control"/>
             </div>
           </div>
           <div className="d-flex">
             <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
-            <div>시간고르기</div>
+            <div>
+              <TimeSelect startDate={startDate} changeDate={changeDate} />
+            </div>
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={close}>
+        <button className={styles.cancel_btn} onClick={close}>
           취소
-        </Button>
-        <Button variant="primary" onClick={close}>
+        </button>
+        <button className={styles.appoint_btn} onClick={close}>
           확인
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
     ) : null}
