@@ -1,0 +1,12 @@
+
+.staff{
+  margin: 45px 65px;
+  flex:1;
+  display: flex;
+}
+.staff_content{
+  padding-top: 50px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 20px;
+}

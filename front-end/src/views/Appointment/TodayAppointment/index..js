@@ -21,7 +21,6 @@ function TodayAppointment(props) {
     {"no":"17","time":"10:30","patient_name":"아무개","staff_name":"김의사"},
     {"no":"18","time":"10:30","patient_name":"아무개","staff_name":"김의사"},
     {"no":"19","time":"10:30","patient_name":"아무개","staff_name":"김의사"},
-    
   ];
 
  

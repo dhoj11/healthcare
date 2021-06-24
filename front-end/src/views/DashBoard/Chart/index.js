@@ -1,17 +1,18 @@
 import {CanvasJSChart} from 'canvasjs-react-charts'
-
+import { getAppointNum } from '../data';
+import styles from "./index.module.css";
 function Chart(props) {
+  
   const options = {
     animationEnabled: true,	
+    width:900,//in pixels
+    height:341,//in pixels
     title:{
-      text: "시간별 예약 환자"
+      text: "시간별 예약 환자",
+      fontSize: 20,
     },
-    axisY : {
-      title: "Number of Customers"
-    },
-    toolTip: {
-      shared: true
-    },
+
+
     data: [{
       type: "spline",
       name: "2016",
@@ -33,11 +34,13 @@ function Chart(props) {
     }]
   }
   
-  return(
 
-          <CanvasJSChart options = {options} 
-            /* onRef={ref => this.chart = ref} */
-          />
+  
+  return(
+    <>
+      <div className={styles.today}>당일예약환자 </div>
+      <CanvasJSChart options = {options}/>
+    </>
   );
 }
 export default Chart;

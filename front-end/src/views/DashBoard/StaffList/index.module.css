@@ -1,0 +1,13 @@
+.staffs{
+  width: 80%;
+  background-color: white;
+  border-radius: 30px;
+  margin-right: 30px;
+  height: 510px;
+  overflow: auto;
+}
+
+.staff_contain{
+  display: flex;
+  width: 100%;
+}
