@@ -12,7 +12,7 @@
   flex-direction: row;
 }
 
-.selectWork .item{
+.item{
   border-radius: 5px;
   border: 1px solid #D3D3D3;
   padding: 5px 15px;
@@ -22,7 +22,18 @@
   color: #808080;
 }
 
-.selectWork .item:hover{
+.item:hover{
+  background: #0d4467;
+  color: #fff;
+}
+
+.record, .TestResult{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 5px;
   background: #0d4467;
   color: #fff;
 }

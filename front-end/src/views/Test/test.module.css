@@ -1,0 +1,61 @@
+
+.test{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.left{
+  height: 100%;
+}
+
+.search{
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px 0px 10px 0px;
+  margin-bottom: 0;
+  padding: 20px;
+  width: 610px;
+}
+
+.leftMiddle{
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.patientCard{
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px 0px;
+  margin-bottom: 0;
+  padding: 20px;
+}
+
+.State{
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.testList{
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px 0 10px 0;
+  margin-bottom: 0;
+  padding: 20px;
+  width: 610px;
+  overflow: auto;
+}
+
+.testResult{
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px;
+  margin-left: 5px;
+  margin-bottom: 0;
+  padding: 20px;
+  width: 100%;
+  overflow: auto;
+}

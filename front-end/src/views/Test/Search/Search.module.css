@@ -1,0 +1,13 @@
+.search{
+  display: flex;
+  flex-direction: row;
+}
+
+.field{
+  width: 100%;
+}
+
+.searchButton{
+  width: 100px;
+  margin-left: 10px;
+}
