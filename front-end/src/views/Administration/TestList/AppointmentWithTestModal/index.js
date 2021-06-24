@@ -1,7 +1,7 @@
 import styles from "./AppointmentWithTestModal.module.css";
 import {Modal, Button} from "react-bootstrap";
 import {getPatientList} from "../../data";
-import Calendar from "../../../Appointment/Calendar/Calendar"
+import Calendar from "../../../Appointment/Calendar"
 import TimeSelect from "../../common/TimeSelect";
 import {useState, useEffect} from "react";
 

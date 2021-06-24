@@ -1,15 +1,15 @@
 import { Redirect, Route , Switch } from "react-router-dom";
 import Appointment from "./views/Appointment";
-import Home from "./views/Home";
 import Treatment from "./views/Treatment";
 import Administration from "./views/Administration";
+import DashBoard from "./views/DashBoard";
 import Test from "./views/Test";
 import Login from "./views/Auth/Login";
 
 function AppRoute(){
   return(
     <Switch>
-      <Route path="/" exact component={Home}/>
+      <Route path="/DashBoard" exact component={DashBoard}/>
       <Route path="/treatment" exact component={Treatment}/>
       <Route path="/Appointment" exact component={Appointment}/>
       <Route path="/administration" exact component={Administration}/>

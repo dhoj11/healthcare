@@ -1,0 +1,17 @@
+.dashboard_contain{
+}
+.top_contain{
+  display: flex;
+}
+.bottom_contain{
+  display: flex;
+  height: 100%;
+}
+.chart_contain{
+  display: flex;
+  width: 80%;
+  background-color: white;
+  border-radius: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}

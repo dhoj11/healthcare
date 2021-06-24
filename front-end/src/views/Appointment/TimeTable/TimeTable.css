@@ -1,40 +1,109 @@
 .TimeTable_contain{
   background-color: white;
-  margin-left:30px;
+  margin-left:15px;
   border-radius: 30px;
-  padding: 40px;
-  padding-top: 10px;
+  padding: 0px 30px;
   border:none;
+  overflow:auto;
   width: 100%;
-  height: 100%;
+  height: 875px;
+  
 }
 .TimeTable_contain > table{
   padding: 50px;
   text-align: center;
-  width: 100%;
 }
+
 .TimeTable_contain > table thead{
   background-color: #e9ecef;
+  position: sticky;
+	top: 40px;
+  font-size: 17px;
+}
+.completeTd{
+  background-color: #e7f5ff;
+  border: 1px solid #e9ecef;
+
+}
+.completeTd .stateStyle {
+  color:#1864ab;
+}
+
+.appointTd{
+  background-color:#ebfbee;
+  border: 1px solid #e9ecef;
+
+}
+.appointTd .stateStyle{
+  color:#2b8a3e;
+
+}
+.cancelTd{
+  background-color: #fff5f5;
+  border: 1px solid #e9ecef;
+
+}
+.cancelTd .stateStyle{
+  color:#c92a2a;
 }
 
 .TimeTable_contain > table th{
-  border: 1px solid lightgrey;
   font-weight: 700;
+  padding: 0 0;
+  height: 35px;
+  border-radius: 6px;
+  border-top:none;
+  padding-bottom: 4px;
 }
+.lastThBtn{
+  border: none;
+  font-weight: 600;
+}
+
+.lunch{
+  background-color: #adb5bd;
+}
+.TimeTable{
+  white-space:nowrap;
+}
+
+.TimeTable th:first-child,
+.TimeTable td:first-child {
+	border-left: 0;
+}
+.TimeTable th:last-child,
+.TimeTable td:last-child {
+	border-right: 0;
+}
+
 .TimeTable_contain > table th:nth-child(1){
-  width: 20px;
+  width: 80px;
 }
 .TimeTable_contain > table th:not(th:nth-child(1)){
-  width: auto;
+  width: 300px;
 }
+
 .TimeTable_contain >table tbody td{
-  height: 60px;
-  border: 1px solid lightgrey;
-  box-sizing: border-box;
+  height: 65px;
+  padding: 0 0px;
+  padding-left: 5px;
 }
-.TimeTable_contain > table tbody td:not(td:nth-child(1)){
+.empty{
+  border: 1px solid #e9ecef;
+}
+.empty:hover{
+  background-color: #ebfbee;
+  cursor: pointer;
+
+}
+.appointTd:hover, .completeTd:hover, .cancelTd:hover{
+  opacity: 0.5;
   cursor: pointer;
 }
+.TimeTable_contain > table td:not(td:nth-child(1)){
+  text-align: left;
+}
+
 .date {
   font-size: 30px;
   font-weight: 500;
@@ -43,14 +112,37 @@
   display: flex;
   text-align: center;
   justify-content: center;
+  position: sticky;
+	top: 0;
+  background-color: white;
 }
-.date_contain > .btn {
+.date_contain  .btn {
   font-size: 20px;
   font-weight: 900;
   color: #adb5bd;
   margin-left: 50px;
   margin-right: 50px;
 }
+.showAppoint, .number {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.showAppoint > button, .number > button{
+  border-radius: 5px;
+  border : 1px solid lightgray;
+  background-color: white;
+  color: gray;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 5px 10px;
+  margin-right: 15px;
+}
+
+.showAppoint > button:hover ,.number > button:hover{
+  background-color: #04436d;
+  color:white;
+}
+
 
 .modal_body {
   height: 400px;

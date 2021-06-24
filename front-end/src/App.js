@@ -6,12 +6,16 @@ import AppRoute from "./AppRoute";
 function App() {
   return (
     <div className="main">
-        <div className="sidebar">
-          <AppMenu/>
-        </div>
-        <div className="content item">
-          <AppRoute/>
-        </div>
+        <div className="header"></div>
+        <div className="body">
+          <div className="sidebar">
+            <AppMenu/>
+          </div>
+          <div className="content">
+            <AppRoute/>
+          </div>
+        </div>    
+        
     </div>
   );
 }

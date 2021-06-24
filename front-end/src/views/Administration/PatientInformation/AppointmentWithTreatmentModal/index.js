@@ -1,9 +1,10 @@
 import {Modal, Button} from "react-bootstrap";
 import {useState, useEffect} from "react";
 import {getPatientList, getStaffList} from "../../data";
-import Calendar from "../../../Appointment/Calendar/Calendar"
 import styles from "./AppointmentWithTreatmentModal.module.css";
 import TimeSelect from "../../common/TimeSelect";
+import Calendar from "../../../Appointment/Calendar";
+
 
 function AppointmentModal(props) {
   const {patientId, isOpen, close} = props;
