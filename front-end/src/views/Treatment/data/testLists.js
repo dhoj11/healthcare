@@ -1,0 +1,26 @@
+const testList = [
+  {tId: 1,code: "L2001", name: "CBC (CBC,PLT,DIFF)"},
+  {tId: 1,code: "L2002", name: "CBC(CBC,PLT)"},
+  {tId: 2,code: "L2116", name: "Factor Assay(8종)*(11366036)SCL"},
+  {tId: 3,code: "L300101", name: "Routine BC(순환기내과12종)"},
+  {tId: 4,code: "L300102", name: "Routine BC(11종목)-신경과"},
+  {tId: 5,code: "L3002", name:	"Liver Profile"},
+  {tId: 5,code: "L2001", name: "CBC (CBC,PLT,DIFF)"},
+  {tId: 6,code: "L2002", name: "CBC(CBC,PLT)"},
+  {tId: 7,code: "L2116", name: "Factor Assay(8종)*(11366036)SCL"},
+  {tId: 7,code: "L3001", name: "Routine BC(13종목)"},
+  {tId: 8,code: "L300101", name: "Routine BC(순환기내과12종)"},
+  {tId: 9,code: "L300102", name: "Routine BC(11종목)-신경과"},
+  {tId: 10,code: "L3002", name:	"Liver Profile"},
+  {tId: 10,code: "L2001", name: "CBC (CBC,PLT,DIFF)"},
+  {tId: 11,code: "L2002", name: "CBC(CBC,PLT)"},
+  {tId: 12,code: "L2116", name: "Factor Assay(8종)*(11366036)SCL"},
+  {tId: 13,code: "L3001", name: "Routine BC(13종목)"},
+  {tId: 14,code: "L300101", name: "Routine BC(순환기내과12종)"},
+  {tId: 14,code: "L300102", name: "Routine BC(11종목)-신경과"},
+  {tId: 15,code: "L3002", name:	"Liver Profile"},
+  {tId: 15,code: "L2001", name: "CBC (CBC,PLT,DIFF)"},
+  {tId: 16,code: "L2002", name: "CBC(CBC,PLT)"},
+]
+
+export default testList;

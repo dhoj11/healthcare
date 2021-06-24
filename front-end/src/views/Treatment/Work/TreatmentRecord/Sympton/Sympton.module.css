@@ -1,0 +1,25 @@
+.sympton{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.title{
+
+  font-weight: 700;
+  font-size: 14px;
+  background: #F8FAFF;
+  border-radius: 5px;
+  border: 1px solid #ebf0fc;
+  padding: 10px 20px 10px 20px;
+  height: 100%;
+  color: #808080;
+}
+.content{
+  margin-left: 5px;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+  height: 100%;
+  color: #808080
+}

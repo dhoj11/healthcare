@@ -1,88 +1,49 @@
-import {getAppointmentList} from "../data";
-import { AutoSizer, List } from "react-virtualized";
+import {getAppointmentList, getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import { useState } from "react";
-import classnames from "classnames/bind";
+import { useEffect, useState } from "react";
+import ListItem from "./ListItem";
 
 function Appointment(props) {
 
-  const staticAppointmentList = getAppointmentList();
-  const todayAppointmentList = staticAppointmentList.filter(today => today.date === "2021.06.16");  //오늘 날짜의 예약만 
+  const {selectedPatient, receptionPatient, testPatient, isFinished} = props;
+
+  //예약 리스트, 환자 리스트 정보 가져오기
+  const staticAppointmentList = getAppointmentList();   
+  const staticPatientList = getPatientList();
+
+  //당일 예약 리스트를 가져오기 위해 필터를 적용, 당일 예약 리스트를 초기상태로 선언
+  const todayAppointmentList = staticAppointmentList.filter(today => today.date === "2021-06-16");  //후에 백엔드에서 처리할 예정
   const [appointmentList, setAppointmentList] = useState(todayAppointmentList);
+  const [stateList, setStateList] = useState([]);
+  const setAppointmentState = (list) => {
+    // const temp = stateList;
+    // temp.filter(state => state.patientId !== list.patientId);
+    // temp.concat(list);
+    // setStateList(temp);
+    const temp = stateList.filter(state => state.patientId === list.patientId);
+    console.log(temp);
+    const arr = temp.concat(list);
+    console.log(arr);
+  };
 
-  const getAllLength = () => {
-    return todayAppointmentList.length;
-  }
-
-  const listAll = () => {
+  const listAll = () => {   //전체 클릭시 예약 리스트 상태를 다시 당일 예약 리스트로 세팅
     setAppointmentList(todayAppointmentList);
   };
 
-  const listWithState = (appointmentState) => {
-    const filteredAppointmentList = todayAppointmentList.filter(appointment => appointment.state === appointmentState);
+  const getAllLength = () => {  //당일 예약 리스트의 전체 건수를 반환해줌
+    return todayAppointmentList.length;
+  };
+
+  const listWithState = (appointmentState) => {   //예약상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 예약 리스트 상태를 다시 세팅
+    const temp = todayAppointmentList;
+    const filteredAppointmentList = temp.filter(appointment => appointment.state === appointmentState);
     setAppointmentList(filteredAppointmentList);
   };
 
-  const handleStateChange = (event, patientId) => {
-    // setAppointmentList({
-    //   ...appointmentList,
-    //   appointmentList[index].state = event.target.value
-    // })
-
-    //백엔드에서 예약리스트에서 patientId로 찾은 튜플의 state를 event.target.value로 바꿔줌
-
-    console.log(event.target.value);
-  };
-
-  const rowRenderer = ({index, key, style}) => {
-    return (
-      <div key={key} style={style} className={classnames(styles.appointmentRow, "border-bottom d-flex")} >
-        <span className={styles.appointmentItem}>
-        {appointmentList[index].order}
-      </span>
-      <span className={styles.appointmentItem}>
-      {appointmentList[index].time}
-      </span>
-      <span className={styles.appointmentItem}>
-      {appointmentList[index].name}
-      </span>
-      <span className={styles.appointmentItem}>
-      {appointmentList[index].appointmentKind}
-      </span>
-      <span className={styles.appointmentItem}>
-      {appointmentList[index].doctor}
-      </span>
-      {
-        { 
-           예약 : (<select style={{color: "black"}} value={appointmentList[index].state} onChange={(event) =>handleStateChange(event, appointmentList[index].patientId)}>
-                    <option style={{color: "black"}} value="예약">예약</option>
-                    <option style={{color: "green"}} value="내원">내원</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                    <option style={{color: "red"}} value="취소">취소</option>
-                  </select>),
-           내원 : (<select style={{color: "green"}} value={appointmentList[index].state} onChange={(event) =>handleStateChange(event, appointmentList[index].patientId)}>
-                    <option style={{color: "black"}} value="예약">예약</option>
-                    <option style={{color: "green"}} value="내원">내원</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                    <option style={{color: "red"}} value="취소">취소</option>
-                  </select>),
-           취소 : (<select style={{color: "red"}} value={appointmentList[index].state} onChange={(event) =>handleStateChange(event, appointmentList[index].patientId)}>
-                    <option style={{color: "black"}} value="예약">예약</option>
-                    <option style={{color: "green"}} value="내원">내원</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                    <option style={{color: "red"}} value="취소">취소</option>
-                  </select>),
-           완료 : (<select style={{color: "blue"}} value={appointmentList[index].state} onChange={(event) =>handleStateChange(event, appointmentList[index].patientId)}>
-                    <option style={{color: "black"}} value="예약">예약</option>
-                    <option style={{color: "green"}} value="내원">내원</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                    <option style={{color: "red"}} value="취소">취소</option>
-                  </select>)
-        }[appointmentList[index].state]
-      }
-      </div>
-    );
-  };
+  const selectPatient = (patientId) => { //예약 리스트의 환자 클릭 시 해당 환자의 patientId로 환자 리스트에서 환자를 찾고 부모 컴포넌트의 상태를 바꿔줌 
+    const filteredPatient = staticPatientList.filter(patient => patient.patientId === patientId);
+    selectedPatient(filteredPatient[0]);
+  }
 
   return (
     <div className={styles.appointment}>
@@ -99,7 +60,7 @@ function Appointment(props) {
           순서
         </span>
         <span className={`border ${styles.appointment_border}`}>
-          접수시간
+          예약시간
         </span>
         <span className={`border ${styles.appointment_border}`}>
           이름
@@ -114,45 +75,11 @@ function Appointment(props) {
           상태
         </span>
     </div>
-    <AutoSizer disableHeight>
-          {({width, height}) => {
-            return (
-              <List width={width} height={300} 
-                    list={appointmentList} 
-                    rowCount={appointmentList.length}
-                    rowHeight={40}
-                    rowRenderer={rowRenderer}
-                    overscanRowCount={5}/> //* overscanRowCount: 미리 5개의 여유분을 만들어 놔서 스크롤 시 로딩을 줄여줌*/}
-            );
-          }}
-        </AutoSizer>
-
-        {/* <div>
-          <table className="table table-hover table-bordered">
-            <thead>
-              <tr className="table table-secondary text-center">
-                <th>순서</th>
-                <th>예약시간</th>
-                <th>이름</th>
-                <th>예약내용</th>
-                <th>담당의</th>
-                <th>상태</th>
-              </tr>
-            </thead>
-            <tbody>
-            {appointmentList.map(appointment=>(
-                  <tr className="text-center" key={appointment.order}>
-                    <th>{appointment.order}</th>
-                    <th>{appointment.time}</th>
-                    <td>{appointment.name}</td>
-                    <td>{appointment.appointmentKind}</td>
-                    <td>{appointment.doctor}</td>
-                    <td>{appointment.state}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div> */}
+    <div className={styles.appointment_content}>
+      {appointmentList.map((appointment, index)=>(
+        <ListItem index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} testPatient={testPatient} isFinished={isFinished} setAppointmentState={setAppointmentState}/>
+      ))}
+    </div>
  </div>
   );
 }

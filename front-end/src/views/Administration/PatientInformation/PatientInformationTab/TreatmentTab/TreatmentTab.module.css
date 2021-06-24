@@ -1,0 +1,33 @@
+.treatment_tab_border {
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+.treatment_tab_border_disease {
+  width: 250px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.treatment_tab_item {
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 5px;
+}
+
+.treatment_tab_item_disease {
+  width: 250px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 5px;
+  overflow: auto;
+}
+
+.treatment_row:hover {
+  background-color:#edf2ff;
+}

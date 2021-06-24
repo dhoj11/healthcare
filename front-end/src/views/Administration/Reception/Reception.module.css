@@ -25,3 +25,8 @@
 .reception_row:hover {
   background-color:#edf2ff;
 }
+
+.reception_content {
+  height: 300px;
+  overflow: auto;
+}
