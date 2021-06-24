@@ -29,3 +29,8 @@
 .appointmentRow:hover {
   background-color:#edf2ff;
 }
+
+.appointment_content {
+  height: 300px;
+  overflow: auto;
+}

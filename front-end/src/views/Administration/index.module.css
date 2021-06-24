@@ -25,5 +25,6 @@
   padding-bottom: 30px;
 }
 
-.patient-information-component {
+.patient_information_component {
+  height: 50%;
 }

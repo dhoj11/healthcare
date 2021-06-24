@@ -26,18 +26,6 @@
   line-height: 40px;
 }
 
-.patient_row:hover {
-  background-color:#edf2ff;
-
-}
-.test_patient_item {
-  width: 120px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  padding-left: 5px;
-}
-
 .test_code_border {
   width: 200px;
   height: 40px;
@@ -60,4 +48,9 @@
 .test_button {
   display: flex;
   margin-left: 265px;
+}
+
+.patient_list_content {
+  height: 80%;
+  overflow: auto;
 }

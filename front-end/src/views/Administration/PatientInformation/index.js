@@ -1,54 +1,71 @@
 import styles from "./PatientInformation.module.css";
 import PatientInformationCard from "./PatientInformationCard";
-import { Tabs, Tab} from "react-bootstrap";
-import AppointmentTab from "./PatientInformationTab/AppointmentTab";
-import TreatmentTab from "./PatientInformationTab/TreatmentTab";
-import TestTab from "./PatientInformationTab/TestTab";
-import PrescriptionTab from "./PatientInformationTab/PrescriptionTab";
-import AppointmentModal from "./AppointmentModal";
+import AppointmentModal from "./AppointmentWithTreatmentModal";
+import ReceptionModal from "./ReceptionOfTreatmentModal";
+import PatientInformationTab from "./PatientInformationTab";
 import { useState } from "react";
 
 function PatientInformation(props) {
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const{selectedPatient, selectedPatientId, visitReception} = props;
 
-  const openModal = () => {
-    setModalOpen(true);
+  const [receptionModalOpen, setReceptionModalOpen] = useState(false);
+  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+
+  const openReceptionModal = () => {
+    setReceptionModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeReceptionModal = () => {
+    setReceptionModalOpen(false);
+  };
+
+  const openAppointmentModal = () => {
+    setAppointmentModalOpen(true);
+  };
+
+  const closeAppointmentModal = () => {
+    setAppointmentModalOpen(false);
   };
 
   return (
-    <div className={styles.patient_information}>
-      <div><PatientInformationCard patientId={"2"}/></div>
+    <>
+      {props.selectedPatientId !== undefined ? 
+      (<div className={styles.patient_information}>
+      <div>
+        <PatientInformationCard patient={selectedPatient}/>
+      </div>
       <div className={styles.patient_information_tab}>
-        <Tabs defaultActiveKey="appointmentTab">
-          <Tab eventKey="appointmentTab" title="예약">
-            <AppointmentTab patientId={"2"}/>
-          </Tab>
-          <Tab eventKey="treatmentTab" title="진료">
-            <TreatmentTab patientId={"2"}/>
-          </Tab>
-          <Tab eventKey="testTab" title="검사">
-            <TestTab patientId={"2"}/>
-          </Tab>
-          <Tab eventKey="prescriptionTab" title="처방">
-            <PrescriptionTab patientId={"2"}/>
-          </Tab>
-        </Tabs>
+        <PatientInformationTab selectedPatientId={selectedPatientId}/>
       </div>
       <div className={styles.button_area}>
         <div>
-          <button type="button" className="btn btn-outline-secondary mr-2" >진료접수</button>
+          <button type="button" className="btn btn-outline-secondary mr-2" onClick={openReceptionModal}>진료접수</button>
+          <ReceptionModal patient={selectedPatient} isOpen={receptionModalOpen} close={closeReceptionModal} visitReception={visitReception}/>
         </div>
         <div>
-          <button type="button" className="btn btn-outline-secondary mr-3" onClick={openModal}>진료예약</button>
-          <AppointmentModal patientId={"2"} isOpen={modalOpen} close={closeModal}/>
+          <button type="button" className="btn btn-outline-secondary mr-3" onClick={openAppointmentModal}>진료예약</button>
+          <AppointmentModal patientId={selectedPatientId} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
         </div>
       </div>
-    </div>
+    </div>)
+    :
+    (<div className={`${styles.patient_information}`}>
+      <div className={styles.patient_information_content}>
+      <div className={`${styles.patient_information_null}`}>
+      <div className={styles.first_card_row}>
+        <div className={styles.patient_icon_area}>
+          <img className={styles.patient_icon} src="/resources/svg/emoji-smile.svg" />
+        </div>
+        <div className={styles.patient_alert}>
+         <span className={styles.patient_alert_letter}>환자를 선택해주세요!</span>
+        </div>
+      </div> 
+      </div>
+      </div>
+    </div>)}
+    </>
+    
   );
 }
 
