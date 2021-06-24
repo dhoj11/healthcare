@@ -1,13 +1,21 @@
 import { AutoSizer, List } from "react-virtualized";
-import {useState} from "react";
-import {getAppointmentList} from "../../data";
+import {useState,useEffect} from "react";
+import {getAppointmentList} from "../../../data";
 import styles from "./AppointmentTab.module.css";
 
 function AppointmentTab(props) {
   
   const staticAppointmentList = getAppointmentList();
   const filteredAppointmentList = staticAppointmentList.filter(appointment => (appointment.patientId === props.patientId));
-  const [appointmentList, setAppointmentList] = useState(filteredAppointmentList);
+  const [appointmentList, setAppointmentList] = useState([]);
+
+  useEffect(() => {
+    setAppointmentList(filteredAppointmentList);
+    return (() => {
+        console.log("예약탭 언마운트시 실행");
+    });
+  },[props]);
+  
 
   const rowRenderer = ({index, key, style}) => {
     return (

@@ -1,0 +1,43 @@
+.prescription_tab_border {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.prescription_tab_border_medicine {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.prescription_tab_item {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 5px;
+}
+
+.prescription_tab_item_date {
+  width: 100px;
+  height: 40px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 5px;
+}
+
+.prescription_tab_item_medicine {
+  width: 200px;
+  height: 40px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 5px;
+}
+
+.prescription_row:hover {
+  background-color:#edf2ff;
+}

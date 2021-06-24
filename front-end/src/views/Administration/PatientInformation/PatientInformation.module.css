@@ -16,3 +16,45 @@
   display: flex;
   float: right;
 }
+
+.patient_information_content {
+  padding: 5px;
+  width: 35rem;
+  height: 595px;
+}
+
+.patient_information_null {
+  margin-top: 30px;
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+
+.first_card_row {
+  height: 100%;
+  margin-bottom: 30px;
+  margin-top: 10rem;
+}
+
+.patient_icon_area {
+  display: flex;
+  justify-content: center;
+  padding-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.patient_icon {
+  height: 7rem;
+  margin-right: 50px;
+}
+
+.patient_alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 4rem;
+}
+
+.patient_alert_letter {
+  font-size: 1.5rem;
+  font-weight: bold;
+}

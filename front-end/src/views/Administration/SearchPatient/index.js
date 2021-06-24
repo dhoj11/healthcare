@@ -5,18 +5,16 @@ import styles from "./SearchPatient.module.css";
 import NewPatientModal from "./NewPatientModal";
 
 function SearchPatient(props) {
+  const staticPatientList = getPatientList();   //모든 환자리스트를 가져옴
+  const [patientName, setPatientName] = useState("");   //input 창에 환자 이름을 입력할 때 사용되는 상태
+  const [patientList, setPatientList] = useState(staticPatientList);    //모든 환자의 리스트를 초기 상태로 선언
+  const [modalOpen, setModalOpen] = useState(false);    //신규회원등록 모달의 열림 상태를 초기엔 false로 선언
 
-  const [patientName, setPatientName] = useState("");
-  const [patientList, setPatientList] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const staticPatientList = getPatientList();   //나중에 db에서 가져올 정보
-
-  const changePatientName = (event) => {
+  const changePatientName = (event) => {  //event.target.name(input창에 입력한 내용)으로 patientName 상태를 세팅을 해줌
     setPatientName(event.target.value);
   };
 
-  const search = () => {
+  const search = () => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
     const searchPatientList = staticPatientList.filter(patient => patient.name === patientName);
    setPatientList(searchPatientList);
   }
@@ -29,9 +27,21 @@ function SearchPatient(props) {
     setModalOpen(false);
   };
 
+  const selectPatient = (patientId) => {
+    const filteredPatient = patientList.filter(patient => patient.patientId === patientId);
+    props.selectedPatient(filteredPatient[0]);
+  }
+
+  const newPaitentList = (patient) => {
+    const newPatientList = patientList.concat(patient);
+    setPatientList(newPatientList);
+    console.log(newPatientList);
+    console.log(patientList);
+  }
+
   const rowRenderer = ({index, key ,style}) => {
     return (
-      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`}>
+      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`} onClick={() => selectPatient(patientList[index].patientId)}>
         <span className={styles.patient_item}>
         {patientList[index].name}
       </span>
@@ -57,14 +67,14 @@ function SearchPatient(props) {
         <div className={styles.search_second_content}>
           <div className="col-3"><img className="mr-3" src="/resources/svg/people.svg"></img><span>환자검색</span></div>
           <div className="input-group col-7 d-flex">
-            <input type="text" className="form-control" placeholder="name" value={patientName} onChange={changePatientName} />
+            <input type="text" className="form-control" placeholder="name" onChange={changePatientName} />
             <div>
               <button type="button" className="btn btn-secondary" onClick={search}>search</button>
             </div>
           </div>
           <div className="search-button col-2 d-flex justify-content-center">
             <button className="btn btn-outline-secondary" onClick={openModal}>new</button>
-            <NewPatientModal isOpen={modalOpen} close={closeModal}/>
+            <NewPatientModal isOpen={modalOpen} close={closeModal} newPaitentList={newPaitentList} />
           </div>
         </div>
       </div>
@@ -89,7 +99,7 @@ function SearchPatient(props) {
         <AutoSizer disableHeight>
           {({width, height}) => {
             return (
-              <List width={width} height={150} 
+              <List width={width} height={120} 
                     list={patientList} 
                     rowCount={patientList.length}
                     rowHeight={40}

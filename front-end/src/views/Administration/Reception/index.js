@@ -1,66 +1,65 @@
-import {getReceptionList} from "../data";
+import {getReceptionList, getPatientList} from "../data";
 import styles from "./Reception.module.css";
 import { AutoSizer, List } from "react-virtualized";
-import {useState, useMemo} from "react";
+import {useState} from "react";
+import { useEffect } from "react";
+import ListItem from "./ListItem";
 
 function Reception(props) {
-  let receptionList = [];
-   receptionList = getReceptionList();
+  const {selectedPatient, receptionPatientId, visitReception, finished} = props;
+  const staticReceptionList = getReceptionList();
+  const staticPatientList = getPatientList();
+  const [receptionList, setReceptionList] = useState([]);
 
-   const handleStateChange = (event, patientId) => {
+  //예약 후 접수
+  useEffect(() => {
+    console.log("예약 접수 실행");
+    const newReception = receptionList.concat(staticReceptionList.filter(reception => reception.patientId === props.receptionPatientId));
+    setReceptionList(newReception);
+    return (() => {
+      console.log("예약 접수 언마운트시 실행");
+    });
+  },[receptionPatientId]);
 
-   };
+  //방문 접수 : props로 받아온 객체를 receptionList에 concat해줌
+  useEffect(() => {
+    console.log("방문 접수 실행");
+    if(visitReception !== undefined) {
+      const newReception = receptionList.concat(visitReception);
+      setReceptionList(newReception);
+    }
+    return (() => {
+      console.log("방문 접수 언마운트시 실행");
+    });
+  },[visitReception]);
 
-  const rowRenderer = ({index, key, style}) => {
-    return (
-      <div key={key} style={style} className={`${styles.reception_row} border-bottom d-flex`}>
-        <span className={styles.reception_item}>
-        {receptionList[index].order}
-      </span>
-      <span className={styles.reception_item}>
-      {receptionList[index].time}
-      </span>
-      <span className={styles.reception_item}>
-      {receptionList[index].name}
-      </span>
-      <span className={styles.reception_item}>
-      {receptionList[index].treatmentComment}
-      </span>
-      <span className={styles.reception_item}>
-      {receptionList[index].doctor}
-      </span>
-      {
-        { 
-          대기 : (<select style={{color: "green"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
-                    <option style={{color: "green"}} value="대기">대기</option>
-                    <option style={{color: "red"}} value="진료">진료</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                  </select>),
-          진료 : (<select style={{color: "red"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
-                    <option style={{color: "green"}} value="대기">대기</option>
-                    <option style={{color: "red"}} value="진료">진료</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                  </select>),
-          완료 : (<select style={{color: "blue"}} value={receptionList[index].state} onChange={(event) =>handleStateChange(event, receptionList[index].patientId)}>
-                    <option style={{color: "green"}} value="대기">대기</option>
-                    <option style={{color: "red"}} value="진료">진료</option>
-                    <option style={{color: "blue"}} value="완료">완료</option>
-                  </select>)
-        }[receptionList[index].state]
-      }
-      </div>
-    );
-  };
 
-  //const appointmentList = getReceptionList();
+  const listAll = () => {   //전체 클릭시 접수 리스트 상태를 다시 전체 접수 리스트로 세팅
+  //setReceptionList(staticReceptionList);
+};
+
+const getAllLength = () => {  //접수 리스트의 전체 건수를 반환해줌
+  return staticReceptionList.length;
+};
+
+  const listWithState = (receptionState) => {   //접수상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 접수 리스트 상태를 세팅
+  // const filteredReceptionList = staticReceptionList.filter(reception => reception.state === receptionState);
+  // setReceptionList(filteredReceptionList);
+};
+
+  const selectPatient = (patientId) => {
+  const filteredPatient = staticPatientList.filter(patient => patient.patientId === patientId);
+  selectedPatient(filteredPatient[0]);
+}
+
   return (
     <div className={styles.reception}>
-    <div className="mb-1 ml-2">
-      <img className="mr-3" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-3">내원</span>
-      <span style={{color : "#ffd43b"}}>전체 {receptionList.length} | </span>
-      <a href="#">완료 3 | </a>
-      <a href="#">진료 1 | </a>
-      <a href="#">대기 4 | </a>
+    <div className="mb-1 ml-2 d-flex">
+      <img className="mr-3" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-3">접수</span>
+      <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} | </div>
+      <div className="mr-2" onClick={()=> listWithState("완료")}>완료 | </div>
+      <div className="mr-2" onClick={()=> listWithState("진료")}>진료 | </div>
+      <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div>
     </div>
     <div className="d-flex bg-light">
       <span className={`border ${styles.reception_border}`}>
@@ -82,46 +81,11 @@ function Reception(props) {
         상태
       </span>
     </div>
-    <AutoSizer disableHeight>
-          {({width, height}) => {
-            return (
-              <List width={width} height={300} 
-                    list={receptionList} 
-                    rowCount={receptionList.length}
-                    rowHeight={40}
-                    rowRenderer={rowRenderer}
-                    overscanRowCount={5}/> //* overscanRowCount: 미리 5개의 여유분을 만들어 놔서 스크롤 시 로딩을 줄여줌*/}
-            );
-          }}
-        </AutoSizer>
-
-
-    {/* <div>
-      <table className="table table-hover table-bordered">
-        <thead>
-          <tr className="table table-secondary text-center">
-            <th>순서</th>
-            <th>예약시간</th>
-            <th>이름</th>
-            <th>예약내용</th>
-            <th>담당의</th>
-            <th>상태</th>
-          </tr>
-        </thead>
-        <tbody>
-        {appointmentList.map(appointment=>(
-              <tr className="text-center" key={appointment.order}>
-                <th>{appointment.order}</th>
-                <th>{appointment.time}</th>
-                <td>{appointment.name}</td>
-                <td>{appointment.treatmentComment}</td>
-                <td>{appointment.doctor}</td>
-                <td>{appointment.state}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div> */}
+    <div className={styles.reception_content}>
+      {receptionList.map((reception, index)=>(
+        <ListItem index={index} reception={reception} selectPatient={selectPatient} finished={finished}/>
+      ))}
+    </div>
 </div>
   );
 }
