@@ -1,0 +1,87 @@
+.prescription{
+  width: 100%;
+  margin-top: 5px;
+}
+
+.title{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  font-size: 14px;
+  font-weight: 600;
+  color: #808080;
+  padding: 5px 10px;
+  text-align: center;
+  margin-bottom: 5px;
+  background: #F5F5F5;
+}
+
+.prescriptionList{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  height: 170px;
+  text-align: center;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.prescriptionTable{
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.thead{
+  background: #F8FAFF;
+}
+
+.add{
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background-color: blanchedalmond;
+  background: #f8fafd;
+}
+
+.addTitle{
+  font-size: 14px;
+  margin-top: 5px;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.day{
+  text-align: center;
+  font-weight: 600;
+  width: 50px;
+  border: 0px;
+  border-bottom: 1px solid #808080;
+}
+
+.day:focus {
+  outline: none;
+}
+
+.input{
+  width: 20%;
+}
+
+.addButton{
+  margin-left: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #808080;
+}
+
+.plus{
+  font-weight: 800;
+  font-size: 20px;
+  color: #2c5c00;
+}
+
+.minus{
+  color: #DB4455
+}
+

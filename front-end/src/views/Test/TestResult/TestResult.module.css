@@ -1,0 +1,37 @@
+.TestResult{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.TestListTable{
+  text-align: center;
+  margin: auto;
+  overflow: auto;
+}
+
+.thead{
+  background: #F8FAFF ;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.input{
+  width:100px;
+}
+
+.saveButton{
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  padding: 5px 15px 5px 15px;
+  margin: 20px 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #808080;
+  text-align: center;
+}
+
+.saveButton:hover{
+  background: #0d4467;
+  color: #fff;
+}
