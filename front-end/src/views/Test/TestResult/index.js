@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import style from "./TestResult.module.css";
 
 // 후에는 검사번호로 불러오기
@@ -6,54 +6,59 @@ import testResultsData from "../data/testResults"
 
 function TestResult(props){
 
-  let prevItem; // 한 묶음코드 표시 위함 index 역할
-
-  const[testList, setTestList] = useState();    // 왼쪽 테이블 대기 목록
+  const[testList, setTestList] = useState();         // 선택/검색한 검사번호
   const[testResults, setTestResults] = useState([]); // 왼쪽 테이블에서 하나의 검사를 선택했을 때 오른쪽에 표시되는 검사 목록
   
-  let inputResults = [];
+  let prevItem;  
+
+  /**
+   * 
+   * 검사번호로 상세검사내역/결과 리스트를 불러옴
+   * 검색, 혹은 리스트에서 선택한 검사의 상세(결과)가 오른쪽리스트에 표시된다.
+   * 
+   * TODO : api 요청으로 검사번호로 test_results 테이블에서 검사결과(상세) 객체를 요청한다.
+   *        api가 반환하는 객체의 형태는    {test_list_id: 1, tId:1, test_code: "L2001", test_name: "CBC (CBC,PLT,DIFF)", test_details_code: "L2010", test_details_name:"RBC", test_details_unit:"x10^6/mm3",	test_details_min:"4.1", test_details_max:"10.2", test_result_value: "10"},
+   *        반환된 newTestResults를 TestResult컴포넌트의 testResults 상태에 업데이트 한다.     
+   */
+
+  const getTestResults = useCallback(() => {
+    const newTestResults = testResultsData.filter( item => { return item.test_list_id == testList});
+    return newTestResults;
+  },[testList]);
 
   useEffect(()=>{
     setTestList(props.testList);
-  },[props])
+  },[props.testList])
 
   useEffect(()=>{
-    // testResults 가 만들어지는 시점은 testList가 만들어지는 시점과 같고,
-    // 진료에서 검사를 의뢰할 때 만들어진다.
-
-    // 스프링으로 요청할 땐 검사번호로 요청하자.
-    const newTestResults = testResultsData.filter( item => { return item.test_list_id === testList});
-    setTestResults(newTestResults);
+    setTestResults(getTestResults);
   },[testList]);
 
 
-  useEffect(()=>{
-    
-    inputResults = []
-    const newTestResults = testResultsData.filter( item => { return item.test_list_id === testList});
-    
-    for(let index in newTestResults){
-      inputResults.push(
-        { 
-          test_code: newTestResults[index].test_code,
-          test_list_id : newTestResults[index].test_list_id,
-          test_details_id : newTestResults[index].test_details_id,
-          test_result_value : newTestResults[index].test_result_value
-        });
-    }
-    console.log(inputResults);
-
-  },[testResults])
-
+  /**
+   * 상세검사목록에서 입력되는 값의 변화가 일어날 때마다 (onChange) 
+   * 새로운 객체배열을 만들어 testList 상태를 업데이트 한다.
+   * 
+   * param {결과값(input)} event 
+   * param {상세결과 항목을 구분하기 위함} index 
+   */
 
   const handleChange = (event, index) =>{
-    let inputIndex = inputResults.findIndex(obj => obj.test_details_id == event.target.name); 
-    inputResults[inputIndex].test_result_value = event.target.value;
-
+    if(testResults){
+      let newTestResult = [...testResults];
+      newTestResult[index].test_result_value = event.target.value;
+      setTestResults(newTestResult);
+    }
   }
 
+  /**
+   * 저장버튼 클릭스 현재 상태를 저장한다.
+   * 
+   * TODO : testList 를 DB에 업데이트하는 api 작성
+   */
+
   const saveResult = () => {
-    // axios 요청으로 inputIndex을 저장하자.
+    // api 요청 작성
   }
 
   return(
@@ -83,9 +88,8 @@ function TestResult(props){
                                 <td><input className={`form-control ${style.input}`}
                                            type="text"
                                            name={item.test_details_id}
-                                           defaultValue={item.test_result_value || ""}
+                                           value={item.test_result_value}
                                            onChange={(event) => handleChange(event, index)}>
-                                           
                                           </input></td>
                               </tr>
                             );
@@ -97,12 +101,15 @@ function TestResult(props){
                               <td></td>
                               <td>{item.test_details_code}</td>
                               <td>{item.test_details_name}</td>
-                              <td><input className={`form-control ${style.input}`}
+                              <td>
+                                <input className={`form-control ${style.input}`}
                                         type="text"
                                         name={item.test_details_id}
-                                        defaultValue={item.test_result_value || ""}
-                                        onChange={(event) => handleChange(event)}>
-                                        </input></td>
+                                        value={item.test_result_value}
+                                        onChange={(event) => handleChange(event,index)}
+                                        >
+                                        </input>
+                                        </td>
                             </tr>
                             );
                     }
@@ -110,8 +117,7 @@ function TestResult(props){
                 }
               </tbody>
             </table>
-          <div className={style.saveButton}
-               onClick={saveResult}>저장</div>
+          <div className={style.saveButton} onClick={saveResult}>저장</div>
     </div>
   );
 }
