@@ -8,6 +8,7 @@ import { useState } from "react";
 function PatientInformation(props) {
 
   const{selectedPatient, selectedPatientId, visitReception} = props;
+  console.log(selectedPatient);
 
   const [receptionModalOpen, setReceptionModalOpen] = useState(false);
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);

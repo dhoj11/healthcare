@@ -33,7 +33,7 @@ function TestList(props) {
   };
 
   const getAllLength = () => {  //검사 환자 리스트의 전체 건수를 반환해줌
-    //return staticTestPatientList.length;
+    return testPatientList.length;
   };
 
   const listWithState = (testState) => {   //검사상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 검사 환자 리스트 상태를 다시 세팅
@@ -93,10 +93,10 @@ function TestList(props) {
       <div className={styles.test_patient_list}>
           <div className="mb-2 ml-2 d-flex">
             <img className="mr-3" src="/resources/svg/clipboard-data.svg"></img><span className="mr-3">검사</span>
-            <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} | </div>
-            <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
+            <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
+            {/* <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
             <div className="mr-2" onClick={()=> listWithState("진행중")}>진행중  | </div>
-            <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div>
+            <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div> */}
           </div>
           <div className="d-flex bg-light">
           <span className={`border ${styles.test_border}`}>

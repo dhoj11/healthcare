@@ -5,11 +5,20 @@ function ListItem(props) {
 
   const {index, appointment, selectPatient, receptionPatient, testPatient, isFinished, setAppointmentState} = props;
   const [state, setState] = useState("예약");
+  const [list, setList] = useState([]);
+  
+  // useEffect(() => {
+  //   const temp = {...appointment, appointmentState: state};
+  //   async function ex() {
+  //     await setAppointmentState(temp);
+  //   }
+  //   ex();
+  // },[state]);
 
   useEffect(() => {
-    const temp = {...appointment, appointmentState: state};
+    const temp = {...appointment, appointment_state: state};
     setAppointmentState(temp);
-  },[state]);
+  },[state])
 
   useEffect(() => {
     if(appointment.patientId === isFinished) {
