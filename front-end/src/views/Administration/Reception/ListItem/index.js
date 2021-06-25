@@ -10,7 +10,8 @@ function ListItem(props) {
   const handleStateChange = (event, patientId) => {
     setState(event.target.value);
     console.log(state);
-    if(event.target.value === "완료") {
+    if(event.target.value === "완료" && patientId !== undefined) {
+      console.log(patientId);
       finished(patientId);
     }
   };
