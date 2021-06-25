@@ -12,6 +12,7 @@ function Administration(props) {
   const selectedPatient = (patient) => {    //전역 상태인 환자의 정보를 바꾸는 함수, 자식 컴포넌트에서 부모 컴포넌트의 상태(globalPatient)를 바꿔줌
     setGlobalPatient(patient);
   }
+  console.log(globalPatient);
 
   const [receptionPatientId, setReceptionPatientId] = useState();
   const receptionPatient = (patientId) => {

@@ -1,6 +1,6 @@
 import {getAppointmentList, getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ListItem from "./ListItem";
 
 function Appointment(props) {
@@ -14,17 +14,18 @@ function Appointment(props) {
   //당일 예약 리스트를 가져오기 위해 필터를 적용, 당일 예약 리스트를 초기상태로 선언
   const todayAppointmentList = staticAppointmentList.filter(today => today.date === "2021-06-16");  //후에 백엔드에서 처리할 예정
   const [appointmentList, setAppointmentList] = useState(todayAppointmentList);
+
   const [stateList, setStateList] = useState([]);
+  let newList = stateList;
   const setAppointmentState = (list) => {
-    // const temp = stateList;
-    // temp.filter(state => state.patientId !== list.patientId);
-    // temp.concat(list);
-    // setStateList(temp);
-    const temp = stateList.filter(state => state.patientId === list.patientId);
-    console.log(temp);
-    const arr = temp.concat(list);
-    console.log(arr);
+    newList = newList.filter(temp => temp.patientId !== list.patientId);
+    newList = newList.concat(list);
+    setStateList(newList);
   };
+
+  useEffect(() => {
+    console.log("!!!!!!!!!!!!!!!",stateList);
+  },[stateList])
 
   const listAll = () => {   //전체 클릭시 예약 리스트 상태를 다시 당일 예약 리스트로 세팅
     setAppointmentList(todayAppointmentList);
@@ -49,11 +50,11 @@ function Appointment(props) {
     <div className={styles.appointment}>
         <div className="mb-1 ml-2 d-flex">
           <img className="mr-3" src="/resources/svg/person-check.svg"></img><span className="mr-3">예약</span>
-          <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} | </div>
-          <div className="mr-2" onClick={()=> listWithState("예약")}>예약  | </div>
+          <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
+          {/* <div className="mr-2" onClick={()=> listWithState("예약")}>예약  | </div>
           <div className="mr-2" onClick={()=> listWithState("내원")}>내원  | </div>
           <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
-          <div className="mr-2" onClick={()=> listWithState("취소")}>취소  </div>
+          <div className="mr-2" onClick={()=> listWithState("취소")}>취소  </div> */}
         </div>
       <div className="d-flex bg-light">
         <span className={`border ${styles.appointment_border}`}>
