@@ -1,0 +1,84 @@
+.staffcard{
+  border-radius: 10px;
+  background-color: #fff;
+  width: 30%;
+  height: 100%;
+  margin: 2px;
+}
+
+.top{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.pic{
+  background-color: #0d4467;
+  width : 150px;
+  height : 150px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.profile{
+  font-size:100px;
+  color: #fff;
+}
+
+.intro{
+  margin-top: 50px;
+  text-align: center;
+}
+
+.mainInfo{
+  font-size: 20px;
+  font-weight: 700;
+  color: #4b4b4b;
+  text-align: center;
+}
+
+.subInfo{
+  display: flex;
+  flex-direction: column;
+}
+
+.role{
+  border-radius: 20px;
+  background-color: #f39e01ec;
+  color: rgb(240, 240, 240);
+  padding: 5px 20px 5px 20px;
+  margin: 0 10px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.title{
+  border-radius: 20px;
+  background-color: #ececec;
+  padding: 5px 20px 5px 20px;
+  margin: 0 40px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.content{
+  padding: 10px 20px 10px 20px;
+  margin: 0 40px;
+  font-size: 15px;
+}
+
+.doctor{
+  background-color: #f39e01ec;
+}
+
+.nurse{
+  background-color: #326305ec;
+}
+
+.tester{
+  background-color: #853aa8ec;
+}

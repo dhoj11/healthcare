@@ -1,0 +1,79 @@
+.staffTable{
+  border-radius: 10px;
+  background-color: #fff;
+  width: 70%;
+  height: 100%;
+  margin: 2px;
+  padding-top: 50px;
+}
+
+.staffItem{
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  padding: 10px 30px;
+  margin: 10px 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.staffItem:hover{
+  background-color: #0d4467;
+  color: #fff;
+}
+
+.staffItem .content{
+  margin: 0 80px;
+}
+
+.Table{
+  text-align: center;
+}
+
+.Table tr{
+  border-radius: 10px;;
+}
+
+.no{
+  margin-right: 0 10%;
+  font-weight: 600;
+}
+
+.doctor, .nurse, .tester{
+  margin: 0 20%;
+}
+
+.name{
+  margin: 0 10%;
+  margin-right: 180px;
+  font-weight: 700;
+}
+
+
+
+.doctor{
+  border-radius: 20px;
+  background-color: #f39e01ec;
+  color: rgb(240, 240, 240);
+  padding: 2px 10px 2px 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.nurse{
+  border-radius: 20px;
+  background-color: #326305ec;
+  color: rgb(240, 240, 240);
+  padding: 2px 10px 2px 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tester{
+  border-radius: 20px;
+  background-color: #853aa8ec;
+  color: rgb(240, 240, 240);
+  padding: 2px 10px 2px 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
