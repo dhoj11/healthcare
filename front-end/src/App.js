@@ -2,11 +2,14 @@ import './App.css';
 import './reset.css';
 import AppMenu from "./AppMenu";
 import AppRoute from "./AppRoute";
+import AppHeader from './AppHeader';
 
 function App() {
   return (
     <div className="main">
-        <div className="header"></div>
+        <div className="header">
+          <AppHeader/>
+        </div>
         <div className="body">
           <div className="sidebar">
             <AppMenu/>
