@@ -8,7 +8,7 @@ body{
 }
 .header {
   height:30px;
-  background-color: blue;
+  background-color: rgb(188, 206, 221);
   width: 100%;
 }
 .body{
@@ -26,7 +26,6 @@ body{
 
 .sidebar {
   overflow: hidden;
-
   width: 65px;
   background: #00253d;
 }
@@ -47,4 +46,8 @@ body{
 .sidebar .nav a:hover{
   background: #0d4467;
   color: #e9e9e9;
+}
+
+.appHeader{
+  margin-top: 0;
 }

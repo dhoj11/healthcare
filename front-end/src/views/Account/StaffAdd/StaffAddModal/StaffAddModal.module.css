@@ -1,0 +1,102 @@
+.body{
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px!important;
+}
+
+.item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 40px;
+}
+
+.title{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.addInput{
+  width: 250px!important;
+}
+
+.role{
+  justify-content: space-between;
+}
+
+.pic{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.roleButton{
+  width: 120px;
+  border-radius: 5px;
+  padding: 10px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 10px 0;
+  border: 1px solid #D3D3D3;
+  background-color: #fdfdfd;
+}
+
+.selectRole{
+  width: 120px;
+  border-radius: 5px;
+  padding: 10px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 10px 0;
+  border: 1px solid #D3D3D3;
+  background-color: #fdfdfd;
+  background-color: #0d4467;
+  color: #fff;
+}
+
+.roleButton:hover{
+  background-color: #0d4467;
+  color: #fff;
+}
+
+.actionButton{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.cancel, .join{
+  border: 1px solid #D3D3D3;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 5px 30px;
+  margin: 10px 20px 10px 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #616161;
+}
+
+.cancel:hover{
+  background-color: #e6e6e6;
+}
+
+.join:hover{
+  background-color: #e6e6e6;
+}
+
+
+/* .doctor:hover{
+  background-color: #f39e01ec;
+}
+
+.nurse:hover{
+  background-color: #326305ec;
+}
+
+.tester:hover{
+  background-color: #853aa8ec;
+} */
