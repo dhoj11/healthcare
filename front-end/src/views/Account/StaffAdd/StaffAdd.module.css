@@ -1,0 +1,37 @@
+.button{
+  width: 100%;
+  background-color: #00253d;
+  border-radius: 20px;
+  padding: 10px 30px;
+  color: #fff;
+  font-weight: 700;
+  margin: 5px;
+}
+
+.button:hover{
+  background-color: #0d4467;
+  color: #fff;
+}
+
+.button2{
+  width: 100%;
+  background-color: #965500;
+  border-radius: 20px;
+  padding: 10px 30px;
+  color: #fff;
+  font-weight: 700;
+  margin: 5px;
+}
+
+.button2:hover{
+  background-color: #bb6a00;
+  color: #fff;
+}
+
+
+.addIcon{
+  margin-right: 10px;
+}
+
+
+
