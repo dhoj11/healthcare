@@ -1,13 +1,23 @@
+import { useState } from "react";
+import Barcode from "./Barcode";
 import style from "./State.module.css"
 
 function State(props){
 
+  const [barcodeModalOpen, setBarcodeModalOpen] = useState(false);
 
-  const printBarcode = () => {
-    console.log(props.testList);
-    alert(props.testList + "바코드 출력완료");
+  const openBarcodeModal = () => {
+    setBarcodeModalOpen(true);
+  };
+
+  const closeBarcodeModal = () => {
+    setBarcodeModalOpen(false);
   }
-
+  const printBarcode = () => {
+    if(props.testList){
+      setBarcodeModalOpen(true);
+    }
+  }
 
   /**
    * 선택한 검사의 검사진행상태를 변경한다.
@@ -18,15 +28,15 @@ function State(props){
    */
 
   const handleChangeSate = (state) => {
-    // 
+    props.changeState(props.testList, state);
   }
 
-
   return(
-    <div calssName={style.state}>
+    <div className={style.state}>
       <span className={style.item} onClick={printBarcode}>바코드 출력</span>
       <span className={style.item} onClick={()=>{handleChangeSate("진행중")}}>검사진행</span>
       <span className={style.item} onClick={()=>{handleChangeSate("완료")}}>검사완료</span>
+      <Barcode isOpen={barcodeModalOpen} close={closeBarcodeModal} testList={props.testList}/>
     </div>
   );
 }

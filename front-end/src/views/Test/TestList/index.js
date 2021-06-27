@@ -1,21 +1,19 @@
 import style from "./TestList.module.css";
 import { useCallback, useEffect, useState } from "react";
 
-import testListData from "../data/testList";
-
 function TestList(props){
 
   const [testLists, setTestLists] = useState([]);
-  const [testList, setTestList] = useState();
+  const [testList, setTestList] = useState(); // id 임
   const [listState, setListState] = useState();
 
   /**
    * 당일 검사자 목록을 표시한다.
-   * 
-   * TODO : api 요청시 test_list table 에서 당일, test_list_req가 1인 튜플을 불러와 newTestListDate에 초기화
+   * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만
    */
 
   const getTestList = useCallback(() => { 
+    const testListData = props.testLists || [];
     const newTestListDate = testListData.reduce( (acc, current) => {
       if (acc.findIndex(({ test_list_id }) => test_list_id === current.test_list_id) === -1) {
         acc.push(current);
@@ -23,7 +21,7 @@ function TestList(props){
       return acc;
     },[]);
     return newTestListDate;
-  },[])
+  },[props.testLists])
 
   const selectListState = useCallback((state) => {
     setListState(state);
@@ -35,11 +33,11 @@ function TestList(props){
 
   useEffect(()=>{
     setTestLists(getTestList);
-  },[getTestList]);
+  },[]);
   
   useEffect(()=>{
     // testList - // {test_list_id: "", patient_id: ""}
-    props.changeTestList(testList);
+    props.changeTestList(testList); // 선택된 환자 id를 바꿈
   },[testList])
   
   return(
@@ -118,7 +116,6 @@ function TestList(props){
 }
 
 export default TestList;
-
 
 
 

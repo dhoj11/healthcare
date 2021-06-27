@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PatientInformationCard from "../Administration/common/PatientInformationCard";
 import Search from "./Search";
 import State from "./State";
@@ -6,13 +6,28 @@ import style from "./test.module.css";
 import TestResult from "./TestResult";
 import patients from "./data/Patients"
 import TestList from "./TestList";
+
 import TestListData from "./data/testList";
 
 function Test(props){
 
-  const[testList, setTestList] = useState(); 
-  const[patient, setPatient] = useState();   
-  
+  /**
+   * TODO : 당일, req가 1인 검사리스트를 가져와 testLists 상태에 업데이트하는 api 요청 작성
+   */
+  const getTestLists = () => {
+    return TestListData;
+  }
+
+  const[testList, setTestList] = useState(); // testListId
+  const[patient, setPatient] = useState();
+
+  const[testLists, setTestLists] = useState(getTestLists);
+
+  /**
+   * TODO : 당일, req가 1인 검사리스트를 가져와 testLists 상태에 업데이트하는 api 요청 작성
+   */
+
+
   /** 
   * 검색컴포넌트에 프롭으로 함수를 전달하고 검사번호를 입력받고 arg를 전달받아 아래 동작을 처리한다.
   *
@@ -27,7 +42,7 @@ function Test(props){
 
   const searchTestList = useCallback((arg) => {
     if(arg && arg !== ""){
-      const selectPatient = TestListData.find((item)=>item.test_list_id == arg);
+      const selectPatient = testLists.find((item)=>item.test_list_id == arg);
       if(selectPatient !== undefined){
         const patientObject = patients.find((item)=>item.patientId == selectPatient.patient_id+"");
         if(patientObject) setPatient(patientObject);
@@ -52,6 +67,15 @@ function Test(props){
     }
   },[]);
 
+  const changeState = useCallback((testList, state)=> {
+    let newTestLists = testLists;
+    for(let index in newTestLists){
+      if(newTestLists[index].test_list_id === testList)
+        newTestLists[index].test_list_state = state;
+    }
+    setTestLists({newTestLists});
+  },[]);
+
   return(
     <div className={style.test}>
       <div className={style.left}>
@@ -63,11 +87,13 @@ function Test(props){
             <PatientInformationCard patient={patient || {"patientId":"","name":"", "gender":"","birth":"","age":"","tel": "","recentVisit": "", "medicine": "", "disease": "", "comment": ""}}/> 
           </div>
           <div className={style.State}>
-            <State testList={testList}/>
+            { testList &&
+            <State testList={testList} changeState={changeState}/>
+            }
           </div>
         </div>
         <div className={style.testList}>
-          <TestList changeTestList={changeTestList}/>
+          <TestList testLists={testLists} changeTestList={changeTestList}/>
         </div>
       </div>
       <div className={style.testResult}>

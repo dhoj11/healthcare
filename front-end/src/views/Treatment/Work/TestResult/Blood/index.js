@@ -12,7 +12,7 @@ function Blood(props){
   const patient = useSelector(state => state.treatmentReducer.patient);
 
   const getTestResult = useCallback((event) => {
-    const prevTestResults = data.filter(item => item.tId === treatment);
+    const prevTestResults = data.filter(item => item.treatment_id === treatment);
     return prevTestResults;
   },[treatment]);
 
@@ -51,31 +51,31 @@ function Blood(props){
               <tbody>
               {
                 testResults.map((item, index) => {
-                  if(prevItem !== item.code){
-                    prevItem=item.code;
+                  if(prevItem !== item.test_code){
+                    prevItem=item.test_code;
                     return (
                       <tr key={index}>
-                        <th>{item.code}</th>
-                        <th>{item.name}</th>
-                        <th>{item.dCode}</th>
-                        <th>{item.dName}</th>
-                        <th>{item.min}</th>
-                        <th>{item.max}</th>
-                        <th>{item.result} {item.unit}</th>
+                        <th>{item.test_code}</th>
+                        <th>{item.test_name}</th>
+                        <th>{item.test_details_code}</th>
+                        <th>{item.test_details_name}</th>
+                        <th>{item.test_details_min}</th>
+                        <th>{item.test_details_max}</th>
+                        <th>{item.test_result_value} {item.test_details_unit}</th>
                       </tr>
                     );
                   }
                   else{
-                    prevItem=item.code;
+                    prevItem=item.test_code;
                     return (
                       <tr key={index}>
                         <th></th>
                         <th></th>
-                        <th>{item.dCode}</th>
-                        <th>{item.dName}</th>
-                        <th>{item.min}</th>
-                        <th>{item.max}</th>
-                        <th>{item.result} {item.unit}</th>
+                        <th>{item.test_details_code}</th>
+                        <th>{item.test_details_name}</th>
+                        <th>{item.test_details_min}</th>
+                        <th>{item.test_details_max}</th>
+                        <th>{item.test_result_value} {item.test_details_unit}</th>
                     </tr>
                     );
                   }

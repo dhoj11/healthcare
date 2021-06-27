@@ -1,0 +1,19 @@
+.barcode{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.confirm{
+  border-radius: 20px;
+  background-color: #f1f1f1;
+  padding: 10px 20px 10px 20px;
+  font-weight: 600;
+  margin: 10px 50px 10px 50px;
+}
+
+.confirm:hover{
+  background-color: #a5a5a5;
+  color: #fff
+}
