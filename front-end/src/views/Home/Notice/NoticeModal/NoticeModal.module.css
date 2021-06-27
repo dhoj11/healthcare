@@ -1,0 +1,30 @@
+.title_wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.writer_wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.writer {
+  font-size: medium;
+  font-weight: normal;
+}
+
+.date_wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.date {
+  font-size: medium;
+  font-weight: normal;
+}
+
+.content_wrapper {
+  margin-bottom: 1.5rem;
+}

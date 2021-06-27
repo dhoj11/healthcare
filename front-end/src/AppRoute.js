@@ -5,10 +5,12 @@ import Administration from "./views/Administration";
 import DashBoard from "./views/DashBoard";
 import Test from "./views/Test";
 import Login from "./views/Auth/Login";
+import Home from "./views/Home";
 
 function AppRoute(){
   return(
     <Switch>
+      <Route path="/" exact component={Home}/>
       <Route path="/DashBoard" exact component={DashBoard}/>
       <Route path="/treatment" exact component={Treatment}/>
       <Route path="/Appointment" exact component={Appointment}/>
