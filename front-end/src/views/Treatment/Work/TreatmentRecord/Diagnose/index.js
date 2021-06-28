@@ -30,11 +30,11 @@ function Diagnose(props){
   const dispatch = useDispatch();
 
   const getDiagnose = useCallback((event) => {
-    const prevDiagnoses = data2.filter(item => item.tId === treatment);
+    const prevDiagnoses = data2.filter(item => item.treatment_id === treatment);
      return prevDiagnoses;
   },[treatment]);
 
-  const [diagnose, setDiagnose] = useState({code:""});
+  const [diagnose, setDiagnose] = useState({disease_code:""});
   const [diagnoses, setDiagnoses] = useState(getDiagnose);
   const [editBlock, SetEditBlock] = useState(true);
 
@@ -60,11 +60,10 @@ function Diagnose(props){
   },[patient, treatment]);
 
   useEffect( () => {
-    console.log(treatment);
-    const curTreatment = data3.find(item => item.id === treatment);
+    const curTreatment = data3.find(item => item.treatment_id === treatment);
     const today = getCurrentDate();
     SetEditBlock(true);
-    if (curTreatment && today === curTreatment.date){
+    if (curTreatment && today === curTreatment.treatment_date){
         SetEditBlock(false);
         setDiagnoses([]);
       }
@@ -72,15 +71,15 @@ function Diagnose(props){
   
   const addDiagnose = useCallback(() => {
     // 추가하면 현재 Tid 로 tid, code 해서 튜플 만들기
-    if(  (!editBlock) && diagnose && diagnose.code !== ""){ 
+    if(  (!editBlock) && diagnose && diagnose.disease_code !== ""){ 
         let able = true;
         for(let i=0; i<diagnoses.length; i++){
-          if(diagnoses[i].code === diagnose.code){
+          if(diagnoses[i].disease_code === diagnose.disease_code){
             able = false;
           }
         }
         if(able){
-          const newDiagnoses = diagnoses.concat({ tId:treatment, code: diagnose.code, name: diagnose.name});
+          const newDiagnoses = diagnoses.concat({ treatement_id:treatment, disease_code : diagnose.disease_code, disease_name: diagnose.disease_name});
           setDiagnoses(newDiagnoses);
         }
         setDiagnose("");  
@@ -89,7 +88,7 @@ function Diagnose(props){
       
   const deleteDiagnose = useCallback((code) => {
     if(!editBlock) {  
-      const newDiagnoses = diagnoses.filter(diagnose => diagnose.code !== code);
+      const newDiagnoses = diagnoses.filter(diagnose => diagnose.disease_code !== code);
       setDiagnoses(newDiagnoses);
     }
   },[diagnose,diagnoses]);
@@ -112,9 +111,9 @@ function Diagnose(props){
             {
               diagnoses && diagnoses.map((item, index) => { 
                 return (<tr key={index}> 
-                          <td>{item.code}</td> 
-                          <td>{item.name}</td>
-                          <td onClick={() => deleteDiagnose(item.code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                          <td>{item.disease_code}</td> 
+                          <td>{item.disease_name}</td>
+                          <td onClick={() => deleteDiagnose(item.disease_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
                         </tr>); })         
             }
             </tbody>
@@ -124,7 +123,7 @@ function Diagnose(props){
             <span className={style.addTitle}>질병명 :</span>
             <Autocomplete className={style.input}
                           options={data}
-                          getOptionLabel={(option) => option.name}
+                          getOptionLabel={(option) => option.disease_name}
                           onChange={(event, newValue) => {
                             setDiagnose(newValue);
                           }}

@@ -26,13 +26,13 @@ function Prescription(props){
 
   const getPrescriptions = useCallback((event) => {
     // spring 연결하면  axios 로 요청해서 가져오자
-    const prevPrescriptions = data2.filter(item => item.tId === treatment);
+    const prevPrescriptions = data2.filter(item => item.treatment_id === treatment);
     return prevPrescriptions;
   },[treatment]);
 
   const dispatch = useDispatch();
   
-  const [prescription, setPrescription] = useState({code:""})
+  const [prescription, setPrescription] = useState({medicine_code:""})
   const [prescriptions, setPrescriptions] = useState(getPrescriptions);
   const [editBlock, SetEditBlock] = useState(true);
 
@@ -58,11 +58,10 @@ function Prescription(props){
   },[patient, treatment]);
     
   useEffect( () => {
-    console.log(treatment);
-    const curTreatment = data3.find(item => item.id === treatment);
+    const curTreatment = data3.find(item => item.treatment_id === treatment);
     const today = getCurrentDate();
     SetEditBlock(true);
-    if (curTreatment && today === curTreatment.date){
+    if (curTreatment && today === curTreatment.treatment_date){
         SetEditBlock(false);
         setPrescriptions([]);
       }
@@ -71,24 +70,29 @@ function Prescription(props){
 
   const addPrescription = useCallback((event) => {
     
-    if( (!editBlock) && prescriptions && prescription.code !== ""){
+    if( (!editBlock) && prescriptions && prescription.medicine_code !== ""){
       let able = true;
       for(let i=0; i<prescriptions.length; i++){
-        if(prescriptions[i].code === prescription.code){
+        if(prescriptions[i].medicine_code === prescription.medicine_code){
           able = false;
         }
       }
       if(able){
-        const newPrescriptions = prescriptions.concat({tId:prescription, code: prescription.code, name: prescription.name, comment:prescription.comment});
+        const newPrescriptions = prescriptions.concat({treatment_id:treatment, 
+                                      medicine_code: prescription.medicine_code, 
+                                      medicine_name: prescription.medicine_name, 
+                                      medicine_kind: prescription.medicine_kind,
+                                      medicine_type: prescription.medicine_type,             
+                                      prescription_comment:prescription.prescription_comment});
         setPrescriptions(newPrescriptions);
       }
-      setPrescription({code:""});
+      setPrescription({medicine_code:""});
     }
   },[prescription, prescriptions]);
 
   const deletePrescription = useCallback((event, code) => {
     if (!editBlock){
-      const newPrescriptions = prescriptions.filter(prescriptions => prescriptions.code !== code);
+      const newPrescriptions = prescriptions.filter(prescriptions => prescriptions.medicine_code !== code);
       setPrescriptions(newPrescriptions);
     }
   },[prescription,prescriptions]);
@@ -105,7 +109,7 @@ function Prescription(props){
                 <th scope="col" className="col-1">약코드</th>
                 <th scope="col" className="col-4">약명</th>
                 <th scope="col" className="col-2">구분</th>
-                <th scope="col" className="col-2">단위</th>
+                <th scope="col" className="col-2">타입</th>
                 <th scope="col" className="col-2">처방일수</th>
                 <th scope="col" className="col-1"></th>
               </tr>
@@ -114,12 +118,12 @@ function Prescription(props){
               {
                 prescriptions.map((item, index) => {
                   return (<tr key={index}>
-                            <td>{item.code}</td>
-                            <td>{item.name}</td>
-                            <td>{item.kind}</td>
-                            <td>{item.type}</td>
-                            <td>{item.comment}</td>
-                            <td onClick={(event) => deletePrescription(event, item.code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                            <td>{item.medicine_code}</td>
+                            <td>{item.medicine_name}</td>
+                            <td>{item.medicine_kind}</td>
+                            <td>{item.medicine_type}</td>
+                            <td>{item.prescription_comment}</td>
+                            <td onClick={(event) => deletePrescription(event, item.medicine_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
                         </tr>);
                 })
               }
@@ -130,11 +134,11 @@ function Prescription(props){
           <span className={style.addTitle}> 약명 : </span> 
           <Autocomplete className={style.input}
                           options={data}
-                          getOptionLabel={(option) => option.name}
+                          getOptionLabel={(option) => option.medicine_name}
                           onChange={(event, newValue) => {
                             setPrescription({
                              ...newValue,
-                             comment:0
+                             prescription_code:0
                             });
                           }}
                           renderInput={(params) => <TextField {...params} />}
@@ -143,8 +147,8 @@ function Prescription(props){
           <div className={style.comment}>
             <input type="number"
                    className={style.day}
-                   name="comment" 
-                   value={prescription.comment||0}
+                   name="prescription_comment" 
+                   value={prescription.prescription_comment||0}
                    onChange={(event, newValue) => {
                       setPrescription(
                         {
