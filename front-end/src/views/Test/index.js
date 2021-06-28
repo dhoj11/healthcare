@@ -45,7 +45,7 @@ function Test(props){
     if(arg && arg !== ""){
       const selectPatient = testLists.find((item)=>item.test_list_id == arg);
       if(selectPatient !== undefined){
-        const patientObject = patients.find((item)=>item.patientId == selectPatient.patient_id+"");
+        const patientObject = patients.find((item)=>item.patient_id == selectPatient.patient_id+"");
         if(patientObject) setPatient(patientObject);
       }
       setTestList(arg); 
@@ -62,7 +62,7 @@ function Test(props){
 
   const changeTestList = useCallback((arg) => {
     if(arg && arg !== ""){
-      const selectPatient = patients.filter((item)=>item.patientId===arg.patient_id+"");
+      const selectPatient = patients.filter((item)=>item.patient_id===arg.patient_id+"");
       setPatient(selectPatient[0]);
       setTestList(arg.test_list_id);
     }
