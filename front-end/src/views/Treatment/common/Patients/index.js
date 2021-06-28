@@ -15,7 +15,7 @@ function Patients(props){
   const patients  = data;
   const dispatch = useDispatch();
 
-  const [curPatient, setCurPatient] = useState({id:patient});
+  const [curPatient, setCurPatient] = useState({patient_id:patient});
   const [listState, setListState] = useState();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Patients(props){
   },[]);
 
   useEffect(()=> {
-      dispatch(createSetPatientAction(curPatient.id)); 
+      dispatch(createSetPatientAction(curPatient.patient_id)); 
   },[curPatient])
 
 
@@ -46,32 +46,32 @@ function Patients(props){
 
       {listState === "all" ?
           patients.map((item) => { 
-            return (<div className={ item.id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
+            return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                       onClick={() => {
                         setCurPatient(item); 
                       }} 
-                      key={item.id}> 
-                      {item.name} ( {item.gender} {item.age} ) 
+                      key={item.patient_id}> 
+                      {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
                     </div>); })
       
       :  listState === "before" ?
-            patients.filter( item => { return item.state === "before"} ).map((item) => { 
-              return (<div className={ item.id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
+            patients.filter( item => { return item.patient_state === "before"} ).map((item) => { 
+              return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                         onClick={() => {
                           setCurPatient(item); 
                         }} 
-                        key={item.id}> 
-                        {item.name} ( {item.gender} {item.age} ) 
+                        key={item.patient_id}> 
+                        {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
                       </div>); })
 
           : listState === "complete" ?
-              patients.filter( item => { return item.state === "complete"} ).map((item) => { 
-                return (<div className={ item.id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
+              patients.filter( item => { return item.patient_state === "complete"} ).map((item) => { 
+                return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                           onClick={() => {
                             setCurPatient(item); 
                           }} 
-                          key={item.id}> 
-                          {item.name} ( {item.gender} {item.age} ) 
+                          key={item.patient_id}> 
+                          {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
                         </div>); })
           :null
       }
@@ -81,16 +81,16 @@ function Patients(props){
         <i className={`far fa-user-circle ${style.profileIcon}`}></i>
         <div className={style.patientDescription}>
 
-          { curPatient.id !=="" && <span className={style.name}> {curPatient.name}({curPatient.gender}, 만{curPatient.age}세) </span> }
+          { curPatient.patient_id !=="" && <span className={style.name}> {curPatient.patient_name}({curPatient.patient_gender}, 만{curPatient.patient_age}세) </span> }
           {
           curPatient.id !=="" &&
             <div className={style.subWrapper}>
               <span className={style.subTitle}>만성질환</span>
-              <span className={style.subDesc}>{curPatient.disease}</span>
+              <span className={style.subDesc}>{curPatient.patient_disease}</span>
               <span className={style.subTitle}>복용약물</span>
-              <span className={style.subDesc}>{curPatient.medicine}</span>
+              <span className={style.subDesc}>{curPatient.patient_medicine}</span>
               <span className={style.subTitle}>특이사항</span>
-              <span className={style.subDesc}>{curPatient.commnet}</span>
+              <span className={style.subDesc}>{curPatient.patient_commnet}</span>
             </div>
         }
         </div>
