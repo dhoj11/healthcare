@@ -9,7 +9,7 @@ function AppointmentWithTestModal(props) {
   
   const {patientId, testCodes, isOpen, close} = props;
   const staticPatientList = getPatientList();
-  const filteredPatient = staticPatientList.filter(patients => (patients.patientId === patientId));
+  const filteredPatient = staticPatientList.filter(patients => (patients.patient_id === patientId));
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
   const [patient, setpatient] = useState({});
@@ -38,7 +38,7 @@ function AppointmentWithTestModal(props) {
         <div>
             <div className={styles.register_form_row}>
               <div className={`${styles.border_title} border`} >환자 이름</div>
-              {patient.name}
+              {patient.patient_name}
             </div>
             <div className={styles.register_form_row}>
               <div className={`${styles.border_title} border`}>검사 종류</div>
