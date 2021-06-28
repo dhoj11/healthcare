@@ -14,13 +14,13 @@ function TestList(props){
 
   const getTestList = useCallback(() => { 
     const testListData = props.testLists || [];
-    const newTestListDate = testListData.reduce( (acc, current) => {
+    const newTestListData = testListData.reduce( (acc, current) => {
       if (acc.findIndex(({ test_list_id }) => test_list_id === current.test_list_id) === -1) {
         acc.push(current);
       }
       return acc;
     },[]);
-    return newTestListDate;
+    return newTestListData;
   },[props.testLists])
 
   const selectListState = useCallback((state) => {
@@ -31,7 +31,7 @@ function TestList(props){
     setListState("all");
   },[]);
 
-  useEffect(()=>{
+  useEffect(()=>{;
     setTestLists(getTestList);
   },[]);
   
@@ -39,7 +39,7 @@ function TestList(props){
     // testList - // {test_list_id: "", patient_id: ""}
     props.changeTestList(testList); // 선택된 환자 id를 바꿈
   },[testList])
-  
+
   return(
     <div className={style.testList}>
       <div className={style.filter}>

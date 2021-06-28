@@ -23,6 +23,7 @@ function Test(props){
 
   const[testLists, setTestLists] = useState(getTestLists);
 
+  const[isSaved, setIsSaved] = useState(false);
   /**
    * TODO : 당일, req가 1인 검사리스트를 가져와 testLists 상태에 업데이트하는 api 요청 작성
    */
@@ -67,15 +68,38 @@ function Test(props){
     }
   },[]);
 
-  const changeState = useCallback((testList, state)=> {
-    let newTestLists = testLists;
+  /**
+   * 유효한 검사번호인지 확인한다.
+   */
+  // useEffect(()=>{
+  //   if(testLists){
+  //     let test = testLists.filter((item)=>item.test_list_id == testList);
+  //     if(test.length !== 0) setIsValid(true);
+  //     if(test.length === 0) setIsValid(false);
+  //   }
+  // },[testList]);
+
+  const changeState = useCallback ((testList, state)=> {
+  
+    let newTestLists = [...testLists];
     for(let index in newTestLists){
       if(newTestLists[index].test_list_id === testList)
         newTestLists[index].test_list_state = state;
     }
-    setTestLists({newTestLists});
+    setTestLists(newTestLists);
+
   },[]);
 
+  useEffect(()=>{
+    if(testLists){
+      const test = testLists.find((item)=>item.test_list_id == testList)
+      if( test && test.test_list_saved === 1)
+        setIsSaved(true);
+      else
+        setIsSaved(false);   
+    }
+  },[testList])
+  
   return(
     <div className={style.test}>
       <div className={style.left}>
@@ -87,9 +111,7 @@ function Test(props){
             <PatientInformationCard patient={patient || {"patientId":"","name":"", "gender":"","birth":"","age":"","tel": "","recentVisit": "", "medicine": "", "disease": "", "comment": ""}}/> 
           </div>
           <div className={style.State}>
-            { testList &&
             <State testList={testList} changeState={changeState}/>
-            }
           </div>
         </div>
         <div className={style.testList}>
@@ -97,7 +119,7 @@ function Test(props){
         </div>
       </div>
       <div className={style.testResult}>
-        <TestResult testList={testList}/>
+        <TestResult testList={testList} isSaved={isSaved}/>
       </div>
     </div>
   );

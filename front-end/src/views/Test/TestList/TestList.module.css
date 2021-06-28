@@ -24,6 +24,31 @@
 
 .thead{
   background: #F8FAFF;
+  color: rgb(56, 56, 56);
   font-weight: 600;
   font-size: 14px;
+}
+
+.testListTable thead tr th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.testListTable thead tr th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.testListTable thead tr > th {
+  border: none !important;
+}
+
+.testListTable tbody tr th:first-child{
+  border-radius: 10px 0 0 10px;
+}
+
+.testListTable tbody tr th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.testListTable tbody tr > th {
+  border: none !important;
 }

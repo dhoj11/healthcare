@@ -7,7 +7,6 @@ import Test from "./views/Test";
 import Login from "./views/Auth/Login";
 import Home from "./views/Home";
 import Account from "./views/Account";
-import Error from "./views/Error";
 
 function AppRoute(){
   return(
@@ -19,7 +18,6 @@ function AppRoute(){
       <Route path="/administration" exact component={Administration}/>
       <Route path="/test" exact component={Test}/>
       <Route path="/account" exact component={Account}/>
-      <Route path="/error" exact component={Error}/>
       {/* //회원로그인 임시로 라우트 */} 
       <Redirect to="/"/>
     </Switch>
