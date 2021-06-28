@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 function ListItem(props) {
 
-  const {index, appointment, selectPatient, receptionPatient, testPatient, isFinished, setAppointmentState} = props;
+  const {index, appointment, selectPatient, receptionPatient, appointmentTest, isFinished, setAppointmentState} = props;
   const [state, setState] = useState("예약");
   const [list, setList] = useState([]);
   
@@ -21,64 +21,73 @@ function ListItem(props) {
   },[state])
 
   useEffect(() => {
-    if(appointment.patientId === isFinished) {
+    if(appointment.patient_id === isFinished) {
       setState("완료");
     }
   },[isFinished]);
 
-  const handleStateChange = (event, patientId, appointmentKind) => {
+  const handleStateChange = (event, appointment_id, appointment_kind) => {
     setState(event.target.value);
-    if(event.target.value === "내원" && appointmentKind === "진료") {
+    if(event.target.value === "내원" && appointment_kind === "진료") {
       //접수 테이블 추가
-      receptionPatient(patientId);
-    } else if(event.target.value === "내원" && appointmentKind === "검사") {
+      receptionPatient(appointment_id);    //appointment_id를 보내야함
+    } else if(event.target.value === "내원" && appointment_kind === "검사") {
       //검사 테이블 추가
-      testPatient(patientId);
+      appointmentTest(appointment_id);
     }
   };
 
   return (
-    <div key={index} onClick={() => selectPatient(appointment.patientId)} className={`${styles.appointmentRow} border-bottom d-flex`} >
+    <div onClick={() => selectPatient(appointment.patient_id)} className={`${styles.appointmentRow} border-bottom d-flex`} >
         <span className={styles.appointmentItem}>
-        {appointment.order}
+        {index+1}
         </span>
         <span className={styles.appointmentItem}>
-        {appointment.time}
+        {appointment.appointment_time}
         </span>
         <span className={styles.appointmentItem}>
-        {appointment.name}
+        {appointment.patient_name}
         </span>
+        {
+          {
+            진료: (
+              <span className={styles.appointmentItem} style={{color: "#51cf66"}}>
+                {appointment.appointment_kind}
+              </span>),
+            검사: (
+              <span className={styles.appointmentItem} style={{color: "#339af0"}}>
+                {appointment.appointment_kind}
+              </span>)
+          }[appointment.appointment_kind]
+        }
         <span className={styles.appointmentItem}>
-        {appointment.appointmentKind}
-        </span>
-        <span className={styles.appointmentItem}>
-        {appointment.doctor}
+        {appointment.staff_name}
         </span>
         {
           { 
-            예약 : (<select style={{color: "black"}} value={state} onChange={(event) =>handleStateChange(event, appointment.patientId, appointment.appointmentKind)}>
-                      <option style={{color: "black"}} value="예약">예약</option>
-                      <option style={{color: "green"}} value="내원">내원</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="취소">취소</option>
+            예약 : (<select style={{color: "#495057"}} value={state} onChange={(event) =>handleStateChange(event, appointment.appointment_id, appointment.appointment_kind)}>
+                      <option style={{color: "#495057"}} value="예약">예약</option>
+                      <option style={{color: "#74b816"}} value="내원">내원</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>),
-            내원 : (<select style={{color: "green"}} value={state} onChange={(event) =>handleStateChange(event, appointment.patientId, appointment.appointmentKind)}>
-                      <option style={{color: "black"}} value="예약">예약</option>
-                      <option style={{color: "green"}} value="내원">내원</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="취소">취소</option>
+            내원 : (<select style={{color: "#74b816"}} value={state} onChange={(event) =>handleStateChange(event, appointment.appointment_id, appointment.appointment_kind)}>
+                      <option style={{color: "#495057"}} value="예약">예약</option>
+                      <option style={{color: "#74b816"}} value="내원">내원</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>),
-            취소 : (<select style={{color: "red"}} value={state} onChange={(event) =>handleStateChange(event, appointment.patientId, appointment.appointmentKind)}>
-                      <option style={{color: "black"}} value="예약">예약</option>
-                      <option style={{color: "green"}} value="내원">내원</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="취소">취소</option>
+            취소 : (<select style={{color: "#f03e3e"}} value={state} onChange={(event) =>handleStateChange(event, appointment.appointment_id, appointment.appointment_kind)}>
+                      <option style={{color: "#495057"}} value="예약">예약</option>
+                      <option style={{color: "#74b816"}} value="내원">내원</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>),
-            완료 : (<select style={{color: "blue"}} value={state} onChange={(event) =>handleStateChange(event, appointment.patientId, appointment.appointmentKind)}>
-                      <option style={{color: "black"}} value="예약">예약</option>
-                      <option style={{color: "green"}} value="내원">내원</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="취소">취소</option>
+            완료 : (<select style={{color: "#1c7ed6"}} value={state} onChange={(event) =>handleStateChange(event, appointment.appointment_id, appointment.appointment_kind)}>
+                      <option style={{color: "#495057"}} value="예약">예약</option>
+                      <option style={{color: "#74b816"}} value="내원">내원</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>)
           }[state]
         }

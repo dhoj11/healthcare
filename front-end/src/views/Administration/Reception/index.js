@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import ListItem from "./ListItem";
 
 function Reception(props) {
-  const {selectedPatient, receptionPatientId, visitReception, finished} = props;
+  const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
   const staticReceptionList = getReceptionList();
   const staticPatientList = getPatientList();
   const [receptionList, setReceptionList] = useState([]);
@@ -14,12 +14,12 @@ function Reception(props) {
   //예약 후 접수
   useEffect(() => {
     console.log("예약 접수 실행");
-    const newReception = receptionList.concat(staticReceptionList.filter(reception => reception.patientId === props.receptionPatientId));
+    const newReception = receptionList.concat(staticReceptionList.filter(reception => reception.appointment_id === receptionAppointmentId));
     setReceptionList(newReception);
     return (() => {
       console.log("예약 접수 언마운트시 실행");
     });
-  },[receptionPatientId]);
+  },[receptionAppointmentId]);
 
   //방문 접수 : props로 받아온 객체를 receptionList에 concat해줌
   useEffect(() => {
@@ -50,7 +50,7 @@ const getAllLength = () => {  //접수 리스트의 전체 건수를 반환해�
 };
 
 const selectPatient = (patientId) => { 
-  const filteredPatient = staticPatientList.filter(patient => patient.patientId === patientId);
+  const filteredPatient = staticPatientList.filter(patient => patient.patient_id === patientId);
   selectedPatient(filteredPatient[0]);
 }
 

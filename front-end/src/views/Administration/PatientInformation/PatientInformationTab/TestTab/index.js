@@ -5,7 +5,7 @@ import {getTestList} from "../../../data";
 
 function TestTab(props) {
   const staticTestList = getTestList();
-  const filteredTestList = staticTestList.filter(test => (test.patientId === props.patientId));
+  const filteredTestList = staticTestList.filter(test => (test.patient_id === props.patientId));
   const [testList, setTestList] = useState([]);
   let curr = 0;
 
@@ -18,20 +18,20 @@ function TestTab(props) {
 
   const rowRenderer = ({index, key, style}) => {
     if(index !== 0) {
-      curr = testList[index-1].treatmentId;
+      curr = testList[index-1].treatment_id;
     } 
     return (
       <div key={key} style={style} className={`${styles.treatment_row} border-bottom d-flex`}>
-      {testList[index].treatmentId !== curr ? (
+      {testList[index].treatment_id !== curr ? (
       <>
         <span className={styles.treatment_tab_item}>
-          {testList[index].treatmentDate}
+          {testList[index].treatment_date}
         </span>
         <span className={styles.treatment_tab_item}>
-          {testList[index].doctor}
+          {testList[index].staff_name}
         </span>
         <span className={styles.treatment_tab_item_disease}>
-          {testList[index].testCodeName}
+          {testList[index].test_name}
         </span>
         </>)
       :(<>
@@ -40,7 +40,7 @@ function TestTab(props) {
           <span className={styles.treatment_tab_item}>
           </span>
           <span className={styles.treatment_tab_item_disease}>
-            {testList[index].testCodeName}
+            {testList[index].test_name}
           </span>
         </>)}
       </div>

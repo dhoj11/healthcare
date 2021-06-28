@@ -9,26 +9,26 @@ function NewPatientModal(props) {
   const {isOpen, close, newPaitentList} = props;
   const [newPatientId, setNewPatientId] = useState(20);
   const [newPatient, setNewPatient] = useState({
-    name: "",
-    gender: "",
-    birth: "",
-    tel: "",
+    patient_name: "",
+    patient_gender: "",
+    patient_birth: "",
+    patient_tel: "",
     recentVisit: moment().format('YYYY-MM-DD'),
-    medicine: "",
-    disease: "",
-    comment: ""
+    patient_medicine: "",
+    patient_disease: "",
+    patient_comment: ""
   })
 
   useEffect(() => {
     setNewPatient({
-      name: "",
-      gender: "",
-      birth: "",
-      tel: "",
+      patient_name: "",
+      patient_gender: "",
+      patient_birth: "",
+      patient_tel: "",
       recentVisit: moment().format('YYYY-MM-DD'),
-      medicine: "",
-      disease: "",
-      comment: ""
+      patient_medicine: "",
+      patient_disease: "",
+      patient_comment: ""
     })
     return (() => {
       
@@ -43,8 +43,8 @@ function NewPatientModal(props) {
   };
 
   const addNewPatient = () => {
-    const patientAge = moment().diff(newPatient.birth, 'years');
-    const patient = {patientId: newPatientId.toString(), age: patientAge.toString(), ...newPatient};
+    const patientAge = moment().diff(newPatient.patient_birth, 'years');
+    const patient = {patient_id: newPatientId.toString(), age: patientAge.toString(), ...newPatient};
     setNewPatientId(newPatientId + 1);
     newPaitentList(patient);
     close();
@@ -62,14 +62,14 @@ function NewPatientModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>이름</div>
             <div>
-              <input className="form-control" name="name" value={newPatient.name} onChange={handleChange}/>
+              <input className="form-control" name="patient_name" value={newPatient.patient_name} onChange={handleChange}/>
             </div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>생년월일</div>
             <div className={styles.register_form_birth}>
               <div className="d-flex">
-                <input type="date" name="birth" className="form-control" value={newPatient.birth} onChange={handleChange}/>
+                <input type="date" name="patient_birth" className="form-control" value={newPatient.patient_birth} onChange={handleChange}/>
               </div>
             </div>
           </div>
@@ -77,11 +77,11 @@ function NewPatientModal(props) {
             <div className={`${styles.border_title} border`}>성별</div>
               <div className="d-flex">
                 <div>
-                  <input className="mr-1" type="radio" name="gender" value="남" onChange={handleChange} />
+                  <input className="mr-1" type="radio" name="patient_gender" value="남" onChange={handleChange} />
                   <label className="mr-3">남</label>
                 </div>
                 <div>
-                  <input className="mr-1" type="radio" name="gender" value="여" onChange={handleChange} />
+                  <input className="mr-1" type="radio" name="patient_gender" value="여" onChange={handleChange} />
                   <span>여</span>
                 </div>
               </div>
@@ -89,21 +89,21 @@ function NewPatientModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>연락처</div>
             <div>
-              <input type="text" name="tel" className="form-control" placeholder="'-' 포함 숫자 입력" value={newPatient.tel} onChange={handleChange}/>
+              <input type="text" name="patient_tel" className="form-control" placeholder="'-' 포함 숫자 입력" value={newPatient.patient_tel} onChange={handleChange}/>
             </div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>복용약물</div>
             <div className="d-flex">
               <div className={`${styles.medicine}`}>
-                <input className="mr-1" type="radio" name="medicine" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
+                <input className="mr-1" type="radio" name="patient_medicine" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="medicine" value={newPatient.medicine} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_medicine" value={newPatient.patient_medicine} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="medicine" className="form-control" placeholder="" value={newPatient.medicine} onChange={handleChange}/>
+                  <input type="text" name="patient_medicine" className="form-control" placeholder="" value={newPatient.patient_medicine} onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -112,14 +112,14 @@ function NewPatientModal(props) {
             <div className={`${styles.border_title} border`}>만성질환</div>
             <div className="d-flex">
               <div className={`${styles.medicine}`}>
-                <input className="mr-1" type="radio" name="disease" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
+                <input className="mr-1" type="radio" name="patient_disease" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="disease" value={newPatient.disease} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_disease" value={newPatient.patient_disease} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="disease" className="form-control" placeholder="" value={newPatient.disease} onChange={handleChange}/>
+                  <input type="text" name="patient_disease" className="form-control" placeholder="" value={newPatient.patient_disease} onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -128,14 +128,14 @@ function NewPatientModal(props) {
             <div className={`${styles.border_title} border`}>특이사항</div>
             <div className="d-flex">
               <div className={`${styles.medicine}`}>
-                <input className="mr-1" type="radio" name="comment" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
+                <input className="mr-1" type="radio" name="patient_comment" placeholder="" value="없음" onChange={handleChange}/><label className="mr-3">없음</label>
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="comment" value={newPatient.comment} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_comment" value={newPatient.patient_comment} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="comment" className="form-control" placeholder="" value={newPatient.comment} onChange={handleChange}/>
+                  <input type="text" name="patient_comment" className="form-control" placeholder="" value={newPatient.patient_comment} onChange={handleChange}/>
                 </div>
               </div>
             </div>

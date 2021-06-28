@@ -14,14 +14,14 @@ function Administration(props) {
   }
   console.log(globalPatient);
 
-  const [receptionPatientId, setReceptionPatientId] = useState();
-  const receptionPatient = (patientId) => {
-    setReceptionPatientId(patientId);
+  const [receptionAppointmentId, setReceptionAppointmentId] = useState();   //예약 => 접수 : appointment_id를 보내주도록 다시 수정
+  const receptionPatient = (appointmentId) => {
+    setReceptionAppointmentId(appointmentId);
   } 
 
-  const [testPatientId, seTestPatientId] = useState();
-  const testPatient = (patientId) => {
-    seTestPatientId(patientId);
+  const [testAppointmentId, seTestAppointmentId] = useState();
+  const appointmentTest = (appointmentId) => {
+    seTestAppointmentId(appointmentId);
   } 
 
   const [reception, setReception] = useState();
@@ -40,16 +40,16 @@ function Administration(props) {
     <div className={styles.first_content}>
       <div>
         <div className={styles.second_content}>
-          <div className={styles.appointment_component}><Appointment selectedPatient={selectedPatient} receptionPatient={receptionPatient} testPatient={testPatient} isFinished={isFinished}/></div>
-          <div className={styles.reception_component}><Reception selectedPatient={selectedPatient} receptionPatientId={receptionPatientId} visitReception={reception} finished={finished}/></div>
+          <div className={styles.appointment_component}><Appointment selectedPatient={selectedPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished}/></div>
+          <div className={styles.reception_component}><Reception selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} finished={finished}/></div>
         </div>
         <div className={styles.testlist_component}>
-          <TestList testPatientId={testPatientId}/>
+          <TestList testAppointmentId={testAppointmentId}/>
         </div>
       </div>
       <div>
         <div className={styles.search_patient_component}><SearchPatient selectedPatient={selectedPatient}/></div>
-        <div className={styles.patient_information_component}><PatientInformation selectedPatient={globalPatient} selectedPatientId={globalPatient.patientId} visitReception={visitReception}/></div>
+        <div className={styles.patient_information_component}><PatientInformation selectedPatient={globalPatient} selectedPatientId={globalPatient.patient_id} visitReception={visitReception}/></div>
         
       </div>
     </div>
