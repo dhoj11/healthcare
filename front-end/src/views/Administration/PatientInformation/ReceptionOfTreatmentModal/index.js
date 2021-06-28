@@ -1,27 +1,30 @@
 import styles from "./ReceptionOfTreatmentModal.module.css"
 import {Modal,} from "react-bootstrap";
-import {getPatientList, getStaffList} from "../../data";
+import {getStaffList} from "../../data";
 import {useState, useEffect} from "react";
+import moment from "moment";
 
 function ReceptionOfTreatmentModal(props) {
   const {patient, isOpen, close, visitReception} = props;
-  // const staticPatientList = getPatientList();
   const staticStaffList = getStaffList();
-  // const filteredPatient = staticPatientList.filter(patients => (patients.patientId === patientId));
 
   const [receptionPatient, setReceptionPatient] = useState({
-    name: patient.name,
-    treatmentComment: "",
-    doctor: "",
-    patientId: patient.patientId
+    reception_date: moment().format("YYYY-MM-dd"),
+    reception_time: moment().format("HH:mm"),
+    patient_name: patient.patient_name,
+    reception_content: "",
+    staff_name: "",         //staff_id로 수정 필요
+    appointment_id: null,
+    reception_state: "대기",
+    patient_id: patient.patient_id
   });
   
   useEffect(() => {
     setReceptionPatient({
-      name: patient.name,
-      treatmentComment: "",
-      doctor: "",
-      patientId: patient.patientId
+      patient_name: patient.patient_name,
+      reception_content: "",
+      staff_name: "",
+      patient_id: patient.patient_id
     })
     return (() => {
       
@@ -52,15 +55,15 @@ function ReceptionOfTreatmentModal(props) {
       <div>
       <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`} >환자이름</div>
-            <div>{patient.name}</div>
+            <div>{patient.patient_name}</div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
-              {staticStaffList.map(staff=>(
-                <div key={staff.staffId}>
-                  <input className="mr-2" type="radio" name="doctor" value={staff.name} onChange={handleChange}/>
-                  <label className="form-check-label mr-2">{staff.name}</label>
+              {staticStaffList.map((staff,key)=>(
+                <div key={key}>
+                  <input className="mr-2" type="radio" name="staff_name" value={staff.staff_name} onChange={handleChange}/> 
+                  <label className="form-check-label mr-2">{staff.staff_name}</label>
                 </div>
               ))}
             </div>
@@ -68,7 +71,7 @@ function ReceptionOfTreatmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료내용</div>
             <div>
-              <input type="text" className="form-control" name="treatmentComment" onChange={handleChange}/>
+              <input type="text" className="form-control" name="reception_content" onChange={handleChange}/>
             </div>
           </div>
         </div>

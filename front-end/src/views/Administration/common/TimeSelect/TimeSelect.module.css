@@ -12,9 +12,15 @@ margin-top: 80px;
   align-items: center;
 }
 
-.time_box:focus {
+.selected_time_box {
+  margin: 5px;
   background-color: #00253d;
   color: white;
+  width: 80px;
+  height: 40px;
+  border: 1px solid #00253d;
+  text-align: center;
+  align-items: center;
 }
 
 .cancel_btn{

@@ -10,21 +10,51 @@ function AppointmentModal(props) {
   const {patientId, isOpen, close} = props;
   const staticPatientList = getPatientList();
   const staticStaffList = getStaffList();
-  const filteredPatient = staticPatientList.filter(patient => (patient.patientId === patientId));
+  const filteredPatient = staticPatientList.filter(patient => (patient.patient_id === patientId));
   
   const [startDate, setStartDate] = useState(new Date());
   const [patient, setPatient] = useState({});
+  const [appointment, setAppointment] = useState({
+    appointment_date: "",
+    appointment_time: "",
+    staff_id: "",
+    patientId: patientId,
+    appointment_state: "예약",
+    appointment_content: "",
+    appointment_kind: "진료"
+  });
 
   useEffect(() => {
     setPatient(filteredPatient[0]);
+    setAppointment({
+      appointment_date: "",
+      appointment_time: "",
+      staff_id: "",
+      patientId: patientId,
+      appointment_state: "예약",
+      appointment_content: "",
+      appointment_kind: "진료"
+    })
     return (() => {
         console.log("진료 예약 언마운트시 실행");
     });
-  },[props]);
+  },[isOpen]);
 
   const changeDate = (date) => {
     setStartDate(date);
     console.log(date);
+  }
+
+  const handleChange = (event) => {
+    setAppointment({
+      ...appointment,
+      [event.target.name]: event.target.value
+    });
+  }
+
+  const newAppointment = () => {
+    const newAppointment = {...appointment};
+    close();
   }
 
   return (
@@ -38,15 +68,15 @@ function AppointmentModal(props) {
         <div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`} >환자이름</div>
-            <div>{patient.name}</div>
+            <div>{patient.patient_name}</div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
-              {staticStaffList.map(staff=>(
-                <div key={staff.staffId}>
-                  <input className="mr-2" type="radio" name="staff" value={staff.staffId}/>
-                  <label className="form-check-label mr-2">{staff.name}</label>
+              {staticStaffList.map((staff, key)=>(
+                <div key={key}>
+                  <input className="mr-2" type="radio" name="staff_id" value={staff.staff_id} onChange={handleChange}/>
+                  <label className="form-check-label mr-2">{staff.staff_name}</label>
                 </div>
               ))}
             </div>
@@ -54,7 +84,7 @@ function AppointmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료내용</div>
             <div>
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" name="appointment_content" onChange={handleChange}/>
             </div>
           </div>
           <div className="d-flex">
@@ -69,7 +99,7 @@ function AppointmentModal(props) {
         <button className={styles.cancel_btn} onClick={close}>
           취소
         </button>
-        <button className={styles.appoint_btn} onClick={close}>
+        <button className={styles.appoint_btn} onClick={newAppointment}>
           확인
         </button>
       </Modal.Footer>

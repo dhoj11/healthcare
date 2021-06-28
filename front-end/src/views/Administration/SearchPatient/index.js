@@ -15,7 +15,7 @@ function SearchPatient(props) {
   };
 
   const search = () => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
-    const searchPatientList = newPatientList.filter(patient => patient.name === patientName);
+    const searchPatientList = newPatientList.filter(patient => patient.patient_name === patientName);
     setPatientList(searchPatientList);
   }
 
@@ -28,7 +28,7 @@ function SearchPatient(props) {
   };
 
   const selectPatient = (patientId) => {
-    const filteredPatient = patientList.filter(patient => patient.patientId === patientId);
+    const filteredPatient = patientList.filter(patient => patient.patient_id === patientId);
     props.selectedPatient(filteredPatient[0]);
   }
 
@@ -42,18 +42,18 @@ function SearchPatient(props) {
 
   const rowRenderer = ({index, key ,style}) => {
     return (
-      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`} onClick={() => selectPatient(patientList[index].patientId)}>
+      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`} onClick={() => selectPatient(patientList[index].patient_id)}>
         <span className={styles.patient_item}>
-        {patientList[index].name}
+        {patientList[index].patient_name}
       </span>
       <span className={styles.patient_item_gender}>
-      {patientList[index].gender}
+      {patientList[index].patient_gender}
       </span>
       <span className={styles.patient_item}>
-      {patientList[index].birth}
+      {patientList[index].patient_birth}
       </span>
       <span className={styles.patient_item_tel}>
-      {patientList[index].tel}
+      {patientList[index].patient_tel}
       </span>
       <span className={styles.patient_item}>
       {patientList[index].recentVisit}

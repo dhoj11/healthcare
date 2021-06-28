@@ -6,7 +6,7 @@ import styles from "./AppointmentTab.module.css";
 function AppointmentTab(props) {
   
   const staticAppointmentList = getAppointmentList();
-  const filteredAppointmentList = staticAppointmentList.filter(appointment => (appointment.patientId === props.patientId));
+  const filteredAppointmentList = staticAppointmentList.filter(appointment => (appointment.patient_id === props.patientId));
   const [appointmentList, setAppointmentList] = useState([]);
 
   useEffect(() => {
@@ -21,19 +21,19 @@ function AppointmentTab(props) {
     return (
       <div key={key} style={style} className={`${styles.appointment_row} border-bottom d-flex`}>
         <span className={styles.appointment_tab_item}>
-        {appointmentList[index].date}
+        {appointmentList[index].appointment_date}
       </span>
       <span className={styles.appointment_tab_item}>
-      {appointmentList[index].time}
+      {appointmentList[index].appointment_time}
       </span>
       <span className={styles.appointment_tab_item}>
-      {appointmentList[index].doctor}
+      {appointmentList[index].staff_name}
       </span>
       <span className={styles.appointment_tab_item}>
-      {appointmentList[index].appointmentKind}
+      {appointmentList[index].appointment_kind}
       </span>
       <span className={styles.appointment_tab_item}>
-      {appointmentList[index].state}
+      {appointmentList[index].appointment_state}
       </span>
       </div>
     );
