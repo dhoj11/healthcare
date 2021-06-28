@@ -17,7 +17,7 @@ function ListItem(props) {
   };
 
   return (
-    <div key={index} onClick={() => selectPatient(reception.patientId)} className={`${styles.appointmentRow} border-bottom d-flex`} >
+    <div key={index} onClick={() => selectPatient(reception.patient_id)} className={`${styles.appointmentRow} border-bottom d-flex`} >
         <span className={styles.appointmentItem}>
         {index+1}
         </span>
@@ -25,30 +25,30 @@ function ListItem(props) {
         {moment().format('HH:mm')}
         </span>
         <span className={styles.appointmentItem}>
-        {reception.name}
+        {reception.patient_name}
         </span>
         <span className={styles.appointmentItem}>
-        {reception.treatmentComment}
+        {reception.reception_content}
         </span>
         <span className={styles.appointmentItem}>
-        {reception.doctor}
+        {reception.staff_name}
         </span>
         {
           { 
-            대기 : (<select style={{color: "green"}} value={state} onChange={(event) =>handleStateChange(event, reception.patientId, reception.appointmentKind)}>
-                      <option style={{color: "green"}} value="대기">대기</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="진료">진료</option>
+            대기 : (<select style={{color: "#74b816"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+                      <option style={{color: "#74b816"}} value="대기">대기</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
                     </select>),
-            진료 : (<select style={{color: "red"}} value={state} onChange={(event) =>handleStateChange(event, reception.patientId, reception.appointmentKind)}>
-                      <option style={{color: "green"}} value="대기">대기</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="진료">진료</option>
+            진료 : (<select style={{color: "#f03e3e"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+                      <option style={{color: "#74b816"}} value="대기">대기</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
                     </select>),
-            완료 : (<select style={{color: "blue"}} value={state} onChange={(event) =>handleStateChange(event, reception.patientId, reception.appointmentKind)}>
-                      <option style={{color: "green"}} value="대기">대기</option>
-                      <option style={{color: "blue"}} value="완료">완료</option>
-                      <option style={{color: "red"}} value="진료">진료</option>
+            완료 : (<select style={{color: "#1c7ed6"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+                      <option style={{color: "#74b816"}} value="대기">대기</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
                     </select>)
           }[state]
         }

@@ -5,7 +5,7 @@ import styles from "./TreatmentTab.module.css";
 
 function TreatmentTab(props) {
   const staticTreatmentList = getTreatmentList();
-  const filteredTreatmentList = staticTreatmentList.filter(treatment => (treatment.patientId === props.patientId));
+  const filteredTreatmentList = staticTreatmentList.filter(treatment => (treatment.patient_id === props.patientId));
   const [treatmentList, setTreatmentList] = useState(filteredTreatmentList);
   let curr = 0;
 
@@ -18,20 +18,20 @@ function TreatmentTab(props) {
 
   const rowRenderer = ({index, key, style}) => {
     if(index !== 0) {
-      curr = treatmentList[index-1].treatmentId;
+      curr = treatmentList[index-1].treatment_id;
     } 
     return (
       <div key={key} style={style} className={`${styles.treatment_row} border-bottom d-flex`}>
-      {treatmentList[index].treatmentId !== curr ? (
+      {treatmentList[index].treatment_id !== curr ? (
       <>
         <span className={styles.treatment_tab_item}>
-          {treatmentList[index].treatmentDate}
+          {treatmentList[index].treatment_date}
         </span>
         <span className={styles.treatment_tab_item}>
-          {treatmentList[index].doctor}
+          {treatmentList[index].staff_name}
         </span>
         <span className={styles.treatment_tab_item_disease}>
-          {treatmentList[index].disease}
+          {treatmentList[index].disease_name}
         </span>
         </>)
       :(<>
@@ -42,7 +42,7 @@ function TreatmentTab(props) {
             
           </span>
           <span className={styles.treatment_tab_item_disease}>
-            {treatmentList[index].disease}
+            {treatmentList[index].disease_name}
           </span>
         </>)}
       </div>

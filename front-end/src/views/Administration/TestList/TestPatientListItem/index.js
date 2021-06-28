@@ -8,7 +8,7 @@ function TestPatientListItem(props) {
   const [state, setState] = useState("대기");
 
   return (
-    <div key={index} onClick={()=> showTestList(testPatient.patientId)} className={`border-bottom d-flex ${styles.patient_row}`}>
+    <div key={index} onClick={()=> showTestList(testPatient.patient_id)} className={`border-bottom d-flex ${styles.patient_row}`}>
         <span className={styles.test_patient_item}>
         {index+1}
       </span>
@@ -16,16 +16,16 @@ function TestPatientListItem(props) {
         {moment().format("HH:mm")}
       </span>
       <span className={styles.test_patient_item}>
-        {testPatient.name}
+        {testPatient.patient_name}
       </span>
       <span className={styles.test_patient_item}>
-        {testPatient.doctor}
+        {testPatient.staff_name}
       </span>
       {
         { 
-           대기 : <span style={{color: "green"}}className={styles.test_patient_item}>{state}</span>,
-           진행중 : <span style={{color: "red"}}className={styles.test_patient_item}>{state}</span>,
-           완료 : <span style={{color: "blue"}}className={styles.test_patient_item}>{state}</span>
+           대기 : <span style={{color: "#74b816"}}className={styles.test_patient_item}>{state}</span>,
+           진행중 : <span style={{color: "#f03e3e"}}className={styles.test_patient_item}>{state}</span>,
+           완료 : <span style={{color: "#1c7ed6"}}className={styles.test_patient_item}>{state}</span>
         }[state]
       }
     </div>
