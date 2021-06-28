@@ -4,7 +4,6 @@ import Treatment from "./views/Treatment";
 import Administration from "./views/Administration";
 import DashBoard from "./views/DashBoard";
 import Test from "./views/Test";
-import Login from "./views/Auth/Login";
 import Home from "./views/Home";
 import Account from "./views/Account";
 import Error from "./views/Error"

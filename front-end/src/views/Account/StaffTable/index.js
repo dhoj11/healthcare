@@ -25,7 +25,7 @@ function StaffTable(props){
     {
     staffs.map((item, index) => {
         return(
-            <div className={style.staffItem} onClick={ () => { handleChangeStaff(item.staff_id)} }>
+            <div key={index} className={style.staffItem} onClick={ () => { handleChangeStaff(item.staff_id)} }>
               <span className={style.no}>{index+1}</span>
               <span className={ item.staff_authority === "의사" ? `${style.doctor}` : 
                item.staff_authority === "간호" ? `${style.nurse}` :
