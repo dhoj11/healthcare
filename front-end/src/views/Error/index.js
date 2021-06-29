@@ -9,7 +9,6 @@ function Error(props) {
         </div>
         <div className={styles.error_letter}><span>해당 계정으로 접근할 수 없는 페이지 입니다. 권한을 확인해주세요!</span></div>
       </div>
-      
     </>
   );
 }

@@ -93,6 +93,23 @@ body{
   margin-right: 10px;
 }
 
-.appHeader .newContents{
-  font-weight: 600;
+.appHeader .currentTime{
+  display: flex;
 }
+
+.currentTime .date{
+  font-size: 15px;
+  font-weight: 600;
+  margin: 4px 5px;
+  color: #5a5a5a;
+}
+
+.currentTime .time{
+  font-size: 15px;
+  font-weight: 800;
+  margin: 4px 5px;
+  color: #00253d;
+}
+
+
+

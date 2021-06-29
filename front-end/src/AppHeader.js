@@ -1,31 +1,17 @@
-import RssParser from 'rss-parser';
-
 import { faHospital, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useEffect, useState } from "react";
+import moment from 'moment';
 
 function AppHeader(props){
 
-  let contents = [];
-  let parser = new RssParser();
-  parser.parseURL('https://cors-anywhere.herokuapp.com/http://www.doctorsnews.co.kr/rss/clickTop.xml', function(err, feed) {
-    if (err) throw err;
-     feed.items.forEach(function(entry) {
-      contents.push( {title: entry.title, link: entry.link} )
-    })
-  })
-
-  var curContent;
-  let length = contents.length;
-  let i=0;
-
-  setTimeout( () => {
-
-    for(let index in contents){
-      curContent = contents[index]
-      console.log(curContent);
-    }
-  }, 2000);
+  const [time, setTime] = useState(moment());
+  
+  useEffect( () => {
+    setInterval(() => {
+      setTime(moment());
+    }, 1000);
+  }, []);
 
   return(
     <div className="appHeader">
@@ -33,8 +19,9 @@ function AppHeader(props){
         <FontAwesomeIcon icon={faHospital} className="hospitalIcon"/>
         <span className="name">사조병원</span>
       </div>
-      <div className="newContents">
-        <span>{curContent && curContent.title}</span>
+      <div className="currentTime">
+        <div className="date">{time.format('YYYY-MM-DD   ')}</div>
+        <div className="time">{time.format('HH:mm:ss')}</div>
       </div>
       <div className="loginUser">
         <span className="name">의사 : 조운호</span>
