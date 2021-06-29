@@ -10,7 +10,7 @@ export function getAppointNum(){
 const staffList = [
   {"staff_id":1,"staff_name":"정동호","staff_tel":"010-1234-1234","img":"/resources/img/staff2.jpg","appoint_num":5,"staff_authority":"의사"},
   {"staff_id":2,"staff_name":"박선명","staff_tel":"010-1234-1234","img":"/resources/img/staff3.jpg","appoint_num":7,"staff_authority":"간호사"},
-  {"staff_id":3,"staff_name":"조운호","staff_tel":"010-1234-1234","img":"/resources/img/staff3.jpg","appoint_num":15,"staff_authority":"의사"},
+  {"staff_id":3,"staff_name":"조운호a","staff_tel":"010-1234-1234","img":"/resources/img/staff3.jpg","appoint_num":15,"staff_authority":"의사"},
   {"staff_id":4,"staff_name":"강슬기","staff_tel":"010-1234-1234","img":"/resources/img/staff3.jpg","appoint_num":12,"staff_authority":"검사자"},
   {"staff_id":5,"staff_name":"김나영","staff_tel":"010-1234-1234","img":"/resources/img/staff3.jpg","appoint_num":10,"staff_authority":"의사"}
 ]
