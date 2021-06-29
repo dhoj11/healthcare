@@ -8,7 +8,7 @@ function TestPatientListItem(props) {
   const [state, setState] = useState("대기");
 
   return (
-    <div key={index} onClick={()=> showTestList(testPatient.patient_id)} className={`border-bottom d-flex ${styles.patient_row}`}>
+    <div key={index} onClick={()=> showTestList(testPatient.test_list_id,  testPatient.patient_id)} className={`border-bottom d-flex ${styles.patient_row}`}>
         <span className={styles.test_patient_item}>
         {index+1}
       </span>

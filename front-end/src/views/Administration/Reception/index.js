@@ -85,7 +85,7 @@ return (
   </div>
   <div className={styles.reception_content}>
     {receptionList.map((reception, index)=>(
-      <ListItem index={index} reception={reception} selectPatient={selectPatient} finished={finished}/>
+      <ListItem key={index} index={index} reception={reception} selectPatient={selectPatient} finished={finished}/>
     ))}
   </div>
 </div>

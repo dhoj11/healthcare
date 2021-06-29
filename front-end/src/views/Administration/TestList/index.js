@@ -1,11 +1,10 @@
 import styles from "./TestList.module.css";
 import {getTestPatientList, getTestCodeList} from "../data";
-import { AutoSizer, List } from "react-virtualized";
 import { useState, useEffect } from "react";
 import AppointmentWithTestModal from "./AppointmentWithTestModal";
 import TestPatientListItem from "./TestPatientListItem";
+import TestListItem from "./TestListItem";
 import RequestTest from "./RequestTest";
-import moment from "moment";
 
 function TestList(props) {
 
@@ -16,10 +15,18 @@ function TestList(props) {
   
   const [testPatientList, setTestPatientList] = useState([]);    //모든 검사 환자 리스트를 초기 상태로 선언
   const [testCodeList, setTestCodeList] = useState([]);   //검사 리스트 빈 배열로 초기 상태 선언
-  const [appointmentTestCode, setAppointmentTestCode] = useState([]);   //예약이 필요한 검사 리스트를 담을 상태
+  const [selectedTestCodes, setSelectedTestCodes] = useState([]);   //예약이 필요한 검사 리스트를 담을 상태
   const [patientId, setPatientId] = useState();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [reqTestModalOpen, setReqTestModalOpen] = useState(false);
+  const [isReq, setIsReq] = useState(false);
+  const ReqTest = () => {
+    setIsReq(true);
+  };
+  
+  useEffect(() => {
+    setIsReq(false);
+  },[selectedTestCodes])
 
   useEffect(() => {
     console.log("검사 접수 실행");
@@ -59,44 +66,20 @@ function TestList(props) {
     setReqTestModalOpen(false);
   };
 
-  const showTestList = (patientId) => {
-    const testList = staticTestCodeList.filter(testCode => testCode.patient_id === patientId);
+  const showTestList = (testListId, patientId) => {
+    const testList = staticTestCodeList.filter(testCode => testCode.test_list_id === testListId);
     setTestCodeList(testList);
-    setAppointmentTestCode([]);   //이전에 환자의 예약 검사 리스트를 빈배열로 세팅
+    setSelectedTestCodes([]);
     setPatientId(patientId);
   }
   const changeCheckedList = (event) => {
     if(event.target.checked) {
-      setAppointmentTestCode(testCode => (appointmentTestCode.concat(event.target.value)));
+      setSelectedTestCodes(testCode => (selectedTestCodes.concat(event.target.value)));
     }
     else {
-      setAppointmentTestCode(prev => (appointmentTestCode.filter(item => item !== event.target.value)));
+      setSelectedTestCodes(prev => (selectedTestCodes.filter(item => item !== event.target.value)));
     }
   }
-
-  const testCodeRowRenderer = ({index, key, style}) => {
-    return (
-      <div key={key} style={style} className={`border-bottom d-flex ${styles.code_row}`}>
-        <span className={styles.test_code_item}>
-          <input className="mr-1" type="checkbox" value={testCodeList[index].test_code} onChange={changeCheckedList}/>
-          {testCodeList[index].test_code}
-        </span>
-        <span className={styles.test_code_item}>
-          {testCodeList[index].test_name}
-        </span>
-        <span className={styles.test_code_item}>
-          {testCodeList[index].staff_name}
-        </span>
-        {
-          { 
-            대기 : <span style={{color: "#74b816"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>,
-            진행중 : <span style={{color: "#f03e3e"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>,
-            완료 : <span style={{color: "#1c7ed6"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>
-          }[testCodeList[index].test_list_state]
-        }
-      </div>
-    );
-  };
 
   return (
     <div className={styles.test_list}>
@@ -127,8 +110,8 @@ function TestList(props) {
         </div>
         <div className={styles.patient_list_content}>
           {
-            testPatientList.map((testPatient,index) => (
-              <TestPatientListItem index={index} testPatient={testPatient} showTestList={showTestList}/>
+            testPatientList.map((testPatient, index) => (
+              <TestPatientListItem key={index} index={index} testPatient={testPatient} showTestList={showTestList}/>
             ))
           }
         </div>
@@ -139,9 +122,9 @@ function TestList(props) {
           <span className="mr-2">검사 목록</span>
           <div className={styles.test_button}>
             <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
-            <AppointmentWithTestModal patientId={patientId} testCodes={appointmentTestCode} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+            <AppointmentWithTestModal patientId={patientId} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
             <button type="button" className="btn btn-sm btn-outline-secondary" onClick={openReqTestModal}>검사요청</button>
-            <RequestTest patientId={patientId} testCodes={appointmentTestCode} isOpen={reqTestModalOpen} close={closeReqTestModal}/>
+            <RequestTest patientId={patientId} testCodes={selectedTestCodes} isOpen={reqTestModalOpen} close={closeReqTestModal} ReqTest={ReqTest}/>
           </div>
         </div>
         <div className="d-flex bg-light">
@@ -158,18 +141,13 @@ function TestList(props) {
             상태
           </span>
       </div>
-          <AutoSizer disableHeight>
-          {({width, height}) => {
-            return (
-              <List width={width} height={300} 
-                    list={testCodeList} 
-                    rowCount={testCodeList.length}
-                    rowHeight={40}
-                    rowRenderer={testCodeRowRenderer}
-                    overscanRowCount={5}/> //* overscanRowCount: 미리 5개의 여유분을 만들어 놔서 스크롤 시 로딩을 줄여줌*/}
-            );
-          }}
-        </AutoSizer>
+      <div className={styles.patient_list_content}>
+          {
+            testCodeList.map((testCodes, index) => (
+                <TestListItem testCodeList={testCodes} changeCheckedList={changeCheckedList} isReq={isReq} selectedTestCodes={selectedTestCodes} />
+            ))
+          }
+      </div>
       </div>
     </div>
   );

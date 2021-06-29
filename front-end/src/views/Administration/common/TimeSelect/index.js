@@ -16,8 +16,8 @@ function TimeSelect(props) {
     <div className={styles.time_select}>
       <div>
         {
-          appointmentTime.map((time, index, key) => (
-            <Fragment key={key}>
+          appointmentTime.map((time, index) => (
+            <Fragment key={index}>
               <button className={ timeSelect === time ? `${styles.selected_time_box}` : `${styles.time_box}`} onClick={() => changeTime(time)}>{time}</button>
           </Fragment>
           ))
