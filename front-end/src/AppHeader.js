@@ -16,7 +16,9 @@ function AppHeader(props){
 
   return(
     <div className="appHeader">
-      
+      <div className="hospitalTitle">
+        <span className="name">사조병원</span>
+      </div>
     </div>
   );
 }
