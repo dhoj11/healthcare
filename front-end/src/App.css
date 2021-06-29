@@ -54,5 +54,45 @@ body{
 
 .appHeader{
   margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
+.appHeader .hospitalTitle .hospitalIcon{
+  margin-right: 10px;
+}
+
+.appHeader .hospitalTitle{
+  margin-left: 10px;
+}
+
+.appHeader .hospitalTitle .name{
+  font-weight: 600;
+}
+
+.appHeader .loginUser{
+  margin-right: 20px;
+}
+
+.appHeader .loginUser .name{
+  font-weight: 600;
+  margin-right: 20px;
+}
+
+.appHeader .loginUser .logOut{
+  color: #303030;
+  font-weight: 600;
+}
+
+.appHeader .loginUser .logOut:hover{
+  color: #aa4400;
+}
+
+.appHeader .loginUser .logOutIcon{
+  margin-right: 10px;
+}
+
+.appHeader .newContents{
+  font-weight: 600;
+}
