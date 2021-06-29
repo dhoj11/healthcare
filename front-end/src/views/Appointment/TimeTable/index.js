@@ -1,9 +1,9 @@
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-import "./TimeTable.css";
+import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Appoint from "./Appoint";
-import Cancel from "./Cancel";
+import Appoint from "./Modal/Appoint/Appoint";
+import Cancel from "./Modal/Cancel/Cancel";
 import { getAppointList, getAppointTime, getPatientList, getTAppoint } from "./data/data";
 import { useEffect } from "react";
 function TimeTable(props) {
@@ -54,13 +54,13 @@ function TimeTable(props) {
       return data.appointment_id === value
     })
     // console.log("",appointItem[0].appointment_state);
-    if(value==null){
+    if(value==null || appointItem[0].appointment_state==="취소"){
       setShowAppointModal(true);
       setAppointInfo({
         time,
         doctor
       })
-    } else if(appointItem[0].appointment_state==="예약"){
+    } else if(appointItem[0].appointment_state==="예약" ){
       console.log(value);
       setAppointInfo({
         time,

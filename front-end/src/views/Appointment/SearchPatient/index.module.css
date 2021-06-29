@@ -1,0 +1,77 @@
+.Patient_contain{
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 15px 10px;
+  height: 200px;
+  margin-top: 10px;
+}
+
+.patientSearch > span , .treatmentContent > span{
+  margin-left: 5px;
+  margin-right: 15px;
+}
+.patientSearch > input, .treatmentContent > input{
+  border-radius: 5px;
+  outline: 0;
+  text-align: right;
+  padding-right: 20px;
+  height: 35px;
+  border : 1px solid lightgray;
+}
+.patient_table{
+  margin-top: 10px;
+}
+.patient_table .tbody{
+  cursor: pointer;
+}
+.patient_table .tbodyClicked{
+  background-color: #04436d;
+  color: white;
+}
+.patient_table .tbodyDefault:hover{
+  background-color:lightgrey;
+}
+.patient_table >.thead{
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  background-color: #f1f3f5;
+}
+.patient_table >.thead span{
+  display:inline-block;
+  height: 100%;
+  border: 1px solid lightgray;
+
+}
+.patient_table >.thead span:nth-child(1){
+  width:20%;
+}
+.patient_table >.thead span:nth-child(2){
+  width:30%;
+}
+.patient_table >.thead span:nth-child(3){
+  width:50%;
+}
+
+
+.tbody span{
+  display:inline-block;
+  height: 100%;
+  border-bottom: 1px solid lightgray;
+}
+.tbody span:nth-child(1){
+  width:22%;
+}
+.tbody span:nth-child(2){
+  width:35%;
+}
+.tbody span:nth-child(3){
+  width:43%;
+}
+.tbody{
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  font-size: 14px;
+}
