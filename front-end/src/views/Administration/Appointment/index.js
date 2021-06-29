@@ -78,7 +78,7 @@ function Appointment(props) {
     </div>
     <div className={styles.appointment_content}>
       {appointmentList.map((appointment, index)=>(
-        <ListItem index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished} setAppointmentState={setAppointmentState}/>
+        <ListItem key={index} index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished} setAppointmentState={setAppointmentState}/>
       ))}
     </div>
  </div>

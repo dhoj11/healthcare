@@ -28,3 +28,18 @@
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.border_title {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  text-align: center;
+  line-height: 40px;
+}
