@@ -1,8 +1,15 @@
 import style from "./Blood.module.css";
-
-import data from "../../../data/testResults"
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
+import data from "../../../data/testResults"
+
+/**
+ * 선택한 진료에서 의뢰한 검사의 결과를 표시한다.
+ * 
+ * TODO : 검사결과 테이블에서 검사번호로 데이터 요청 api 작성
+ * 요청데이터 형태 
+ * {test_list_id: {num}, treatment_id:{num}, test_code: "", test_name: "", test_details_code: "", test_details_name:"", test_details_unit:"",	test_details_min:"", test_details_max:"", test_result_value: ""},
+ */
 
 function Blood(props){
 

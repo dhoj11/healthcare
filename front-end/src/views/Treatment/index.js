@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import { createSetPatientAction, createSetTreatmentAction, createSetWorkActoin } from "../../redux/treatment-reducer";
 import Work from "./Work";
 
+/**
+ * 환자, 진료 선택 후 작업영역 탭으로 전환
+ */
+
 function Treatment(props){
 
   const [work, setWork] = useState({});
@@ -30,6 +34,7 @@ function Treatment(props){
 
   // 2021.06.19. 현재 work 가 바뀔 때 마다 공통컴포넌트 Date, Patients가 re-render 됨
   // 추후 고치자
+
   return(
     <div className={style.treatmentMain}>
       <div className={style.selectWork}>

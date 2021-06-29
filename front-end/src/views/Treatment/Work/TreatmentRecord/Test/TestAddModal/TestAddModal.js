@@ -2,17 +2,20 @@ import style from "./TestAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import data from "../../../../data/test";
 import { useState } from "react";
-
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+/**
+ * 검사를 검색하고 검사를 추가한다.
+ * 
+ * TODO : 검색된 검사이름을 통해 testList테이블에서 검사데이터를 요청하는 API 작성
+ * 요청데이터의형태
+ * {test_code: "", test_name:	""},
+ */
 
 function TestAddModal(props){
 
   const {isOpen, close} = props;
-
-  const handleClose = () => {
-    close();
-  }
 
   const [searchItem, setSearchItem] = useState();
   const [tests, setTests] = useState([]);

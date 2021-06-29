@@ -4,22 +4,27 @@ import style from "./Record.module.css";
 import data from "../../../data/treatment"
 import { createSetCurRecordActoin } from "../../../../../redux/treatment-reducer";
 
+/**
+ * 선택된 진료의 과거진료기록(의무기록)을 가져온다.
+ * 
+ * TODO : 현재진료번호로 진료테이블에서 comment 속성값 가져오는 api 작성
+ * 요청데이터의 형태
+ * {treatment_record: ""}
+ */
+
 function Record(props){
 
-  const [record, setRecord] = useState();
-  const [editBlock, SetEditBlock] = useState(true);
-  // true 이면 수정 불가. 
+  const treatments = data;
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
   const work = useSelector(state => state.treatmentReducer.work);
+  const editBlock = useSelector(state => state.treatmentReducer.editBlock);
+
+  const [record, setRecord] = useState();
 
   const dispatch = useDispatch();
 
-  const treatments = data;
-
-  // 선택된 진료 번호 추후 스프링에서 진료번호로 진료 내용 가져오기
-  // 가져와서 setRecord 로 상태 업뎃
   const getRecord = useCallback((event) => {
     const prevTreatment = treatments.find(item => item.treatment_id === treatment);
     if(prevTreatment) return prevTreatment.treatment_record;
@@ -29,20 +34,13 @@ function Record(props){
     setRecord(getRecord);
   },[treatment])
 
+  useEffect(()=>{
+    if(!editBlock) setRecord("");  
+  },[editBlock])
 
   const handleChange = useCallback((event) => {
     setRecord( () => event.target.value);
   },[record]);
-
-  useEffect( () => {
-    const curTreatment = treatments.find(item => item.treatment_id === treatment);
-    const today = getCurrentDate();
-    SetEditBlock(true);
-    if (curTreatment && today === curTreatment.treatment_date){
-        setRecord("");
-        SetEditBlock(false);
-      }
-    },[treatment]);
 
   useEffect(()=>{
     setRecord(getRecord); 
@@ -74,16 +72,6 @@ function Record(props){
                 </textarea>
     </div>
   );
-}
-
-const getCurrentDate = () => {
-  let date = new Date();
-  let year = date.getFullYear().toString();
-  let month = date.getMonth() + 1;
-  month = month < 10 ? '0' + month.toString() : month.toString();
-  var day = date.getDate();
-  day = day < 10 ? '0' + day.toString() : day.toString();
-  return year +  "-" + month + "-" + day ;
 }
 
 export default Record;
