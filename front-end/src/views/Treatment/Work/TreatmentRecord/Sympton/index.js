@@ -15,13 +15,13 @@ function Sympton(props){
   const treatments = data;
 
   const getSympton = useCallback(()=> {
-    const prevTreatment = treatments.filter(item => item.id === treatment);
-    if(prevTreatment[0]) setSympton(prevTreatment[0].sympton);
+    const prevTreatment = treatments.filter(item => item.treatment_id === treatment);
+    if(prevTreatment[0]) setSympton(prevTreatment[0].treatment_sympton);
   },[]) 
   
   useEffect(()=> {
-    const prevTreatment = treatments.filter(item => item.id === treatment);
-    if(prevTreatment[0]) setSympton(prevTreatment[0].sympton);
+    const prevTreatment = treatments.filter(item => item.treatment_id === treatment);
+    if(prevTreatment[0]) setSympton(prevTreatment[0].treatment_sympton);
   },[treatment])
 
   useEffect(()=>{

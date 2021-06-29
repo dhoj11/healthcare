@@ -21,8 +21,8 @@ function Record(props){
   // 선택된 진료 번호 추후 스프링에서 진료번호로 진료 내용 가져오기
   // 가져와서 setRecord 로 상태 업뎃
   const getRecord = useCallback((event) => {
-    const prevTreatment = treatments.find(item => item.id === treatment);
-    if(prevTreatment) return prevTreatment.record;
+    const prevTreatment = treatments.find(item => item.treatment_id === treatment);
+    if(prevTreatment) return prevTreatment.treatment_record;
   },[treatment])
 
   useEffect(()=> {
@@ -35,10 +35,10 @@ function Record(props){
   },[record]);
 
   useEffect( () => {
-    const curTreatment = treatments.find(item => item.id === treatment);
+    const curTreatment = treatments.find(item => item.treatment_id === treatment);
     const today = getCurrentDate();
     SetEditBlock(true);
-    if (curTreatment && today === curTreatment.date){
+    if (curTreatment && today === curTreatment.treatment_date){
         setRecord("");
         SetEditBlock(false);
       }

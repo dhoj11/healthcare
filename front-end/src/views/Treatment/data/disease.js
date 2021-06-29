@@ -1,10 +1,10 @@
 const disease = [
-  {"code":  "A00", "name": "콜레라"},
-  {"code":  "A000", "name": "	고전적 콜레라"},
-  {"code":  "A001", "name": "	엘토르 콜레라"},
-  {"code":  "A009", "name": "	상세불명의 콜레라"},
-  {"code":  "A01", "name": "	장티푸스 및 파라티푸스"},
-  {"code":  "A010", "name": "	장티푸스"},
+  {disease_code:  "A00", disease_name: "콜레라"},
+  {disease_code:  "A000", disease_name: "고전적 콜레라"},
+  {disease_code:  "A001", disease_name: "엘토르 콜레라"},
+  {disease_code:  "A009", disease_name: "상세불명의 콜레라"},
+  {disease_code:  "A01", disease_name: "장티푸스 및 파라티푸스"},
+  {disease_code:  "A010", disease_name: "장티푸스"},
 ]
 
 // {"code":  A20	페스트

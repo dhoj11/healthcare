@@ -22,8 +22,8 @@ function Comment(props){
   const dispatch = useDispatch();
 
   const getComment = useCallback((event) => {
-    const prevTreatment = treatments.filter(item => item.id === treatment);
-    if(prevTreatment[0]) return prevTreatment[0].comment;
+    const prevTreatment = treatments.filter(item => item.treatment_id === treatment);
+    if(prevTreatment[0]) return prevTreatment[0].treatment_comment;
   },[treatment])
 
   useEffect(()=> {
@@ -35,10 +35,10 @@ function Comment(props){
   },[comment]);
 
   useEffect( () => {
-    const curTreatment = treatments.find(item => item.id === treatment);
+    const curTreatment = treatments.find(item => item.treatment_id === treatment);
     const today = getCurrentDate();
     SetEditBlock(true);
-    if (curTreatment && today === curTreatment.date){
+    if (curTreatment && today === curTreatment.treatment_date){
         setComment("");
         SetEditBlock(false);
       }

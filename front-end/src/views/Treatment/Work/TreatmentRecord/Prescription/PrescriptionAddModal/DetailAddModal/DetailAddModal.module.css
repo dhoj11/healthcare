@@ -1,0 +1,55 @@
+.body{
+  text-align: center;
+}
+
+.detail{
+  display: flex;
+  flex-direction: row;
+  padding: 40px 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.day, .amount{
+  display: flex;
+  flex-direction: row;
+}
+
+.day .title, .amount .title{
+  font-size: 17px;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.input{
+  width: 60px!important;
+  margin-bottom: 5px;
+}
+
+.day .il{
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 10px;
+  margin-right: 30px;
+}
+
+.item .select{
+  margin-right: 20px;
+}
+
+.selectItem{
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.time .item{
+  display: flex;
+  flex-direction: row;
+}
+
+.plus{
+  font-weight: 800;
+  font-size: 30px;
+  color: #2c5c00;
+  margin-left: 50px;
+}

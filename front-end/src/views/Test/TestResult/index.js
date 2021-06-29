@@ -8,9 +8,8 @@ function TestResult(props){
 
   const[testList, setTestList] = useState();         // 선택/검색한 검사번호
   const[testResults, setTestResults] = useState([]); // 왼쪽 테이블에서 하나의 검사를 선택했을 때 오른쪽에 표시되는 검사 목록
-  
+  const[isSaved, setIsSaved] = useState();
   let prevItem;  
-
   /**
    * 
    * 검사번호로 상세검사내역/결과 리스트를 불러옴
@@ -32,8 +31,8 @@ function TestResult(props){
 
   useEffect(()=>{
     setTestResults(getTestResults);
+    setIsSaved(props.isSaved);
   },[testList]);
-
 
   /**
    * 상세검사목록에서 입력되는 값의 변화가 일어날 때마다 (onChange) 
@@ -55,14 +54,18 @@ function TestResult(props){
    * 저장버튼 클릭스 현재 상태를 저장한다.
    * 
    * TODO : testList 를 DB에 업데이트하는 api 작성
+   * testResults 상태변수에는 각 상세검서와 입력한 결과값이 저장되어 있음
    */
 
   const saveResult = () => {
-    // api 요청 작성
+    //console.log(testResults);
+    setIsSaved(true);
   }
+  
 
   return(
-    <div className={style.TestResult}>
+    <div className={style.testResult}>
+      <div>
        <table className={`table table-hover ${style.testResultTable}`}>
               <thead className={style.thead}>
                 <tr>
@@ -70,15 +73,14 @@ function TestResult(props){
                   <th scope="col" className="col-3">검사명</th>
                   <th scope="col" className="col-1">처방코드</th>
                   <th scope="col" className="col-3">상세검사명</th>
-                  <th scope="col" className="col-2">결과값</th>
-
+                  <th scope="col" className="col-1">결과값</th>
                 </tr>
               </thead>
               <tbody>
                 { 
                   testResults && testResults.map((item, index) => {
-                    if(prevItem !== item.test_list_id){
-                        prevItem=item.test_list_id;
+                    if(prevItem !== item.test_code){
+                        prevItem=item.test_code;
                       
                       return(<tr key={index}>
                                 <td>{item.test_code}</td>
@@ -86,6 +88,7 @@ function TestResult(props){
                                 <td>{item.test_details_code}</td>
                                 <td>{item.test_details_name}</td>
                                 <td><input className={`form-control ${style.input}`}
+                                           readOnly={isSaved && true}
                                            type="text"
                                            name={item.test_details_id}
                                            value={item.test_result_value}
@@ -95,7 +98,7 @@ function TestResult(props){
                             );
                     }
                     else{
-                      prevItem=item.test_list_id;
+                      prevItem=item.test_code;
                       return(<tr key={index}>
                               <td></td>
                               <td></td>
@@ -103,13 +106,14 @@ function TestResult(props){
                               <td>{item.test_details_name}</td>
                               <td>
                                 <input className={`form-control ${style.input}`}
-                                        type="text"
-                                        name={item.test_details_id}
-                                        value={item.test_result_value}
-                                        onChange={(event) => handleChange(event,index)}
-                                        >
-                                        </input>
-                                        </td>
+                                       readOnly={isSaved && true}
+                                       type="text"
+                                       name={item.test_details_id}
+                                       value={item.test_result_value}
+                                       onChange={(event) => handleChange(event,index)}
+                                       >
+                                       </input>
+                                      </td>
                             </tr>
                             );
                     }
@@ -117,7 +121,8 @@ function TestResult(props){
                 }
               </tbody>
             </table>
-          <div className={style.saveButton} onClick={saveResult}>저장</div>
+            </div>
+          { testList && !isSaved && <div className={style.saveButton} onClick={saveResult}>저장</div> }
     </div>
   );
 }

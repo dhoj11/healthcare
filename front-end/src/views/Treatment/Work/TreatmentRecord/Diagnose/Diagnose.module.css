@@ -16,6 +16,10 @@
   background: #F5F5F5;
 }
 
+.title:hover{
+  background: #d4d4d4;
+}
+
 .diagnoseList{
   border-radius: 5px;
   border: 1px solid #D3D3D3;
@@ -77,3 +81,4 @@
 .minus{
   color: #DB4455
 }
+

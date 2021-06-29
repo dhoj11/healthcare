@@ -1,0 +1,17 @@
+.AppointInfo_contain{
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 15px 10px;
+  height: 305px;
+  margin-top: 15px;
+}
+.default{
+  text-align: center;
+  margin-top: 50px;
+}
+.default > div{
+  font-size: large;
+  font-weight: 700;
+  margin-top: 20px;
+}
