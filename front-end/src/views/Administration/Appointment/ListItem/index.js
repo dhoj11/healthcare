@@ -51,11 +51,11 @@ function ListItem(props) {
         {
           {
             진료: (
-              <span className={styles.appointmentItem} style={{color: "#51cf66"}}>
+              <span className={styles.appointmentItem} style={{color: "black"}}>
                 {appointment.appointment_kind}
               </span>),
             검사: (
-              <span className={styles.appointmentItem} style={{color: "#339af0"}}>
+              <span className={styles.appointmentItem} style={{color: "black"}}>
                 {appointment.appointment_kind}
               </span>)
           }[appointment.appointment_kind]

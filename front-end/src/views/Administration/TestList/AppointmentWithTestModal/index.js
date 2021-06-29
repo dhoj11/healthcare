@@ -68,7 +68,7 @@ function AppointmentWithTestModal(props) {
         </Modal.Footer>
       </Modal>
       ):(
-        <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
+        <Modal show={isOpen} onHide={close} centered="true" className="modal">
         <Modal.Header closeButton>
           <Modal.Title>검사 예약</Modal.Title>
         </Modal.Header>
@@ -78,9 +78,6 @@ function AppointmentWithTestModal(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className={styles.cancel_btn} onClick={close}>
-            취소
-          </button>
           <button className={styles.appoint_btn} onClick={close}>
             확인
           </button>
