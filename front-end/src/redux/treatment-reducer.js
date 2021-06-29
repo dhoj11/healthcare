@@ -6,7 +6,9 @@ const initialState = {
   curComment:"",
   curDiagnoses:{},
   curPrescriptions:{},
-  curTests:{}
+  curTests:{},
+
+  editBlock:true
 }
 
 const SET_WORK = "work/SetWork";                // 진료기록 -> 검사결과 or 검사결과 -> 진료기록 탭 할 때마다 현재 선택된 환자의 진료/검사내용을 각각 컴포넌트에 뿌려주어야함
@@ -17,6 +19,7 @@ const SET_CURCOMMENT ="record/SetCurComment";
 const SET_CURDIAGNOSES ="record/SetCurDiagnoses";
 const SET_CURPRESCRIPTIONS ="record/SetCurPrescriptions";
 const SET_CURPTESTS ="record/SetCurTests";
+const SET_EDITBLOCK ="treatment/SetEditBlock";
 
 export const createSetWorkActoin = (work) => {
   return {type:SET_WORK, work};
@@ -50,6 +53,10 @@ export const createSetCurTestsActoin = (curTests) => {
   return {type:SET_CURPTESTS, curTests};
 };
 
+export const createSetEditBlockActoin = (editBlock) => {
+  return {type:SET_EDITBLOCK, editBlock};
+};
+
 export const treatmentReducer = (state=initialState, action) => {
 
   switch (action.type){
@@ -68,7 +75,9 @@ export const treatmentReducer = (state=initialState, action) => {
     case SET_CURPRESCRIPTIONS :
       return {...state, curPrescriptions: action.curPrescriptions}       
     case SET_CURPTESTS :
-      return {...state, curTests: action.curTests}       
+      return {...state, curTests: action.curTests}    
+    case SET_EDITBLOCK :
+      return { ...state, editBlock: action.editBlock}   
     default :
       return state;
   }

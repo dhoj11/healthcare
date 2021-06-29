@@ -7,16 +7,20 @@ import NewPatientModal from "./NewPatientModal";
 function SearchPatient(props) {
   const staticPatientList = getPatientList();   //모든 환자리스트를 가져옴
   const [patientName, setPatientName] = useState("");   //input 창에 환자 이름을 입력할 때 사용되는 상태
-  const [patientList, setPatientList] = useState(staticPatientList);    //모든 환자의 리스트를 초기 상태로 선언
+  const [patientList, setPatientList] = useState(staticPatientList);    //모든 환자의 리스트를 초기 상태로 선언, 화면에 보여줄 환자리스트
   const [modalOpen, setModalOpen] = useState(false);    //신규회원등록 모달의 열림 상태를 초기엔 false로 선언
-  const [newPatientList, setNewPatientList] = useState(staticPatientList);
+  const [newPatientList, setNewPatientList] = useState(staticPatientList);  //신규 등록한 회원(모든 회원)이 담긴 리스트
   const changePatientName = (event) => {  //event.target.name(input창에 입력한 내용)으로 patientName 상태를 세팅을 해줌
     setPatientName(event.target.value);
   };
 
   const search = () => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
-    const searchPatientList = newPatientList.filter(patient => patient.patient_name === patientName);
-    setPatientList(searchPatientList);
+    if(patientName === "") {
+      setPatientList(newPatientList);
+    } else {
+      const searchPatientList = newPatientList.filter(patient => patient.patient_name === patientName);
+      setPatientList(searchPatientList);
+    }
   }
 
   const openModal = () => {

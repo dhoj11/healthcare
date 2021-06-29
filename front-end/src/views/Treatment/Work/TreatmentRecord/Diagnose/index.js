@@ -1,28 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
-
 import style from "./Diagnose.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-
-/*과거 진단 샘플 데이터*/
-import data2 from "../../../data/diagnoses";
-/* redux 진료번호로 진료시간을 가져오기 위함, 현재 DB 연결 없음*/  /*data2, 3은 묶어도 될 듯 함*/ 
-import data3 from "../../../data/treatment"
-
+import data2 from "../../../data/diagnoses"; /*과거 진단 샘플 데이터*/
 import { createSetCurDiagnosesActoin } from "../../../../../redux/treatment-reducer";
 import DiagnoseAddModal from "./DiagnoseAddModal";
 
-
-// 진단목록 컴포넌트에서 필요한 데이터의 형태
-// {tId: 16, "code": "D682","name" : "선천성 무피브리노젠혈증"}
-// 리덕스 스토어에 저장된 진료번호(진료화면에서 날짜 선택시)로 DB 진단테이블에서 위와 같이 불러오자
+/**
+ * 현재선택된 진료의 과거 진단기록을 표시한다.
+ * 자식컴포넌트에서 진단을 추가한다.
+ * 
+ * TODO : 진단테이블에서 진료번호로 진단데이터 요청 api 작성
+ * 요청데이터형태
+ * {treatment_id: {num}, disease_code: "", disease_code : ""}
+ */
 
 function Diagnose(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
   const work = useSelector(state => state.treatmentReducer.work);
+  const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
   const dispatch = useDispatch();
 
@@ -32,8 +31,6 @@ function Diagnose(props){
   },[treatment]);
 
   const [diagnoses, setDiagnoses] = useState(getDiagnose);
-  const [editBlock, SetEditBlock] = useState(true);
-
   const [addModalOpen, setAddModalOpen] = useState(false);
 
   const openAddModal = () => {
@@ -62,47 +59,42 @@ function Diagnose(props){
     dispatch(createSetCurDiagnosesActoin(diagnoses)) 
   },[diagnoses]);
 
-  //  진료, 환자 바뀌면 리덕스 스토어 상태 초기화.
   useEffect(()=> {
     dispatch(createSetCurDiagnosesActoin({})) 
   },[patient, treatment]);
 
-  useEffect( () => {
-    const curTreatment = data3.find(item => item.treatment_id === treatment);
-    const today = getCurrentDate();
-    SetEditBlock(true);
-    if (curTreatment && today === curTreatment.treatment_date){
-        SetEditBlock(false);
-        setDiagnoses([]);
-      }
-    },[treatment]);
+  /**
+   * 질병을 추가하는 함수
+   * 
+   * 한진료에서 중복진단을 막음
+   * 진단은 자식 모달컴포넌트에서 이루어지며 이 함수가 props으로 전달됨
+   */
 
-    const addDiagnoses = (diagnose) => {
-      if((!editBlock) && diagnose){ 
-        let able = true;
-        for(let i=0; i<diagnoses.length; i++){
-          if(diagnoses[i].disease_code === diagnose.disease_code){
-            able = false;
-          }
-        }
-        if(able){
-          const newDiagnoses = diagnoses.concat({ treatement_id:treatment, disease_code : diagnose.disease_code, disease_name: diagnose.disease_name});
-          setDiagnoses(newDiagnoses);
+  const addDiagnoses = (diagnose) => {
+    if((!editBlock) && diagnose){ 
+      let able = true;
+      for(let i=0; i<diagnoses.length; i++){
+        if(diagnoses[i].disease_code === diagnose.disease_code){
+          able = false;
         }
       }
-    }
-
-    const deleteDiagnose = useCallback((code) => {
-      if(!editBlock) {  
-        const newDiagnoses = diagnoses.filter(diagnose => diagnose.disease_code !== code);
+      if(able){
+        const newDiagnoses = diagnoses.concat({ treatement_id:treatment, disease_code : diagnose.disease_code, disease_name: diagnose.disease_name});
         setDiagnoses(newDiagnoses);
       }
-    },[diagnoses]);
+    }
+  }
+
+  const deleteDiagnose = useCallback((code) => {
+    if(!editBlock) {  
+      const newDiagnoses = diagnoses.filter(diagnose => diagnose.disease_code !== code);
+      setDiagnoses(newDiagnoses);
+    }
+  },[diagnoses]);
 
 
   return(
     <div className={style.diagnose}>
-
       <div className={style.title} onClick={openAddModal}>
         진단
       </div>
@@ -131,16 +123,5 @@ function Diagnose(props){
     </div>
   );
 }
-
-const getCurrentDate = () => {
-  let date = new Date();
-  let year = date.getFullYear().toString();
-  let month = date.getMonth() + 1;
-  month = month < 10 ? '0' + month.toString() : month.toString();
-  var day = date.getDate();
-  day = day < 10 ? '0' + day.toString() : day.toString();
-  return year +  "-" + month + "-" + day ;
-}
-
 
 export default Diagnose;

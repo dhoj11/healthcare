@@ -35,9 +35,6 @@ function AppointmentModal(props) {
       appointment_content: "",
       appointment_kind: "진료"
     })
-    return (() => {
-        console.log("진료 예약 언마운트시 실행");
-    });
   },[isOpen]);
 
   const changeDate = (date) => {
@@ -60,6 +57,7 @@ function AppointmentModal(props) {
   return (
     <>
     {isOpen ? (
+      patient !== undefined ? (
       <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
       <Modal.Header closeButton>
         <Modal.Title>진료 예약</Modal.Title>
@@ -103,7 +101,7 @@ function AppointmentModal(props) {
           확인
         </button>
       </Modal.Footer>
-    </Modal>
+    </Modal>) : (null)
     ) : null}
     </>
   );

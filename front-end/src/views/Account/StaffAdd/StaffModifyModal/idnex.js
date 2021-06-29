@@ -46,9 +46,6 @@ function StaffModifyModal(props){
   const handleModify = async(event) => {
     event.preventDefault();
     try{
-      //const updatedAccount = {...newAccount};
-      //await updateAccount(updatedAccount);
-
       const formData = new FormData();
       formData.append("staff_id", newAccount.staff_id);
       formData.append("staff_password", newAccount.staff_password);
