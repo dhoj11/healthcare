@@ -1,0 +1,73 @@
+.writer{
+  display: flex;
+}
+
+.img{
+  font-size: 35px;
+  background-color: gray;
+  color:white;
+  border-radius: 4px;
+  padding: 5px 5px;
+}
+.wirter_content{
+  margin-left: 10px;
+}
+.writer_name{
+  font-size: 20px;
+  font-weight: 600;
+}
+.write_date, .answer_date{
+  color: gray;
+  font-size:14px;
+  margin-top: -5px;
+}
+
+.title{
+  font-size: 20px;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  font-weight: 700;
+}
+.body_answer{
+  height: 400px;
+  overflow: auto;
+}
+.answer{
+  margin-top: 50px;
+}
+.answer_writer{
+  display: flex;
+}
+.Small_img{
+  font-size: 15px;
+  background-color: gray;
+  color:white;
+  border-radius: 4px;
+  padding: 5px 5px;
+  margin-right: 3px;
+}
+.answer_text{
+  width: 700px;
+  margin-right: 15px;
+  background-color: lightgray;
+  border:none;
+  border-radius: 10px;
+  height: 35px;
+  outline: 0;
+}
+.register {
+}
+.register > button{
+  border:none;
+  background-color: white;
+}
+
+.register_img{
+  border-radius: 70%;
+  font-size: 25px;
+  padding: 5px 5px;
+  color: rgb(87, 87, 87);
+}
+.register_img:hover{
+  background-color: lightgray;
+}

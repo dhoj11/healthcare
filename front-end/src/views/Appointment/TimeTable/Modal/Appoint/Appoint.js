@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import { getPatientList } from "./data/data";
+import { getPatientList } from "../../data/data";
 import styles from "./Appoint.module.css";
 function Appoint(props) {
 
@@ -9,8 +9,7 @@ function Appoint(props) {
     selectPatientId:"",
     treatmentContent:""   
   });
-  const [select,setSelect] = useState("")
-  console.log("실행");
+  const [select,setSelect] = useState("");
   const rowRenderer = ({index, key,style}) => {
     return (
       
@@ -34,7 +33,7 @@ function Appoint(props) {
             {patientList[index].patient_tel}
             </span>
             <span>
-            {patientList[index].date}
+            {patientList[index].reception_date}
             </span>     
              
       </div>
@@ -67,7 +66,6 @@ function Appoint(props) {
       treatmentContent:e.target.value
     })
   }
-
   return(
     <>
     <div className="modal_body">
@@ -77,7 +75,9 @@ function Appoint(props) {
                 <div className={styles.treatmentContent}><span>진료 내용</span><input type="text" onChange={setTreatmentcontent}></input></div>
               </div>
               <div className={styles.patient_table}>
-                <div className={styles.thead}><span>이름</span><span>성별</span><span>생년월일</span><span>전화번호</span><span>최근내원일</span></div>
+                <div className={styles.thead}>
+                  <span>이름</span><span>성별</span><span>생년월일</span><span>전화번호</span><span>최근내원일</span>
+                </div>
                 <AutoSizer disableHeight>
                   {({width, height}) => {
                     return (

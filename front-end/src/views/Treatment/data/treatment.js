@@ -15,7 +15,7 @@ const treatment = [
   {"id": 14 , "patientId": 6, "sympton": "몸이 뜨거워요", "record": "고열 증사응로 내원", "comment": "특이사항 없음", "date": "2021-06-13"},
   {"id": 15 , "patientId": 7, "sympton": "어지럽고 추워요", "record": "상기환자 몸살 기운으로 내원", "comment": "특이사항 없음", "date": "2021-06-14"},
   {"id": 16 , "patientId": 8, "sympton": "어지러워요", "record": "어지러움 호소", "comment": "특이사항 없음", "date": "2021-06-15"},
-  {"id": 17 , "patientId": 1,  "sympton": "감기증상이 있어요", "date": "2021-06-24"}
+  {"id": 17 , "patientId": 1,  "sympton": "감기증상이 있어요", "date": "2021-06-25"}
 ]
 
 export default treatment;

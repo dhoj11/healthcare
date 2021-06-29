@@ -14,7 +14,7 @@ function AppointmentModal(props) {
   
   const [startDate, setStartDate] = useState(new Date());
   const [patient, setPatient] = useState({});
-
+  
   useEffect(() => {
     setPatient(filteredPatient[0]);
     return (() => {
