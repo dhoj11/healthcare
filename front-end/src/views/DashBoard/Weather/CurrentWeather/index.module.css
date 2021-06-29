@@ -1,0 +1,82 @@
+.Weather_contain{
+  width: 26.5%;
+  background-color: white;
+  border-radius: 30px;
+  margin-right: 30px;
+  height: 510px;
+  overflow: auto;
+}
+
+.Weather_header{
+  margin-top: 30px;
+  margin-left: 30px;
+  color:#1971c2;
+  font-weight: 600;
+  font-size: large;
+}
+.Weather_header > span{
+  margin-left: 10px;
+}
+.Weather_body {
+  
+  text-align: center;
+}
+img{
+  image-rendering: auto;
+  image-rendering: -webkit-optimize-contrast;;
+}
+.Img{
+  font-size: 100px;
+}
+.Img i{
+  color: gray;
+}
+.weather_content{
+  margin-left: 30px;
+}
+.temp{
+  padding-bottom: 10px;
+  font-size: 90px;
+  font-weight: 400;
+  padding-bottom: 0px;
+}
+.state_text{
+  font-size: 25px;
+}
+.sign{
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 400;
+}
+.weather_part{
+  margin-top: 5px;
+  font-size:17px;
+}
+.min{
+  margin-right: 10px;
+}
+.max{
+  margin-right: 10px;
+}
+.min_value{
+  color: blue;
+  font-weight: 600;
+  margin-left: 3px;
+}
+.max_value{
+  color: red;
+  font-weight: 600;
+  margin-left: 3px;
+}
+.feels_value{
+  color: green;
+  font-weight: 600;
+  margin-left: 3px;
+}
+.clouds{
+  margin-left: 10px;
+  font-size: 14px
+}
+.Weather_body > div:nth-child(1){
+  height: 120px;
+}

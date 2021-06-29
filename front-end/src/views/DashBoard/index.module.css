@@ -2,16 +2,14 @@
 }
 .top_contain{
   display: flex;
+  width: 100%;
 }
 .bottom_contain{
   display: flex;
   height: 100%;
+  width: 100%;
 }
-.chart_contain{
-  display: flex;
-  width: 80%;
-  background-color: white;
-  border-radius: 30px;
-  margin-right: 30px;
-  margin-bottom: 30px;
+
+.bottom_contain{
+  margin-top: 15px;
 }
