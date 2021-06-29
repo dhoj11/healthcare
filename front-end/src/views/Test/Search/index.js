@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import style from "./Search.module.css"
 import testListData from "../data/testList";
 
@@ -19,9 +19,7 @@ function Search(props){
       alert("검사번호가 유효하지 않습니다.");
     }
   }
-
   
-
   return(
     <div className={style.search}>
       <input className={`form-control ${style.field}`} onChange={handleChange} type="text" placeholder="바코드(검사번호)를 입력하세요."></input>

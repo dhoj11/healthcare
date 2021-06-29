@@ -9,7 +9,7 @@ function TestList(props){
 
   /**
    * 당일 검사자 목록을 표시한다.
-   * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만
+   * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만 표시한다.
    */
 
   const getTestList = useCallback(() => { 

@@ -2,17 +2,20 @@ import style from "./DiagnoseAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import data from "../../../../data/disease";
 import { useState } from "react";
-
-import { faPlus, faSearch, faCommentMedical } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+/**
+ * 질병을 검색하고 진단을 추가한다.
+ * 
+ * TODO : 검색된 질병이름을 통해 질병테이블에서 질병데이터를 요청하는 API 작성
+ * 요청데이터의형태
+ * {disease_code:  "", disease_name: ""},
+ */
 
 function DiagnoseAddModal(props){
 
   const {isOpen, close} = props;
-
-  const handleClose = () => {
-    close();
-  }
 
   const [searchItem, setSearchItem] = useState();
   const [diseases, setDiseases] = useState([]);
@@ -27,12 +30,16 @@ function DiagnoseAddModal(props){
     setDiseases(newDiseases);
   }
 
+  /**
+   * 진단을 추가한다.
+   * 
+   * 선택된 질병은 부모컴포넌트의 함수를 통해, 부모컴포넌트의 진단(배열)상태를 업데이트 한다. 
+   */
   const addDiagnoses = (item) => {
     let diagnose = item;
     props.addDiagnoses(diagnose);
   }
 
-  
   return(
     <>
     {isOpen? (
@@ -48,7 +55,6 @@ function DiagnoseAddModal(props){
             <div className={style.top}>
               <div className={style.search}>
                 <span className={style.title}>
-                  {/* <span><FontAwesomeIcon icon={faCommentMedical} className={style.titleIcon}/></span> */}
                   <span className={style.titleContent}>질병진단</span>
                 </span>
                 <input type="text" className={`form-control-lg form-rounded ${style.input}`}

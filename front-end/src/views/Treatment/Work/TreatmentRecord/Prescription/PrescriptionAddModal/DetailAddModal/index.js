@@ -1,9 +1,13 @@
 import style from "./DetailAddModal.module.css";
 import { Modal } from "react-bootstrap";
-
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+
+/**
+ * 처방손자컴포넌트
+ * 선택된 약의 복용일수, 1회투약양을 지정하여 처방한다.
+ */
 
 function DetailAddModal(props){
 
@@ -24,10 +28,6 @@ function DetailAddModal(props){
     setMedicine(props.medicine);
   },[props])
 
-  const handleClose = () => {
-    close();
-  }
-
   useEffect(()=>{
     setPrescription(medicine);
   },[medicine]);
@@ -36,10 +36,6 @@ function DetailAddModal(props){
     props.addPrescriptions(prescription);
     close();
   }
-
-  useEffect(()=>{
-    console.log(prescription);
-  },[prescription])
 
   const handleChange = (event) => {
 
@@ -50,7 +46,7 @@ function DetailAddModal(props){
       })
     }
     
-    // 복용시간 지정해줄 경우 활성화
+    // 복용시간(아침,점심,저녁) 지정해줄 경우 주석풀기
     // else {
     //   if(event.target.checked){
     //     setPrescription(prevPrescription => {
@@ -102,7 +98,7 @@ function DetailAddModal(props){
               <span className={style.il}></span>
             </div>
 
-            {/* 아래 아침점심 선택 처방 정상동작 함 추후 고려하여 활성화 */}
+            {/* 아래 아침점심 선택 처방 정상동작 함 추후 고려하여 주석풀기 */}
             {/* <div className={style.time}>
               <div className={`form-group row`}>
                 <div className={style.item}>

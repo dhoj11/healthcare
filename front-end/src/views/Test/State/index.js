@@ -9,10 +9,6 @@ function State(props){
 
   const [barcodeModalOpen, setBarcodeModalOpen] = useState(false);
 
-  const openBarcodeModal = () => {
-    setBarcodeModalOpen(true);
-  };
-
   const closeBarcodeModal = () => {
     setBarcodeModalOpen(false);
   }
