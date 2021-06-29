@@ -25,13 +25,13 @@ function Date(props){
   return(
     <div className={style.selectDate}>
       {
-        treatments.filter( item => { return item.patientId === patient}).map((item) => {
-          return (<div key={item.id}
-                       className={ item.id === treatment ? `${style.selectTreatment}` : `${style.dateItem}` }
+        treatments.filter( item => { return item.patient_id === patient}).map((item) => {
+          return (<div key={item.treatment_id}
+                       className={ item.treatment_id === treatment ? `${style.selectTreatment}` : `${style.dateItem}` }
                        onClick={() => {
-                         dispatch(createSetTreatmentAction(item.id));
+                         dispatch(createSetTreatmentAction(item.treatment_id));
                        }}>
-                       {item.date} 
+                       {item.treatment_date} 
                    </div>);
                    })
       }

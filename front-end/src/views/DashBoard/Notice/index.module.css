@@ -29,3 +29,9 @@
   padding: 10px 10px;
   cursor: pointer;
 }
+.Notice_title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}

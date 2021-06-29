@@ -14,6 +14,6 @@ code {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-thumb{
   height: 20%;
-  background-color: gray;
+  background-color: rgb(179, 179, 179);
   border-radius: 10px;    
 }

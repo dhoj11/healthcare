@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 function PrescriptionTab(props) {
   const staticPrescription = getPrescriptionList();
-  const filteredPrescriptionList = staticPrescription.filter(prescription => (prescription.patientId === props.patientId));
+  const filteredPrescriptionList = staticPrescription.filter(prescription => (prescription.patient_id === props.patientId));
   const [prescriptionList, setPrescriptionList] = useState(filteredPrescriptionList);
   let curr = 0;
 
@@ -19,26 +19,26 @@ function PrescriptionTab(props) {
 
   const rowRenderer = ({index, key, style}) => {
     if(index !== 0) {
-      curr = prescriptionList[index-1].treatmentId;
+      curr = prescriptionList[index-1].treatment_id;
     } 
     return (
       <div key={key} style={style} className={`${styles.prescription_row} border-bottom d-flex`}>
-      {prescriptionList[index].treatmentId !== curr ? (
+      {prescriptionList[index].treatment_id !== curr ? (
       <>
         <span className={styles.prescription_tab_item_date}>
-          {prescriptionList[index].treatmentDate}
+          {prescriptionList[index].treatment_date}
         </span>
         <span className={styles.prescription_tab_item}>
-          {prescriptionList[index].doctor}
+          {prescriptionList[index].staff_name}
         </span>
         <span className={styles.prescription_tab_item_medicine}>
-          {prescriptionList[index].medicine}
+          {prescriptionList[index].medicine_name}
         </span>
         <span className={styles.prescription_tab_item}>
-          {prescriptionList[index].kind}
+          {prescriptionList[index].medicine_kind}
         </span>
         <span className={styles.prescription_tab_item}>
-          {prescriptionList[index].days}
+          {prescriptionList[index].prescription_comment}
         </span>
       </>)
       :(<>
@@ -47,13 +47,13 @@ function PrescriptionTab(props) {
           <span className={styles.prescription_tab_item}>
           </span>
           <span className={styles.prescription_tab_item_medicine}>
-            {prescriptionList[index].medicine}
+            {prescriptionList[index].medicine_name}
           </span>
           <span className={styles.prescription_tab_item}>
-            {prescriptionList[index].kind}
+            {prescriptionList[index].medicine_kind}
           </span>
           <span className={styles.prescription_tab_item}>
-            {prescriptionList[index].days}
+            {prescriptionList[index].prescription_comment}
           </span>
         </>)}
       </div>

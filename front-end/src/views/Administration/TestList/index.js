@@ -4,11 +4,12 @@ import { AutoSizer, List } from "react-virtualized";
 import { useState, useEffect } from "react";
 import AppointmentWithTestModal from "./AppointmentWithTestModal";
 import TestPatientListItem from "./TestPatientListItem";
+import RequestTest from "./RequestTest";
 import moment from "moment";
 
 function TestList(props) {
 
-  const {testPatientId} = props;
+  const {testAppointmentId} = props;
   // 검사 환자 리스트와 그 환자에 해당하는 검사리스트를 가지고옴
   const staticTestPatientList = getTestPatientList();
   const staticTestCodeList = getTestCodeList();
@@ -17,23 +18,24 @@ function TestList(props) {
   const [testCodeList, setTestCodeList] = useState([]);   //검사 리스트 빈 배열로 초기 상태 선언
   const [appointmentTestCode, setAppointmentTestCode] = useState([]);   //예약이 필요한 검사 리스트를 담을 상태
   const [patientId, setPatientId] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [reqTestModalOpen, setReqTestModalOpen] = useState(false);
 
   useEffect(() => {
     console.log("검사 접수 실행");
-    const newTest = testPatientList.concat(staticTestPatientList.filter(test => test.patientId === testPatientId));
+    const newTest = testPatientList.concat(staticTestPatientList.filter(test => test.appointment_id === testAppointmentId));
     setTestPatientList(newTest);
     return (() => {
       console.log("검사 접수 언마운트시 실행");
     });
-  },[testPatientId]);
+  },[testAppointmentId]);
 
   const listAll = () => {   //전체 클릭시 검사 환자 리스트 상태를 다시 당일 검사 환자 리스트로 세팅
     //setTestPatientList(staticTestPatientList);
   };
 
   const getAllLength = () => {  //검사 환자 리스트의 전체 건수를 반환해줌
-    //return staticTestPatientList.length;
+    return testPatientList.length;
   };
 
   const listWithState = (testState) => {   //검사상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 검사 환자 리스트 상태를 다시 세팅
@@ -41,16 +43,24 @@ function TestList(props) {
     //setTestPatientList(filteredTestPatientList);
   };
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openAppointmentModal = () => {
+    setAppointmentModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeAppointmentModal = () => {
+    setAppointmentModalOpen(false);
+  };
+
+  const openReqTestModal = () => {
+    setReqTestModalOpen(true);
+  };
+
+  const closeReqTestModal = () => {
+    setReqTestModalOpen(false);
   };
 
   const showTestList = (patientId) => {
-    const testList = staticTestCodeList.filter(testCode => testCode.patientId === patientId);
+    const testList = staticTestCodeList.filter(testCode => testCode.patient_id === patientId);
     setTestCodeList(testList);
     setAppointmentTestCode([]);   //이전에 환자의 예약 검사 리스트를 빈배열로 세팅
     setPatientId(patientId);
@@ -68,21 +78,21 @@ function TestList(props) {
     return (
       <div key={key} style={style} className={`border-bottom d-flex ${styles.code_row}`}>
         <span className={styles.test_code_item}>
-          <input className="mr-1" type="checkbox" value={testCodeList[index].code} onChange={changeCheckedList}/>
-          {testCodeList[index].code}
+          <input className="mr-1" type="checkbox" value={testCodeList[index].test_code} onChange={changeCheckedList}/>
+          {testCodeList[index].test_code}
         </span>
         <span className={styles.test_code_item}>
-          {testCodeList[index].codeName}
+          {testCodeList[index].test_name}
         </span>
         <span className={styles.test_code_item}>
-          {testCodeList[index].inspector}
+          {testCodeList[index].staff_name}
         </span>
         {
           { 
-            대기 : <span style={{color: "green"}}className={styles.test_code_item}>{testCodeList[index].state}</span>,
-            진행중 : <span style={{color: "red"}}className={styles.test_code_item}>{testCodeList[index].state}</span>,
-            완료 : <span style={{color: "blue"}}className={styles.test_code_item}>{testCodeList[index].state}</span>
-          }[testCodeList[index].state]
+            대기 : <span style={{color: "#74b816"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>,
+            진행중 : <span style={{color: "#f03e3e"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>,
+            완료 : <span style={{color: "#1c7ed6"}}className={styles.test_code_item}>{testCodeList[index].test_list_state}</span>
+          }[testCodeList[index].test_list_state]
         }
       </div>
     );
@@ -93,10 +103,10 @@ function TestList(props) {
       <div className={styles.test_patient_list}>
           <div className="mb-2 ml-2 d-flex">
             <img className="mr-3" src="/resources/svg/clipboard-data.svg"></img><span className="mr-3">검사</span>
-            <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} | </div>
-            <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
+            <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
+            {/* <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
             <div className="mr-2" onClick={()=> listWithState("진행중")}>진행중  | </div>
-            <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div>
+            <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div> */}
           </div>
           <div className="d-flex bg-light">
           <span className={`border ${styles.test_border}`}>
@@ -128,9 +138,10 @@ function TestList(props) {
           <img className="mr-3" src="/resources/svg/card-list.svg"></img>
           <span className="mr-2">검사 목록</span>
           <div className={styles.test_button}>
-            <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openModal}>검사예약</button>
-            <AppointmentWithTestModal patientId={patientId} testCodes={appointmentTestCode} isOpen={modalOpen} close={closeModal}/>
-            <button type="button" className="btn btn-sm btn-outline-secondary">검사요청</button>
+            <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
+            <AppointmentWithTestModal patientId={patientId} testCodes={appointmentTestCode} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={openReqTestModal}>검사요청</button>
+            <RequestTest patientId={patientId} testCodes={appointmentTestCode} isOpen={reqTestModalOpen} close={closeReqTestModal}/>
           </div>
         </div>
         <div className="d-flex bg-light">

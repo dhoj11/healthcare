@@ -1,0 +1,27 @@
+
+.account{
+  position: relative;
+  margin: 0 200px;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+}
+
+.top{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.body{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+hr{
+  margin: 20px;
+}

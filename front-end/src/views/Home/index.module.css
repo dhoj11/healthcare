@@ -1,0 +1,25 @@
+.home_content {
+  padding:20px;
+  display: flex;
+  width: 120%;
+  height: 875px;
+}
+
+.login_area {
+  display: flex;
+  align-items: center;
+}
+
+.second_column {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #DAE4FF;
+  width: 50%;
+  height: 100%;
+}
+
+.notice_area, .poster_area {
+  padding: 50px;
+  height: 50%;
+}
+

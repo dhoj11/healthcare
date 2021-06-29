@@ -9,14 +9,14 @@ function SearchPatient(props) {
   const [patientName, setPatientName] = useState("");   //input 창에 환자 이름을 입력할 때 사용되는 상태
   const [patientList, setPatientList] = useState(staticPatientList);    //모든 환자의 리스트를 초기 상태로 선언
   const [modalOpen, setModalOpen] = useState(false);    //신규회원등록 모달의 열림 상태를 초기엔 false로 선언
-
+  const [newPatientList, setNewPatientList] = useState(staticPatientList);
   const changePatientName = (event) => {  //event.target.name(input창에 입력한 내용)으로 patientName 상태를 세팅을 해줌
     setPatientName(event.target.value);
   };
 
   const search = () => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
-    const searchPatientList = staticPatientList.filter(patient => patient.name === patientName);
-   setPatientList(searchPatientList);
+    const searchPatientList = newPatientList.filter(patient => patient.patient_name === patientName);
+    setPatientList(searchPatientList);
   }
 
   const openModal = () => {
@@ -28,31 +28,32 @@ function SearchPatient(props) {
   };
 
   const selectPatient = (patientId) => {
-    const filteredPatient = patientList.filter(patient => patient.patientId === patientId);
+    const filteredPatient = patientList.filter(patient => patient.patient_id === patientId);
     props.selectedPatient(filteredPatient[0]);
   }
 
   const newPaitentList = (patient) => {
-    const newPatientList = patientList.concat(patient);
-    setPatientList(newPatientList);
-    console.log(newPatientList);
+    //const newPatientList = staticPatientList.push(patient);
+    const newList = newPatientList.concat(patient);
+    setNewPatientList(newList);
+    setPatientList(newList);
     console.log(patientList);
   }
 
   const rowRenderer = ({index, key ,style}) => {
     return (
-      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`} onClick={() => selectPatient(patientList[index].patientId)}>
+      <div key={key} style={style} className={`${styles.search_patient_row} border-bottom d-flex`} onClick={() => selectPatient(patientList[index].patient_id)}>
         <span className={styles.patient_item}>
-        {patientList[index].name}
+        {patientList[index].patient_name}
       </span>
       <span className={styles.patient_item_gender}>
-      {patientList[index].gender}
+      {patientList[index].patient_gender}
       </span>
       <span className={styles.patient_item}>
-      {patientList[index].birth}
+      {patientList[index].patient_birth}
       </span>
       <span className={styles.patient_item_tel}>
-      {patientList[index].tel}
+      {patientList[index].patient_tel}
       </span>
       <span className={styles.patient_item}>
       {patientList[index].recentVisit}

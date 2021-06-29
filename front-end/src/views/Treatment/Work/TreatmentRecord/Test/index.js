@@ -22,11 +22,11 @@ function Test(props){
   const work = useSelector(state => state.treatmentReducer.work);
 
   const getTest = useCallback((event) => {
-    const prevTests = data2.filter(item => item.tId === treatment);
+    const prevTests = data2.filter(item => item.treatment_id === treatment);
     return prevTests;
   },[treatment]);
 
-  const [test, setTest] = useState({code:""});
+  const [test, setTest] = useState({test_code:""});
   const [tests, setTests] = useState(getTest);
   const [editBlock, SetEditBlock] = useState(true);
 
@@ -55,21 +55,20 @@ function Test(props){
 
 
   useEffect( () => {
-    console.log(treatment);
-    const curTreatment = data3.find(item => item.id === treatment);
+    const curTreatment = data3.find(item => item.treatment_id === treatment);
     const today = getCurrentDate();
     SetEditBlock(true);
-    if (curTreatment && today === curTreatment.date){
+    if (curTreatment && today === curTreatment.treatment_date){
         SetEditBlock(false);
         setTests([]);
       }
     },[treatment]);
 
   const addTest = useCallback((event) => {
-    if( (!editBlock) && tests && test.code !== ""){
+    if( (!editBlock) && tests && test.test_code !== ""){
       let able = true;
       for(let i=0; i<tests.length; i++){
-        if(tests[i].code === test.code){
+        if(tests[i].test_code === test.test_code){
           able = false;
         }
       }
@@ -77,13 +76,13 @@ function Test(props){
         const newTest = tests.concat(test);
         setTests(newTest);
       }
-      setTest({code:""});
+      setTest({test_code:""});
     }
   },[test, tests]);
 
   const deleteTest = useCallback((event, code) => {
     if(!editBlock){
-      const newTests = tests.filter(test => test.code !== code);
+      const newTests = tests.filter(test => test.test_code !== code);
       setTests(newTests);
     }
   },[test, tests]);
@@ -105,10 +104,10 @@ function Test(props){
               <tbody>
               {
               tests.map((item) => { 
-                return (<tr key={item.code}> 
-                          <td>{item.code}</td> 
-                          <td>{item.name}</td>
-                          <td onClick={(event) => deleteTest(event, item.code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                return (<tr key={item.test_code}> 
+                          <td>{item.test_code}</td> 
+                          <td>{item.test_name}</td>
+                          <td onClick={(event) => deleteTest(event, item.test_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
                         </tr>); })
             }
               </tbody>
@@ -118,7 +117,7 @@ function Test(props){
             <span className={style.addTitle}>검사명 :</span>
             <Autocomplete className={style.input}
                           options={data}
-                          getOptionLabel={(option) => option.name || option.code}
+                          getOptionLabel={(option) => option.test_name}
                           onChange={(event, newValue) => {
                             setTest(newValue);
                           }}

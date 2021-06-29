@@ -1,30 +1,31 @@
 import {getAppointmentList, getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ListItem from "./ListItem";
 
 function Appointment(props) {
 
-  const {selectedPatient, receptionPatient, testPatient, isFinished} = props;
+  const {selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
 
   //예약 리스트, 환자 리스트 정보 가져오기
   const staticAppointmentList = getAppointmentList();   
   const staticPatientList = getPatientList();
 
   //당일 예약 리스트를 가져오기 위해 필터를 적용, 당일 예약 리스트를 초기상태로 선언
-  const todayAppointmentList = staticAppointmentList.filter(today => today.date === "2021-06-16");  //후에 백엔드에서 처리할 예정
+  const todayAppointmentList = staticAppointmentList.filter(today => today.appointment_date === "2021-06-16");  //후에 백엔드에서 처리할 예정
   const [appointmentList, setAppointmentList] = useState(todayAppointmentList);
+
   const [stateList, setStateList] = useState([]);
+  let newList = stateList;
   const setAppointmentState = (list) => {
-    // const temp = stateList;
-    // temp.filter(state => state.patientId !== list.patientId);
-    // temp.concat(list);
-    // setStateList(temp);
-    const temp = stateList.filter(state => state.patientId === list.patientId);
-    console.log(temp);
-    const arr = temp.concat(list);
-    console.log(arr);
+    newList = newList.filter(temp => temp.patient_id !== list.patient_id);
+    newList = newList.concat(list);
+    setStateList(newList);
   };
+
+  useEffect(() => {
+    console.log("!!!!!!!!!!!!!!!",stateList);
+  },[stateList])
 
   const listAll = () => {   //전체 클릭시 예약 리스트 상태를 다시 당일 예약 리스트로 세팅
     setAppointmentList(todayAppointmentList);
@@ -36,12 +37,12 @@ function Appointment(props) {
 
   const listWithState = (appointmentState) => {   //예약상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 예약 리스트 상태를 다시 세팅
     const temp = todayAppointmentList;
-    const filteredAppointmentList = temp.filter(appointment => appointment.state === appointmentState);
+    const filteredAppointmentList = temp.filter(appointment => appointment.appointment_state === appointmentState);
     setAppointmentList(filteredAppointmentList);
   };
 
   const selectPatient = (patientId) => { //예약 리스트의 환자 클릭 시 해당 환자의 patientId로 환자 리스트에서 환자를 찾고 부모 컴포넌트의 상태를 바꿔줌 
-    const filteredPatient = staticPatientList.filter(patient => patient.patientId === patientId);
+    const filteredPatient = staticPatientList.filter(patient => patient.patient_id === patientId);
     selectedPatient(filteredPatient[0]);
   }
 
@@ -49,11 +50,11 @@ function Appointment(props) {
     <div className={styles.appointment}>
         <div className="mb-1 ml-2 d-flex">
           <img className="mr-3" src="/resources/svg/person-check.svg"></img><span className="mr-3">예약</span>
-          <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} | </div>
-          <div className="mr-2" onClick={()=> listWithState("예약")}>예약  | </div>
+          <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
+          {/* <div className="mr-2" onClick={()=> listWithState("예약")}>예약  | </div>
           <div className="mr-2" onClick={()=> listWithState("내원")}>내원  | </div>
           <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
-          <div className="mr-2" onClick={()=> listWithState("취소")}>취소  </div>
+          <div className="mr-2" onClick={()=> listWithState("취소")}>취소  </div> */}
         </div>
       <div className="d-flex bg-light">
         <span className={`border ${styles.appointment_border}`}>
@@ -77,7 +78,7 @@ function Appointment(props) {
     </div>
     <div className={styles.appointment_content}>
       {appointmentList.map((appointment, index)=>(
-        <ListItem index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} testPatient={testPatient} isFinished={isFinished} setAppointmentState={setAppointmentState}/>
+        <ListItem index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished} setAppointmentState={setAppointmentState}/>
       ))}
     </div>
  </div>

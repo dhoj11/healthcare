@@ -53,3 +53,9 @@
 .FreeBoard_etc > i{
   margin-left: 10px;
 }
+.FreeBoard_title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}

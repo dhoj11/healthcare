@@ -19,7 +19,7 @@ export function getStaffList(){
 }
 
 const imgNotice = [
-  {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img1.jpg"},
+  {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일월요일 화요일 수요일 목요일 금요일","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img1.jpg"},
   {"img_notice_id":1,"img_notice_title":"병원 위치 및 병원관리","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img2.jpg"},
   {"img_notice_id":1,"img_notice_title":"점심시간 안내 및 점심비용","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img3.jpg"},
   {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img1.jpg"},
