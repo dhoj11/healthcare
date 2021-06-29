@@ -6,7 +6,7 @@ const medicine = [
   {medicine_code: "SILY14", medicine_name: "LEGALON 140 Cap", medicine_kind : "내복약", medicine_type:"T"},
   {medicine_code: "SIMV2", medicine_name: "SIMVALORD Tab 20mg", medicine_kind : "내복약", medicine_type:"C"},
   {medicine_code: "RFD45", medicine_name: "RIFODEX Tab 450mg", medicine_kind : "내복약", medicine_type:"T"},
-  {medicine_code: "PSEUDA", medicine_name: "SUDAFED Tab 60mg", medicine_kind : "내복약", medicine_type:"C"},
+  {medicine_code: "PSEUDA", medicine_name: "SUDAFED Tab 60mg", medicine_kind : "주사약", medicine_type:"C"},
   {medicine_code: "QU100", medicine_name: "Tab 400mg", medicine_kind : "내복약", medicine_type:"T"},
   {medicine_code: "RAC", medicine_name: "MESTINON Tab 60mg", medicine_kind : "내복약", medicine_type:"C"},
 ]

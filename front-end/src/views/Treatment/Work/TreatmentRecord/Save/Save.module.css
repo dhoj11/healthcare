@@ -1,15 +1,18 @@
 .save{
-  margin-bottom: 10px;
+  background-color: #066b53;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #fff;
   font-weight: 700;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid #D3D3D3;
-  padding: 10px 20px 10px 20px;
-  color: #808080;
+  margin: 5px;
 }
 
 
 .save:hover{
   background: #008868;
   color: #fff;
+}
+
+.addIcon{
+  margin-right: 10px;
 }
