@@ -13,6 +13,7 @@ import data2 from "../../../data/testLists"
 import data3 from "../../../data/treatment";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetCurTestsActoin } from "../../../../../redux/treatment-reducer";
+import TestAddModal from "./TestAddModal/TestAddModal";
 
 
 function Test(props){
@@ -26,11 +27,22 @@ function Test(props){
     return prevTests;
   },[treatment]);
 
-  const [test, setTest] = useState({test_code:""});
   const [tests, setTests] = useState(getTest);
   const [editBlock, SetEditBlock] = useState(true);
 
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
   const dispatch = useDispatch();
+
+  const openAddModal = () => {
+    if(!editBlock){
+      setAddModalOpen(true);
+    }
+  };
+
+  const closeAddModal = () => {
+    setAddModalOpen(false);
+  };
 
   useEffect(()=>{
     setTests(getTest);
@@ -64,8 +76,8 @@ function Test(props){
       }
     },[treatment]);
 
-  const addTest = useCallback((event) => {
-    if( (!editBlock) && tests && test.test_code !== ""){
+  const addTests  = (test) => {
+    if( (!editBlock) && tests){
       let able = true;
       for(let i=0; i<tests.length; i++){
         if(tests[i].test_code === test.test_code){
@@ -76,20 +88,19 @@ function Test(props){
         const newTest = tests.concat(test);
         setTests(newTest);
       }
-      setTest({test_code:""});
     }
-  },[test, tests]);
+  } 
 
-  const deleteTest = useCallback((event, code) => {
+  const deleteTest = useCallback((code) => {
     if(!editBlock){
       const newTests = tests.filter(test => test.test_code !== code);
       setTests(newTests);
     }
-  },[test, tests]);
+  },[tests]);
 
   return(
     <div className={style.test}>
-      <div className={style.title}>
+      <div className={style.title} onClick={openAddModal}>
         검사
       </div>
       <div className={style.testList}>
@@ -107,27 +118,13 @@ function Test(props){
                 return (<tr key={item.test_code}> 
                           <td>{item.test_code}</td> 
                           <td>{item.test_name}</td>
-                          <td onClick={(event) => deleteTest(event, item.test_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                          <td onClick={() => deleteTest(item.test_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
                         </tr>); })
             }
               </tbody>
             </table>
-
-            <div className={style.add}>
-            <span className={style.addTitle}>검사명 :</span>
-            <Autocomplete className={style.input}
-                          options={data}
-                          getOptionLabel={(option) => option.test_name}
-                          onChange={(event, newValue) => {
-                            setTest(newValue);
-                          }}
-                          renderInput={(params) => <TextField {...params}/>}
-                          />
-            <div className={style.addButton} onClick={addTest}> 
-              <FontAwesomeIcon icon={faPlus} className={style.plus}/>
-            </div>
-          </div>
       </div>
+      <TestAddModal isOpen={addModalOpen} close={closeAddModal} addTests={addTests}/>
     </div>
   );
 }

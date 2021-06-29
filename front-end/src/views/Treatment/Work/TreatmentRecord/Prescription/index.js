@@ -1,11 +1,7 @@
 import style from "./Prescription.module.css";
-import TextField from '@material-ui/core/TextField';
-import { Autocomplete } from "@material-ui/lab";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-/* 약데이터 */
-import data from "../../../data/medicine";
 /* 과거 처방 샘플 데이터 */
 import data2 from "../../../data/prescriptions";
 import data3 from "../../../data/treatment";
@@ -17,6 +13,7 @@ import data3 from "../../../data/treatment";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetCurPrescriptionsActoin } from "../../../../../redux/treatment-reducer";
+import PrescriptionAddModal from "./PrescriptionAddModal";
 
 function Prescription(props){
 
@@ -32,9 +29,20 @@ function Prescription(props){
 
   const dispatch = useDispatch();
   
-  const [prescription, setPrescription] = useState({medicine_code:""})
   const [prescriptions, setPrescriptions] = useState(getPrescriptions);
   const [editBlock, SetEditBlock] = useState(true);
+
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
+  const openAddModal = () => {
+    if(!editBlock){
+      setAddModalOpen(true);
+    }
+  };
+
+  const closeAddModal = () => {
+    setAddModalOpen(false);
+  };
 
   useEffect(()=>{
     setPrescriptions(getPrescriptions);
@@ -67,10 +75,9 @@ function Prescription(props){
       }
     },[treatment]);
 
-
-  const addPrescription = useCallback((event) => {
-    
-    if( (!editBlock) && prescriptions && prescription.medicine_code !== ""){
+  const addPrescriptions = (prescription) => {
+  
+    if( (!editBlock) && prescription){
       let able = true;
       for(let i=0; i<prescriptions.length; i++){
         if(prescriptions[i].medicine_code === prescription.medicine_code){
@@ -82,24 +89,26 @@ function Prescription(props){
                                       medicine_code: prescription.medicine_code, 
                                       medicine_name: prescription.medicine_name, 
                                       medicine_kind: prescription.medicine_kind,
-                                      medicine_type: prescription.medicine_type,             
-                                      prescription_comment:prescription.prescription_comment});
+                                      medicine_type: prescription.medicine_type,           
+                                      prescription_comment:prescription.prescription_comment || "",
+                                      prescription_amount:prescription.prescription_amount || ""
+                                      //prescription_time:prescription.prescription_time || ""
+                                    });
         setPrescriptions(newPrescriptions);
       }
-      setPrescription({medicine_code:""});
     }
-  },[prescription, prescriptions]);
+  }
 
-  const deletePrescription = useCallback((event, code) => {
+  const deletePrescription = useCallback((code) => {
     if (!editBlock){
       const newPrescriptions = prescriptions.filter(prescriptions => prescriptions.medicine_code !== code);
       setPrescriptions(newPrescriptions);
     }
-  },[prescription,prescriptions]);
+  },[prescriptions]);
 
   return(
     <div className={style.prescription}>
-      <div className={style.title}>
+      <div className={style.title} onClick={openAddModal}>
         처방
       </div>
       <div className={style.prescriptionList}>
@@ -123,47 +132,16 @@ function Prescription(props){
                             <td>{item.medicine_kind}</td>
                             <td>{item.medicine_type}</td>
                             <td>{item.prescription_comment}</td>
-                            <td onClick={(event) => deletePrescription(event, item.medicine_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                            <td onClick={() => deletePrescription(item.medicine_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
                         </tr>);
                 })
               }
             </tbody>
           </table>
-
-          <div className={style.add}>
-          <span className={style.addTitle}> 약명 : </span> 
-          <Autocomplete className={style.input}
-                          options={data}
-                          getOptionLabel={(option) => option.medicine_name}
-                          onChange={(event, newValue) => {
-                            setPrescription({
-                             ...newValue,
-                             prescription_code:0
-                            });
-                          }}
-                          renderInput={(params) => <TextField {...params} />}
-                          />
-          <span className={style.addTitle}>처방일수 : </span>
-          <div className={style.comment}>
-            <input type="number"
-                   className={style.day}
-                   name="prescription_comment" 
-                   value={prescription.prescription_comment||0}
-                   onChange={(event, newValue) => {
-                      setPrescription(
-                        {
-                          ...prescription,
-                         [event.target.name]: event.target.value
-                        })
-                   }}>
-            </input>
-          </div>
-          <div className={style.addButton} onClick={addPrescription}> 
-              <FontAwesomeIcon icon={faPlus} className={style.plus}/>
-          </div>
-
-          </div>
       </div>
+
+    <PrescriptionAddModal isOpen={addModalOpen} close={closeAddModal} addPrescriptions={addPrescriptions}/>
+
     </div>
   );
 }
