@@ -1,19 +1,22 @@
 import style from "./PrescriptionAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import data from "../../../../data/medicine";
-
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import DetailAddModal from "./DetailAddModal";
 
+/**
+ * 약을 검색하고 처방을 추가한다.
+ * 
+ * TODO : 검색된 약이름을 통해 약테이블에서 약데이터를 요청하는 API 작성
+ * 요청데이터의 형태
+ * {treatment_id: {num}, medicine_code: "", medicine_name: "", medicine_kind : "", medicine_type:	"",prescription_comment: {num}},
+ */
+
 function PrescriptionAddModal(props){
 
   const {isOpen, close} = props;
-
-  const handleClose = () => {
-    close();
-  }
 
   const [searchItem, setSearchItem] = useState();
   const [prescriptions, setPrescriptions] = useState([]);
@@ -29,7 +32,6 @@ function PrescriptionAddModal(props){
     setAddModalOpen(false);
   };
 
-  
   const handleChange = (event) => {
     setSearchItem(event.target.value);
   }
@@ -39,10 +41,21 @@ function PrescriptionAddModal(props){
     const newMedicines = medicineData.filter( item => item.medicine_name.includes(searchItem));
     setPrescriptions(newMedicines);
   }
-  //medicine_code, medicine_name, medicine_kind, medicine_type
+
+  /**
+   * 약 처방은 다음의 과정을 따른다.
+   * 
+   * 첫번째 모달에서 약 선택 후
+   * 두번째 모달에서 복용날짜/ 1회 투약횟수를 지정하여 처방한다.
+   * 
+   * 이 컴포넌트에서는 약을 선택하는 모달로
+   * 현재 선택된 약 정보를 상태로 저장하여, 부모컴포넌트의 상태변경함수와 함께 자식컴포넌트에게 전달한다.
+   * 
+   * 즉 할아버지 컴포넌트의 처방(배열)상태를 변경하는 함수가
+   * 손자컴포넌트에게 전달된다.
+   */
   
   const addPrescriptions = (item) => {
-
     setMedicine({medicine_code: item.medicine_code, 
                  medicine_name: item.medicine_name, 
                  medicine_kind: item.medicine_kind, 

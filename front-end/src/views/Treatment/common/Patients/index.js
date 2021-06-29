@@ -1,22 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Patients.module.css";
+import { createSetPatientAction } from "../../../../redux/treatment-reducer";
 
 import data from "../../data/patients";
-import { createSetPatientAction } from "../../../../redux/treatment-reducer";
+
+/**
+ * 오늘 진료대기/완료된 환자를 오른쪽 리스트에 표시한다.
+ * 
+ * 접수테이블에 튜플이 추가 될 때 진료테이블에 튜플이 추가된다. 
+ * 따라서 내원한 환자만 표시됨
+ * 
+ * TODO : 접수테이블에서 로그인된 의사(staff_id) && 오늘날짜의 환자 id로 환자 데이터 요청 api 작성
+ * 
+ * 요청데이터의 형태
+ *  {id: {num}, name: "", age:{num}, gender: "", disease: "", medicine: "", comment: "", state: ""}, 
+ */
 
 function Patients(props){
 
-  // 현재 로그인된 의사 id와 오늘 날짜로 접수테이블에서 환자id로 환자정보 불러오기
-  // {id: 1, name: "이지은", age:"29", gender: "여", disease: "고혈압", medicine: "혈압약", comment: "없음", state: "complete"}, 
+  const patients  = data;
 
   const patient = useSelector(state => state.treatmentReducer.patient);
 
-  const patients  = data;
-  const dispatch = useDispatch();
-
   const [curPatient, setCurPatient] = useState({patient_id:patient});
   const [listState, setListState] = useState();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setListState("all");
@@ -25,7 +35,6 @@ function Patients(props){
   useEffect(()=> {
       dispatch(createSetPatientAction(curPatient.patient_id)); 
   },[curPatient])
-
 
   const selectListState = useCallback((state) => {
     setListState(state);
