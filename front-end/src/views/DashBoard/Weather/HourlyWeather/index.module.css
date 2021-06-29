@@ -1,13 +1,16 @@
 .imgs:not(.imgs:nth-child(1)){
-  margin-left: 36.5px;
+  margin-left: 30px;
 }
 
 .weather_chart{
   margin-top: 20px;
 }
 .header{
-  margin-top: 15px;
-  margin-left: 20px;
+  margin-top: 45px;
+  margin-left: 50px;
   font-weight: 600;
-  font-size: small;
+  font-size: 16px;
+}
+.imgs{
+  margin-left: 13px;
 }

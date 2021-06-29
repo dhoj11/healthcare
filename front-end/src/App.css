@@ -2,6 +2,8 @@ body{
   overflow: hidden;
 }
 .main {
+  font-family: 'Noto Sans CJK KR';
+
   display: flex;
   flex-direction: column;
   padding-left: 65;

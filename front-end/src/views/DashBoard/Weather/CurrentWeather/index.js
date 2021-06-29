@@ -9,7 +9,7 @@ function CurrentWeather(props) {
       <div className={styles.Weather_body}>
         <div className="d-flex justify-content-center">
           <div>
-              <img src={weather.weather[0].icon} width="140px"/>
+              <img src={weather.weather[0].icon} width="100px"/>
           </div>
           <div className={styles.temp}>{Math.round(weather.main.temp)}</div><span className={styles.sign}>°C</span>
         </div>
