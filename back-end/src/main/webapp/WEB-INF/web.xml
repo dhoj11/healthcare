@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
   <display-name>healthcare</display-name>
-  	<!-- Root WebApplicationContext 설정 파일 위치 -->
+  		<!-- Root WebApplicationContext 설정 파일 위치 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root/*.xml</param-value>
@@ -11,7 +11,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<!-- DispatcherServlet 설정 -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -22,7 +22,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
 	<!-- 문자 인코딩 필터 설정 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -32,9 +37,9 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
-		<!-- 8080/webapp 생략 되어있따 -->
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>

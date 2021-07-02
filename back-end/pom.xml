@@ -27,13 +27,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.2.8.RELEASE</version>
+			<version>5.3.8</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>5.2.8.RELEASE</version>
+			<version>5.3.8</version>
 		</dependency>
 		<!-- 로깅 관련 라이브러리 -->
 		<dependency>
@@ -42,35 +42,28 @@
 		    <version>1.7.30</version>
 		</dependency>
 		
-		
-		<!-- 부가적인 기능 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context-support</artifactId>
-		    <version>5.2.3.RELEASE</version>
-		</dependency>
-		
 		<!-- servlet/jsp와 관련된 라이브러리 -->
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <version>4.0.1</version>
-		    <scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
 		
-		<dependency>
-		    <groupId>javax.servlet.jsp</groupId>
-		    <artifactId>javax.servlet.jsp-api</artifactId>
-		    <version>2.3.3</version>
-		    <scope>provided</scope>
-		</dependency>
 		
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
-		</dependency>
 		<!-- json 관련 라이브러리 -->
 		<dependency>
 		    <groupId>org.json</groupId>
@@ -85,11 +78,11 @@
 		    <version>2.8.0</version>
 		</dependency>
 		
- 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.16</version>
+		    <version>8.0.25</version>
 		</dependency>
 
 		
@@ -106,6 +99,7 @@
 		    <artifactId>mybatis-spring</artifactId>
 		    <version>2.0.6</version>
 		</dependency>
+
 		
 		<!-- File Upload 관련 라이브러리 -->
 		<dependency>
@@ -114,27 +108,18 @@
 		    <version>1.4</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
-		<!-- <dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-test</artifactId>
-		    <version>5.2.8.RELEASE</version>
-		    <scope>test</scope>
+		<!-- RestController 사용시 json으로 변환 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.12.3</version>
 		</dependency>
-		https://mvnrepository.com/artifact/junit/junit
-		https://mvnrepository.com/artifact/junit/junit
-			<dependency>
-			    <groupId>junit</groupId>
-			    <artifactId>junit</artifactId>
-			    <version>4.13.2</version>
-			    <scope>test</scope>
-			</dependency>
-			
-			<dependency>
-			    <groupId>javax.inject</groupId>
-			    <artifactId>javax.inject</artifactId>
-			    <version>1</version>
-			</dependency> -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.3</version>
+		</dependency>
+
 	</dependencies>
 	
 </project>
