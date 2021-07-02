@@ -16,5 +16,5 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
 	</context:component-scan>
 	
-	<mybatis-spring:scan base-package="com.mycompany.webapp.dao"/>
+	<mybatis-spring:scan base-package="com.team4.healthcare.dao"/>
 </beans>
