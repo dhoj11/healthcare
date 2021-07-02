@@ -9,7 +9,10 @@ function TestList(props){
 
   /**
    * 당일 검사자 목록을 표시한다.
-   * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만 표시한다.
+   * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만 표시한다. 
+   * 즉 중복제거 후 testLists에 상태로 업데이트
+   * 
+   * 이 컴포넌트에서 사용하는 testListData는 부모 컴포넌트에서 프롭으로 전달받은 객체배열 
    */
 
   const getTestList = useCallback(() => { 
@@ -37,7 +40,7 @@ function TestList(props){
   
   useEffect(()=>{
     // testList - // {test_list_id: "", patient_id: ""}
-    props.changeTestList(testList); // 선택된 환자 id를 바꿈
+    props.changeTestList(testList); 
   },[testList])
 
   return(

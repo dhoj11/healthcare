@@ -3,7 +3,7 @@ import { faUserPlus,  faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StaffAddModal from "./StaffAddModal";
 import { useState } from "react";
-import StaffModifyModal from "./StaffModifyModal/idnex";
+import StaffModifyModal from "./StaffModifyModal";
 
 function StaffAdd(props){
 

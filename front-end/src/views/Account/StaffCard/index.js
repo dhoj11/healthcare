@@ -7,6 +7,8 @@ import { downloadAttach } from "../../../apis/account";
 /**
  * 오른쪽 테이블에서 선택한 직원이 왼쪽 직원카드에 상세 정보가 표시된다.
  * 전달받은 prop을 화면에 표시한다.
+ * 
+ * 따로 APi 호출 필요 없음 props에 환자객체가 모두 넘어옴
  */
 
 function StaffCard(props){
@@ -26,12 +28,12 @@ function StaffCard(props){
           const response = await downloadAttach(staff.staff_id);
           setImgSrc(URL.createObjectURL(response.data)); 
         } catch(error){
-          console.log(error);
+          //
         }
       };
       work();   
     }
-  },[]); 
+  },[staff]); 
 
   return(
     <div className={style.staffcard}>
