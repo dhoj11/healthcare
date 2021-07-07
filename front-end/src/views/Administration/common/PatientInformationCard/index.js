@@ -1,4 +1,5 @@
 import styles from "./PatientInformationCard.module.css";
+import moment from "moment";
 
 function PatientInformationCard(props) {
 
@@ -11,10 +12,10 @@ function PatientInformationCard(props) {
           <img className={styles.patient_icon} src="/resources/svg/emoji-smile.svg" />
         </div>
         <div className={styles.patient_basic}>
-          <p className={styles.patient_basic_information}>{patient.patient_name} ( {patient.patient_gender} , {patient.age} )</p>
+          <p className={styles.patient_basic_information}>{patient.patient_name} ( {patient.patient_gender} , {moment().diff(patient.patient_birth,'years')} )</p>
           <p className={styles.patient_basic_information}>생년월일 : {patient.patient_birth}</p>
           <p className={styles.patient_basic_information}>연락처 : {patient.patient_tel}</p>
-          <p className={styles.patient_basic_information}>최근 내원일 : {patient.recentVisit}</p>
+          <p className={styles.patient_basic_information}>최근 내원일 : {patient.patient_recent_visit}</p>
         </div>
       </div> 
       <div className={styles.second_card_row}>

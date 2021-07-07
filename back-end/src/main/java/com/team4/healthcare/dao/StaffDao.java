@@ -10,4 +10,5 @@ import com.team4.healthcare.dto.Staff;
 public interface StaffDao {
 	public List<Staff> selectByAll();
 	public Staff selectById(String staff_id);
+	public List<Staff> selectDoctorNameList();
 }

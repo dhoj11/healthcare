@@ -21,9 +21,6 @@ function AppointmentWithTestModal(props) {
 
   useEffect(() => {   //props가 변경될 때 patient의 상태를 props로 전해받은 patientId에 해당하는 환자로 세팅을 해줌
     setpatient(filteredPatient[0]);
-    return (() => {
-        console.log("검사 예약 언마운트시 실행");
-    });
   }, [props]);
 
   return (

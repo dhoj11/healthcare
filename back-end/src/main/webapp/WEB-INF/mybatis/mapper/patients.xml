@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.PatientDAO">
+	<select id="selectPatientById" resultType="patients">
+		select patient_id, patient_name, patient_tel, patient_birth, patient_medicine
+				, patient_disease, patient_comment, patient_gender, patient_recent_visit
+		from patient
+		where patient_id = #{patient_id}
+	</select>
+	<select id="selectPatientList" resultType="patients">
+		select patient_id, patient_name, patient_tel, patient_birth, patient_medicine
+				, patient_disease, patient_comment, patient_gender, patient_recent_visit
+		from patient
+	</select>
+	<select id="selectSearchedPatientList" resultType="patients">
+		select patient_id, patient_name, patient_tel, patient_birth, patient_medicine
+				, patient_disease, patient_comment, patient_gender, patient_recent_visit
+		from patient
+		where patient_name = #{patient_name}
+	</select>
+	<insert id="insertNewPatient" parameterType="patients">
+		insert into patient
+			(patient_name, patient_tel, patient_birth, patient_medicine, patient_disease
+			, patient_comment, patient_gender, patient_recent_visit)
+		values (#{patient_name},#{patient_tel},#{patient_birth},#{patient_medicine}
+				,#{patient_disease},#{patient_comment},#{patient_gender},#{patient_recent_visit})
+		
+	</insert>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.PrescriptionDAO">
+	<select id="selectPrescriptionHistory" resultType="summeryPrescriptions">
+		select DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, staff.staff_name, prescription.prescription_comment, medicine.medicine_kind, medicine.medicine_name
+		from treatment, staff, prescription, medicine
+		where treatment.staff_id = staff.staff_id
+			and treatment.treatment_id = prescription.treatment_id
+		    and prescription.medicine_code = medicine.medicine_code
+			and patient_id = #{patient_id}
+	</select>
+</mapper>

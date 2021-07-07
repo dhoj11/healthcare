@@ -11,4 +11,9 @@
 		from staff
 		where staff_id=#{staff_id}
 	</select>
+	<select id="selectDoctorNameList" resultType="staff">
+		select staff_id, staff_name
+		from staff
+		where staff_authority = "의사" and staff_enabled = 1
+	</select>
 </mapper>
