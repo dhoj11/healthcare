@@ -1,67 +1,85 @@
-import {getReceptionList, getPatientList} from "../data";
 import styles from "./Reception.module.css";
-import { AutoSizer, List } from "react-virtualized";
 import {useState} from "react";
 import { useEffect } from "react";
 import ListItem from "./ListItem";
+import {getReceptionList, getReceptionListByState} from "../../../apis/administration";
 
 function Reception(props) {
   const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
-  const staticReceptionList = getReceptionList();
-  const staticPatientList = getPatientList();
   const [receptionList, setReceptionList] = useState([]);
+  const [state, setState] = useState("");
 
   //예약 후 접수
   useEffect(() => {
-    console.log("예약 접수 실행");
-    const newReception = receptionList.concat(staticReceptionList.filter(reception => reception.appointment_id === receptionAppointmentId));
-    setReceptionList(newReception);
-    return (() => {
-      console.log("예약 접수 언마운트시 실행");
-    });
+    //비동기 통신
+    const work = async () => {
+      try {
+        const response = await getReceptionList();
+        setReceptionList(response.data);
+        setState("전체");
+      } catch (error) {
+        console.log(error.message);
+        //history.push("./error"); 에러 컴포넌트로 이동
+      }
+    };
+    work();
   },[receptionAppointmentId]);
 
   //방문 접수 : props로 받아온 객체를 receptionList에 concat해줌
   useEffect(() => {
-    console.log(visitReception);
-    if(visitReception !== undefined) {
-      const newReception = receptionList.concat(visitReception);
-      setReceptionList(newReception);
-    }
-    return (() => {
-      console.log("방문 접수 언마운트시 실행");
-    });
+    //비동기 통신
+    const work = async () => {
+      try {
+        const response = await getReceptionList();
+        setReceptionList(response.data);
+        setState("전체");
+      } catch (error) {
+        console.log(error.message);
+        //history.push("./error"); 에러 컴포넌트로 이동
+      }
+    };
+    work();
   },[visitReception]);
 
-  console.log(receptionList);
+  const getAllList = async() => {
+    try {
+      const response = await getReceptionList();
+      setReceptionList(response.data);
+      setState("전체");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-
-  const listAll = () => {   //전체 클릭시 접수 리스트 상태를 다시 전체 접수 리스트로 세팅
-  //setReceptionList(staticReceptionList);
-};
-
-const getAllLength = () => {  //접수 리스트의 전체 건수를 반환해줌
+const getLength = () => {  //접수 리스트의 건 수를 반환해줌
   return receptionList.length;
 };
 
-  const listWithState = (receptionState) => {   //접수상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 접수 리스트 상태를 세팅
-  // const filteredReceptionList = staticReceptionList.filter(reception => reception.state === receptionState);
-  // setReceptionList(filteredReceptionList);
+const listWithState = async(receptionState) => {
+  try{
+    const response = await getReceptionListByState(receptionState);
+    setReceptionList(response.data);
+    setState(receptionState);
+  }catch(error) {
+    console.log(error.message);
+  }
 };
 
 const selectPatient = (patientId) => { 
-  const filteredPatient = staticPatientList.filter(patient => patient.patient_id === patientId);
-  selectedPatient(filteredPatient[0]);
+  selectedPatient(patientId);
 }
 
 return (
+  <>
   <div className={styles.reception}>
   <div className="mb-1 ml-2 d-flex">
     <img className="mr-3" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-3">접수</span>
-    <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
-    {/* <div className="mr-2" onClick={()=> listWithState("완료")}>완료 | </div>
-    <div className="mr-2" onClick={()=> listWithState("진료")}>진료 | </div>
-    <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div> */}
+    <div className={styles.reception_state} onClick={getAllList} >전체 &nbsp;| </div>
+    <div className={styles.reception_state} onClick={()=> listWithState("대기")}>대기 &nbsp;| </div>
+    <div className={styles.reception_state} onClick={()=> listWithState("진료")}>진료 &nbsp;| </div>
+    <div className={styles.reception_state} onClick={()=> listWithState("완료")}>완료 &nbsp;| </div>
+    <div className={styles.reception_state} onClick={()=> listWithState("취소")}>취소 </div>
+    <div className={styles.length} >{state} : 총 {getLength()} 건</div>
   </div>
   <div className="d-flex bg-light">
     <span className={`border ${styles.reception_border}`}>
@@ -89,6 +107,7 @@ return (
     ))}
   </div>
 </div>
+</>
   );
 }
 

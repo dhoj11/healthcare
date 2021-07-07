@@ -2,4 +2,13 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
                         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+<typeAliases>
+   		<typeAlias type="com.team4.healthcare.dto.Appointment" alias="appointments"/>
+   		<typeAlias type="com.team4.healthcare.dto.Patient" alias="patients"/>
+   		<typeAlias type="com.team4.healthcare.dto.Reception" alias="receptions"/>
+   		<typeAlias type="com.team4.healthcare.dto.Staff" alias="staffs"/>
+   		<typeAlias type="com.team4.healthcare.dto.SummeryTreatment" alias="summeryTreatments"/>
+   		<typeAlias type="com.team4.healthcare.dto.SummeryTest" alias="summeryTests"/>
+   		<typeAlias type="com.team4.healthcare.dto.SummeryPrescription" alias="summeryPrescriptions"/>
+   </typeAliases>
 </configuration>

@@ -1,47 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import {getPatientList} from "../data";
 import styles from "./SearchPatient.module.css";
 import NewPatientModal from "./NewPatientModal";
+import {addNewPatient, getPatientList, searchPatient} from "../../../apis/administration";
 
 function SearchPatient(props) {
-  const staticPatientList = getPatientList();   //모든 환자리스트를 가져옴
   const [patientName, setPatientName] = useState("");   //input 창에 환자 이름을 입력할 때 사용되는 상태
-  const [patientList, setPatientList] = useState(staticPatientList);    //모든 환자의 리스트를 초기 상태로 선언, 화면에 보여줄 환자리스트
+  const [patientList, setPatientList] = useState([]);    //모든 환자의 리스트를 초기 상태로 선언, 화면에 보여줄 환자리스트
   const [modalOpen, setModalOpen] = useState(false);    //신규회원등록 모달의 열림 상태를 초기엔 false로 선언
-  const [newPatientList, setNewPatientList] = useState(staticPatientList);  //신규 등록한 회원(모든 회원)이 담긴 리스트
-  const changePatientName = (event) => {  //event.target.name(input창에 입력한 내용)으로 patientName 상태를 세팅을 해줌
+  
+  useEffect(() => {
+    //비동기 통신
+    const work = async () => {
+      try {
+        const response = await getPatientList();
+        setPatientList(response.data);
+      } catch (error) {
+        console.log(error.message);
+        //history.push("./error"); 에러 컴포넌트로 이동
+      }
+    };
+    work();
+  },[]);
+
+  const changePatientName = (event) => { 
     setPatientName(event.target.value);
   };
-
-  const search = () => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
-    if(patientName === "") {
-      setPatientList(newPatientList);
-    } else {
-      const searchPatientList = newPatientList.filter(patient => patient.patient_name === patientName);
-      setPatientList(searchPatientList);
-    }
-  }
-
+  
   const openModal = () => {
     setModalOpen(true);
   };
-
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const selectPatient = (patientId) => {
-    const filteredPatient = patientList.filter(patient => patient.patient_id === patientId);
-    props.selectedPatient(filteredPatient[0]);
+  const search = async() => {    //모든 환자리스트에 필터를 적용하여 patientName에 해당하는 환자리스트를 가지고 와서 patientList에 세팅을 해줌
+    try{
+      if(patientName === "") {
+        const response = await getPatientList();
+        setPatientList(response.data);
+      } else {
+        const response = await searchPatient(patientName);
+        setPatientList(response.data);
+      }
+    }
+    catch(error) {
+      console.log(error.message);
+    }
   }
 
-  const newPaitentList = (patient) => {
-    //const newPatientList = staticPatientList.push(patient);
-    const newList = newPatientList.concat(patient);
-    setNewPatientList(newList);
-    setPatientList(newList);
-    console.log(patientList);
+  const selectPatient = (patientId) => {
+    props.selectedPatient(patientId);
+  }
+
+  const addNewPaitent = async(newPatient) => {
+    try{
+      await addNewPatient(newPatient);
+      const response = await getPatientList();
+      setPatientList(response.data);
+    }catch(error) {
+      console.log(error.message);
+    }
   }
 
   const rowRenderer = ({index, key ,style}) => {
@@ -53,14 +72,14 @@ function SearchPatient(props) {
       <span className={styles.patient_item_gender}>
       {patientList[index].patient_gender}
       </span>
-      <span className={styles.patient_item}>
+      <span className={styles.patient_item_birth}>
       {patientList[index].patient_birth}
       </span>
       <span className={styles.patient_item_tel}>
       {patientList[index].patient_tel}
       </span>
-      <span className={styles.patient_item}>
-      {patientList[index].recentVisit}
+      <span className={styles.patient_item_visit}>
+      {patientList[index].patient_recent_visit}
       </span>
       </div>
     );
@@ -78,8 +97,8 @@ function SearchPatient(props) {
             </div>
           </div>
           <div className="search-button col-2 d-flex justify-content-center">
-            <button className="btn btn-outline-secondary" onClick={openModal}>new</button>
-            <NewPatientModal isOpen={modalOpen} close={closeModal} newPaitentList={newPaitentList} />
+            <button className="btn btn-outline-secondary ml-5" onClick={openModal}>new</button>
+            <NewPatientModal isOpen={modalOpen} close={closeModal} addNewPaitent={addNewPaitent} />
           </div>
         </div>
       </div>
@@ -91,13 +110,13 @@ function SearchPatient(props) {
           <span className={`border ${styles.search_border_gender}`}>
             성별
           </span>
-          <span className={`border ${styles.search_border}`}>
+          <span className={`border ${styles.search_border_birth}`}>
             생년월일
           </span>
           <span className={`border ${styles.search_border_tel}`}>
             전화번호
           </span>
-          <span className={`border ${styles.search_border}`}>
+          <span className={`border ${styles.search_border_visit}`}>
             최근내원일
           </span>
         </div>

@@ -1,19 +1,24 @@
 import { AutoSizer, List } from "react-virtualized";
 import {useState, useEffect} from "react";
-import {getTreatmentList} from "../../../data";
+import { checkTreatmentList } from "../../../../../apis/administration";
 import styles from "./TreatmentTab.module.css";
 
 function TreatmentTab(props) {
-  const staticTreatmentList = getTreatmentList();
-  const filteredTreatmentList = staticTreatmentList.filter(treatment => (treatment.patient_id === props.patientId));
-  const [treatmentList, setTreatmentList] = useState(filteredTreatmentList);
+  
+  const { patientId } = props;
+  const [treatmentList, setTreatmentList] = useState([]);
   let curr = 0;
 
   useEffect(() => {
-    setTreatmentList(filteredTreatmentList);
-    return (() => {
-        console.log("진료탭 언마운트시 실행");
-    });
+    const work = async() => {
+      try{
+        const response = await checkTreatmentList(patientId);
+        setTreatmentList(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+   }
+   work();
   },[props]);
 
   const rowRenderer = ({index, key, style}) => {

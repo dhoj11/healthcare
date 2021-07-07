@@ -5,7 +5,7 @@
   line-height: 40px;
 }
 .treatment_tab_border_disease {
-  width: 250px;
+  width: 300px;
   height: 40px;
   text-align: center;
   line-height: 40px;
@@ -20,12 +20,13 @@
 }
 
 .treatment_tab_item_disease {
-  width: 250px;
+  width: 300px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  padding-left: 5px;
-  overflow: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .treatment_row:hover {

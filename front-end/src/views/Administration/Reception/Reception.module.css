@@ -3,7 +3,7 @@
   border-radius: 30px;
   border-color: white;
   padding: 10px;
-  width: 35rem;
+  width: 37rem;
   height: 100%;
 }
 
@@ -29,4 +29,14 @@
 .reception_content {
   height: 300px;
   overflow: auto;
+}
+
+.length {
+  margin-left: 120px;
+  color: #fcc419;
+}
+
+.reception_state {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }

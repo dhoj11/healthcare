@@ -1,20 +1,26 @@
 import styles from "./PrescriptionTab.module.css";
 import { AutoSizer, List } from "react-virtualized";
-import {useState} from "react";
-import {getPrescriptionList} from "../../../data";
-import { useEffect } from "react";
+import {useState, useEffect} from "react";
+import { checkPrescriptionList } from "../../../../../apis/administration";
+import React from "react";
+
 
 function PrescriptionTab(props) {
-  const staticPrescription = getPrescriptionList();
-  const filteredPrescriptionList = staticPrescription.filter(prescription => (prescription.patient_id === props.patientId));
-  const [prescriptionList, setPrescriptionList] = useState(filteredPrescriptionList);
+  
+  const [prescriptionList, setPrescriptionList] = useState([]);
+  const { patientId } = props;
   let curr = 0;
 
   useEffect(() => {
-    setPrescriptionList(filteredPrescriptionList);
-    return (() => {
-        console.log("처방탭 언마운트시 실행");
-    });
+    const work = async() => {
+      try{
+        const response = await checkPrescriptionList(patientId);
+        setPrescriptionList(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+   }
+   work();
   },[props]);
 
   const rowRenderer = ({index, key, style}) => {
@@ -95,4 +101,4 @@ function PrescriptionTab(props) {
   );
 }
 
-export default PrescriptionTab;
+export default React.memo(PrescriptionTab);

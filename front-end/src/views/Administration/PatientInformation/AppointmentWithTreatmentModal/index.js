@@ -1,45 +1,55 @@
 import {Modal, Button} from "react-bootstrap";
 import {useState, useEffect} from "react";
-import {getPatientList, getStaffList} from "../../data";
 import styles from "./AppointmentWithTreatmentModal.module.css";
 import TimeSelect from "../../common/TimeSelect";
 import Calendar from "../../../Appointment/Calendar";
+import {getDoctorNameList, addNewTreatmentAppointment} from "../../../../apis/administration";
+import moment from "moment";
 
 
 function AppointmentModal(props) {
-  const {patientId, isOpen, close} = props;
-  const staticPatientList = getPatientList();
-  const staticStaffList = getStaffList();
-  const filteredPatient = staticPatientList.filter(patient => (patient.patient_id === patientId));
-  
+  const {dayAppointment, patient, isOpen, close} = props;
+  const [doctorList, setDoctorList] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [patient, setPatient] = useState({});
+  const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
+  const [appointmentTime, setAppointmentTime] = useState("");
   const [appointment, setAppointment] = useState({
-    appointment_date: "",
-    appointment_time: "",
+    appointment_date: moment().format("YYYY-MM-DD"),
     staff_id: "",
-    patientId: patientId,
-    appointment_state: "예약",
-    appointment_content: "",
-    appointment_kind: "진료"
+    patient_id: "",
+    appointment_content: ""
   });
 
   useEffect(() => {
-    setPatient(filteredPatient[0]);
-    setAppointment({
-      appointment_date: "",
-      appointment_time: "",
-      staff_id: "",
-      patientId: patientId,
-      appointment_state: "예약",
-      appointment_content: "",
-      appointment_kind: "진료"
-    })
+    if(patient !== undefined) {
+      setStartDate(new Date());
+      setAppointmentDate(moment().format("YYYY-MM-DD"));
+      setAppointment({
+        staff_id: "",
+        patient_id: patient.patient_id,
+        appointment_content: "",
+      });
+      const work = async() => {
+        try{
+          const response = await getDoctorNameList();
+          setDoctorList(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      };
+      work();
+    }
   },[isOpen]);
 
   const changeDate = (date) => {
+    const fmt = moment(date).format("YYYY-MM-DD");
     setStartDate(date);
-    console.log(date);
+    setAppointmentDate(fmt);
+    console.log(appointmentDate);
+  }
+
+  const changeTime = (time) => {
+    setAppointmentTime(time);
   }
 
   const handleChange = (event) => {
@@ -49,8 +59,17 @@ function AppointmentModal(props) {
     });
   }
 
-  const newAppointment = () => {
-    const newAppointment = {...appointment};
+  const newAppointment = async() => {
+    const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime};
+    console.log(newAppointment);
+    try{
+      await addNewTreatmentAppointment(newAppointment);
+    }catch(error) {
+      console.log(error.message);
+    }
+    if(newAppointment.appointment_date === moment().format("YYYY-MM-DD")) {
+      dayAppointment(true);
+    }
     close();
   }
 
@@ -71,10 +90,10 @@ function AppointmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
-              {staticStaffList.map((staff, key)=>(
+              {doctorList.map((doctor, key)=>(
                 <div key={key}>
-                  <input className="mr-2" type="radio" name="staff_id" value={staff.staff_id} onChange={handleChange}/>
-                  <label className="form-check-label mr-2">{staff.staff_name}</label>
+                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleChange}/>
+                  <label className="form-check-label mr-2">{doctor.staff_name}</label>
                 </div>
               ))}
             </div>
@@ -88,7 +107,7 @@ function AppointmentModal(props) {
           <div className="d-flex">
             <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
             <div>
-              <TimeSelect startDate={startDate} changeDate={changeDate} />
+              <TimeSelect startDate={startDate} appointmentDate={appointmentDate} staffId={appointment.staff_id} changeTime={changeTime}/>
             </div>
           </div>
         </div>

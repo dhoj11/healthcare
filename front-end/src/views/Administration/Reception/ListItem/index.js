@@ -1,23 +1,27 @@
 import styles from "./ListItem.module.css";
 import {useEffect, useState} from "react";
-import moment from "moment";
+import {changeReceptionState} from "../../../../apis/administration";
 
 function ListItem(props) {
   
   const {index, reception, selectPatient, finished} = props;
-  const [state, setState] = useState("대기");
-  const [receptionTime, setReceptionTime] = useState("");
-  useEffect(() => {
-    const time = moment().format("HH:mm");
-    setReceptionTime(time);
-  },[]);
+  const [state, setState] = useState(reception.reception_state);
 
-  const handleStateChange = (event, patientId) => {
+    //reception이 변경되면 state도 reception_state 다시 세팅해줌.
+    useEffect(()=> {
+      setState(reception.reception_state);
+    },[reception])
+
+  const handleStateChange = async(event, reception_id, appointment_id) => {
     setState(event.target.value);
-    console.log(state);
-    if(event.target.value === "완료" && patientId !== undefined) {
-      console.log(patientId);
-      finished(patientId);
+    try{
+      await changeReceptionState(reception_id, event.target.value);
+    }catch(error) {
+      console.log(error.message);
+    }
+    if(event.target.value === "완료" && appointment_id !== null) {
+      console.log(appointment_id);
+      finished(appointment_id);
     }
   };
 
@@ -27,7 +31,7 @@ function ListItem(props) {
         {index+1}
         </span>
         <span className={styles.appointmentItem}>
-        {receptionTime}
+        {reception.reception_time}
         </span>
         <span className={styles.appointmentItem}>
         {reception.patient_name}
@@ -40,17 +44,17 @@ function ListItem(props) {
         </span>
         {
           { 
-            대기 : (<select className={styles.select_box} style={{color: "#74b816"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+            대기 : (<select className={styles.select_box} style={{color: "#74b816"}} value="대기" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
                       <option style={{color: "#f03e3e"}} value="진료">진료</option>
                     </select>),
-            진료 : (<select className={styles.select_box} style={{color: "#f03e3e"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+            진료 : (<select className={styles.select_box} style={{color: "#f03e3e"}} value="진료" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
                       <option style={{color: "#f03e3e"}} value="진료">진료</option>
                     </select>),
-            완료 : (<select className={styles.select_box} style={{color: "#1c7ed6"}} value={state} onChange={(event) =>handleStateChange(event, reception.patient_id)}>
+            완료 : (<select className={styles.select_box} style={{color: "#1c7ed6"}} value="완료" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
                       <option style={{color: "#f03e3e"}} value="진료">진료</option>

@@ -6,24 +6,26 @@ import PrescriptionTab from "./PrescriptionTab";
 
 function PatientInformationTab(props) {
 
-  const {selectedPatientId} = props;
+  const {patient} = props;
 
   return (
     <>
+    {patient !==undefined ? (
       <Tabs defaultActiveKey="appointmentTab">
         <Tab eventKey="appointmentTab" title="예약">
-          <AppointmentTab patientId={selectedPatientId}/>
+          <AppointmentTab patientId={patient.patient_id}/>
         </Tab>
         <Tab eventKey="treatmentTab" title="진료">
-          <TreatmentTab patientId={selectedPatientId}/>
+          <TreatmentTab patientId={patient.patient_id}/>
         </Tab>
         <Tab eventKey="testTab" title="검사">
-          <TestTab patientId={selectedPatientId}/>
+          <TestTab patientId={patient.patient_id}/>
         </Tab>
         <Tab eventKey="prescriptionTab" title="처방">
-          <PrescriptionTab patientId={selectedPatientId}/>
+          <PrescriptionTab patientId={patient.patient_id}/>
         </Tab>
-      </Tabs>
+      </Tabs>) : (null)}
+      
     </>
   );
 }

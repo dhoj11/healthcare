@@ -3,11 +3,13 @@ import PatientInformationCard from "./PatientInformationCard";
 import AppointmentModal from "./AppointmentWithTreatmentModal";
 import ReceptionModal from "./ReceptionOfTreatmentModal";
 import PatientInformationTab from "./PatientInformationTab";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {getPatient} from "../../../apis/administration";
 
 function PatientInformation(props) {
 
-  const{selectedPatient, selectedPatientId, visitReception} = props;
+  const{dayAppointment,selectedPatientId, visitReception} = props;
+  const [patient, setPatient] = useState();
 
   const [receptionModalOpen, setReceptionModalOpen] = useState(false);
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
@@ -28,24 +30,40 @@ function PatientInformation(props) {
     setAppointmentModalOpen(false);
   };
 
+  useEffect(() => {
+    if(selectedPatientId !== undefined) {
+      //비동기 통신
+      const work = async () => {
+        try {
+          const response = await getPatient(selectedPatientId);
+          setPatient(response.data);
+        } catch (error) {
+          console.log(error.message);
+          //history.push("./error"); 에러 컴포넌트로 이동
+        }
+      };
+      work();
+    }
+  },[selectedPatientId]);
+
   return (
     <>
-      {props.selectedPatientId !== undefined ? 
+      {patient !== undefined ? 
       (<div className={styles.patient_information}>
       <div>
-        <PatientInformationCard patient={selectedPatient}/>
+        <PatientInformationCard patient={patient}/>
       </div>
       <div className={styles.patient_information_tab}>
-        <PatientInformationTab selectedPatientId={selectedPatientId}/>
+        <PatientInformationTab patient={patient}/>
       </div>
       <div className={styles.button_area}>
         <div>
           <button type="button" className="btn btn-outline-secondary mr-2" onClick={openReceptionModal}>진료접수</button>
-          <ReceptionModal patient={selectedPatient} isOpen={receptionModalOpen} close={closeReceptionModal} visitReception={visitReception}/>
+          <ReceptionModal patient={patient} isOpen={receptionModalOpen} close={closeReceptionModal} visitReception={visitReception}/>
         </div>
         <div>
           <button type="button" className="btn btn-outline-secondary mr-3" onClick={openAppointmentModal}>진료예약</button>
-          <AppointmentModal patientId={selectedPatientId} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+          <AppointmentModal dayAppointment={dayAppointment} patient={patient} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
         </div>
       </div>
     </div>)

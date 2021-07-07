@@ -3,7 +3,7 @@
   border-radius: 30px;
   border-color: white;
   padding: 20px;
-  width: 35rem;
+  width: 37rem;
   height: 250px;
 }
 .search_first_content {
@@ -26,7 +26,7 @@
 }
 
 .search_border_tel{
-  width: 150px;
+  width: 155px;
   height: 40px;
   text-align: center;
   line-height: 40px;
@@ -34,6 +34,19 @@
 
 .search_border_gender{
   width: 50px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+.search_border_birth {
+  width: 115px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.search_border_visit{
+  width: 120px;
   height: 40px;
   text-align: center;
   line-height: 40px;
@@ -55,9 +68,25 @@
 }
 
 .patient_item_tel {
-  width: 150px;
+  width: 155px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  padding-left: 10px;
+  padding-left: 20px;
+}
+
+.patient_item_birth {
+  width: 115px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 20px;
+}
+
+.patient_item_visit {
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  padding-left: 20px;
 }

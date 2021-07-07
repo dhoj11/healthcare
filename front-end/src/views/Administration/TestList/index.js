@@ -29,12 +29,8 @@ function TestList(props) {
   },[selectedTestCodes])
 
   useEffect(() => {
-    console.log("검사 접수 실행");
     const newTest = testPatientList.concat(staticTestPatientList.filter(test => test.appointment_id === testAppointmentId));
     setTestPatientList(newTest);
-    return (() => {
-      console.log("검사 접수 언마운트시 실행");
-    });
   },[testAppointmentId]);
 
   const listAll = () => {   //전체 클릭시 검사 환자 리스트 상태를 다시 당일 검사 환자 리스트로 세팅
