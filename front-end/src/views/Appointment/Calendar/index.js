@@ -15,6 +15,7 @@ function Calendar(props) {
        <DatePicker
         onChange={(date) => props.changeDate(date)}
         inline
+        dateFormat="yyyy-MM-dd"
         onMonthChange={(date) => props.changeDate(date)}
         selected={props.startDate}
       />

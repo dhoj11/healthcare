@@ -5,15 +5,13 @@ import moment from "moment";
 
 function NewPatientModal(props) {
 
-  const date = new Date();
-  const {isOpen, close, newPaitentList} = props;
-  const [newPatientId, setNewPatientId] = useState(20);
+  const {isOpen, close, addNewPaitent} = props;
   const [newPatient, setNewPatient] = useState({
     patient_name: "",
     patient_gender: "",
     patient_birth: "",
     patient_tel: "",
-    recentVisit: moment().format('YYYY-MM-DD'),
+    patient_recent_visit: moment().format('YYYY-MM-DD'),
     patient_medicine: "",
     patient_disease: "",
     patient_comment: ""
@@ -25,7 +23,7 @@ function NewPatientModal(props) {
       patient_gender: "",
       patient_birth: "",
       patient_tel: "",
-      recentVisit: moment().format('YYYY-MM-DD'),
+      patient_recent_visit: moment().format('YYYY-MM-DD'),
       patient_medicine: "",
       patient_disease: "",
       patient_comment: ""
@@ -43,10 +41,7 @@ function NewPatientModal(props) {
   };
 
   const addNewPatient = () => {
-    const patientAge = moment().diff(newPatient.patient_birth, 'years');
-    const patient = {patient_id: newPatientId.toString(), age: patientAge.toString(), ...newPatient};
-    setNewPatientId(newPatientId + 1);
-    newPaitentList(patient);
+    addNewPaitent(newPatient);
     close();
   };
 

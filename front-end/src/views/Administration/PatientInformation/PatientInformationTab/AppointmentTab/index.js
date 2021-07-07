@@ -1,22 +1,26 @@
 import { AutoSizer, List } from "react-virtualized";
 import {useState,useEffect} from "react";
-import {getAppointmentList} from "../../../data";
 import styles from "./AppointmentTab.module.css";
+import {checkAppointmentList} from "../../../../../apis/administration";
+import React from "react";
 
 function AppointmentTab(props) {
   
-  const staticAppointmentList = getAppointmentList();
-  const filteredAppointmentList = staticAppointmentList.filter(appointment => (appointment.patient_id === props.patientId));
   const [appointmentList, setAppointmentList] = useState([]);
+  const { patientId } = props;
 
   useEffect(() => {
-    setAppointmentList(filteredAppointmentList);
-    return (() => {
-        console.log("예약탭 언마운트시 실행");
-    });
+    const work = async() => {
+      try{
+        const response = await checkAppointmentList(patientId);
+        setAppointmentList(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+   }
+   work();
   },[props]);
   
-
   const rowRenderer = ({index, key, style}) => {
     return (
       <div key={key} style={style} className={`${styles.appointment_row} border-bottom d-flex`}>
@@ -74,4 +78,4 @@ function AppointmentTab(props) {
   );
 }
 
-export default AppointmentTab;
+export default React.memo(AppointmentTab);

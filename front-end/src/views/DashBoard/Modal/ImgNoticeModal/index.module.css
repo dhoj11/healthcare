@@ -24,3 +24,26 @@
 .close:hover{
   opacity: 0.8;
 }
+
+
+.img_notice_top{
+  text-align: center;
+  width: 100%;
+}
+.img_notice_header{
+  text-align: center;
+}
+.img_notice_info{
+  margin-bottom: 15px;
+}
+.img_notice_info >span{
+  margin-right: 10px;
+  color: #808080;
+  font-size: 14px;
+}
+.img_notice_info >span:nth-child(3){
+  cursor: pointer;
+}
+.img_notice_info >span:nth-child(4){
+  cursor: pointer;
+}

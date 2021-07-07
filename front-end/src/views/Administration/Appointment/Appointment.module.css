@@ -3,7 +3,7 @@
   border-radius: 30px;
   border-color: white;
   padding: 10px;
-  width: 35rem;
+  width: 37rem;
   height: 100%;
 }
 
@@ -33,4 +33,14 @@
 .appointment_content {
   height: 300px;
   overflow: auto;
+}
+
+.length {
+  margin-left: 120px;
+  color: #fcc419;
+}
+
+.appointment_state {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }

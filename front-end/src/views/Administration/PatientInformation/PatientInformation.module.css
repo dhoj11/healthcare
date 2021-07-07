@@ -3,7 +3,7 @@
   border-radius: 30px;
   border-color: white;
   padding: 5px;
-  width: 35rem;
+  width: 37rem;
   height: 595px;
 }
 
@@ -38,12 +38,11 @@
 .patient_icon_area {
   display: flex;
   justify-content: center;
-  padding-right: 2rem;
   margin-bottom: 2rem;
 }
 
 .patient_icon {
-  height: 7rem;
+  height: 9rem;
   margin-right: 50px;
 }
 
@@ -51,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 4rem;
+  padding-right: 2rem;
 }
 
 .patient_alert_letter {

@@ -37,7 +37,6 @@ function Diagnose(props){
     if(treatment !=="") getDiagnose();
   },[treatment])
 
-
   const openAddModal = () => {
     if(!editBlock){
       setAddModalOpen(true);

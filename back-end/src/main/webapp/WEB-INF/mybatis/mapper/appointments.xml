@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.AppointmentDAO">
+	<select id="selectAppointmentList" resultType="appointments">
+		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
+				, appointment_state, appointment.patient_id, appointment_content
+				, appointment_kind, patient.patient_name, staff.staff_name
+		from appointment, patient, staff
+		where appointment.patient_id = patient.patient_id 
+				and appointment.staff_id = staff.staff_id 
+				and appointment_date = curdate()
+		order by appointment_time;
+	</select>
+	<update id="updateAppointmentState">
+		update appointment 
+		set appointment_state = #{appointment_state} 
+		where appointment_id = #{appointment_id}
+	</update>
+	<select id="selectAppointmentById" resultType="appointments">
+		select appointment_id, patient_id, appointment_content, staff_id
+		from appointment
+		where appointment_id = #{appointment_id}
+	</select>
+	<select id="selectAppointmentListByState" resultType="appointments">
+		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
+				, appointment_state, appointment.patient_id, appointment_content
+				, appointment_kind, patient.patient_name, staff.staff_name
+		from appointment, patient, staff
+		where appointment.patient_id = patient.patient_id 
+				and appointment.staff_id = staff.staff_id 
+				and appointment_date = curdate()
+				and appointment_state = #{appointment_state}
+		order by appointment_time;
+	</select>
+	<select id="selectAppointmentHistory" resultType="appointments">
+		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
+				, appointment_state, appointment.patient_id, appointment_content
+				, appointment_kind, patient.patient_name, staff.staff_name
+		from appointment, patient, staff
+		where appointment.patient_id = patient.patient_id 
+				and appointment.staff_id = staff.staff_id 
+				and appointment.patient_id = #{patient_id}
+		order by appointment_date desc;
+	
+	</select>
+	<select id="selectAppointment" resultType="String">
+		select DATE_FORMAT(appointment_time,'%H:%i') as appointment_time
+		from appointment
+		where staff_id = #{staff_id}
+			and appointment_date = #{appointment_date}
+			and appointment_state = '예약'
+	</select>
+	<insert id="insertNewTreatmentAppointment" parameterType="appointments" >
+		insert into appointment (appointment_date, appointment_time, staff_id
+								, patient_id, appointment_content, appointment_kind)
+			values (#{appointment_date}, #{appointment_time}, #{staff_id}, #{patient_id},
+					#{appointment_content}, '진료')
+	</insert>
+</mapper>

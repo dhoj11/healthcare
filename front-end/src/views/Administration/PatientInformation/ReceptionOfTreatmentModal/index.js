@@ -1,34 +1,36 @@
 import styles from "./ReceptionOfTreatmentModal.module.css"
 import {Modal,} from "react-bootstrap";
-import {getStaffList} from "../../data";
+import { getDoctorNameList, addReceptionAfterVisit } from "../../../../apis/administration";
 import {useState, useEffect} from "react";
-import moment from "moment";
 
 function ReceptionOfTreatmentModal(props) {
   const {patient, isOpen, close, visitReception} = props;
-  const staticStaffList = getStaffList();
-
+  const [doctorList, setDoctorList] = useState([]);
   const [receptionPatient, setReceptionPatient] = useState({
-    reception_date: moment().format("YYYY-MM-dd"),
-    reception_time: moment().format("HH:mm"),
-    patient_name: patient.patient_name,
+    patient_id: "",
     reception_content: "",
-    staff_name: "",         //staff_id로 수정 필요
-    appointment_id: null,
-    reception_state: "대기",
-    patient_id: patient.patient_id
+    staff_id: ""
   });
   
   useEffect(() => {
-    setReceptionPatient({
-      patient_name: patient.patient_name,
-      reception_content: "",
-      staff_name: "",
-      patient_id: patient.patient_id
-    })
-    return (() => {
-      
-    });
+    if(patient !== undefined) {
+      setReceptionPatient({
+        patient_id: patient.patient_id,
+        reception_content: "",
+        staff_id: ""
+      })
+
+      const work = async() => {
+      try{
+        const response = await getDoctorNameList();
+        setDoctorList(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+    };
+
+    work();
+    }
   }, [isOpen]);
 
   const handleChange = (event) => {
@@ -38,9 +40,15 @@ function ReceptionOfTreatmentModal(props) {
     })
   };
 
-  const addReception = () => {
+  const addReception = async() => {
     const newReception = {...receptionPatient};
+    try{
+      await addReceptionAfterVisit(newReception);
+    }catch(error) {
+      console.log(error)
+    }
     visitReception(newReception);
+    console.log(newReception);
     close();
   };
 
@@ -60,10 +68,10 @@ function ReceptionOfTreatmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
-              {staticStaffList.map((staff,key)=>(
+              {doctorList.map((doctor,key)=>(
                 <div key={key}>
-                  <input className="mr-2" type="radio" name="staff_name" value={staff.staff_name} onChange={handleChange}/> 
-                  <label className="form-check-label mr-2">{staff.staff_name}</label>
+                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleChange}/> 
+                  <label className="form-check-label mr-2">{doctor.staff_name}</label>
                 </div>
               ))}
             </div>

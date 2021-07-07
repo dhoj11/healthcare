@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.healthcare.dao.TreatmentDao">
 
+	<select id="selectTreatmentHistory" resultType="summeryTreatments">
+		select DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, treatment.treatment_id, treatment.staff_id, staff.staff_name, diagnose.disease_code, disease.disease_name
+		from treatment, staff, diagnose, disease
+		where treatment.staff_id = staff.staff_id 
+			and treatment.treatment_id = diagnose.treatment_id
+		    and diagnose.disease_code = disease.disease_code
+			and patient_id = #{patient_id}
+	</select>
+
    <select id = "selectPatientIds" parameterType="string" resultType="int">
    	select distinct(patient_id)
    	from treatment

@@ -1,19 +1,25 @@
 import styles from "./TestTab.module.css";
 import { AutoSizer, List } from "react-virtualized";
 import {useState, useEffect} from "react";
-import {getTestList} from "../../../data";
+import { checkTestList } from "../../../../../apis/administration";
+import React from "react";
 
 function TestTab(props) {
-  const staticTestList = getTestList();
-  const filteredTestList = staticTestList.filter(test => (test.patient_id === props.patientId));
+  
   const [testList, setTestList] = useState([]);
+  const { patientId } = props;
   let curr = 0;
-
+  
   useEffect(() => {
-    setTestList(filteredTestList);
-    return (() => {
-        console.log("테스트탭 언마운트시 실행");
-    });
+    const work = async() => {
+      try{
+        const response = await checkTestList(patientId);
+        setTestList(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+   }
+   work();
   },[props]);
 
   const rowRenderer = ({index, key, style}) => {
@@ -76,4 +82,4 @@ function TestTab(props) {
   );
 }
 
-export default TestTab;
+export default React.memo(TestTab);

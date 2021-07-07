@@ -5,6 +5,7 @@ import { getTAppoint, getTestAppointment } from "./TimeTable/data/data";
 import SearchPatient from "./SearchPatient";
 import Info from "./Info";
 import styles from "./index.module.css";
+import moment from "moment";
 function Appointment(props) {
 
   const [startDate, setStartDate] = useState(new Date());
@@ -14,6 +15,8 @@ function Appointment(props) {
   
 
   const changeDate = (date) => {
+    
+    console.log(moment(date).format("YYYY-MM-DD"));
     setStartDate(date);
   }
   console.log(startDate);

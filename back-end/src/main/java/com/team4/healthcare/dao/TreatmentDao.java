@@ -2,22 +2,22 @@ package com.team4.healthcare.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team4.healthcare.dto.Diagnose;
 import com.team4.healthcare.dto.Disease;
 import com.team4.healthcare.dto.Medicine;
 import com.team4.healthcare.dto.Patient;
 import com.team4.healthcare.dto.Prescription;
+import com.team4.healthcare.dto.SummeryTreatment;
 import com.team4.healthcare.dto.Test;
 import com.team4.healthcare.dto.TestList;
 import com.team4.healthcare.dto.TestResult;
 import com.team4.healthcare.dto.Treatment;
 
-@Mapper
 public interface TreatmentDao {
+	public List<SummeryTreatment> selectTreatmentHistory(int patient_id);
+	
 	public List<Integer> selectPatientIds(String staff_id);
 	public List<Patient> selectPatients(List<Integer> patientidList);
 	public int selectTreatmentIsComplete(int patient_id);
@@ -66,4 +66,5 @@ public interface TreatmentDao {
 	public List<Integer> getTestListId(int treatment_id);
 	
 	public List<TestResult> selectTreatmentTestResults(List<Integer> test_list_id);
+
 }
