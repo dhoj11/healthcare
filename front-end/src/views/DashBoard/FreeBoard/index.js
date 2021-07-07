@@ -1,17 +1,63 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { getFreeBoard } from "../data";
+import { getFreeBoard, getFreeBoardAnswerList, getFreeBoardList } from "../../../apis/dashboard";
 import FreeBoardModal from "../Modal/FreeBoardModal";
 import WriteModal from "../Modal/FreeBoardModal/WriteModal";
 import styles from "./index.module.css";
 function FreeBoard(props) {
-  const freeBaord = getFreeBoard();
+  const [freeBoard,setFreeBoard] = useState([]);
+  const [freeBoardAnswer,setFreeBoardAnswer] =useState([]);
   const [showFreeBoardModal,setShowFreeBoardModal] = useState(false);
   const [showWriteModal,setShowWriteModal] = useState(false);
+  const [freeBoardItem,setFreeBoardItem] = useState({});
 
-  const [freeBoardItem,setFreeBoardItem] = useState(null);
+
+  console.log("ㅎㅇㅎㅇㅎㅇ");
+  useEffect(() => {
+    (async function() {
+      try{
+        const response = await getFreeBoardList();
+        setFreeBoard(response.data);
+      } catch(error){
+        throw error;
+      }
+    })();
+  },[showWriteModal,freeBoardAnswer,showFreeBoardModal])
+
+  const addAnswerReRender = () => {
+    (async function() {
+      try{
+        const response = await getFreeBoardAnswerList(freeBoardItem.freeboard_id); 
+        setFreeBoardAnswer(response.data);
+      } catch(error){
+        throw error;
+      }
+    })();
+  }
+  const freeBoardReRender = () => {
+    (async function() {
+      try{
+        const responseBoard = await getFreeBoard(freeBoardItem.freeboard_id);
+        setFreeBoardItem(responseBoard.data);
+        const response = await getFreeBoardList();
+        setFreeBoard(response.data);
+      } catch(error){
+        throw error;
+      }
+    })();
+  }
+
   const openFreeBoardModal = (data) => {
-    setFreeBoardItem(data);
-    setShowFreeBoardModal(true);
+    (async function() {
+      try{
+        const response=await getFreeBoardAnswerList(data.freeboard_id);
+        setFreeBoardAnswer(response.data);
+        setFreeBoardItem(data);
+        setShowFreeBoardModal(true);
+      } catch(error){
+        throw error;
+      }
+    })();
   }
   const closeFreeBoardModal = () => {
     setShowFreeBoardModal(false);
@@ -36,7 +82,7 @@ function FreeBoard(props) {
       </div>
       <div className={styles.FreeBoard_body}>
         {
-          freeBaord.map((data,index) => {
+          freeBoard.map((data,index) => {
             return(
               <div key={index} className={`${styles.FreeBoard_item} d-flex justify-content-between`} onClick={() => openFreeBoardModal(data)}>
                 <div className={styles.FreeBoard_title}>{data.freeboard_title}</div>
@@ -44,7 +90,7 @@ function FreeBoard(props) {
                   <span>{data.freeboard_date}</span>
                   <span>{data.patient_name}</span>
                   <i class="far fa-comment"></i>
-                  <span>{data.freeboard_comment}</span>
+                  <span>{data.freeboard_comment_count}</span>
                 </div>
               </div>
             );
@@ -52,7 +98,7 @@ function FreeBoard(props) {
         }
       </div>
     </div>
-    <FreeBoardModal showFreeBoardModal={showFreeBoardModal} closeFreeBoardModal={closeFreeBoardModal} freeBoardItem={freeBoardItem}></FreeBoardModal>
+    <FreeBoardModal showFreeBoardModal={showFreeBoardModal} closeFreeBoardModal={closeFreeBoardModal} freeBoardItem={freeBoardItem} freeBoardAnswer={freeBoardAnswer} addAnswerReRender={addAnswerReRender} freeBoardReRender={freeBoardReRender}></FreeBoardModal>
     <WriteModal showWriteModal={showWriteModal} closeWriteBoardModal={closeWriteBoardModal}></WriteModal>
 
     </>

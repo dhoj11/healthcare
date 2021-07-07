@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.FreeBoardDao">
+	<select id="selectByAll" resultType="freeBoard">
+		select fb.freeboard_id,fb.freeboard_title,fb.freeboard_content,fb.freeboard_date,fb.freeboard_time,fb.staff_name ,count(fba.freeboard_id) as freeboard_comment_count
+		from freeboard as fb left join freeboard_answer as fba
+		on fb.freeboard_id=fba.freeboard_id
+		group by fb.freeboard_id
+		order by freeboard_id desc;
+	</select>
+	<select id="selectById" resultType="freeBoard" parameterType="int">
+		select *
+		from freeboard
+		where freeboard_id=#{freeoboard_id}
+	
+	</select>
+	
+	<insert id="create" parameterType="freeBoard">
+		insert into freeboard(freeboard_title,freeboard_content,freeboard_date,freeboard_time,staff_name)
+		values(#{freeboard_title},#{freeboard_content},#{freeboard_date},#{freeboard_time},#{staff_name})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from freeboard
+		where freeboard_id =#{freeboard_id}
+	</delete>
+	
+	<update id="update" parameterType="freeBoard">
+		update freeboard
+		set freeboard_title=#{freeboard_title}, freeboard_content =#{freeboard_content}
+		where freeboard_id=#{freeboard_id}
+	</update>
+</mapper>
