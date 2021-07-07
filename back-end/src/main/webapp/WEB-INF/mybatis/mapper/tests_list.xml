@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.healthcare.dao.TestDao">
-	<select id="selectTestHistory" resultType="summeryTests">
+	<select id="selectTestHistory" resultType="summeryTest">
 		SELECT DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, treatment.treatment_id, treatment.staff_id, staff.staff_name, tests_list.test_code, tests.test_name
 		FROM treatment, staff, tests_list, tests
 		where treatment.staff_id = staff.staff_id 

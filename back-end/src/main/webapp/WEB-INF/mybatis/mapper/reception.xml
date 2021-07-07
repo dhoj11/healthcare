@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.team4.healthcare.dao.ReceptionDAO">
-	<insert id="insertReceptionAfterAppointment" parameterType="receptions">
+<mapper namespace="com.team4.healthcare.dao.ReceptionDao">
+	<insert id="insertReceptionAfterAppointment" parameterType="reception">
 		insert into reception 
 			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id) 
 		values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, #{appointment_id})
 	</insert>
-	<select id="selectReceptionList" resultType="receptions">
+	<select id="selectReceptionList" resultType="reception">
 		select reception_id, DATE_FORMAT(reception_date, '%Y-%m-%d') as reception_date, DATE_FORMAT(reception_time,'%H:%i') as reception_time, reception.staff_id
 				, reception_state, reception.patient_id, reception_content, reception.appointment_id
 				, patient.patient_name, staff.staff_name
@@ -16,7 +16,7 @@
 				and reception_date = curdate()
 		order by reception_time;
 	</select>
-	<select id="selectReceptionListByState" resultType="receptions">
+	<select id="selectReceptionListByState" resultType="reception">
 		select reception_id, DATE_FORMAT(reception_date, '%Y-%m-%d') as reception_date, DATE_FORMAT(reception_time,'%H:%i') as reception_time, reception.staff_id
 				, reception_state, reception.patient_id, reception_content
 				, patient.patient_name, staff.staff_name
@@ -32,7 +32,7 @@
 		set reception_state = #{reception_state} 
 		where reception_id = #{reception_id}
 	</update>
-	<insert id="insertReceptionAfterVisit" parameterType="receptions">
+	<insert id="insertReceptionAfterVisit" parameterType="reception">
 	insert into reception 
 			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id) 
 	values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, null)

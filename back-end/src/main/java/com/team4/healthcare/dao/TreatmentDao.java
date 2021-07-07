@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.team4.healthcare.dto.SummeryTreatment;
 
-public interface TreatmentDAO {
+public interface TreatmentDao {
 	public List<SummeryTreatment> selectTreatmentHistory(int patient_id);
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.team4.healthcare.dao.AppointmentDAO">
-	<select id="selectAppointmentList" resultType="appointments">
+<mapper namespace="com.team4.healthcare.dao.AppointmentDao">
+	<select id="selectAppointmentList" resultType="appointment">
 		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
 				, appointment_state, appointment.patient_id, appointment_content
 				, appointment_kind, patient.patient_name, staff.staff_name
@@ -16,12 +16,12 @@
 		set appointment_state = #{appointment_state} 
 		where appointment_id = #{appointment_id}
 	</update>
-	<select id="selectAppointmentById" resultType="appointments">
+	<select id="selectAppointmentById" resultType="appointment">
 		select appointment_id, patient_id, appointment_content, staff_id
 		from appointment
 		where appointment_id = #{appointment_id}
 	</select>
-	<select id="selectAppointmentListByState" resultType="appointments">
+	<select id="selectAppointmentListByState" resultType="appointment">
 		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
 				, appointment_state, appointment.patient_id, appointment_content
 				, appointment_kind, patient.patient_name, staff.staff_name
@@ -32,7 +32,7 @@
 				and appointment_state = #{appointment_state}
 		order by appointment_time;
 	</select>
-	<select id="selectAppointmentHistory" resultType="appointments">
+	<select id="selectAppointmentHistory" resultType="appointment">
 		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
 				, appointment_state, appointment.patient_id, appointment_content
 				, appointment_kind, patient.patient_name, staff.staff_name
@@ -50,7 +50,7 @@
 			and appointment_date = #{appointment_date}
 			and appointment_state = '예약'
 	</select>
-	<insert id="insertNewTreatmentAppointment" parameterType="appointments" >
+	<insert id="insertNewTreatmentAppointment" parameterType="appointment" >
 		insert into appointment (appointment_date, appointment_time, staff_id
 								, patient_id, appointment_content, appointment_kind)
 			values (#{appointment_date}, #{appointment_time}, #{staff_id}, #{patient_id},
