@@ -31,7 +31,6 @@ function Patients(props){
   const getPateints = async() => {
     try{
       const response = await getPateintList(staff_id);
-      
       let newPatients = response.data;
 
       newPatients.map( async (item, index) => {
@@ -41,9 +40,6 @@ function Patients(props){
           ,patient_state : isComplete.data
         }
       })
-
-      console.log(newPatients);
-      
       setPateints(newPatients);
     } catch (error){
       console.log(error);
