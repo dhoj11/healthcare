@@ -2,7 +2,6 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
                         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
 	<typeAliases>
 	 <typeAlias alias="staff" type="com.team4.healthcare.dto.Staff" />
 	 <typeAlias alias="patient" type="com.team4.healthcare.dto.Patient" />
@@ -14,16 +13,16 @@
 	 <typeAlias alias="testlist" type="com.team4.healthcare.dto.TestList" />
 	 <typeAlias alias="test" type="com.team4.healthcare.dto.Test"/>
 	 <typeAlias alias="testresult" type="com.team4.healthcare.dto.TestResult" />
-	<typeAlias type="com.team4.healthcare.dto.Appointment" alias="appointments"/>
-	<typeAlias type="com.team4.healthcare.dto.Patient" alias="patients"/>
-	<typeAlias type="com.team4.healthcare.dto.Reception" alias="receptions"/>
-	<typeAlias type="com.team4.healthcare.dto.SummeryTreatment" alias="summeryTreatments"/>
-	<typeAlias type="com.team4.healthcare.dto.SummeryTest" alias="summeryTests"/>
-	<typeAlias type="com.team4.healthcare.dto.SummeryPrescription" alias="summeryPrescriptions"/>
+	<typeAlias type="com.team4.healthcare.dto.Appointment" alias="appointment"/>
+	<typeAlias type="com.team4.healthcare.dto.Patient" alias="patient"/>
+	<typeAlias type="com.team4.healthcare.dto.Reception" alias="reception"/>
+	<typeAlias type="com.team4.healthcare.dto.SummeryTreatment" alias="summeryTreatment"/>
+	<typeAlias type="com.team4.healthcare.dto.SummeryTest" alias="summeryTest"/>
+	<typeAlias type="com.team4.healthcare.dto.SummeryPrescription" alias="summeryPrescription"/>
 	<typeAlias alias="notice" type="com.team4.healthcare.dto.Notice"/>
 	<typeAlias alias="freeBoard" type="com.team4.healthcare.dto.FreeBoard"/>
 	<typeAlias alias="freeBoardAnswer" type="com.team4.healthcare.dto.FreeBoardAnswer"/>
+	<typeAlias alias="staff" type="com.team4.healthcare.dto.Staff"/>
 	<typeAlias alias="imgNotice" type="com.team4.healthcare.dto.ImgNotice"/>
-
 	</typeAliases>
 </configuration>
