@@ -41,7 +41,6 @@ public class AdministrationController {
 	@GetMapping("/appointment")
 	public List<Appointment> getAppointmentList() {
 		List<Appointment> appointmentList = administrationService.getAppointmentList();
-		appointmentList.toString();
 		return appointmentList;
 	}
 	

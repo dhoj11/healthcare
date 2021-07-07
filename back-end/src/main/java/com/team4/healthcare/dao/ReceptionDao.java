@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.team4.healthcare.dto.Reception;
 
-public interface ReceptionDAO {
+public interface ReceptionDao {
 	public int insertReceptionAfterAppointment(Reception reception);
 	public List<Reception> selectReceptionList();
 	public List<Reception> selectReceptionListByState(String reception_state);

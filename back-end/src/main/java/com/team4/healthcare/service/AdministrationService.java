@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team4.healthcare.dao.AppointmentDAO;
-import com.team4.healthcare.dao.PatientDAO;
-import com.team4.healthcare.dao.PrescriptionDAO;
-import com.team4.healthcare.dao.ReceptionDAO;
+import com.team4.healthcare.dao.AppointmentDao;
+import com.team4.healthcare.dao.PatientDao;
+import com.team4.healthcare.dao.PrescriptionDao;
+import com.team4.healthcare.dao.ReceptionDao;
 import com.team4.healthcare.dao.StaffDao;
 import com.team4.healthcare.dao.TestDao;
 import com.team4.healthcare.dao.TreatmentDao;
@@ -30,17 +30,17 @@ public class AdministrationService {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationService.class);
 
 	@Autowired
-	private AppointmentDAO appointmentDAO;
+	private AppointmentDao appointmentDAO;
 	@Autowired 
-	private ReceptionDAO receptionDAO;
+	private ReceptionDao receptionDAO;
 	@Autowired
-	private PatientDAO patientDAO;
+	private PatientDao patientDAO;
 	@Autowired
 	private TreatmentDao treatmentDAO;
 	@Autowired
 	private TestDao testDAO;
 	@Autowired
-	private PrescriptionDAO prescriptionDAO;
+	private PrescriptionDao prescriptionDAO;
 	@Autowired
 	private StaffDao staffDAO;
 	

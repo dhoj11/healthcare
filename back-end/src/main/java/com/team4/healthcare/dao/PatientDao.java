@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.team4.healthcare.dto.Patient;
 
-public interface PatientDAO {
+public interface PatientDao {
 	
 	public Patient selectPatientById(int patient_id);
 	public List<Patient> selectPatientList();
