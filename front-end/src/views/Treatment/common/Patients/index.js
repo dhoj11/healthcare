@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Patients.module.css";
 import { createSetPatientAction } from "../../../../redux/treatment-reducer";
 
-import data from "../../data/patients";
+import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment";
 
 /**
  * 오늘 진료대기/완료된 환자를 오른쪽 리스트에 표시한다.
@@ -11,26 +11,49 @@ import data from "../../data/patients";
  * 접수테이블에 튜플이 추가 될 때 진료테이블에 튜플이 추가된다. 
  * 따라서 내원한 환자만 표시됨
  * 
- * TODO : 접수테이블에서 로그인된 의사(staff_id) && 오늘날짜의 환자 id로 환자 데이터 요청 api 작성
- * 
- * 요청데이터의 형태
- *  {id: {num}, name: "", age:{num}, gender: "", disease: "", medicine: "", comment: "", state: ""}, 
  */
 
 function Patients(props){
 
-  const patients  = data;
-
+  const staff_id = "dhoj11"; // TODO : 리덕스 스토어의 상태로 staff_id 초기화
+  
   const patient = useSelector(state => state.treatmentReducer.patient);
 
   const [curPatient, setCurPatient] = useState({patient_id:patient});
   const [listState, setListState] = useState();
-
+  const [patients, setPateints] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setListState("all");
   },[]);
+
+  const getPateints = async() => {
+    try{
+      const response = await getPateintList(staff_id);
+      
+      let newPatients = response.data;
+
+      newPatients.map( async (item, index) => {
+        let isComplete = await isTreatmentComplete(item.patient_id);
+        newPatients[index] = {
+          ...newPatients[index]
+          ,patient_state : isComplete.data
+        }
+      })
+
+      console.log(newPatients);
+      
+      setPateints(newPatients);
+    } catch (error){
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getPateints();
+  },[]);
+
 
   useEffect(()=> {
       dispatch(createSetPatientAction(curPatient.patient_id)); 
@@ -54,33 +77,33 @@ function Patients(props){
       <div className={style.patients}>
 
       {listState === "all" ?
-          patients.map((item) => { 
+          patients.length > 0 && patients.map((item) => { 
             return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                       onClick={() => {
                         setCurPatient(item); 
                       }} 
                       key={item.patient_id}> 
-                      {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
+                      {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
                     </div>); })
       
       :  listState === "before" ?
-            patients.filter( item => { return item.patient_state === "before"} ).map((item) => { 
+            patients.length > 0 && patients.filter( item => { return item.patient_state === "before"} ).map((item) => { 
               return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                         onClick={() => {
                           setCurPatient(item); 
                         }} 
                         key={item.patient_id}> 
-                        {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
+                        {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
                       </div>); })
 
           : listState === "complete" ?
-              patients.filter( item => { return item.patient_state === "complete"} ).map((item) => { 
+              patients.length > 0 && patients.filter( item => { return item.patient_state === "complete"} ).map((item) => { 
                 return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                           onClick={() => {
                             setCurPatient(item); 
                           }} 
                           key={item.patient_id}> 
-                          {item.patient_name} ( {item.patient_gender} {item.patient_age} ) 
+                          {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
                         </div>); })
           :null
       }
@@ -90,7 +113,7 @@ function Patients(props){
         <i className={`far fa-user-circle ${style.profileIcon}`}></i>
         <div className={style.patientDescription}>
 
-          { curPatient.patient_id !=="" && <span className={style.name}> {curPatient.patient_name}({curPatient.patient_gender}, 만{curPatient.patient_age}세) </span> }
+          { curPatient.patient_id !=="" && <span className={style.name}> {curPatient.patient_name}({curPatient.patient_gender}, 만{curPatient.patient_birth}세) </span> }
           {
           curPatient.id !=="" &&
             <div className={style.subWrapper}>

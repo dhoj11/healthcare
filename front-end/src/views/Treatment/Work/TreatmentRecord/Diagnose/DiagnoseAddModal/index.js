@@ -1,9 +1,9 @@
 import style from "./DiagnoseAddModal.module.css";
 import { Modal } from "react-bootstrap";
-import data from "../../../../data/disease";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getSearchDiseases } from "../../../../../../apis/treatment";
 
 /**
  * 질병을 검색하고 진단을 추가한다.
@@ -24,11 +24,14 @@ function DiagnoseAddModal(props){
     setSearchItem(event.target.value);
   }
 
-  const handleSearch = () => {
-    const diseaseData = data;
-    const newDiseases = diseaseData.filter( item => item.disease_name.includes(searchItem))
-    setDiseases(newDiseases);
-  }
+  const handleSearch = useCallback( async() => {
+    try{
+      const response = await getSearchDiseases(searchItem);
+      setDiseases(response.data);
+    } catch(error){
+      console.log(error)
+    }
+  },[searchItem])
 
   /**
    * 진단을 추가한다.

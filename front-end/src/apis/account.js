@@ -1,17 +1,29 @@
 import axios from 'axios';
 
-export function createAccouont(account){
-  
+export function getStaffList(){
+  const promise = axios.get('http://localhost:8080/account/staff');
+  return promise;
 }
 
-export function updateAccount(account){
-  
+export function getStaff(staff_id){
+  const promise = axios.get('http://localhost:8080/account/staff/' + staff_id);
+  return promise;
+}
+
+export function createAccouont(account){
+  axios.post('http://localhost:8080/account/staff', account);
 }
 
 export function downloadAttach(staff_id) {
-  //return axios.get("/account/attach/" + staff_id, {responseType: "blob"});
+  const promise =  axios.get("http://localhost:8080/account/staff/attach/" + staff_id, {responseType: "blob"});
+  return promise;
+
 }
 
-export function removeAccount(staff_id){
-  
+export function updateAccount(account){
+  axios.put('http://localhost:8080/account/staff', account);
+}
+
+export function deleteAccount(staff_id){
+  axios.delete('http://localhost:8080/account/staff/' + staff_id);
 }

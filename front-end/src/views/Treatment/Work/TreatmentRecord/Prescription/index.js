@@ -1,19 +1,15 @@
 import style from "./Prescription.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import data2 from "../../../data/prescriptions"; /* 과거 처방 샘플 데이터 */
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetCurPrescriptionsActoin } from "../../../../../redux/treatment-reducer";
 import PrescriptionAddModal from "./PrescriptionAddModal";
+import { getTreatmentPrescriptions } from "../../../../../apis/treatment";
 
 /**
  * 현재선택된 진료의 과거 처방기록을 표시한다.
  * 자식컴포넌트에서 처방을 추가한다.
- * 
- * TODO : 처방테이블에서 진료번호로 처방데이터 요청 api 작성
- * 요청데이터형태
- * {treatment_id: {num}, prescription_code: "", prescription_name: "", prescription_kind : "", prescription_type:	"", prescription_comment: 3},
  */
 
 function Prescription(props){
@@ -23,15 +19,25 @@ function Prescription(props){
   const work = useSelector(state => state.treatmentReducer.work);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
   const dispatch = useDispatch();
 
-  const getPrescriptions = useCallback((event) => {
-    const prevPrescriptions = data2.filter(item => item.treatment_id === treatment);
-    return prevPrescriptions;
+  const getPrescriptions = useCallback( async () => {
+    try{
+      const response = await getTreatmentPrescriptions(treatment);
+      setPrescriptions(response.data);
+    } catch(error){
+      console.log(error);
+    }
+   
   },[treatment]);
 
-  const [prescriptions, setPrescriptions] = useState(getPrescriptions);
-  const [addModalOpen, setAddModalOpen] = useState(false);
+
+  useEffect(()=>{
+    if(treatment !=="") getPrescriptions();
+  },[treatment])
 
   const openAddModal = () => {
     if(!editBlock){
@@ -44,12 +50,8 @@ function Prescription(props){
   };
 
   useEffect(()=>{
-    setPrescriptions(getPrescriptions);
+    if(treatment !=="") getPrescriptions();
   },[work]);
-
-  useEffect(()=> {
-    setPrescriptions(getPrescriptions);
-  },[treatment])
 
   useEffect(()=>{
     setPrescriptions([]);
@@ -114,19 +116,24 @@ function Prescription(props){
                 <th scope="col" className="col-2">구분</th>
                 <th scope="col" className="col-2">타입</th>
                 <th scope="col" className="col-2">처방일수</th>
+                <th scope="col" className="col-2">투약량</th>
                 <th scope="col" className="col-1"></th>
               </tr>
             </thead>
             <tbody>
               {
-                prescriptions.map((item, index) => {
+                prescriptions && prescriptions.length > 0 && prescriptions.map((item, index) => {
                   return (<tr key={index}>
                             <td>{item.medicine_code}</td>
                             <td>{item.medicine_name}</td>
                             <td>{item.medicine_kind}</td>
                             <td>{item.medicine_type}</td>
                             <td>{item.prescription_comment}</td>
+                            <td>{item.prescription_amount}</td>
+                            { !editBlock ?
                             <td onClick={() => deletePrescription(item.medicine_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                            : 
+                            <td></td>}
                         </tr>);
                 })
               }

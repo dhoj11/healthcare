@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.AccountDao">
+
+    <insert id="insertStaff" parameterType="staff">
+        insert into staff (
+        				  hospital_code
+        				  ,staff_id
+        				  ,staff_password
+        				  ,staff_authority
+        				  ,staff_name
+        				  ,staff_tel
+        			 	  ,staff_pic_oname
+        				  ,staff_pic_sname
+        				  ,staff_pic_type
+        				  ,staff_join
+        				  ,staff_enabled  
+        				  )
+        values(
+        	  #{hospital_code}
+        	  ,#{staff_id}
+        	  ,#{staff_password}
+        	  ,#{staff_authority}
+        	  ,#{staff_name}
+        	  ,#{staff_tel}
+        	  ,#{staff_pic_oname}
+        	  ,#{staff_pic_sname}
+        	  ,#{staff_pic_type}
+        	  ,NOW()
+        	  ,1 
+        )
+    </insert>
+
+    <select id="selectAll" resultType="staff">
+    	select *
+    	from staff
+    	where staff_enabled = 1
+    </select>
+    
+    <select id="selectOne" parameterType="string" resultType="staff">
+    	select hospital_code
+        				  ,staff_id
+        				  ,staff_password
+        				  ,staff_authority
+        				  ,staff_name
+        				  ,staff_tel
+        			 	  ,staff_pic_oname
+        				  ,staff_pic_sname
+        				  ,staff_pic_type
+        				  ,date_format(staff_join, '%Y-%m-%d') as staff_join
+        				  ,staff_enabled  
+    	from staff
+    	where staff_id = #{staff_id}
+    </select>
+    
+    <update id="updateStaff" parameterType="staff">
+    	update staff
+    	set <if test="staff_password != null">
+             	staff_password = #{staff_password},
+             </if>
+             <if test="staff_pic != null">
+             	 staff_pic_oname = #{staff_pic_oname}
+        		,staff_pic_sname = #{staff_pic_sname}
+        		,staff_pic_type = #{staff_pic_type}
+             </if>
+             <if test="staff_tel != null">
+    			staff_tel=#{staff_tel}
+    		</if>
+    	where staff_id = #{staff_id}
+    </update>
+    
+    <update id="deleteStaff" parameterType="string">
+    	update staff
+    	set staff_enabled = 0
+    	where staff_id = #{staff_id}
+    </update>
+    
+    
+</mapper>

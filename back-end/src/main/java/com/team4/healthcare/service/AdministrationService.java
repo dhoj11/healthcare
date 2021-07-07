@@ -15,7 +15,7 @@ import com.team4.healthcare.dao.PrescriptionDAO;
 import com.team4.healthcare.dao.ReceptionDAO;
 import com.team4.healthcare.dao.StaffDao;
 import com.team4.healthcare.dao.TestDao;
-import com.team4.healthcare.dao.TreatmentDAO;
+import com.team4.healthcare.dao.TreatmentDao;
 import com.team4.healthcare.dto.Appointment;
 import com.team4.healthcare.dto.Patient;
 import com.team4.healthcare.dto.Reception;
@@ -36,7 +36,7 @@ public class AdministrationService {
 	@Autowired
 	private PatientDAO patientDAO;
 	@Autowired
-	private TreatmentDAO treatmentDAO;
+	private TreatmentDao treatmentDAO;
 	@Autowired
 	private TestDao testDAO;
 	@Autowired
