@@ -14,7 +14,6 @@ function HourlyWeather(props) {
       jsonData.indexLabel = Math.round(hourlyWeather[i].main.temp) +'°';
       dataPoints.push(jsonData);
     }
-    console.log(dataPoints);
   }
 
   const options = {

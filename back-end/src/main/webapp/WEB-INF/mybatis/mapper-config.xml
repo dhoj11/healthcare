@@ -2,4 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
                         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<typeAliases>
+		<typeAlias alias="notice" type="com.team4.healthcare.dto.Notice"/>
+		<typeAlias alias="freeBoard" type="com.team4.healthcare.dto.FreeBoard"/>
+		<typeAlias alias="freeBoardAnswer" type="com.team4.healthcare.dto.FreeBoardAnswer"/>
+		<typeAlias alias="staff" type="com.team4.healthcare.dto.Staff"/>
+		<typeAlias alias="imgNotice" type="com.team4.healthcare.dto.ImgNotice"/>
+	</typeAliases>
+	
 </configuration>

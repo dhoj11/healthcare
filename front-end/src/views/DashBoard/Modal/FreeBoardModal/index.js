@@ -1,34 +1,99 @@
+import createPalette from "@material-ui/core/styles/createPalette";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { createFreeBoardAnswer, deleteFreeBoard, deleteFreeBoardAnswer, getFreeBoard, getFreeBoardAnswerList, updateFreeBoard } from "../../../../apis/dashboard";
 import { getFreeBoardAnswer } from "../../data";
+import DeleteModal from "../DeleteModal";
+import AnswerDeleteModal from "../DeleteModal/AnswerDeleteModal";
 import styles from "./index.module.css";
+import UpdateModal from "./UpdateModal";
 function FreeBoardModal(props) {
-  const {showFreeBoardModal, closeFreeBoardModal, freeBoardItem} = props;
-  const [freeBoardAnswer,setFreeBoardAnswer] =useState(getFreeBoardAnswer);
-
+  const {showFreeBoardModal, closeFreeBoardModal,freeBoardItem, freeBoardAnswer,addAnswerReRender,freeBoardReRender} = props;
+  const [showDeleteModal,setShowDeleteModal] = useState(false);
+  const [showAnswerDeleteModal,setShowAnswerDeleteModal] = useState(false);
+  const [showUpdateModal,setUpdateModal] = useState(false);
   const [answer,setAnswer] = useState("");
+  const [deleteAnswerId,setDeleteAnswerId] = useState(null);
+
 
   const changeText = (e) => {
     setAnswer(e.target.value)
   }
-  const addAnswer = () => {
-    const newAnswerList=freeBoardAnswer.concat([
-      {
-        "freeboard_answer_content":answer,
-        "freeboard_answer_date":moment().format('YYYY-MM-DD'),
-        "freeboard_answer_time": moment().format('HH:mm'),
-        "staff_name":"로그인Id"
+  const addAnswer = async() => {
+      try{
+        const newAnswer=
+        {
+          "freeboard_id":freeBoardItem.freeboard_id,
+          "freeboard_answer_content":answer,
+          "freeboard_answer_date":moment().format('YYYY-MM-DD'),
+          "freeboard_answer_time": moment().format('HH:mm'),
+          "staff_name":"로그인Id"
+        }
+        await createFreeBoardAnswer(newAnswer);
+      } catch(error){
+        throw error;
       }
-    ]
-    )
-    setFreeBoardAnswer(newAnswerList);
     setAnswer("");
+    addAnswerReRender();
+  }
+  const deleteItem = () => {
+    (async function() {
+      try{
+        await deleteFreeBoard(freeBoardItem.freeboard_id);
+        setShowDeleteModal(false);
+        closeFreeBoardModal();
+      } catch(error){
+        throw error;
+      }
+    })();
+  }
+  const updateItem = (freeBoardItem) => {
+    (async function() {
+      try{
+        await updateFreeBoard(freeBoardItem);
+        setUpdateModal(false);
+        freeBoardReRender();
+      } catch(error){
+        throw error;
+      }
+      
+    })();
+  }
+  const deleteAnswerItem = () => {
+    (async function() {
+      try{
+        await deleteFreeBoardAnswer(deleteAnswerId);
+        setShowAnswerDeleteModal(false);
+        addAnswerReRender();
+      } catch(error){
+        throw error;
+      }
+    })();
+  }
+  const OpenDeleteModal = () => {
+    setShowDeleteModal(true);
+  }
+  const OpenAnswerDeleteModal = (freeboard_answer_id) => {
+    setDeleteAnswerId(freeboard_answer_id);
+    setShowAnswerDeleteModal(true);
+  }
+  const OpenUpdateModal = () => {
+    setUpdateModal(true);
+  }
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+  }
+  const closeAnswerDeleteModal = () => {
+    setShowAnswerDeleteModal(false);
+  }
+  const closeUpdateModal = () => {
+    setUpdateModal(false);
   }
   return(
     <>
     {
-      showFreeBoardModal ? (
+      showFreeBoardModal && freeBoardItem!==null ? (
         <Modal
       show={showFreeBoardModal} 
       onHide={closeFreeBoardModal}
@@ -41,14 +106,20 @@ function FreeBoardModal(props) {
           <Modal.Body>
             <div className={styles.body_answer}>
               <div className={styles.body}>
-                <div className={styles.writer}>
-                  <div>
-                    <i className={`fas fa-user ${styles.img}`} ></i>
+                <div className={`${styles.writer} justify-content-between`}>
+                  <div className={styles.left}>
+                    <div>
+                      <i className={`fas fa-user ${styles.img} `} ></i>
+                    </div>
+                    <div className={styles.wirter_content}>
+                        <div className={styles.writer_name}>{freeBoardItem.staff_name}</div>
+                        <div className={styles.write_date}>{(freeBoardItem.freeboard_date).substr(5,5)} {freeBoardItem.freeboard_time}</div>
+                    </div>
                   </div>
-                  <div className={styles.wirter_content}>
-                    <div className={styles.writer_name}>{freeBoardItem.staff_name}</div>
-                    <div className={styles.write_date}>{(freeBoardItem.freeboard_date).substr(5,5)} {freeBoardItem.freeboard_time}</div>
-                  </div>     
+                  <div>
+                      <button className={styles.btn} onClick={OpenUpdateModal}>수정</button>
+                      <button className={styles.btn} onClick={OpenDeleteModal}>삭제</button>
+                    </div>    
                 </div>
                 <div className={styles.title}>
                   {freeBoardItem.freeboard_title}
@@ -56,9 +127,10 @@ function FreeBoardModal(props) {
                 <div className={styles.content}>
                 {(freeBoardItem.freeboard_content).split("\n").map((text,index) =>{
                     return ( 
-                      <div key={index}>
+                      <span key={index}>
                         {text}
-                      </div>
+                        <br></br>
+                      </span>
                     )
                   })}
                 </div>
@@ -72,13 +144,18 @@ function FreeBoardModal(props) {
                         <div key={index}>
                           <hr></hr>
                           <div>
-                            <div className={styles.answer_writer}>
-                              <div>
-                                <i className={`fas fa-user ${styles.Small_img}`} ></i>
+                            <div className={`${styles.answer_writer} justify-content-between`}>
+                              <div className="d-flex">
+                                <div>
+                                  <i className={`fas fa-user ${styles.Small_img}`} ></i>
+                                </div>
+                                <div>
+                                  {data.staff_name}
+                                </div>                                
                               </div>
                               <div>
-                                {data.staff_name}
-                              </div>
+                                <button className={styles.btn} onClick={() =>OpenAnswerDeleteModal(data.freeboard_answer_id)}>삭제</button>
+                              </div>                           
                             </div>
                             <div>
                               {data.freeboard_answer_content}
@@ -110,10 +187,15 @@ function FreeBoardModal(props) {
               </div>
             </div>
           </Modal.Footer>
+          <DeleteModal showDeleteModal={showDeleteModal}  closeDeleteModal={closeDeleteModal} deleteItem={deleteItem}></DeleteModal>
+          <AnswerDeleteModal showAnswerDeleteModal={showAnswerDeleteModal} closeAnswerDeleteModal={closeAnswerDeleteModal} deleteAnswerItem={deleteAnswerItem}></AnswerDeleteModal>
+          <UpdateModal showUpdateModal={showUpdateModal} closeUpdateModal={closeUpdateModal} freeBoardItem={freeBoardItem} updateItem={updateItem}> </UpdateModal>
     </Modal>
+    
       ) :
       null
     }
+      
     </>
   );
 }

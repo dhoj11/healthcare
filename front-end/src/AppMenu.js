@@ -10,7 +10,6 @@ function AppMenu(props){
         <Link to="/treatment" className="nav-link"><i className="fas fa-stethoscope"></i></Link>
         <Link to="/test" className="nav-link"><i className="fas fa-vial"></i></Link>
         <Link to="/account" className="nav-link"><i className="fas fa-user-cog"></i></Link>
-        <Link to="/writenotice" className="nav-link"><i class="fas fa-edit"></i></Link>
       </li>
     </ul>
   );

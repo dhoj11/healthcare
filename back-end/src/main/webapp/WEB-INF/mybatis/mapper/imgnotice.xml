@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.ImgNoticeDao">
+	<insert id="create" parameterType="imgNotice">
+		insert into img_notice(img_notice_title,img_notice_content,img_notice_date,img_notice_pic_oname,img_notice_pic_sname,img_notice_pic_type,staff_id)
+		values (#{img_notice_title},#{img_notice_content},#{img_notice_date},#{img_notice_pic_oname},#{img_notice_pic_sname},#{img_notice_pic_type},#{staff_id})
+	</insert>
+	
+	<select id="selectByAll" resultType="imgNotice">
+		select img_notice.*,staff.staff_name
+		from img_notice,staff
+		where img_notice.staff_id=staff.staff_id
+		order by img_notice_id desc
+	</select>
+	
+	<select id="selectById" resultType="imgNotice" parameterType="int">
+		select *
+		from img_notice
+		where img_notice_id = #{img_notice_id}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from img_notice
+		where img_notice_id = #{img_notice_id}
+	</delete>
+</mapper>
