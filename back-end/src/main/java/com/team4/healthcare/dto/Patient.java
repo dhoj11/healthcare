@@ -1,6 +1,7 @@
 package com.team4.healthcare.dto;
 
 public class Patient {
+
    private int patient_id;
    private String patient_name;
    private String patient_tel;

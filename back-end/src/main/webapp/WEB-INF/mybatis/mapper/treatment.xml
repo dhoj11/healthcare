@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.TreatmentDao">
+
+	<select id="selectTreatmentHistory" resultType="summeryTreatment">
+		select DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, treatment.treatment_id, treatment.staff_id, staff.staff_name, diagnose.disease_code, disease.disease_name
+		from treatment, staff, diagnose, disease
+		where treatment.staff_id = staff.staff_id 
+			and treatment.treatment_id = diagnose.treatment_id
+		    and diagnose.disease_code = disease.disease_code
+			and patient_id = #{patient_id}
+	</select>
+
+   <select id = "selectPatientIds" parameterType="string" resultType="int">
+   	select distinct(patient_id)
+   	from treatment
+   	where staff_id = #{staff_id}
+   		  and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+   </select>
+   
+   <select id = "selectPatients" parameterType="java.util.List" resultType="patient">
+   	select patient_id
+   		  ,patient_name
+   		  ,patient_tel
+   		  ,FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(date_format(patient_birth, '%Y-%m-%d'),'-','') AS UNSIGNED)) / 10000 ) AS patient_birth
+   		  ,patient_medicine
+   		  ,patient_disease
+   		  ,patient_comment
+   		  ,patient_gender
+   		  ,patient_recent_visit
+   	from patient
+   	where
+   	<foreach collection="list" item="item" separator="or">
+   	patient_id= #{item}
+   	</foreach>
+   </select>
+   
+   <select id = "selectTreatments" parameterType="int" resultType="treatment">
+   	select treatment_id
+   		  ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
+   		  ,treatment_saved
+   	from treatment
+   	where patient_id = #{patient_id}
+   </select>
+   
+   <select id ="selectTreatmentIsComplete" parameterType="int" resultType="int">
+   	select treatment_saved
+   	from treatment
+   	where patient_id = #{patient_id} and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+   	order by treatment_date limit 1
+   </select>
+   
+   <select id ="selectTreatmentRecord" parameterType="int" resultType="string">
+   	select treatment_record
+   	from treatment
+   	where treatment_id = #{treatment_id}
+   </select>
+   
+   <select id ="selectTreatmentComment" parameterType="int" resultType="string">
+   	select treatment_comment
+   	from treatment
+   	where treatment_id = #{treatment_id}
+   </select>
+   
+   <select id="selectTreatmentDiagnoses" parameterType="int" resultType="diagnose">
+	select diagnose_id
+			,diagnose.disease_code
+   		,disease.disease_name
+    from diagnose, disease
+   where diagnose.disease_code = disease.disease_code AND diagnose.treatment_id = #{treatment_id}
+   </select>
+   
+   <select id ="selectDiseases" parameterType="string" resultType="disease">
+    select disease_code
+         , disease_name
+    from disease
+    where disease_name LIKE CONCAT('%',#{disease_name},'%')
+   </select>
+   
+   <select id ="selectTreatmentPrescriptions" parameterType="int" resultType="prescription">
+   	select prescription.medicine_code
+   	      ,medicine_name
+   	      ,medicine_kind
+   	      ,medicine_type
+   	      ,prescription_comment
+   	      ,prescription_amount
+   	from prescription, medicine
+   	where prescription.medicine_code = medicine.medicine_code and treatment_id = #{treatment_id}
+   </select>
+   
+   <select id ="selectMedicines" parameterType="string" resultType="medicine">
+    select *
+    from medicine
+    where medicine_name like CONCAT('%',#{medicine_name},'%')
+   </select>
+   
+   <select id ="selectTreatmentTestList" parameterType="int" resultType="testlist">
+    select tests_list.test_code
+   		  ,tests.test_name
+    from tests_list, tests
+    where tests_list.test_code = tests.test_code and treatment_id= #{treatment_id}
+   </select>
+   
+   <select id ="selectTests" parameterType="string" resultType="test">
+   	select test_code
+   		  ,test_name
+    from tests
+    where test_name like CONCAT('%',#{test_name},'%')
+   </select>
+   
+   <select id="selectReceptionId" parameterType="int" resultType="int">
+   	select reception_id
+   	from treatment
+   	where treatment_id = #{treatment_id}
+   </select>
+   
+   <select id ="selectTreatmentSympton" parameterType="int" resultType="string">
+   	select reception_content
+   	from reception
+   	where reception_id = #{reception_id}
+   </select>
+   
+   <update id ="updateTreatment">
+   	update treatment
+   	set treatment_record = #{treatment_record}
+   	   ,treatment_comment = #{treatment_comment}
+   	   ,treatment_saved = 1
+   	where treatment_id = #{treatment_id}
+   </update>
+   
+   <insert id ="insertDiagnose" parameterType="map">
+   	insert into diagnose (treatment_id, disease_code)
+   	<foreach collection="treatment_diagnoses" item="item" open="values(" separator="),(" close=")">
+   		#{treatment_id}, #{item.disease_code}
+   	</foreach>
+   </insert>
+   
+   <insert id="insertPrescription" parameterType="map">
+   	insert into prescription (treatment_id, medicine_code, prescription_comment, prescription_amount)
+   	<foreach collection="treatment_prescriptions" item="item" open="values(" separator="),(" close=")">
+   		#{treatment_id}, #{item.medicine_code}, #{item.prescription_comment}, #{item.prescription_amount}
+   	</foreach>
+   </insert>
+   
+   <insert id="insertTestList" parameterType="map">
+   	insert into tests_list (test_list_id, test_code, test_list_time, treatment_id, test_list_date)
+   	<foreach collection="treatment_tests" item="item" open="values(" separator="),(" close=")">
+   		#{test_list_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
+   	</foreach>
+   </insert>
+   
+   
+   <select id="selectTestDetailsId" parameterType="String" resultType="int">
+   	select test_details_id
+   	from test_details
+   	where test_code = #{test_code}
+   </select>
+   
+   <insert id="insertTestResult" parameterType="map">
+   	insert into test_results (test_list_id, test_details_id, test_code)
+   	<foreach collection="test_details_id" item="item" open="values(" separator="),(" close=")">
+   		#{test_list_id}, #{item}, #{test_code}
+   	</foreach>
+   </insert>
+
+   <select id="getTestListId" parameterType="int" resultType="int">
+   	select distinct(test_list_id) 
+   	from tests_list
+   	where treatment_id = #{treatment_id}
+   </select>
+   
+   <select id="selectTreatmentTestResults" parameterType="java.util.List" resultType="testresult">
+    select test_details.test_code
+    	  ,test_name
+    	  ,test_details_code
+          ,test_details_name
+    	  ,test_details_unit
+          ,test_details_min
+          ,test_details_max
+          ,test_result_value
+    from test_details, test_results
+    where test_results.test_details_id = test_details.test_details_id and
+    <foreach collection="list" item="item" separator="or">
+   	test_list_id = #{item}
+   	</foreach>
+   </select>
+</mapper>

@@ -64,6 +64,7 @@
 
 .searchResult{
   margin-top: 50px;
+  overflow: auto;
 }
 
 .thead{

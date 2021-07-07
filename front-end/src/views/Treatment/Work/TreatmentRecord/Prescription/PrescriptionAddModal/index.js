@@ -3,8 +3,9 @@ import { Modal } from "react-bootstrap";
 import data from "../../../../data/medicine";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import DetailAddModal from "./DetailAddModal";
+import { getSearchMedicine } from "../../../../../../apis/treatment";
 
 /**
  * 약을 검색하고 처방을 추가한다.
@@ -19,7 +20,7 @@ function PrescriptionAddModal(props){
   const {isOpen, close} = props;
 
   const [searchItem, setSearchItem] = useState();
-  const [prescriptions, setPrescriptions] = useState([]);
+  const [medicines, setMedicines] = useState([]);
   const [medicine, setMedicine] = useState();
 
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -36,11 +37,14 @@ function PrescriptionAddModal(props){
     setSearchItem(event.target.value);
   }
 
-  const handleSearch = () => {
-    const medicineData = data;
-    const newMedicines = medicineData.filter( item => item.medicine_name.includes(searchItem));
-    setPrescriptions(newMedicines);
-  }
+  const handleSearch = useCallback( async () => {
+    try{
+      const response = await getSearchMedicine(searchItem);
+      setMedicines(response.data);
+    } catch(error){
+      console.log(error)
+    }
+  },[searchItem])
 
   /**
    * 약 처방은 다음의 과정을 따른다.
@@ -62,7 +66,7 @@ function PrescriptionAddModal(props){
                  medicine_type: item.medicine_type
                 });
 
-    if(item.medicine_kind==="주사약"){
+    if(item.medicine_kind==="주사약" || item.medicine_kind==="외용약"){
       props.addPrescriptions(medicine);
     } else {
       openAddModal();
@@ -104,7 +108,7 @@ function PrescriptionAddModal(props){
                   </thead>
                   <tbody>
                     {
-                      prescriptions.map((item, index)=>{
+                      medicines.map((item, index)=>{
                         return(
                           <tr key={index}>
                             <td>{item.medicine_code}</td>

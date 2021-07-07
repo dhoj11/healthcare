@@ -2,7 +2,7 @@ import style from "./StaffModifyModal.module.css";
 
 import { Modal } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import { removeAccount, updateAccount } from "../../../../apis/account";
+import { deleteAccount, updateAccount } from "../../../../apis/account";
 
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,9 +17,10 @@ function StaffModifyModal(props){
 
   useEffect(()=>{
     if(staff){
-      setNewAccount(staff[0]);
+      setNewAccount(staff);
     }
   },[staff])
+
 
   const handleChange = (event) => {
     setNewAccount({ ...newAccount,
@@ -42,21 +43,21 @@ function StaffModifyModal(props){
   const handleModify = async(event) => {
     event.preventDefault();
     try{
-      const formData = new FormData();
-      formData.append("staff_id", newAccount.staff_id);
-      formData.append("staff_password", newAccount.staff_password);
-      formData.append("staff_tel", newAccount.staff_tel);
-      formData.append("staff_attachoname", inputFile.current.files[0]);
-      await updateAccount(formData)
+      // const formData = new FormData();
+      // formData.append("staff_id", newAccount.staff_id);
+      // formData.append("staff_password", newAccount.staff_password);
+      // formData.append("staff_tel", newAccount.staff_tel);
+      // formData.append("staff_pic", inputFile.current.files[0]);
+      await updateAccount(newAccount);
     } catch (error) {
-      
+      console.log(error);
     }
     close();
   }
 
   const handleRemove = async() => {
     try{
-      await removeAccount( newAccount.staff_id);
+      await deleteAccount(newAccount.staff_id);
     }catch(error){
       
     }
@@ -113,10 +114,14 @@ function StaffModifyModal(props){
               <span className={style.title}>연락처</span>
               <input type="text" name="staff_tel" className={`form-control ${style.addInput}`} value={newAccount.staff_tel} onChange={handleChange}/>
             </div>
-            <form onSubmit={handleModify}> 
+            <form onSubmit={handleModify}>
               <div className={`${style.item} ${style.pic}`}>
                 <span className={style.title}>프로필사진</span>
-                <span><input id="attach" name="staff_attachoname" type="file" className="form-control-file" ref={inputFile}/></span>
+                <span><input id="attach" name="staff_pic" type="file" className="form-control-file" ref={inputFile}/></span>
+              </div>
+              <div className={`${style.currentfile}`}>
+              <span className={style.currentfileTitle}>저장된 사진</span>
+              <span>{newAccount.staff_pic_sname}</span>
               </div>
               <div className={style.actionButton}>
                 <span className={style.cancel} onClick={handleClose}>취소</span>

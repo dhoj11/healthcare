@@ -2,19 +2,14 @@ import style from "./Test.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useState } from "react";
-import data2 from "../../../data/testLists" // 과거 진단 검사의뢰 데이터
 import { useDispatch, useSelector } from "react-redux";
 import { createSetCurTestsActoin } from "../../../../../redux/treatment-reducer";
 import TestAddModal from "./TestAddModal/TestAddModal";
-
+import { getTreatmentTestList } from "../../../../../apis/treatment";
 
 /**
  * 현재선택된 진료의 과거 검사의뢰기록을 표시한다.
  * 자식컴포넌트에서 검사의뢰를 추가한다.
- * 
- * TODO : testList 테이블에서 진료번호로 검사데이터 요청 api 작성
- * 요청데이터형태
- * {treatment_id: {num},test_code: "", test_name: ""},
  */
 
 function Test(props){
@@ -24,15 +19,23 @@ function Test(props){
   const work = useSelector(state => state.treatmentReducer.work);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
-  const getTest = useCallback((event) => {
-    const prevTests = data2.filter(item => item.treatment_id === treatment);
-    return prevTests;
-  },[treatment]);
-
-  const [tests, setTests] = useState(getTest);
+  const [tests, setTests] = useState([]);
   const [addModalOpen, setAddModalOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  const getTest = useCallback( async() => {
+    try{
+      const response = await getTreatmentTestList(treatment);
+      setTests(response.data);
+    } catch(error){
+      console.log(error);
+    }
+  },[treatment]);
+
+  useEffect(()=>{
+    if(treatment !=="") getTest();
+  },[treatment]);
 
   const openAddModal = () => {
     if(!editBlock){
@@ -45,12 +48,8 @@ function Test(props){
   };
 
   useEffect(()=>{
-    setTests(getTest);
+    if(treatment !=="") getTest();
   },[work]);
-
-  useEffect(()=> {
-    setTests(getTest);
-  },[treatment])
 
   useEffect(()=> {
     setTests([]);
@@ -109,11 +108,14 @@ function Test(props){
               </thead>
               <tbody>
               {
-              tests.map((item) => { 
+              tests&& tests.length > 0 && tests.map((item) => { 
                 return (<tr key={item.test_code}> 
                           <td>{item.test_code}</td> 
                           <td>{item.test_name}</td>
+                          { !editBlock ?
                           <td onClick={() => deleteTest(item.test_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                          : 
+                          <td></td>}
                         </tr>); })
             }
               </tbody>

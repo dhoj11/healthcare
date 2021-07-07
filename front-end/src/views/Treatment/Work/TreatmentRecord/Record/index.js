@@ -1,37 +1,35 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Record.module.css";
-import data from "../../../data/treatment"
 import { createSetCurRecordActoin } from "../../../../../redux/treatment-reducer";
+import { getTreatmentRecord } from "../../../../../apis/treatment";
 
 /**
  * 선택된 진료의 과거진료기록(의무기록)을 가져온다.
- * 
- * TODO : 현재진료번호로 진료테이블에서 comment 속성값 가져오는 api 작성
- * 요청데이터의 형태
- * {treatment_record: ""}
  */
 
 function Record(props){
-
-  const treatments = data;
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
   const work = useSelector(state => state.treatmentReducer.work);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
-  const [record, setRecord] = useState();
+  const [record, setRecord] = useState("");
 
   const dispatch = useDispatch();
 
-  const getRecord = useCallback((event) => {
-    const prevTreatment = treatments.find(item => item.treatment_id === treatment);
-    if(prevTreatment) return prevTreatment.treatment_record;
+  const getRecord = useCallback( async () => {
+    try{
+      const response = await getTreatmentRecord(treatment);
+      setRecord(response.data);
+    }catch(error){
+      console.log(error);
+    }
   },[treatment])
 
   useEffect(()=> {
-    setRecord(getRecord);
+    if(treatment !=="") getRecord();
   },[treatment])
 
   useEffect(()=>{
@@ -43,7 +41,7 @@ function Record(props){
   },[record]);
 
   useEffect(()=>{
-    setRecord(getRecord); 
+    if(treatment !=="") getRecord();
   },[work]);
   
   useEffect(()=>{

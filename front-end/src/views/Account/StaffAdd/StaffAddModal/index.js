@@ -8,6 +8,8 @@ function StaffAddModal(props) {
 
   const {isOpen, close} = props;
 
+  const inputFile = useRef();
+
   const[account, setAccount] = useState({
       staff_name: "",
       staff_id: "",
@@ -30,25 +32,28 @@ function StaffAddModal(props) {
   /**
    * 직원을 추가한다. 
    * 
-   * TODO : axios 요청 api 작성"
+   * TODO : axios 요청 api 작성" (+) 2021.07.04 작성완료
+   * 
    */
-
-  const inputFile = useRef();
 
   const handleAdd = async(evnet) => {
     evnet.preventDefault();
     try{
       const formData = new FormData();
+      formData.append("hospital_code", process.env.REACT_APP_HOSPITAL_CODE)
       formData.append("staff_name", account.staff_name);
       formData.append("staff_id", account.staff_id);
       formData.append("staff_password", account.staff_password);
       formData.append("staff_tel", account.staff_tel);
-      formData.append("staff_authority", account.staff_role);
-      formData.append("staff_attachoname", inputFile.current.files[0]);
+      formData.append("staff_authority", account.staff_authority);
+      if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
       await createAccouont(formData);
     } catch (error){
       console.log(error);
     }
+
+    props.handleAddStaff(account);
+
     init();
     close();
   }
@@ -99,14 +104,14 @@ function StaffAddModal(props) {
               <input type="text" name="staff_tel" className={`form-control ${style.addInput}`} value={account.staff_tel} onChange={handleChange}/>
             </div>
             <div className={`${style.item} ${style.role}`}>
-              <span className={ account.staff_authority === "doctor" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("doctor")}>의사</span>
-              <span className={ account.staff_authority === "nurse" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("nurse")}>간호사</span>
-              <span className={ account.staff_authority === "tester" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("tester")}>임상병리사</span>
+              <span className={ account.staff_authority === "의사" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("의사")}>의사</span>
+              <span className={ account.staff_authority === "간호" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("간호")}>간호사</span>
+              <span className={ account.staff_authority === "임상" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("임상")}>임상병리사</span>
             </div>
             <form onSubmit={handleAdd}> 
               <div className={`${style.item} ${style.pic}`}>
                 <span className={style.title}>프로필사진</span>
-                <span><input id="staff_attachoname" name="staff_attachoname" type="file" className="form-control-file" ref={inputFile}/></span>
+                <span><input id="staff_pic" name="staff_pic" type="file" className="form-control-file" ref={inputFile}/></span>
               </div>
               <div className={style.actionButton}>
                 <span className={style.cancel} onClick={handleClose}>취소</span>

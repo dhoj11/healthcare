@@ -55,7 +55,7 @@ function TestList(props){
               <thead className={style.thead}>
                 <tr>
                   <th scope="col" className="col-1">순서</th>
-                  <th scope="col" className="col-1">환자번호</th>
+                  {/* <th scope="col" className="col-1">환자번호</th> */}
                   <th scope="col" className="col-1">성명</th>
                   <th scope="col" className="col-1">예약시간</th>
                   <th scope="col" className="col-1">상태</th>
@@ -67,7 +67,7 @@ function TestList(props){
                   return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                     <th>{index+1}</th>
-                    <th>{item.patient_id}</th>
+                    {/* <th>{item.patient_id}</th> */}
                     <th>{item.patient_name}</th>
                     <th>{item.test_list_time}</th>
                     <th>{item.test_list_state}</th>
@@ -79,7 +79,7 @@ function TestList(props){
                     return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>
-                      <th>{item.patient_id}</th>
+                      {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
                       <th>{item.test_list_time}</th>
                       <th>{item.test_list_state}</th>
@@ -91,7 +91,7 @@ function TestList(props){
                     return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>
-                      <th>{item.patient_id}</th>
+                      {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
                       <th>{item.test_list_time}</th>
                       <th>{item.test_list_state}</th>
@@ -103,7 +103,7 @@ function TestList(props){
                     return (<tr key={index}
                             onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>
-                      <th>{item.patient_id}</th>
+                      {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
                       <th>{item.test_list_time}</th>
                       <th>{item.test_list_state}</th>

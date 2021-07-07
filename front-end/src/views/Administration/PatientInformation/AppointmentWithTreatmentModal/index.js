@@ -68,7 +68,7 @@ function AppointmentModal(props) {
       console.log(error.message);
     }
     if(newAppointment.appointment_date === moment().format("YYYY-MM-DD")) {
-      dayAppointment(true);
+      dayAppointment(new Date());
     }
     close();
   }
