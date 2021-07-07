@@ -32,7 +32,6 @@ function Diagnose(props){
 
   const [diagnoses, setDiagnoses] = useState(getDiagnose);
   const [addModalOpen, setAddModalOpen] = useState(false);
-
   const openAddModal = () => {
     if(!editBlock){
       setAddModalOpen(true);

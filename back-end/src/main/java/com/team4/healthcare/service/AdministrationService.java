@@ -13,7 +13,7 @@ import com.team4.healthcare.dao.AppointmentDAO;
 import com.team4.healthcare.dao.PatientDAO;
 import com.team4.healthcare.dao.PrescriptionDAO;
 import com.team4.healthcare.dao.ReceptionDAO;
-import com.team4.healthcare.dao.StaffDAO;
+import com.team4.healthcare.dao.StaffDao;
 import com.team4.healthcare.dao.TestDao;
 import com.team4.healthcare.dao.TreatmentDAO;
 import com.team4.healthcare.dto.Appointment;
@@ -42,7 +42,7 @@ public class AdministrationService {
 	@Autowired
 	private PrescriptionDAO prescriptionDAO;
 	@Autowired
-	private StaffDAO staffDAO;
+	private StaffDao staffDAO;
 	
 	public List<Appointment> getAppointmentList() {
 		List<Appointment> appointmentList = appointmentDAO.selectAppointmentList();

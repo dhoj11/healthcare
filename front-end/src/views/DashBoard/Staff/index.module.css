@@ -10,10 +10,29 @@
   margin-top: 20px;
   margin-left: 20px;
 }
+.classify > .bg{
+  background-color: #04436d;
+  color: white;
+}
 .classify > div{
   margin-right: 10px;
   margin-left: 10px;
   cursor: pointer;
+  background-color: white;
+  border-radius: 4px;
+  border : 1px solid #808080;
+  width: 50px;
+  text-align: center;
+  color: #808080;
+  font-size: 15px;
+  height: 30px;
+  padding-top: 3px;
+  font-weight: 600;
+}
+.classify > div:hover{
+  background-color: #04436d;
+  color: white;
+  
 }
 .staff_header{
   margin-top: 30px;

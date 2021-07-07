@@ -24,6 +24,10 @@ const imgNotice = [
   {"img_notice_id":1,"img_notice_title":"점심시간 안내 및 점심비용","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img3.jpg"},
   {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img1.jpg"},
   {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img2.jpg"},
+  {"img_notice_id":1,"img_notice_title":"점심시간 안내 및 점심비용","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img3.jpg"},
+  {"img_notice_id":1,"img_notice_title":"점심시간 안내 및 점심비용","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img3.jpg"},
+  {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img1.jpg"},
+  {"img_notice_id":1,"img_notice_title":"병원 근무시간 및 휴식시간 안내","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img2.jpg"},
   {"img_notice_id":1,"img_notice_title":"점심시간 안내 및 점심비용","img_notice_content":"근무시간: 월요일 화요일 수요일 목요일 금요일 ....","img_notice_date":"2021-06-25","img_notice_hitcount":2,"img_notice_img":"resources/img/img3.jpg"}
 ]
 export function getImgNotice(){
@@ -51,7 +55,6 @@ const freeBoard=[
   {"freeboard_id":5,"freeboard_title":"밖에 비가 얼마나 오는 건가요?","freeboard_date":"2021-06-26","freeboard_time":"13:00","staff_name":"조운호","freeboard_comment":7},
   {"freeboard_id":6,"freeboard_title":"코로나가 갑자기 엄청 심해요","freeboard_date":"2021-06-26","freeboard_time":"13:00","staff_name":"조운호","freeboard_comment":7},
   {"freeboard_id":1,"freeboard_title":"오늘 점심 뭐 먹을까요?","freeboard_date":"2021-06-26","freeboard_time":"13:00","staff_name":"조운호","freeboard_comment":1},
-  
 ]
 export function getFreeBoard(){
   return freeBoard;

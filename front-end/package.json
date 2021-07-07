@@ -39,7 +39,7 @@
     "yarn": "^1.22.10"
   },
   "proxy": "https://openapi.naver.com",
-  "scripts": {
+    "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
