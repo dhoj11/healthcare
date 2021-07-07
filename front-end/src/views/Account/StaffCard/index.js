@@ -16,24 +16,27 @@ function StaffCard(props){
   let staff = null;
 
   if(props.staff){
-    staff = props.staff[0];
+    staff = props.staff;
   }
 
   const [imgSrc, setImgSrc] = useState(null);
 
   useEffect( () => {
-    if(staff && staff.sataff_attachoname!==""){ 
+    if(staff && staff.staff_pic_sname!==null){ 
       const work = async () => {
         try{
           const response = await downloadAttach(staff.staff_id);
           setImgSrc(URL.createObjectURL(response.data)); 
         } catch(error){
-          //
         }
       };
       work();   
     }
   },[staff]); 
+
+  useEffect(()=>{
+    console.log(imgSrc);
+  },[imgSrc])
 
   return(
     <div className={style.staffcard}>
@@ -41,8 +44,8 @@ function StaffCard(props){
         <div className={style.pic}>
 
         {staff && 
-        (staff.staff_attachoname !== "") ? 
-        <img src={imgSrc}/>
+        (staff.staff_pic_sname !== null) ? 
+        <img src={imgSrc} className={style.existPic}/>
         :  <FontAwesomeIcon icon={faUserMd} className={style.profile}/>
         }
         </div>

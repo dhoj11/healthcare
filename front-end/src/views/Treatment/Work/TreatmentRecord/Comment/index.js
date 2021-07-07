@@ -1,20 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Comment.module.css";
-import data from "../../../data/treatment"
 import { createSetCurCommentActoin } from "../../../../../redux/treatment-reducer";
+import { getTreatmentComment } from "../../../../../apis/treatment";
 
 /**
  * 선택된 진료의 과거진료기록(의무기록)을 가져온다.
- * 
- * TODO : 현재진료번호로 진료테이블에서 comment 속성값 가져오는 api 작성
- * 요청데이터의 형태
- * {treatment_comment: ""}
  */
 
 function Comment(props){
-
-  const treatments = data;
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
@@ -25,13 +19,17 @@ function Comment(props){
 
   const dispatch = useDispatch();
 
-  const getComment = useCallback(() => {
-    const prevTreatment = treatments.filter(item => item.treatment_id === treatment);
-    if(prevTreatment[0]) return prevTreatment[0].treatment_comment;
-  },[treatment])
+  const getComment = useCallback( async() => {
+    try{
+      const response = await getTreatmentComment(treatment);
+      setComment(response.data);
+    }catch(error){
+      console.log(error);
+    }
+  },[treatment]);
 
   useEffect(()=> {
-    setComment(getComment);
+    if(treatment !=="") getComment();
   },[treatment])
 
   useEffect(()=>{
@@ -43,7 +41,7 @@ function Comment(props){
   },[comment]);
 
   useEffect(()=>{
-    setComment(getComment);
+    if(treatment !=="") getComment();
   },[work]);
 
   useEffect(()=>{

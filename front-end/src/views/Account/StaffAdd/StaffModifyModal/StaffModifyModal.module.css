@@ -11,9 +11,21 @@
   margin: 10px 40px;
 }
 
+.currentfile{
+  display: flex;
+  flex-direction: row;
+  margin: 10px 40px;
+}
+
 .title{
   font-size: 16px;
   font-weight: 600;
+}
+
+.currentfileTitle{
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 15px;
 }
 
 .addInput{

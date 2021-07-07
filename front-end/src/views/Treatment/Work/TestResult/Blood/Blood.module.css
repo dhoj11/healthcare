@@ -18,9 +18,12 @@
 .testList{
   border-radius: 5px;
   border: 1px solid #D3D3D3;
-  height: 100%px;
   text-align: center;
+}
+
+.testResultTable{
   overflow: auto;
+
 }
 
 .thead{

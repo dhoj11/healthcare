@@ -1,16 +1,12 @@
 import style from "./TestAddModal.module.css";
 import { Modal } from "react-bootstrap";
-import data from "../../../../data/test";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getSearchTests } from "../../../../../../apis/treatment";
 
 /**
  * 검사를 검색하고 검사를 추가한다.
- * 
- * TODO : 검색된 검사이름을 통해 testList테이블에서 검사데이터를 요청하는 API 작성
- * 요청데이터의형태
- * {test_code: "", test_name:	""},
  */
 
 function TestAddModal(props){
@@ -24,11 +20,14 @@ function TestAddModal(props){
     setSearchItem(event.target.value);
   }
 
-  const handleSearch = () => {
-    const testData = data;
-    const newTests = testData.filter( item => item.test_name.includes(searchItem));
-    setTests(newTests);
-  }
+  const handleSearch = useCallback( async() => {
+    try{
+      const response = await getSearchTests(searchItem);
+      setTests(response.data);
+    } catch(error){
+      console.log(error);
+    }
+  },[searchItem])
 
   const addTests = (item) => {
     let test = item;

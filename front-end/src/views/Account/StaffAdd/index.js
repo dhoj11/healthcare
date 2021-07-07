@@ -13,8 +13,6 @@ function StaffAdd(props){
    * 주의 직원수정컴포넌트에 staff객체를 prop으로 전달한다.
    */
 
-  const staff = props.staff;
-
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [modifyModalOpen, setModifyModalOpen] = useState(false);
 
@@ -44,8 +42,8 @@ function StaffAdd(props){
         <FontAwesomeIcon icon={faUserCog} className={style.addIcon}/>직원수정
       </span>
 
-      <StaffAddModal isOpen={addModalOpen} close={closeAddModal}/>
-      <StaffModifyModal isOpen={modifyModalOpen} close={closeModifyModal} staff={staff}/>
+      <StaffAddModal isOpen={addModalOpen} close={closeAddModal} handleAddStaff={props.handleAddStaff}/>
+      <StaffModifyModal isOpen={modifyModalOpen} close={closeModifyModal} staff={props.staff}/>
       
     </div>
   );

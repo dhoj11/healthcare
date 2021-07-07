@@ -23,6 +23,16 @@
   align-items: center; 
 }
 
+.existPic{
+  background-color: #fff;
+  width : 151px;
+  height : 151px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
 .profile{
   font-size:100px;
   color: #fff;

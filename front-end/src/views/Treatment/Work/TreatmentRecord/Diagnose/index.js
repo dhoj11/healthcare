@@ -3,17 +3,13 @@ import style from "./Diagnose.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import data2 from "../../../data/diagnoses"; /*과거 진단 샘플 데이터*/
 import { createSetCurDiagnosesActoin } from "../../../../../redux/treatment-reducer";
 import DiagnoseAddModal from "./DiagnoseAddModal";
+import { getTreatmentDiagnoses } from "../../../../../apis/treatment";
 
 /**
  * 현재선택된 진료의 과거 진단기록을 표시한다.
  * 자식컴포넌트에서 진단을 추가한다.
- * 
- * TODO : 진단테이블에서 진료번호로 진단데이터 요청 api 작성
- * 요청데이터형태
- * {treatment_id: {num}, disease_code: "", disease_code : ""}
  */
 
 function Diagnose(props){
@@ -23,15 +19,24 @@ function Diagnose(props){
   const work = useSelector(state => state.treatmentReducer.work);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
+  const [diagnoses, setDiagnoses] = useState([]);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
   const dispatch = useDispatch();
 
-  const getDiagnose = useCallback(() => {
-    const prevDiagnoses = data2.filter(item => item.treatment_id === treatment);
-     return prevDiagnoses;
-  },[treatment]);
+  const getDiagnose = useCallback( async () => {
+    try{
+      const response = await getTreatmentDiagnoses(treatment);
+      setDiagnoses(response.data);
+    } catch(error){
+      console.log(error);
+    }
+  },[treatment])
 
-  const [diagnoses, setDiagnoses] = useState(getDiagnose);
-  const [addModalOpen, setAddModalOpen] = useState(false);
+  useEffect(()=> {
+    if(treatment !=="") getDiagnose();
+  },[treatment])
+
 
   const openAddModal = () => {
     if(!editBlock){
@@ -44,11 +49,11 @@ function Diagnose(props){
   };
 
   useEffect(()=>{
-    setDiagnoses(getDiagnose);
+    if(treatment !=="") getDiagnose();
   },[work]);
 
   useEffect(()=> {
-    setDiagnoses(getDiagnose);
+    if(treatment !=="") getDiagnose();
   },[treatment])
 
   useEffect(()=>{
@@ -109,11 +114,14 @@ function Diagnose(props){
             </thead>
             <tbody>
             {
-              diagnoses && diagnoses.map((item, index) => { 
+              diagnoses && diagnoses.length > 0 && diagnoses.map((item, index) => { 
                 return (<tr key={index}> 
                           <td>{item.disease_code}</td> 
                           <td>{item.disease_name}</td>
+                          { !editBlock ?
                           <td onClick={() => deleteDiagnose(item.disease_code)}><FontAwesomeIcon icon={faMinus} className={style.minus}/></td>
+                          : 
+                          <td></td>}
                         </tr>); })         
             }
             </tbody>

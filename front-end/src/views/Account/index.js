@@ -4,7 +4,7 @@ import StaffCard from "./StaffCard";
 import StaffTable from "./StaffTable";
 import { useEffect, useState } from "react";
 
-import staffs from "./data/staffs"
+import { getStaff, getStaffList } from "../../apis/account";
 
 /**
  * 
@@ -20,37 +20,66 @@ function Account(props){
   const [staffId, setStaffId] = useState();
   const [staff, setStaff] = useState();
 
+  const [staffs, setStaffs] = useState([]);
+
+  const getStaffs = async() => {
+    try{
+      const response = await getStaffList();
+      setStaffs(response.data);
+    } catch (error){
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getStaffs();
+  },[])
+
   const handleChangeStaffId = (id) => {
     setStaffId(id);
   }
 
+  const handleAddStaff = (staffObject) => {
+    const newStaffs = staffs.concat({staff_id: staffObject.staff_id, 
+                                     staff_authority: staffObject.staff_authority, 
+                                     staff_name: staffObject.staff_name, 
+                                     staff_tel: staffObject.staff_tel, 
+                                    });
+    setStaffs(newStaffs);                                
+  } 
+
   /**
    * 직원ID를 통해 직원상태변수를 초기화한다.
    * 
-   * TODO : 직원ID로 직원정보를 요청하는 axois 요청 api 작성
+   * TODO : 직원ID로 직원정보를 요청하는 axois 요청 api 작성 (+) 2021.07.04 작성완료
    * 반환형태는  {staff_id: "", staff_authority: "", staff_name: "", staff_tel: "", staff_join:"",staff_attachoname:""},
    * 
-   * 첨부가 없다면, 되도록 "" 형태로 받자
-   * staff_authority : "의사" || "간호" || "임상"
+   * 첨부가 없다면, 되도록 "" 형태로 받자 (-) : !!! 그럴 필요 없다. 왜 이 주석 남겼을까 다시 생각해보기  2021.07.04
+   * staff_authority : "의사" || "간호" || "임상" !!! 한글로 할지 ROLE_DOCTOR로 할지 의논하기  2021.07.04
    */
 
-  const getStaff = () => {
-    const staff = staffs.filter((item)=> item.staff_id === staffId);
-    return staff;
+  const setStaffItem = async() => {
+    try{
+      const response = await getStaff(staffId);
+      setStaff(response.data);
+    }
+    catch(error){
+      console.log(error);
+    }
   }
 
   useEffect(()=>{
-    setStaff(getStaff);
+    setStaffItem();
   },[staffId]);
 
   return(
     <div className={style.account}>
       <div className={style.top}>
-        <StaffAdd staff={staff}/>
+        <StaffAdd staff={staff} handleAddStaff={handleAddStaff}/>
       </div>
       <div className={style.body}>
         <StaffCard staff={staff}/>
-        <StaffTable handleChangeStaffId={handleChangeStaffId}/>
+        <StaffTable handleChangeStaffId={handleChangeStaffId} staffs={staffs}/>
       </div>
     </div>
   );
