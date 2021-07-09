@@ -4,7 +4,7 @@ import StaffCard from "./StaffCard";
 import StaffTable from "./StaffTable";
 import { useCallback, useEffect, useState } from "react";
 
-import { getStaff, getStaffList } from "../../apis/account";
+import { getStaff, getStaffList } from "../../../apis/account";
 
 /**
  * 직원관리
