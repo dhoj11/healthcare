@@ -9,10 +9,12 @@ public class TestList {
 	private int test_list_req;
 	private int appointment_id;
 	private String test_list_data;
-	private String test_list_saved;
+	private int test_list_saved;
 	
 	private String test_name;
 	private String patient_name;
+	private int patient_id;
+	private int reception_id;
 
 	public int getTest_list_id() {
 		return test_list_id;
@@ -78,11 +80,11 @@ public class TestList {
 		this.test_list_data = test_list_data;
 	}
 
-	public String getTest_list_saved() {
+	public int getTest_list_saved() {
 		return test_list_saved;
 	}
 
-	public void setTest_list_saved(String test_list_saved) {
+	public void setTest_list_saved(int test_list_saved) {
 		this.test_list_saved = test_list_saved;
 	}
 
@@ -100,5 +102,21 @@ public class TestList {
 
 	public void setTest_name(String test_name) {
 		this.test_name = test_name;
+	}
+
+	public int getPatient_id() {
+		return patient_id;
+	}
+
+	public void setPatient_id(int patient_id) {
+		this.patient_id = patient_id;
+	}
+
+	public int getReception_id() {
+		return reception_id;
+	}
+
+	public void setReception_id(int reception_id) {
+		this.reception_id = reception_id;
 	}
 }
