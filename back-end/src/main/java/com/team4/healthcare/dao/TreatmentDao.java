@@ -49,8 +49,11 @@ public interface TreatmentDao {
 							  ,@Param("treatment_prescriptions")List<Prescription> treatment_prescriptions
 							  );
 	
+	public int getReceptionId(int treatment_id);
+	
 	public void insertTestList(
 							   @Param("treatment_id")int treatment_id
+							  ,@Param("reception_id")int reception_id
 							  ,@Param("test_list_id")int test_list_id
 							  ,@Param("treatment_tests")List<TestList> treatment_tests
 							  );
