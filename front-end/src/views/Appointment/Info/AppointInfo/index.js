@@ -1,8 +1,8 @@
 import styles from "./index.module.css";
 
 function AppointInfo(props) {
-  const appointItem = props.appointItem;
-  console.log(appointItem);
+  const {appointItems} = props;
+  console.log(appointItems);
   return(
     <>
     <div className={styles.Info_contain}>
@@ -14,12 +14,12 @@ function AppointInfo(props) {
         <span>예약날짜</span><span>예약시간</span><span>상태</span>
       </div>
        <div className={styles.body_contain}>
-         {appointItem.map((data) => {
+         {appointItems.map((data) => {
            return(
               <div className={styles.tbody}>
                 <span>{data.appointment_date}</span>
                 <span>{data.appointment_time}</span>
-                <span>{data.appointment_state}</span>
+                <span>{data.appointment_kind}{data.appointment_state}</span>
               </div>
            
            )

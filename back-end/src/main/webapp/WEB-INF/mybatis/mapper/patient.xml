@@ -24,6 +24,10 @@
 			, patient_comment, patient_gender, patient_recent_visit)
 		values (#{patient_name},#{patient_tel},#{patient_birth},#{patient_medicine}
 				,#{patient_disease},#{patient_comment},#{patient_gender},#{patient_recent_visit})
-		
 	</insert>
+	<select id="selectPatientByName" parameterType="String" resultType="patient">
+		select *
+		from patient
+		where patient_name LIKE concat(#{patient_name},'%')
+	</select>
 </mapper>

@@ -1,5 +1,22 @@
+import { cancelTreatmentAppointment } from "../../../../../apis/appointment";
 import styles from "./Cancel.module.css";
 function ComName(props) {
+  const {CancelModalClose,clickedappoint,axiosTreatmentAppointList} = props;
+
+  const appointCancel = () => {
+    (async function() {
+      try{
+        cancelTreatmentAppointment(clickedappoint.appointment_id);
+        axiosTreatmentAppointList();
+        CancelModalClose();
+      } catch(error){
+        throw error;
+      }
+    })();
+
+    
+    
+  }
   return(
     <>
     <div className="modal_body">
@@ -13,19 +30,19 @@ function ComName(props) {
           <div>예약내용</div>
         </div>
         <div className={styles.value}>
-          <div>2021-06-22</div>
-          <div>{props.appointInfo.time}</div>
-          <div>{props.appointInfo.doctor}</div>
-          <div>{props.appointInfo.patient_name}</div>
-          <div>{props.appointInfo.appointment_content}</div>
+          <div>{clickedappoint.appointment_date}</div>
+          <div>{clickedappoint.appointment_time}</div>
+          <div>{clickedappoint.staff_name}</div>
+          <div>{clickedappoint.patient_name}</div>
+          <div>{clickedappoint.appointment_content}</div>
         </div>
       </div>
         
       
     </div>
     <div className={styles.modal_footer}>
-      <button className={styles.back_btn} onClick={props.CancelModalClose}>이전</button>
-      <button className={styles.cancel_btn}  onClick={props.appointCancel}>예약취소</button>
+      <button className={styles.back_btn} onClick={CancelModalClose}>이전</button>
+      <button className={styles.cancel_btn}  onClick={appointCancel}>예약취소</button>
     </div>
     </>
   );
