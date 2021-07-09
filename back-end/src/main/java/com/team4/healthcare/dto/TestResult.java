@@ -1,7 +1,7 @@
 package com.team4.healthcare.dto;
 
 public class TestResult {
-	private int testList_id;
+	private int test_list_id;
 	private String test_code;
 	private int test_details_id;
 	private String test_result_value;
@@ -13,12 +13,13 @@ public class TestResult {
 	private String test_details_min;
 	private String test_details_max;
 	
-	public int getTestList_id() {
-		return testList_id;
+	public int getTest_list_id() {
+		return test_list_id;
 	}
-	public void setTestList_id(int testList_id) {
-		this.testList_id = testList_id;
+	public void setTest_list_id(int test_list_id) {
+		this.test_list_id = test_list_id;
 	}
+	
 	public String getTest_code() {
 		return test_code;
 	}
