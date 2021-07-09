@@ -1,5 +1,6 @@
 package com.team4.healthcare.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class AdministrationController {
 	private AdministrationService administrationService;
 	
 	/**
-	 * ¿À´Ã ³¯Â¥¿¡ ÇØ´çÇÏ´Â ¿¹¾à¸®½ºÆ®, È¯ÀÚ ÀÌ¸§À» °¡Áö°í ¿Â´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½à¸®ï¿½ï¿½Æ®, È¯ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½.
 	 * @return List<Appointment>
 	 */
 	@GetMapping("/appointment")
@@ -47,34 +48,34 @@ public class AdministrationController {
 	}
 	
 	/**
-	 * ¿¹¾à »óÅÂ¸¦ ¹Ù²ãÁØ´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½.
 	 */
 	@PutMapping("/appointment/{appointment_id}")
 	public void changeAppointmentState(@PathVariable int appointment_id,@RequestBody String appointment_state) {
 		boolean isChanged = administrationService.changeAppointmentState(appointment_id, appointment_state);
 		
 		if(isChanged) {
-			logger.info("¿¹¾à »óÅÂ º¯°æ ¿Ï·á");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 		}else {
-			logger.info("¿¹¾à »óÅÂ º¯°æ ¿À·ù");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	
 	/**
-	 * ¿¹¾à¿¡¼­ ³»¿øÀ¸·Î »óÅÂ°¡ ¹Ù²î¸é Á¢¼ö Å×ÀÌºí¿¡ Æ©ÇÃ Ãß°¡
+	 * ï¿½ï¿½ï¿½à¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ Æ©ï¿½ï¿½ ï¿½ß°ï¿½
 	 */
 	@PostMapping("/appointment/reception/{appointment_id}")
 	public void addReceptionAfterAppointment(@PathVariable int appointment_id) {
 		boolean isAdded = administrationService.addReceptionAfterAppointment(appointment_id);
 		
 		if(isAdded) {
-			logger.info("¿¹¾à ÈÄ Á¢¼ö Ãß°¡ ¼º°ø");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}else {
-			logger.info("¿¹¾à ÈÄ Á¢¼ö Ãß°¡ ½ÇÆĞ");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	/**
-	 * È¯ÀÚid¿¡ ÇØ´çÇÏ´Â È¯ÀÚ °´Ã¼¸¦ °¡Á®¿Â´Ù
+	 * È¯ï¿½ï¿½idï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½
 	 * @param patient_id
 	 * @return Patient
 	 */
@@ -85,7 +86,7 @@ public class AdministrationController {
 	}
 	
 	/**
-	 * ¿¹¾à »óÅÂ¿¡ µû¸¥ ¿¹¾à ¸®½ºÆ®¸¦ °¡Á®¿Â´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 	 * @param appointment_state
 	 * @return List<Appointment>
 	 */
@@ -96,7 +97,7 @@ public class AdministrationController {
 	}
 	
 	/**
-	 * Á¢¼ö ¸®½ºÆ®¸¦ °¡Á®¿Â´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 	 * @return List<Reception>
 	 */
 	@GetMapping("/reception")
@@ -112,16 +113,16 @@ public class AdministrationController {
 	}
 	
 	/**
-	 * Á¢¼ö »óÅÂ¸¦ ¹Ù²ãÁØ´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½.
 	 */
 	@PutMapping("/reception/{reception_id}")
 	public void changeReceptionState(@PathVariable int reception_id,@RequestBody String reception_state) {
 		boolean isChanged = administrationService.changeReceptionState(reception_id, reception_state);
 		
 		if(isChanged) {
-			logger.info("Á¢¼ö »óÅÂ º¯°æ ¿Ï·á");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 		}else {
-			logger.info("Á¢¼ö »óÅÂ º¯°æ ¿À·ù");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	
@@ -132,7 +133,7 @@ public class AdministrationController {
 	}
 	
 	/**
-	 * ÀÌ¸§À¸·Î °Ë»öµÈ È¯ÀÚ ¸®½ºÆ®
+	 * ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	 * @param patient_name
 	 * @return List<Patient>
 	 */
@@ -142,7 +143,7 @@ public class AdministrationController {
 		return patientList;
 	}
 	/**
-	 * ½Å±Ô È¸¿ø µî·Ï(add)
+	 * ï¿½Å±ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½(add)
 	 * @param newPatient
 	 */
 	@PostMapping("/patient/new")
@@ -150,9 +151,9 @@ public class AdministrationController {
 		boolean isAdded = administrationService.addNewPatient(newPatient);
 		
 		if(isAdded) {
-			logger.info("½Å±Ô È¸¿ø µî·Ï ¿Ï·á");
+			logger.info("ï¿½Å±ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 		}else {
-			logger.info("½Å±Ô È¸¿ø µî·Ï ¿À·ù");
+			logger.info("ï¿½Å±ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	
@@ -191,9 +192,9 @@ public class AdministrationController {
 		boolean isAdded = administrationService.addReceptionAfterVisit(reception);
 		
 		if(isAdded) {
-			logger.info("¹æ¹® È¯ÀÚ Á¢¼ö ¿Ï·á");
+			logger.info("ï¿½æ¹® È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 		}else {
-			logger.info("¹æ¹® È¯ÀÚ Á¢¼ö ¿À·ù");
+			logger.info("ï¿½æ¹® È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	
@@ -208,9 +209,9 @@ public class AdministrationController {
 		boolean isAdded = administrationService.addNewAppointment(appointment);
 		
 		if(isAdded) {
-			logger.info("Áø·á ¿¹¾à µî·Ï ¿Ï·á");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 		}else {
-			logger.info("Áø·á ¿¹¾à µî·Ï ¿À·ù");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	
@@ -220,8 +221,9 @@ public class AdministrationController {
 		return testCodes;
 	}
 	@GetMapping("/appointment/test/time")
-	public List<Appointment> CountbyAppointment(@RequestParam() String appointment_date) {
-		List<Appointment> timeAndCount = administrationService.CountbyAppointment(appointment_date);
-		return timeAndCount;
+	public void CountbyAppointment(@RequestParam() String appointment_date) throws ParseException {
+		String hospitalCode = "DZ0001";		//ë‚˜ì¤‘ì— í”„ë¡ íŠ¸ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •
+		administrationService.CountbyAppointment(appointment_date, hospitalCode);
+		
 	}
 }

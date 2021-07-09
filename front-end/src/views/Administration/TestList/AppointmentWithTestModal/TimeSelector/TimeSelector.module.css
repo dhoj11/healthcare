@@ -33,3 +33,8 @@ margin-top: 80px;
   line-height: 1.5;
   border-radius: 0.25rem;
 }
+
+.count{
+  font-size: 5px;
+  color: #495057;
+}

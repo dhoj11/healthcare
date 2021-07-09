@@ -23,8 +23,7 @@ function TimeSelector(props) {
           {
             timeAndCount.map((time, index) => (
               <Fragment key={index}>
-                <button className={ timeSelect === time ? `${styles.selected_time_box}` : `${styles.time_box}`} value={time.appointment_time} onClick={() => selectTime(time.appointment_time)}>{time.appointment_time}</button>
-                <span>{time.count}</span>
+                <button className={ timeSelect === time ? `${styles.selected_time_box}` : `${styles.time_box}`} value={time.appointment_time} onClick={() => selectTime(time.appointment_time)}>{time.appointment_time} <span className={styles.count}>{time.count}건</span></button>
             </Fragment>
             ))
           }
