@@ -15,7 +15,14 @@ public class Appointment {
 	private String appointment_kind;
 	private String patient_name;
 	private String staff_name;
+	private String patient_gender;
 	
+	public String getPatient_gender() {
+		return patient_gender;
+	}
+	public void setPatient_gender(String patient_gender) {
+		this.patient_gender = patient_gender;
+	}
 	public int getAppointment_id() {
 		return appointment_id;
 	}

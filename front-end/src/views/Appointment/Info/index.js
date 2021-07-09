@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
+import { getAppointListByPatientId } from "../../../apis/appointment";
 import { getAppointList } from "../TimeTable/data/data";
 import AppointInfo from "./AppointInfo";
 import styles from "./index.module.css";
 function Info(props) {
-  const appointList = getAppointList();
-  let appointItem=appointList.filter((data) => data.patient_id === props.selectPatientId);
+  const {selectPatientId} = props;
+
+  const [appointItems,setAppointItems] = useState([]);
+  // const appointList = getAppointList();
+  // let appointItem=appointList.filter((data) => data.patient_id === props.selectPatientId);
+  useEffect(() => {
+    if(selectPatientId){
+      (async function() {
+        const response = await getAppointListByPatientId(selectPatientId);
+        setAppointItems(response.data);
+      })();
+    }
+    
+  },[props])
   return(
     <div className={styles.AppointInfo_contain}>
       {
@@ -15,10 +28,9 @@ function Info(props) {
         </div>
         :
         <div>
-          <AppointInfo appointItem={appointItem}></AppointInfo>
+          <AppointInfo appointItems={appointItems}></AppointInfo>
         </div>
       }
-    
     </div>
   );
 }

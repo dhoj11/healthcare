@@ -4,11 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Calendar.css";
 
 function Calendar(props) {
-  // const [startDate, setStartDate] = useState(new Date());
-  // console.log(startDate);
-  // const changedate= (date) => {
-  //   setStartDate(date);
-  // }
+
 
   return(
     <div>

@@ -29,7 +29,8 @@ const appointmentTime=[
   "15:30",
   "16:00",
   "16:30",
-  "17:00"
+  "17:00",
+  "17:30"
 ]
 export function getAppointTime(){
   return appointmentTime;
@@ -39,7 +40,7 @@ export function getAppointTime(){
 
 
 const tAppointment=[
-  {"김의사":null,"나의사":1,"박의사":2,"정의사":null},
+  {"김의사":null,"나의사":1,"박의사":2,"정의사":null,"정의사2":null},
   {"김의사":4,"나의사":null,"박의사":5,"정의사":6},
   {"김의사":null,"나의사":null,"박의사":9,"정의사":null},
   {"김의사":null,"나의사":11,"박의사":12,"정의사":null},
@@ -105,8 +106,8 @@ const appointList=[
   {appointment_id:24,patient_name:"정동호", patient_gender:"남", appointment_state:"진료완료", appointment_content:"우측손목"},
   {appointment_id:25,patient_name:"조운호", patient_gender:"남", appointment_state:"예약", appointment_content:"두통"},
   {appointment_id:26,patient_name:"박선명", patient_gender:"여", appointment_state:"취소", appointment_content:"손목"},
-  {appointment_id:27,patient_name:"정동호", patient_gender:"남", appointment_state:"예약", appointment_content:"감기"},
-  {appointment_id:28,patient_name:"조운호", patient_gender:"남", appointment_state:"진료완료", appointment_content:"감기"},
+  {appointment_id:51,patient_name:"정동호", patient_gender:"남", appointment_state:"예약", appointment_content:"감기"},
+  {appointment_id:52,patient_name:"조운호", patient_gender:"남", appointment_state:"진료완료", appointment_content:"감기"},
   {appointment_id:29,patient_name:"박선명", patient_gender:"여", appointment_state:"예약", appointment_content:"두통"},
   {appointment_id:30,patient_name:"정동호", patient_gender:"남", appointment_state:"취소", appointment_content:"손목"},
   {appointment_id:31,patient_name:"조운호", patient_gender:"남", appointment_state:"예약", appointment_content:"감기"},

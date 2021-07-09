@@ -9,24 +9,17 @@ import moment from "moment";
 function Appointment(props) {
 
   const [startDate, setStartDate] = useState(new Date());
-  const [tAppointment,setTAppointment] = useState(getTAppoint());
+  // const [tAppointment,setTAppointment] = useState(getTAppoint());
 
-  const [selectPatientId,setSelectPatientId] = useState(null);
+  const [selectPatientId,setSelectPatientId] = useState("");
   
 
   const changeDate = (date) => {
-    
     console.log(moment(date).format("YYYY-MM-DD"));
     setStartDate(date);
   }
   console.log(startDate);
-  const changeShow = (value) => {
-    if(value === "TreatmentAppoint") {
-      setTAppointment(getTAppoint());
-    } else {
-      setTAppointment(getTestAppointment());
-    }
-  };
+ 
 
   const selectedPatientId = (id) => {
     setSelectPatientId(id);
@@ -40,7 +33,7 @@ function Appointment(props) {
         <SearchPatient selectedPatientId={selectedPatientId}></SearchPatient>
         <Info selectPatientId={selectPatientId}></Info>
       </div>
-      <TimeTable startDate={startDate} changeDate={changeDate} tAppointment={tAppointment} changeShow={changeShow}></TimeTable>
+      <TimeTable startDate={startDate} changeDate={changeDate}></TimeTable>
     </div>
   );
 }

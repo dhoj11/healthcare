@@ -1,15 +1,29 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import { getPatientList } from "../TimeTable/data/data";
+import { getPatientList, getPatientListByName } from "../../../apis/appointment";
 import styles from "./index.module.css";
 
 function SearchPatient(props) {
-  const [patientList, setPatientList]= useState(getPatientList);
+  const [patientList, setPatientList]= useState([]);
+  const [searchedName, setSearchedName] = useState("");
   const [select, setSelect] = useState("");
 
+  const axiosPatientList= useCallback(async () => {
+    try{
+      const response = await getPatientList();
+      setPatientList(response.data);
+    } catch(error){
+      throw error;
+    }
+  },[])
+
+
+  useEffect(() => { 
+    axiosPatientList();
+  },[]);
+  
   const rowRenderer = ({index, key,style}) => {
     return (
-      
       <div key={key}
            style={style}
            className={
@@ -29,13 +43,22 @@ function SearchPatient(props) {
       </div>
     );
   };
+  const changeName = (e) => {
+    setSearchedName(e.target.value);
+  } 
   const searchName = (e) => {
-    const result= getPatientList().filter(data => data.patient_name.includes(e.target.value));
-    setPatientList(result);
-    if(e.target.value===""){
-      setPatientList(getPatientList());
+    (async function() {
+      try{
+        const response = await getPatientListByName(searchedName);
+        setPatientList(response.data);
+        selectPatient();
+      } catch(error){
+        throw error;
+      }
+    })(); 
+    
     }
-  }
+  
   const selectPatient =useCallback((e,id) => {
     setSelect(id);
     props.selectedPatientId(id);
@@ -44,8 +67,9 @@ function SearchPatient(props) {
     return(
     <div className={styles.Patient_contain}>
       <div className={styles.patientSearch}>
-        <i class="fas fa-user-friends"></i>
-        <span>환자 검색</span><input type="text"  placeholder="Name" onChange={searchName}/>
+        <i className="fas fa-user-friends"></i>
+        <span>환자 검색</span><input type="text"  placeholder="Name" onChange={changeName}/>
+        <button className="btn btn-secondary btn-sm" onClick={searchName}>검색</button>
       </div>
         <div className={styles.patient_table}>
           <div className={styles.thead}>

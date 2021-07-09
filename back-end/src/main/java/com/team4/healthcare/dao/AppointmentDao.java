@@ -16,4 +16,9 @@ public interface AppointmentDao {
 	public List<Appointment> selectAppointmentHistory(int patient_id);
 	public List<String> selectAppointment(@Param("staff_id") String staff_id, @Param("appointment_date") String appointment_date);
 	public int insertNewTreatmentAppointment(Appointment appointment);
+	public List<Appointment> selectDoctorTreatmentAppointment(@Param("staff_id") String staff_id, @Param("appointment_date") String appointment_date);
+	public List<Appointment> selectByDate(String appointment_date);
+	public List<Appointment> selectByPatientId(int patient_id);
+	public void insertTreatmentAppointment(Appointment appointment);
+	public void cancelTreatmentAppointment(int appointment_id);
 }
