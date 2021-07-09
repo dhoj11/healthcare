@@ -15,6 +15,7 @@ public class Reception {
 	private String reception_state;
 	private String patient_name;
 	private String staff_name;
+	private String reception_kind;
 	public int getReception_id() {
 		return reception_id;
 	}
@@ -75,12 +76,20 @@ public class Reception {
 	public void setStaff_name(String staff_name) {
 		this.staff_name = staff_name;
 	}
+	public String getReception_kind() {
+		return reception_kind;
+	}
+	public void setReception_kind(String reception_kind) {
+		this.reception_kind = reception_kind;
+	}
+
 	@Override
 	public String toString() {
-		return "ReceptionDTO [reception_id=" + reception_id + ", reception_date=" + reception_date + ", reception_time="
+		return "Reception [reception_id=" + reception_id + ", reception_date=" + reception_date + ", reception_time="
 				+ reception_time + ", patient_id=" + patient_id + ", reception_content=" + reception_content
 				+ ", staff_id=" + staff_id + ", appointment_id=" + appointment_id + ", reception_state="
-				+ reception_state + ", patient_name=" + patient_name + ", staff_name=" + staff_name + "]";
+				+ reception_state + ", patient_name=" + patient_name + ", staff_name=" + staff_name
+				+ ", reception_kind=" + reception_kind + "]";
 	}
 	
 	public void setReceptionInfo(Appointment appointment) {
@@ -89,5 +98,6 @@ public class Reception {
 		this.reception_content = appointment.getAppointment_content();
 		this.staff_id = appointment.getStaff_id();
 		this.staff_name = appointment.getStaff_name();
+		this.reception_kind = appointment.getAppointment_kind();
 	}
 }

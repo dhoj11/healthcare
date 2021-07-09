@@ -1,32 +1,72 @@
 import styles from "./AppointmentWithTestModal.module.css";
-import {Modal, Button} from "react-bootstrap";
-import {getPatientList} from "../../data";
+import {Modal} from "react-bootstrap";
 import Calendar from "../../../Appointment/Calendar"
-import TimeSelect from "../../common/TimeSelect";
 import {useState, useEffect} from "react";
+import {CountbyAppointment} from "../../../../apis/administration";
+import moment from "moment";
+import TimeSelector from "./TimeSelector";
 
 function AppointmentWithTestModal(props) {
   
-  const {patientId, testCodes, isOpen, close} = props;
-  const staticPatientList = getPatientList();
-  const filteredPatient = staticPatientList.filter(patients => (patients.patient_id === patientId));
+  const {testCodes, isOpen, close} = props;
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
-  const [patient, setpatient] = useState({});
+  const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
+  const [appointmentTime, setAppointmentTime] = useState("");
+  const [timeAndCount, setTimeAndCount] = useState();
+  const [appointment, setAppointment] = useState({
+    appointment_date: moment().format("YYYY-MM-DD"),
+    staff_id: "",
+    patient_id: "",
+    appointment_kind: "검사"
+  });
+
+  useEffect(() => {
+    if(testCodes !== undefined) {
+      setStartDate(new Date());
+      setAppointmentDate(moment().format("YYYY-MM-DD"));
+      setAppointment({
+        appointment_date: moment().format("YYYY-MM-DD"),
+        staff_id: testCodes[0].staff_id,
+        patient_id: testCodes[0].patient_id,
+        appointment_kind: "검사"
+      });
+    }
+  },[isOpen]);
+
+  useEffect(() => {
+    const work = async() => {
+      try{
+        const response = await CountbyAppointment(appointmentDate);
+        setTimeAndCount(response.data);
+        console.log(response.data);
+      }catch(error) {
+        console.log(error.message);
+      }
+    }
+    work();
+  },[appointmentDate])
 
   const changeDate = (date) => {
+    const fmt = moment(date).format("YYYY-MM-DD");
     setStartDate(date);
-    console.log(date);
+    setAppointmentDate(fmt);
   }
 
-  useEffect(() => {   //props가 변경될 때 patient의 상태를 props로 전해받은 patientId에 해당하는 환자로 세팅을 해줌
-    setpatient(filteredPatient[0]);
-  }, [props]);
+  const changeTime = (time) => {
+    setAppointmentTime(time);
+  }
+
+  const newTestAppointment = async() => {
+    //appointment추가, test_list_id,test_list_date,appointment_id update
+
+    close();
+  }
 
   return (
     <>
     {isOpen ? (
-      patient !== undefined ? (
+      testCodes !== undefined ? (
         <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
         <Modal.Header closeButton>
           <Modal.Title>검사 예약</Modal.Title>
@@ -35,14 +75,14 @@ function AppointmentWithTestModal(props) {
         <div>
             <div className={styles.register_form_row}>
               <div className={`${styles.border_title} border`} >환자 이름</div>
-              {patient.patient_name}
+              {testCodes[0].patient_name}
             </div>
             <div className={styles.register_form_row}>
               <div className={`${styles.border_title} border`}>검사 종류</div>
               <div className="d-flex">
                 {testCodes.map((testCode,index)=>(
                   <div key={index}>
-                    <input className="mr-2" type="checkbox" checked readOnly /><span className="mr-3">{testCode}</span>
+                    <input className="mr-2" type="checkbox" checked readOnly /><span className="mr-3">{testCode.test_code}</span>
                   </div>
                 ))}
               </div>
@@ -50,7 +90,7 @@ function AppointmentWithTestModal(props) {
             <div className="d-flex">
               <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
               <div>
-                <TimeSelect />
+                <TimeSelector timeAndCount={timeAndCount} changeTime={changeTime}/>
               </div>
             </div>
           </div>
@@ -75,7 +115,7 @@ function AppointmentWithTestModal(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className={styles.appoint_btn} onClick={close}>
+          <button className={styles.appoint_btn} onClick={newTestAppointment}>
             확인
           </button>
         </Modal.Footer>
