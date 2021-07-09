@@ -38,6 +38,8 @@
 
 .thead{
   background: #F8FAFF;
+  position: sticky;
+	top: 0;
 }
 
 .add{

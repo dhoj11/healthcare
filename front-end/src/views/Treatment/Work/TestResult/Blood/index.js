@@ -5,10 +5,6 @@ import { getTreatmentTestResults } from "../../../../../apis/treatment";
 
 /**
  * 선택한 진료에서 의뢰한 검사의 결과를 표시한다.
- * 
- * TODO : 검사결과 테이블에서 검사번호로 데이터 요청 api 작성
- * 요청데이터 형태 
- * {test_list_id: {num}, treatment_id:{num}, test_code: "", test_name: "", test_details_code: "", test_details_name:"", test_details_unit:"",	test_details_min:"", test_details_max:"", test_result_value: ""},
  */
 
 function Blood(props){
@@ -24,7 +20,7 @@ function Blood(props){
     try{
       if(treatment!==""){
         const response = await getTreatmentTestResults(treatment);
-        setTestResults(response.data);
+        if(response) setTestResults(response.data);
       }
     }catch(error){
       console.log(error);
@@ -71,7 +67,7 @@ function Blood(props){
                         <th>{item.test_details_min}</th>
                         <th>{item.test_details_max}</th>
                         <th>
-                         { item.test_result_value  &&  `{item.test_result_value} {item.test_details_unit}`  }
+                        { (item.test_result_value) ? `${item.test_result_value} ${item.test_details_unit}` : null }
                          </th>
                       </tr>
                     );
@@ -87,7 +83,7 @@ function Blood(props){
                         <th>{item.test_details_min}</th>
                         <th>{item.test_details_max}</th>
                         <th>
-                         { item.test_result_value  &&  `{item.test_result_value} {item.test_details_unit}`  }
+                        { (item.test_result_value) ? `${item.test_result_value} ${item.test_details_unit}` : null }
                          </th>
                     </tr>
                     );
