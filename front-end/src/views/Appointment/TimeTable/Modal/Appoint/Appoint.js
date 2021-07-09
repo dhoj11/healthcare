@@ -1,18 +1,58 @@
-import { useCallback, useRef, useState } from "react";
+import moment from "moment";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoSizer, List } from "react-virtualized";
-import { getPatientList } from "../../data/data";
+import { createTretmentAppointment, getPatientList, getPatientListByName } from "../../../../../apis/appointment";
 import styles from "./Appoint.module.css";
 function Appoint(props) {
-
-  const [patientList, setPatientList]= useState(getPatientList);
+  const {selectAppointInfo,AppointModalClose, startDate, axiosTreatmentAppointList} =props;
+  const [patientList, setPatientList]= useState([]);
   const [appointInfo, setAppointInfo] = useState({
     selectPatientId:"",
     treatmentContent:""   
   });
+  const [searchedName, setSearchedName] = useState("");
   const [select,setSelect] = useState("");
+
+  //환자 리스트 뽑아오기
+  const axiosPatientList= useCallback(async () => {
+    try{
+      const response = await getPatientList();
+      setPatientList(response.data);
+    } catch(error){
+      throw error;
+    }
+  },[])
+  useEffect(() =>{
+    axiosPatientList();
+  },[])
+
+  //예약
+  const makeAppointment = () => {
+    console.log(selectAppointInfo);
+    // console.log();
+    // let appointment_date =;
+    const appointment = {
+      appointment_date :  moment(startDate).format("YYYY-MM-DD"),
+      appointment_time : selectAppointInfo.appointment_time,
+      staff_id : selectAppointInfo.staff_id,
+      appointment_state : "예약",
+      patient_id : appointInfo.selectPatientId,
+      appointment_content : appointInfo.treatmentContent,
+      appointment_kind : "진료"
+    };
+    (async function() {
+      try{
+        await createTretmentAppointment(appointment);
+        axiosTreatmentAppointList();
+        AppointModalClose();
+      } catch(error){
+        throw error;
+      }
+    })();
+
+  };
   const rowRenderer = ({index, key,style}) => {
     return (
-      
       <div key={key}
            style={style} 
            className={
@@ -33,32 +73,34 @@ function Appoint(props) {
             {patientList[index].patient_tel}
             </span>
             <span>
-            {patientList[index].reception_date}
+            {patientList[index].patient_recent_visit}
             </span>     
-             
       </div>
     );
   };
 
-  const searchName = (e) => {
-      const result= getPatientList().filter(data => data.patient_name.includes(e.target.value));
-      setPatientList(result);
-      if(e.target.value===""){
-        setPatientList(getPatientList());
-      }
-    //rowRenderer();
+  const changeName = (e) => {
+    setSearchedName(e.target.value);
   }
-
+  const searchName = (e) => {
+    (async function() {
+      try{
+        const response = await getPatientListByName(searchedName);
+        setPatientList(response.data);
+        selectPatient();
+      } catch(error){
+        throw error;
+      }
+    })(); 
+  }
   const selectPatient =useCallback((e,id) => {
     console.log(id);
-    console.log("afdafa",appointInfo);
     setSelect(id);
     setAppointInfo({
       ...appointInfo,
       selectPatientId:id
     });
   },[appointInfo])
-
   const setTreatmentcontent = (e) => {
     console.log("aaaaaaa",e.target.value);
     setAppointInfo({      
@@ -71,7 +113,11 @@ function Appoint(props) {
     <div className="modal_body">
       
               <div className={`d-flex justify-content-between ${styles.search}`}>
-                <div className={styles.patientSearch}><i class="fas fa-user-friends"></i><span>환자 검색</span><input type="text"  placeholder="Name" onChange={searchName}/></div>
+                <div className={styles.patientSearch}>
+                  <i className="fas fa-user-friends"></i>
+                  <span>환자 검색</span><input type="text"  placeholder="Name" onChange={changeName}/>
+                  <button className="btn btn-secondary btn-sm" onClick={searchName}>검색</button>
+                </div>
                 <div className={styles.treatmentContent}><span>진료 내용</span><input type="text" onChange={setTreatmentcontent}></input></div>
               </div>
               <div className={styles.patient_table}>
@@ -93,8 +139,8 @@ function Appoint(props) {
               </div>
             </div>
             <div className="modal_footer">
-              <button className={styles.cancel_btn} onClick={props.AppointModalClose}>취소</button>
-              <button className={styles.appoint_btn} onClick={() => props.appoint(appointInfo)}>예약</button>
+              <button className={styles.cancel_btn} onClick={AppointModalClose}>취소</button>
+              <button className={styles.appoint_btn} onClick={makeAppointment} >예약</button>
             </div>
     </>
   );

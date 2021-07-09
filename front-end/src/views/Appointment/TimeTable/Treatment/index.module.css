@@ -1,0 +1,18 @@
+.TimeTable{
+  width: 100%;
+  
+}
+.thead{
+  width: 100%;
+  background-color: #808080;
+  border: 1px solid black;
+}
+.thead th{
+  border: 1px solid black;
+}
+.firstTh{
+  width: 70px;
+}
+.tbody td{
+  border: 1px solid black;
+}

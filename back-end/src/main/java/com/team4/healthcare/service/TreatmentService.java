@@ -110,7 +110,8 @@ public class TreatmentService {
 		String today = sdf.format(date);
 		int test_list_id = Integer.parseInt(today +"0" +treatment_id);
 				
-		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id,treatment_tests);
+		int reception_id = treatmentDao.getReceptionId(treatment_id);
+		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, reception_id, test_list_id,treatment_tests);
 		
 		if(treatment_tests.size()>0) {
 			for(TestList test : treatment_tests) {
@@ -123,8 +124,10 @@ public class TreatmentService {
 	
 	public List<TestResult> getTreatmentTestResult(int treatment_id) {
 		List<Integer> test_list_id = treatmentDao.getTestListId(treatment_id);
-		List<TestResult> treatemnt_testResult = treatmentDao.selectTreatmentTestResults(test_list_id);
-		return treatemnt_testResult;
+		if(test_list_id.size()>0) {
+			List<TestResult> treatemnt_testResult = treatmentDao.selectTreatmentTestResults(test_list_id);
+			return treatemnt_testResult;
+		} else return null;
 	}
 	
 	

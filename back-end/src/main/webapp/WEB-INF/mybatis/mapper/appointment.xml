@@ -56,6 +56,41 @@
 			values (#{appointment_date}, #{appointment_time}, #{staff_id}, #{patient_id},
 					#{appointment_content}, #{appointment_kind})
 	</insert>
+	
+	
+	
+	<select id="selectDoctorTreatmentAppointment" resultType="appointment">
+		select appointment_id,appointment_date,date_format(appointment_time, '%H:%i') as appointment_time, staff_id,appointment_state,appointment.patient_id,appointment_content,appointment_kind,patient_gender,patient_name
+		from appointment, patient
+		where appointment_id in (select max(appointment_id)
+								from appointment
+								where appointment.staff_id = #{staff_id} and appointment_date =#{appointment_date} and appointment_kind='진료'
+								group by appointment_time) and appointment.patient_id=patient.patient_id
+		order by appointment_time 
+	</select>
+	
+	<select id="selectByDate" parameterType="string" resultType="appointment">
+		select appointment.*,patient.patient_name, patient.patient_gender
+		from appointment, patient
+		where appointment.patient_id=patient.patient_id and appointment_date = #{appointment_date}
+	</select>
+	
+	<select id="selectByPatientId" resultType="appointment" parameterType="int">
+		select *
+		from appointment
+		where patient_id =#{patient_id}
+	</select>
+	
+	<insert id="insertTreatmentAppointment" parameterType="appointment">
+		insert into appointment(appointment_date,appointment_time,staff_id,appointment_state,patient_id,appointment_content,appointment_kind)
+		values(#{appointment_date},#{appointment_time},#{staff_id},'예약',#{patient_id},#{appointment_content},'진료')
+	</insert>
+	
+	<update id="cancelTreatmentAppointment" parameterType="int">
+		update appointment 
+		set appointment_state = '취소' 
+		where appointment_id = #{appointment_id}
+	</update>
 	<select id="selectTestAppointmentById" resultType="appointment">
 		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
 				, appointment_state, appointment.patient_id

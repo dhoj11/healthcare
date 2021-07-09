@@ -7,6 +7,8 @@ function TestList(props){
   const [testList, setTestList] = useState(); // id 임
   const [listState, setListState] = useState();
 
+  const [testListData, setTestListData] = useState([]);
+
   /**
    * 당일 검사자 목록을 표시한다.
    * 같은 검사자가 여러 묶음코드의 검사를 받을경우 하나의 검사만 표시한다. 
@@ -14,17 +16,19 @@ function TestList(props){
    * 
    * 이 컴포넌트에서 사용하는 testListData는 부모 컴포넌트에서 프롭으로 전달받은 객체배열 
    */
+  useEffect(()=>{
+    setTestListData(props.testLists || []);
+  },[props.testLists])
 
-  const getTestList = useCallback(() => { 
-    const testListData = props.testLists || [];
+  useEffect(() => { 
     const newTestListData = testListData.reduce( (acc, current) => {
       if (acc.findIndex(({ test_list_id }) => test_list_id === current.test_list_id) === -1) {
         acc.push(current);
       }
       return acc;
     },[]);
-    return newTestListData;
-  },[props.testLists])
+    setTestLists(newTestListData);
+  },[testListData])
 
   const selectListState = useCallback((state) => {
     setListState(state);
@@ -32,10 +36,6 @@ function TestList(props){
 
   useEffect(()=> {
     setListState("all");
-  },[]);
-
-  useEffect(()=>{;
-    setTestLists(getTestList);
   },[]);
   
   useEffect(()=>{
@@ -47,8 +47,8 @@ function TestList(props){
     <div className={style.testList}>
       <div className={style.filter}>
         <div className={style.item} onClick={() => selectListState("all")}>전체</div>|
-        <div className={style.item} onClick={() => selectListState("before")}>대기</div>|
-        <div className={style.item} onClick={() => selectListState("ing")}>진행중</div>|
+        <div className={style.item} onClick={() => selectListState("before")}>요청</div>|
+        <div className={style.item} onClick={() => selectListState("ing")}>진행</div>|
         <div className={style.item} onClick={() => selectListState("complete")}>완료</div>
       </div>
        <table className={`table table-hover ${style.testListTable}`}>
@@ -57,13 +57,13 @@ function TestList(props){
                   <th scope="col" className="col-1">순서</th>
                   {/* <th scope="col" className="col-1">환자번호</th> */}
                   <th scope="col" className="col-1">성명</th>
-                  <th scope="col" className="col-1">예약시간</th>
+                  <th scope="col" className="col-1">접수시간</th>
                   <th scope="col" className="col-1">상태</th>
                 </tr>
               </thead>
               <tbody>
               { listState === "all" ?
-                testLists.map((item, index) => {
+                testLists.length > 0 && testLists.map((item, index) => {
                   return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                     <th>{index+1}</th>
@@ -75,7 +75,7 @@ function TestList(props){
                   );
                 })
               : listState === "before" ?
-                  testLists.filter( item => { return item.test_list_state === "대기"}).map((item, index)=> {
+                testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "요청"}).map((item, index)=> {
                     return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>
@@ -87,7 +87,7 @@ function TestList(props){
                     );
                   })
                 : listState === "ing" ?
-                  testLists.filter( item => { return item.test_list_state === "진행중"}).map((item, index)=> {
+                  testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "진행"}).map((item, index)=> {
                     return (<tr key={index}
                               onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>
@@ -99,7 +99,7 @@ function TestList(props){
                     );
                   })
                   : listState === "complete" ?
-                  testLists.filter( item => { return item.test_list_state === "완료"}).map((item, index)=> {
+                    testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "완료"}).map((item, index)=> {
                     return (<tr key={index}
                             onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
                       <th>{index+1}</th>

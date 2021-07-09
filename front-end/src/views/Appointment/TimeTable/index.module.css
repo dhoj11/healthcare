@@ -1,0 +1,61 @@
+.TimeTable_contain{
+  background-color: white;
+  margin-left:15px;
+  border-radius: 30px;
+  padding: 0px 30px;
+  border:none;
+  overflow:auto;
+  width: 100%;
+  height: 875px;
+}
+
+.showAppoint, .number {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.showAppoint > button, .number > button{
+  border-radius: 5px;
+  border : 1px solid lightgray;
+
+  font-weight: 700;
+  font-size: 15px;
+  padding: 5px 10px;
+  margin-right: 15px;
+  
+}
+
+.showAppoint > button:hover ,.number > button:hover{
+  background-color: #04436d;
+  color:white;
+}
+.date_top{
+  display: flex;
+  margin-left: 370px;
+}
+.date {
+  font-size: 30px;
+  font-weight: 500;
+}
+.date_contain{
+  display: flex;
+  position: sticky;
+	top: 0;
+  background-color: white;
+}
+.rightbtn, .leftbtn {
+  background-color: white;
+  border: white 1px solid;
+  font-size: 20px;
+  font-weight: 900;
+  color: #adb5bd;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.clicked{
+  background-color: #04436d;
+  color: white;
+}
+.default{
+  background-color: white;
+  color: gray;
+}

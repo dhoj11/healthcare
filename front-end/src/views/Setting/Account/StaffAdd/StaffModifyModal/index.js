@@ -2,7 +2,7 @@ import style from "./StaffModifyModal.module.css";
 
 import { Modal } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import { deleteAccount, updateAccount } from "../../../../apis/account";
+import { deleteAccount, updateAccount } from "../../../../../apis/account";
 
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,15 +29,6 @@ function StaffModifyModal(props){
 
   /**
    * 직원의 비밀번호, 연락처 프로필 사진을 수정할 수 있다.
-   * 
-   * 처음 모달이 보여질 때 비밀번호 입력필드는 비워져 보여진다.
-   * 입력값이 없으면 수정이 없음으로 판단하고, 값이 입력될경우 수정되는 비밀번호로 판단한다. 
-   * 
-   * 프로필 사진첨부의 경우에도 첨부된 수정여부 판단여부는 비밀번호의 경우와 같다.
-   * (파일이 있을경우 수정, 비었을 경우 유지)
-   * 
-   * TODO : axios 요청 api 작성
-   *        spring rest 작성시 입력값의 유무에 따라 수정여부 판단하기
    */
 
   const handleModify = async(event) => {

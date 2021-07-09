@@ -7,10 +7,6 @@ import { getSearchDiseases } from "../../../../../../apis/treatment";
 
 /**
  * 질병을 검색하고 진단을 추가한다.
- * 
- * TODO : 검색된 질병이름을 통해 질병테이블에서 질병데이터를 요청하는 API 작성
- * 요청데이터의형태
- * {disease_code:  "", disease_name: ""},
  */
 
 function DiagnoseAddModal(props){

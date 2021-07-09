@@ -142,10 +142,17 @@
    	</foreach>
    </insert>
    
+   <select id="getReceptionId" parameterType="int" resultType="int">
+   	select reception_id
+   	from treatment
+   	where treatment_id = #{treatment_id}
+   	limit 1
+   </select>
+   
    <insert id="insertTestList" parameterType="map">
-   	insert into tests_list (test_list_id, test_code, test_list_time, treatment_id, test_list_date)
+   	insert into tests_list (test_list_id, reception_id, test_code, test_list_time, treatment_id, test_list_date)
    	<foreach collection="treatment_tests" item="item" open="values(" separator="),(" close=")">
-   		#{test_list_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
+   		#{test_list_id}, #{reception_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
    	</foreach>
    </insert>
    

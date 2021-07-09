@@ -1,9 +1,15 @@
 package com.team4.healthcare.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team4.healthcare.dao.TestDao;
+import com.team4.healthcare.dto.Patient;
+import com.team4.healthcare.dto.TestList;
+import com.team4.healthcare.dto.TestResult;
 
 @Service
 public class TestService {
@@ -13,4 +19,49 @@ public class TestService {
 	public int Test() {
 		return testDao.test();
 	}
+	
+	/* 아래 동호작성 나중에 주석 지웁니다. */
+	public List<TestList> getTestList(){
+		List<TestList> patientList = testDao.selectTestList();
+		return patientList;
+	}
+	
+	public Patient getPatient(int patient_id) {
+		Patient patient = testDao.selectPatient(patient_id);
+		return patient;
+	}
+	
+	public int isValidTestList(int test_list_id) {
+		int result = testDao.isValidTestList(test_list_id);
+		return result;
+	}
+	
+	public Patient getPatientByTestListId(int test_list_id) {
+		Patient patient = testDao.getPatientByTestListId(test_list_id);
+		return patient;
+	}
+	
+	public List<TestResult> getTestResult(int test_list_id){
+		List<TestResult> result = testDao.getTestResult(test_list_id);
+		return result;
+	}
+	
+	public void updateTestListState(Map<String,String> obj) {
+		int test_list_id = Integer.parseInt(obj.get("test_list_id"));
+		String state = obj.get("state");
+		testDao.updateTestListState(test_list_id, state);
+	}
+	
+	public void updateTestResult(List<TestResult> testResults) {
+		for(TestResult item : testResults) {
+			testDao.updateTestResult(item);
+			testDao.updateTestResultSave(item.getTest_list_id());
+		}
+		//testDao.updateTestResultSave(testResults.get(0).getTest_list_id());
+		
+	}
+	
+	
 }
+
+

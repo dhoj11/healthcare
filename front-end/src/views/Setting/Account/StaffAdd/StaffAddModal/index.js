@@ -2,7 +2,7 @@ import style from "./StaffAddModal.module.css";
 
 import { Modal } from "react-bootstrap";
 import { useRef, useState } from "react";
-import { createAccouont } from "../../../../apis/account";
+import { createAccouont } from "../../../../../apis/account";
 
 function StaffAddModal(props) {
 
@@ -28,14 +28,10 @@ function StaffAddModal(props) {
     setAccount({...account, staff_authority});
   }
 
-  
+
   /**
    * 직원을 추가한다. 
-   * 
-   * TODO : axios 요청 api 작성" (+) 2021.07.04 작성완료
-   * 
    */
-
   const handleAdd = async(evnet) => {
     evnet.preventDefault();
     try{
