@@ -9,4 +9,12 @@
     		and tests_list.test_code = tests.test_code
 			and patient_id = #{patient_id}
 	</select>
+	<select id="selectTestsByAppointment" resultType="testlist">
+		SELECT tests_list.test_list_id, tests_list.test_code, tests.test_name, treatment.staff_id, treatment.patient_id, patient.patient_name, tests_list.test_list_state
+		FROM tests_list, tests, treatment, patient
+		where tests_list.appointment_id=#{appointment_id}
+		and tests_list.test_code = tests.test_code
+        and tests_list.treatment_id = treatment.treatment_id
+        and treatment.patient_id = patient.patient_id
+	</select>
 </mapper>

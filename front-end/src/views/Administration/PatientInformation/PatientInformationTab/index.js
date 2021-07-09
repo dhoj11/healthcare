@@ -6,14 +6,14 @@ import PrescriptionTab from "./PrescriptionTab";
 
 function PatientInformationTab(props) {
 
-  const {patient} = props;
+  const {rerenderer, patient} = props;
 
   return (
     <>
     {patient !==undefined ? (
       <Tabs defaultActiveKey="appointmentTab">
         <Tab eventKey="appointmentTab" title="예약">
-          <AppointmentTab patientId={patient.patient_id}/>
+          <AppointmentTab rerenderer={rerenderer} patientId={patient.patient_id}/>
         </Tab>
         <Tab eventKey="treatmentTab" title="진료">
           <TreatmentTab patientId={patient.patient_id}/>

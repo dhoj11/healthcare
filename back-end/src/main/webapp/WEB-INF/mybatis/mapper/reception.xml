@@ -3,8 +3,8 @@
 <mapper namespace="com.team4.healthcare.dao.ReceptionDao">
 	<insert id="insertReceptionAfterAppointment" parameterType="reception">
 		insert into reception 
-			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id) 
-		values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, #{appointment_id})
+			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id, reception_kind) 
+		values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, #{appointment_id}, #{reception_kind})
 	</insert>
 	<select id="selectReceptionList" resultType="reception">
 		select reception_id, DATE_FORMAT(reception_date, '%Y-%m-%d') as reception_date, DATE_FORMAT(reception_time,'%H:%i') as reception_time, reception.staff_id
@@ -14,6 +14,7 @@
 		where reception.patient_id = patient.patient_id 
 				and reception.staff_id = staff.staff_id 
 				and reception_date = curdate()
+				and reception_kind = #{reception_kind}
 		order by reception_time;
 	</select>
 	<select id="selectReceptionListByState" resultType="reception">
@@ -25,6 +26,7 @@
 				and reception.staff_id = staff.staff_id 
 				and reception_date = curdate()
 				and reception_state = #{reception_state}
+				and reception_kind = '진료'
 		order by reception_time;
 	</select>
 	<update id="updateReceptionState">
@@ -34,7 +36,7 @@
 	</update>
 	<insert id="insertReceptionAfterVisit" parameterType="reception">
 	insert into reception 
-			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id) 
-	values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, null)
+			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id, reception_kind) 
+	values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, null, '진료')
 	</insert>
 </mapper>

@@ -9,10 +9,6 @@ import { getSearchMedicine } from "../../../../../../apis/treatment";
 
 /**
  * 약을 검색하고 처방을 추가한다.
- * 
- * TODO : 검색된 약이름을 통해 약테이블에서 약데이터를 요청하는 API 작성
- * 요청데이터의 형태
- * {treatment_id: {num}, medicine_code: "", medicine_name: "", medicine_kind : "", medicine_type:	"",prescription_comment: {num}},
  */
 
 function PrescriptionAddModal(props){
@@ -67,7 +63,7 @@ function PrescriptionAddModal(props){
                 });
 
     if(item.medicine_kind==="주사약" || item.medicine_kind==="외용약"){
-      props.addPrescriptions(medicine);
+      props.addPrescriptions( item );
     } else {
       openAddModal();
     }

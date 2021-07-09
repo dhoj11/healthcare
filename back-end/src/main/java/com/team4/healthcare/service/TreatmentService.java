@@ -123,8 +123,10 @@ public class TreatmentService {
 	
 	public List<TestResult> getTreatmentTestResult(int treatment_id) {
 		List<Integer> test_list_id = treatmentDao.getTestListId(treatment_id);
-		List<TestResult> treatemnt_testResult = treatmentDao.selectTreatmentTestResults(test_list_id);
-		return treatemnt_testResult;
+		if(test_list_id.size()>0) {
+			List<TestResult> treatemnt_testResult = treatmentDao.selectTreatmentTestResults(test_list_id);
+			return treatemnt_testResult;
+		} else return null;
 	}
 	
 	

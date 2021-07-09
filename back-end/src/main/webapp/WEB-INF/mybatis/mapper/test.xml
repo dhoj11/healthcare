@@ -7,4 +7,64 @@
         FROM medicine;
     </select>
     
+    <select id="selectTestList" resultType="testlist">
+   		select test_list_id, test_code, test_list_state, test_list_time, appointment_id, reception_id, patient.patient_id, patient.patient_name, test_list_saved
+    	from tests_list, treatment, patient
+    	where tests_list.treatment_id = treatment.treatment_id 
+    	  And tests_list.test_list_req = 1
+    	  And date_format(tests_list.test_list_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+    	  And treatment.patient_id = patient.patient_id
+    </select>
+    
+    <select id="selectPatient" parameterType="int" resultType="patient">
+    	select *
+    	from patient
+    	where patient_id = #{patient_id}
+    </select>
+    
+    <select id="isValidTestList" parameterType="int" resultType="int">
+    	select EXISTS (select * 
+    				   from tests_list 
+    				   where test_list_id=#{test_list_id} limit 1)
+    </select>
+    
+    <select id="getPatientByTestListId" parameterType="int" resultType="patient">
+    	select patient.patient_id
+			  ,patient_name
+			  ,patient_tel
+  			  ,patient_birth
+	  		  ,patient_medicine
+			  ,patient_disease
+			  ,patient_comment
+			  ,patient_gender
+		from patient, tests_list, treatment
+		where patient.patient_id = treatment.patient_id and tests_list.treatment_id = treatment.treatment_id and tests_list.test_list_id = #{test_list_id} 
+		LIMIT 1
+    </select>
+    
+    <select id="getTestResult" parameterType="int" resultType="testresult">
+    	select *
+    	from test_results, test_details
+    	where test_list_id = #{test_list_id} and test_results.test_details_id = test_details.test_details_id
+    </select>
+    
+    <update id="updateTestListState">
+    	update tests_list
+    	set test_list_state = #{state}
+    	where test_list_id = #{test_list_id}
+    </update>
+    
+    <update id="updateTestResult" parameterType="testresult">
+		update test_results
+   		set test_result_value = #{test_result_value}
+   		where test_list_id = #{test_list_id} And test_code = #{test_code} And test_details_id = #{test_details_id}		
+    </update>
+    
+    <update id="updateTestResultSave" parameterType="int">
+    	update tests_list
+    	set test_list_saved = 1
+    	where test_list_id = #{test_list_id}
+    </update>
+    
+    
 </mapper>

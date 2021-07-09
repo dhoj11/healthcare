@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Patients.module.css";
-import { createSetPatientAction } from "../../../../redux/treatment-reducer";
+import { createSetEditBlockActoin, createSetPatientAction } from "../../../../redux/treatment-reducer";
 
 import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment";
 
@@ -10,7 +10,6 @@ import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment"
  * 
  * 접수테이블에 튜플이 추가 될 때 진료테이블에 튜플이 추가된다. 
  * 따라서 내원한 환자만 표시됨
- * 
  */
 
 function Patients(props){
@@ -31,20 +30,17 @@ function Patients(props){
   const getPateints = async() => {
     try{
       const response = await getPateintList(staff_id);
-      
       let newPatients = response.data;
-
-      newPatients.map( async (item, index) => {
-        let isComplete = await isTreatmentComplete(item.patient_id);
-        newPatients[index] = {
-          ...newPatients[index]
-          ,patient_state : isComplete.data
-        }
-      })
-
-      console.log(newPatients);
-      
-      setPateints(newPatients);
+      if(newPatients){
+        newPatients.map( async (item, index) => {
+          let isComplete = await isTreatmentComplete(item.patient_id);
+          newPatients[index] = {
+            ...newPatients[index]
+            ,patient_state : isComplete.data
+          }
+        })
+        setPateints(newPatients);
+      }
     } catch (error){
       console.log(error);
     }
@@ -54,9 +50,9 @@ function Patients(props){
     getPateints();
   },[]);
 
-
   useEffect(()=> {
       dispatch(createSetPatientAction(curPatient.patient_id)); 
+      dispatch(createSetEditBlockActoin(true)) 
   },[curPatient])
 
   const selectListState = useCallback((state) => {

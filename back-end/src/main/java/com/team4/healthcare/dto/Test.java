@@ -16,4 +16,9 @@ public class Test{
 	public void setTest_name(String test_name) {
 		this.test_name = test_name;
 	}
+	@Override
+	public String toString() {
+		return "Test [test_code=" + test_code + ", test_name=" + test_name + "]";
+	}
+	
 }

@@ -38,7 +38,8 @@ function ListItem(props) {
         await addReceptionAfterAppointment(appointment_id);
         receptionPatient(appointment_id);
       } else if(event.target.value === "내원" && appointment_kind === "검사") {
-        //검사 컴포넌트에 추가, 검사테이블에 새로운 튜플 insert
+        //검사 컴포넌트에 추가, 진료테이블에 새로운 튜플 insert
+        await addReceptionAfterAppointment(appointment_id);
         appointmentTest(appointment_id);
       }
     } catch(error) {

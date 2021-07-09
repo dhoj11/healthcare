@@ -3,6 +3,7 @@ package com.team4.healthcare.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import com.team4.healthcare.dto.Staff;
 import com.team4.healthcare.dto.SummeryPrescription;
 import com.team4.healthcare.dto.SummeryTest;
 import com.team4.healthcare.dto.SummeryTreatment;
+import com.team4.healthcare.dto.TestList;
 
 @Service
 public class AdministrationService {
@@ -77,8 +79,8 @@ public class AdministrationService {
 		return appointmentList;
 	}
 	
-	public List<Reception> getReceptionList() {
-		List<Reception> receptionList = receptionDAO.selectReceptionList();
+	public List<Reception> getReceptionList(String reception_kind) {
+		List<Reception> receptionList = receptionDAO.selectReceptionList(reception_kind);
 		return receptionList;
 	}
 	
@@ -174,8 +176,8 @@ public class AdministrationService {
 		return timeSelect;
 	}
 	
-	public boolean addNewTreatmentAppointment(Appointment appointment) {
-		int row = appointmentDAO.insertNewTreatmentAppointment(appointment);
+	public boolean addNewAppointment(Appointment appointment) {
+		int row = appointmentDAO.insertNewAppointment(appointment);
 		
 		if(row == 1) {
 			return true;
@@ -184,4 +186,41 @@ public class AdministrationService {
 		}
 	}
 	
+	public List<TestList> getTestCodesByAppointment(int appointment_id) {
+		List<TestList> testCodes = testDAO.selectTestsByAppointment(appointment_id);
+		return testCodes;
+	}
+	
+	public List<Appointment> CountbyAppointment(String appointment_date) {
+		String[] times = {"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
+		List<Appointment> getTimeAndCount = appointmentDAO.selectCountByAppointment(appointment_date);
+		List<Appointment> timeAndCount = new ArrayList<Appointment>();
+		
+		if(getTimeAndCount.size() > 0) {
+			for(String time : times) {
+				for(Appointment a : getTimeAndCount) {
+					int index=0;
+					if(time.equals(a.getAppointment_time())) {
+						Appointment appointment = new Appointment();
+						appointment.setAppointment_time(time);
+						appointment.setCount(a.getCount());
+						timeAndCount.add(appointment);
+						break;
+					}else {
+						index++;
+						if(index == getTimeAndCount.size()) {
+							Appointment appointment = new Appointment();
+							appointment.setAppointment_time(time);
+							appointment.setCount(a.getCount());
+							timeAndCount.add(appointment);
+						}else {
+							continue;
+						}
+					}
+				}
+			}
+		}
+
+		return timeAndCount;
+	}
 }

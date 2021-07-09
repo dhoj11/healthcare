@@ -7,8 +7,6 @@ import { downloadAttach } from "../../../apis/account";
 /**
  * 오른쪽 테이블에서 선택한 직원이 왼쪽 직원카드에 상세 정보가 표시된다.
  * 전달받은 prop을 화면에 표시한다.
- * 
- * 따로 APi 호출 필요 없음 props에 환자객체가 모두 넘어옴
  */
 
 function StaffCard(props){
@@ -34,10 +32,6 @@ function StaffCard(props){
     }
   },[staff]); 
 
-  useEffect(()=>{
-    console.log(imgSrc);
-  },[imgSrc])
-
   return(
     <div className={style.staffcard}>
       <div className={style.top}>
@@ -45,7 +39,7 @@ function StaffCard(props){
 
         {staff && 
         (staff.staff_pic_sname !== null) ? 
-        <img src={imgSrc} className={style.existPic}/>
+        <img src={imgSrc} className={style.existPic} alt=""/>
         :  <FontAwesomeIcon icon={faUserMd} className={style.profile}/>
         }
         </div>
@@ -73,8 +67,6 @@ function StaffCard(props){
       
       : null 
       }
-
-
       <div className={style.bottom}>
         
       </div>

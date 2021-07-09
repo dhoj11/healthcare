@@ -24,18 +24,8 @@ function Save(props){
 
   const save = async () => {
 
-    // 진료테이블에 진료번호로, 의무기록, 특이사항, saved 업데이트 하기
-
-    // 진단내용 있다면 진료번호,진단코드 추가
-
-    // 처방내용이 있다면 진료번호, 약코드, commnet,amout 추가
-
-    // 검사내용이 있다면 (검사번호 생성하고), 검사코드, testListtime(현재시간), test_list_date 오늘 날짜로 넣기
-
     dispatch(createSetEditBlockActoin(true));  
-
     try{
-
       const treatmentObj = { treatment_id : treatment
                             ,treatment_record : curRecord
                             ,treatment_comment : curComment
@@ -47,9 +37,6 @@ function Save(props){
     }catch(error){
       console.log(error);
     }
-    console.log(curDiagnoses);
-    console.log(curPrescriptions);
-    console.log(curTests);
   }
 
   return(

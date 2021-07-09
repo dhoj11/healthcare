@@ -21,4 +21,7 @@ public interface AppointmentDao {
 	public List<Appointment> selectByPatientId(int patient_id);
 	public void insertTreatmentAppointment(Appointment appointment);
 	public void cancelTreatmentAppointment(int appointment_id);
+	public int insertNewAppointment(Appointment appointment);
+	public Appointment selectTestAppointmentById(int appointment_id);
+	public List<Appointment> selectCountByAppointment(String appointment_date);
 }

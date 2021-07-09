@@ -1,6 +1,7 @@
 package com.team4.healthcare.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import com.team4.healthcare.dto.Staff;
 import com.team4.healthcare.dto.SummeryPrescription;
 import com.team4.healthcare.dto.SummeryTest;
 import com.team4.healthcare.dto.SummeryTreatment;
+import com.team4.healthcare.dto.TestList;
 import com.team4.healthcare.service.AdministrationService;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
@@ -98,8 +100,8 @@ public class AdministrationController {
 	 * @return List<Reception>
 	 */
 	@GetMapping("/reception")
-	public List<Reception> getReceptionList() {
-		List<Reception> receptionList = administrationService.getReceptionList();
+	public List<Reception> getReceptionList(@RequestParam("reception_kind") String reception_kind) {
+		List<Reception> receptionList = administrationService.getReceptionList(reception_kind);
 		return receptionList;
 	}
 	
@@ -195,20 +197,31 @@ public class AdministrationController {
 		}
 	}
 	
-	@GetMapping("/appointment/time")
+	@GetMapping("/appointment/treatment/time")
 	public List<String> isReserved(@RequestParam() String staff_id, @RequestParam() String appointment_date ) {
 		List<String> timeSelect = administrationService.isReserved(staff_id, appointment_date);
 		return timeSelect;
 	}
 	
-	@PostMapping("/appointment/treatment")
-	public void addNewTreatmentAppointment(@RequestBody Appointment appointment) {
-		boolean isAdded = administrationService.addNewTreatmentAppointment(appointment);
+	@PostMapping("/appointment")
+	public void addNewAppointment(@RequestBody Appointment appointment) {
+		boolean isAdded = administrationService.addNewAppointment(appointment);
 		
 		if(isAdded) {
 			logger.info("진료 예약 등록 완료");
 		}else {
 			logger.info("진료 예약 등록 오류");
 		}
+	}
+	
+	@GetMapping("/test/testcode")
+	public List<TestList> getTestCodesByAppointment(@RequestParam() int appointment_id) {
+		List<TestList> testCodes = administrationService.getTestCodesByAppointment(appointment_id);
+		return testCodes;
+	}
+	@GetMapping("/appointment/test/time")
+	public List<Appointment> CountbyAppointment(@RequestParam() String appointment_date) {
+		List<Appointment> timeAndCount = administrationService.CountbyAppointment(appointment_date);
+		return timeAndCount;
 	}
 }
