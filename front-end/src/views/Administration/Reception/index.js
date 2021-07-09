@@ -14,7 +14,7 @@ function Reception(props) {
     //비동기 통신
     const work = async () => {
       try {
-        const response = await getReceptionList();
+        const response = await getReceptionList("진료");
         setReceptionList(response.data);
         setState("전체");
       } catch (error) {
@@ -30,7 +30,7 @@ function Reception(props) {
     //비동기 통신
     const work = async () => {
       try {
-        const response = await getReceptionList();
+        const response = await getReceptionList("진료");
         setReceptionList(response.data);
         setState("전체");
       } catch (error) {

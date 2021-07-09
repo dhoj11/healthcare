@@ -13,6 +13,11 @@ function PatientInformation(props) {
 
   const [receptionModalOpen, setReceptionModalOpen] = useState(false);
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [rerenderer, setRerenderer] = useState("");
+
+  const rerendering = (flag) => {
+    setRerenderer(flag);
+  }
 
   const openReceptionModal = () => {
     setReceptionModalOpen(true);
@@ -54,7 +59,7 @@ function PatientInformation(props) {
         <PatientInformationCard patient={patient}/>
       </div>
       <div className={styles.patient_information_tab}>
-        <PatientInformationTab patient={patient}/>
+        <PatientInformationTab rerenderer={rerenderer} patient={patient}/>
       </div>
       <div className={styles.button_area}>
         <div>
@@ -63,7 +68,7 @@ function PatientInformation(props) {
         </div>
         <div>
           <button type="button" className="btn btn-outline-secondary mr-3" onClick={openAppointmentModal}>진료예약</button>
-          <AppointmentModal dayAppointment={dayAppointment} patient={patient} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+          <AppointmentModal setRerenderer={setRerenderer} dayAppointment={dayAppointment} patient={patient} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
         </div>
       </div>
     </div>)
