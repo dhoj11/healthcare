@@ -16,6 +16,8 @@ public class Appointment {
 	private String patient_name;
 	private String staff_name;
 	
+	private int count;
+	
 	public int getAppointment_id() {
 		return appointment_id;
 	}
@@ -76,12 +78,20 @@ public class Appointment {
 	public void setStaff_name(String staff_name) {
 		this.staff_name = staff_name;
 	}
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	@Override
 	public String toString() {
-		return "AppointmentDTO [appointment_id=" + appointment_id + ", appointment_date=" + appointment_date
+		return "Appointment [appointment_id=" + appointment_id + ", appointment_date=" + appointment_date
 				+ ", appointment_time=" + appointment_time + ", staff_id=" + staff_id + ", appointment_state="
 				+ appointment_state + ", patient_id=" + patient_id + ", appointment_content=" + appointment_content
 				+ ", appointment_kind=" + appointment_kind + ", patient_name=" + patient_name + ", staff_name="
-				+ staff_name + "]";
+				+ staff_name + ", count=" + count + "]";
 	}
+
 }

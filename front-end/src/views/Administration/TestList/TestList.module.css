@@ -3,20 +3,35 @@
   border-radius: 30px;
   border-color: white;
   padding: 10px;
-  width: 76rem;
+  width: 75rem;
   height: 405px;
   display: flex;
 }
 
 .test_patient_list {
-  width: 34rem;
+  width: 35rem;
   height: 100%;
 }
 
+.test_patient_list_title {
+  margin-bottom: 11px;
+  margin-left: 20px;
+  display: flex;
+}
+
 .test_code_list {
-  width: 34rem;
+  width: 36rem;
   height: 100%;
-  margin-left: 2rem;
+  margin-left: 1.5rem;
+}
+
+.test_code_list_title {
+  width:100px;
+}
+
+.test_patient_name {
+  color: #fcc419;
+  width:100px;
 }
 
 .test_border {
@@ -27,18 +42,16 @@
 }
 
 .test_code_border {
-  width: 200px;
+  width: 100px;
   height: 40px;
   text-align: center;
   line-height: 40px;
 }
-
-.test_code_item {
-  width: 200px;
+.test_code_border_name {
+  width: 400px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  padding-left: 5px;
 }
 
 .code_row:hover {
@@ -47,7 +60,7 @@
 
 .test_button {
   display: flex;
-  margin-left: 265px;
+  margin-left: 188px;
 }
 
 .patient_list_content {

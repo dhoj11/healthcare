@@ -17,7 +17,7 @@
 		where appointment_id = #{appointment_id}
 	</update>
 	<select id="selectAppointmentById" resultType="appointment">
-		select appointment_id, patient_id, appointment_content, staff_id
+		select appointment_id, patient_id, appointment_content, staff_id, appointment_kind
 		from appointment
 		where appointment_id = #{appointment_id}
 	</select>
@@ -50,10 +50,27 @@
 			and appointment_date = #{appointment_date}
 			and appointment_state not in('취소')
 	</select>
-	<insert id="insertNewTreatmentAppointment" parameterType="appointment" >
+	<insert id="insertNewAppointment" parameterType="appointment" >
 		insert into appointment (appointment_date, appointment_time, staff_id
 								, patient_id, appointment_content, appointment_kind)
 			values (#{appointment_date}, #{appointment_time}, #{staff_id}, #{patient_id},
-					#{appointment_content}, '진료')
+					#{appointment_content}, #{appointment_kind})
 	</insert>
+	<select id="selectTestAppointmentById" resultType="appointment">
+		select appointment_id, DATE_FORMAT(appointment_date, '%Y-%m-%d') as appointment_date, DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, appointment.staff_id
+				, appointment_state, appointment.patient_id
+				, appointment_kind, patient.patient_name, staff.staff_name
+		from appointment, patient, staff
+		where appointment_id = #{appointment_id}
+				and appointment.patient_id = patient.patient_id 
+				and appointment.staff_id = staff.staff_id 
+				and appointment_date = curdate()
+		order by appointment_time;
+	</select>
+	<select id="selectCountByAppointment" resultType="appointment">
+		select DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, COUNT(appointment_time) as count
+		from appointment
+		where appointment_date = #{appointment_date} and appointment_kind = '검사'
+		group by appointment_time
+	</select>
 </mapper>

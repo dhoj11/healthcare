@@ -1,14 +1,14 @@
-import {Modal, Button} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 import {useState, useEffect} from "react";
 import styles from "./AppointmentWithTreatmentModal.module.css";
-import TimeSelect from "../../common/TimeSelect";
 import Calendar from "../../../Appointment/Calendar";
-import {getDoctorNameList, addNewTreatmentAppointment} from "../../../../apis/administration";
+import {getDoctorNameList, addNewAppointment} from "../../../../apis/administration";
 import moment from "moment";
+import TimeSelector from "./TimeSelector";
 
 
 function AppointmentModal(props) {
-  const {dayAppointment, patient, isOpen, close} = props;
+  const {setRerenderer, dayAppointment, patient, isOpen, close} = props;
   const [doctorList, setDoctorList] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
@@ -17,7 +17,8 @@ function AppointmentModal(props) {
     appointment_date: moment().format("YYYY-MM-DD"),
     staff_id: "",
     patient_id: "",
-    appointment_content: ""
+    appointment_content: "",
+    appointment_kind: "진료"
   });
 
   useEffect(() => {
@@ -28,6 +29,7 @@ function AppointmentModal(props) {
         staff_id: "",
         patient_id: patient.patient_id,
         appointment_content: "",
+        appointment_kind: "진료"
       });
       const work = async() => {
         try{
@@ -40,6 +42,7 @@ function AppointmentModal(props) {
       work();
     }
   },[isOpen]);
+  
 
   const changeDate = (date) => {
     const fmt = moment(date).format("YYYY-MM-DD");
@@ -63,7 +66,8 @@ function AppointmentModal(props) {
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime};
     console.log(newAppointment);
     try{
-      await addNewTreatmentAppointment(newAppointment);
+      await addNewAppointment(newAppointment);
+      setRerenderer(new Date());
     }catch(error) {
       console.log(error.message);
     }
@@ -107,7 +111,7 @@ function AppointmentModal(props) {
           <div className="d-flex">
             <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
             <div>
-              <TimeSelect startDate={startDate} appointmentDate={appointmentDate} staffId={appointment.staff_id} changeTime={changeTime}/>
+              <TimeSelector appointmentDate={appointmentDate} staffId={appointment.staff_id} changeTime={changeTime}/>
             </div>
           </div>
         </div>

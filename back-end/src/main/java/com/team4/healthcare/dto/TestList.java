@@ -13,6 +13,8 @@ public class TestList {
 	
 	private String test_name;
 	private String patient_name;
+	private String staff_id;
+	private String patient_id;
 
 	public int getTest_list_id() {
 		return test_list_id;
@@ -100,5 +102,30 @@ public class TestList {
 
 	public void setTest_name(String test_name) {
 		this.test_name = test_name;
+	}
+
+	public String getStaff_id() {
+		return staff_id;
+	}
+
+	public void setStaff_id(String staff_id) {
+		this.staff_id = staff_id;
+	}
+
+	public String getPatient_id() {
+		return patient_id;
+	}
+
+	public void setPatient_id(String patient_id) {
+		this.patient_id = patient_id;
+	}
+
+	@Override
+	public String toString() {
+		return "TestList [test_list_id=" + test_list_id + ", test_code=" + test_code + ", test_list_state="
+				+ test_list_state + ", test_list_time=" + test_list_time + ", treatment_id=" + treatment_id
+				+ ", test_list_req=" + test_list_req + ", appointment_id=" + appointment_id + ", test_list_data="
+				+ test_list_data + ", test_list_saved=" + test_list_saved + ", test_name=" + test_name
+				+ ", patient_name=" + patient_name + ", staff_id=" + staff_id + ", patient_id=" + patient_id + "]";
 	}
 }

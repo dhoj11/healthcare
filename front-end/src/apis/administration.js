@@ -26,8 +26,8 @@ export function getAppointmentListByState(appointment_state) {
   return promise;
 }
 
-export function getReceptionList() {
-  const promise = axios.get("http://localhost:8080/administration/reception");
+export function getReceptionList(reception_kind) {
+  const promise = axios.get("http://localhost:8080/administration/reception", {params:{reception_kind}});
   return promise;
 }
 
@@ -87,11 +87,21 @@ export function addReceptionAfterVisit(reception) {
 }
 
 export function isReserved(staff_id, appointment_date) {
-  const promise = axios.get("http://localhost:8080/administration/appointment/time", {params:{staff_id, appointment_date}});
+  const promise = axios.get("http://localhost:8080/administration/appointment/treatment/time", {params:{staff_id, appointment_date}});
   return promise;
 }
 
-export function addNewTreatmentAppointment(appointment) {
-  const promise = axios.post("http://localhost:8080/administration/appointment/treatment", appointment);
+export function addNewAppointment(appointment) {
+  const promise = axios.post("http://localhost:8080/administration/appointment", appointment);
+  return promise;
+}
+
+export function getTestCodesByAppointment(appointment_id) {
+  const promise = axios.get("http://localhost:8080/administration/test/testcode", {params:{appointment_id}});
+  return promise;
+}
+
+export function CountbyAppointment(appointment_date) {
+  const promise = axios.get("http://localhost:8080/administration/appointment/test/time", {params:{appointment_date}});
   return promise;
 }
