@@ -12,7 +12,7 @@ function Date(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
-  
+  console.log("리렌더링",patient);
   const [treatments, setTreatments] = useState([]);
 
   const dispatch = useDispatch();

@@ -14,7 +14,8 @@
         				  ,staff_pic_sname
         				  ,staff_pic_type
         				  ,staff_join
-        				  ,staff_enabled  
+        				  ,staff_enabled
+        					,authority
         				  )
         values(
         	  #{hospital_code}
@@ -27,7 +28,8 @@
         	  ,#{staff_pic_sname}
         	  ,#{staff_pic_type}
         	  ,NOW()
-        	  ,1 
+        	  ,1
+        	  ,'ROLE_DOCTOR' <!-- 수정 -->
         )
     </insert>
 

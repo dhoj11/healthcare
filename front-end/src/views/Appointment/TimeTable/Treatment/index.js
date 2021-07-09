@@ -92,6 +92,7 @@ function Treatment(props) {
               }                
           }
           if(timelyData[staffs[i].staff_name] ===undefined){
+            console.log(timelyData)
             timelyData[staffs[i].staff_name] = staffs[i].staff_id;
           }
         }
