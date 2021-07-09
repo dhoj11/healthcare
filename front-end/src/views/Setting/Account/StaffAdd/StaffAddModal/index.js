@@ -2,7 +2,7 @@ import style from "./StaffAddModal.module.css";
 
 import { Modal } from "react-bootstrap";
 import { useRef, useState } from "react";
-import { createAccouont } from "../../../../apis/account";
+import { createAccouont } from "../../../../../apis/account";
 
 function StaffAddModal(props) {
 

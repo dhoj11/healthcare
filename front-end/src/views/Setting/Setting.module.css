@@ -1,0 +1,14 @@
+.setting{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.setting .custom{
+  margin-top: 50px;
+  height: 100px;
+}
+
+.setting .account{
+  height: 800px;
+}

@@ -2,7 +2,7 @@ import style from "./StaffCard.module.css";
 import { faUserMd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { downloadAttach } from "../../../apis/account";
+import { downloadAttach } from "../../../../apis/account";
 
 /**
  * 오른쪽 테이블에서 선택한 직원이 왼쪽 직원카드에 상세 정보가 표시된다.

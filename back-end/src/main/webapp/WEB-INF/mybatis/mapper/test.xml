@@ -8,7 +8,7 @@
     </select>
     
     <select id="selectTestList" resultType="testlist">
-   		select test_list_id, test_code, test_list_state, test_list_time, appointment_id, reception_id, patient.patient_id, patient.patient_name, test_list_saved
+   		select test_list_id, test_code, test_list_state, test_list_time, appointment_id, treatment.reception_id, patient.patient_id, patient.patient_name, test_list_saved
     	from tests_list, treatment, patient
     	where tests_list.treatment_id = treatment.treatment_id 
     	  And tests_list.test_list_req = 1

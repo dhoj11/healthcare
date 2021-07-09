@@ -5,9 +5,9 @@ import Administration from "./views/Administration";
 import DashBoard from "./views/DashBoard";
 import Test from "./views/Test";
 import Home from "./views/Home";
-import Account from "./views/Account";
 import NoticeEditor from "./views/NoticeEditor";
 import Error from "./views/Error";
+import Setting from "./views/Setting";
 
 function AppRoute(){
   return(
@@ -18,7 +18,7 @@ function AppRoute(){
       <Route path="/appointment" exact component={Appointment}/>
       <Route path="/administration" exact component={Administration}/>
       <Route path="/test" exact component={Test}/>
-      <Route path="/account" exact component={Account}/>
+      <Route path="/setting" exact component={Setting}/>
       <Route path="/noticeeditor"  component={NoticeEditor}/>
       <Route path="/error" exact component={Error}/>
       {/* //회원로그인 임시로 라우트 */} 

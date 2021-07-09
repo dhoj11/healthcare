@@ -2,7 +2,7 @@ import style from "./StaffModifyModal.module.css";
 
 import { Modal } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import { deleteAccount, updateAccount } from "../../../../apis/account";
+import { deleteAccount, updateAccount } from "../../../../../apis/account";
 
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
