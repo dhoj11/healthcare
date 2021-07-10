@@ -10,17 +10,22 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team4.healthcare.controller.DashBoardController;
 import com.team4.healthcare.dao.AccountDao;
 import com.team4.healthcare.dto.Staff;
 
 @Service
 public class AccountService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+
 	@Autowired
 	AccountDao accountDao;
 	
@@ -40,11 +45,10 @@ public class AccountService {
 			}
 		}
 		
-		// 아래 시큐리티 적용시 주석 풀기
-		/*
+		logger.info("여기요기ㅕㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+staff.getStaff_password());
 		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 		staff.setStaff_password(bpe.encode(staff.getStaff_password()));
-		*/
+		logger.info("여기요기ㅕㅇㅇ"+staff.getStaff_password());
 			
 		accountDao.insertStaff(staff);
 	}
@@ -94,11 +98,10 @@ public class AccountService {
 			}
 		}
 		
-		// 아래 시큐리티 적용시 주석 풀기
-		/*
+		
 		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 		staff.setStaff_password(bpe.encode(staff.getStaff_password()));
-		*/
+		
 		
 		accountDao.updateStaff(staff);
 	}
