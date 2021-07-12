@@ -5,13 +5,15 @@ import styles from "./index.module.css";
 import { getNoticeList } from "../../../apis/dashboard";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 function Notice(props) {
 
   const [notice , setNotice] = useState([]);
   const [showNoticeModal,setShowNoticeModal] = useState(false);
   const [noticeItem,setNoticeItem] = useState(null);
-
+  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+  console.log("스태프스태프"+staff_authority);
   useEffect(() => {
 
     (async function() {
@@ -37,7 +39,15 @@ function Notice(props) {
           <i class="fas fa-bullhorn"></i>
           <span>공지사항</span>
         </div>
-        <div><Link to="/noticeeditor/writenotice" className={styles.link}>공지 작성</Link></div>
+        <div>
+          {
+            staff_authority === "병원장" ?
+              <Link to="/noticeeditor/writenotice" className={styles.link}>공지 작성</Link>
+              :
+              null
+          }
+          
+        </div>
         
       </div>
       {

@@ -57,7 +57,7 @@ public class HomeController {
 		map.put("staff_id", staff_id);
 		map.put("authToken", authToken);
 		map.put("staff_name", dbStaff.getStaff_name());
-		map.put("staff_authority",dbStaff.getAuthority());
+		map.put("staff_authority",dbStaff.getStaff_authority());
 		
 		
 	    return map;

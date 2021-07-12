@@ -12,7 +12,6 @@ function FreeBoard(props) {
   const [freeBoardItem,setFreeBoardItem] = useState({});
 
 
-  console.log("ㅎㅇㅎㅇㅎㅇ");
   useEffect(() => {
     (async function() {
       try{

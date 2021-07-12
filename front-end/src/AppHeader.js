@@ -11,6 +11,8 @@ function AppHeader(props){
 
   const [time, setTime] = useState(moment());
   const staff_name = useSelector((state) => state.authReducer.staff_name);
+  const staff_id = useSelector((state) => state.authReducer.staff_id);
+
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect( () => {
@@ -20,7 +22,6 @@ function AppHeader(props){
   }, []);
 
   const logout = (event) => {
-    console.log("로그아웃");
      //Redux
      dispatch(createSetStaffIdAction(""));
      dispatch(createSetAuthTokenAction(""));
@@ -30,6 +31,7 @@ function AppHeader(props){
      //SessionStorage에 인증 내용 제거
      sessionStorage.removeItem("staff_id");
      sessionStorage.removeItem("authToken");
+     
      history.push("/");
   }
   return(
