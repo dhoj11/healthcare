@@ -216,14 +216,30 @@ public class AdministrationController {
 	}
 	
 	@GetMapping("/test/testcode")
-	public List<TestList> getTestCodesByAppointment(@RequestParam() int appointment_id) {
-		List<TestList> testCodes = administrationService.getTestCodesByAppointment(appointment_id);
+	public List<TestList> getTestCodesByAppointment(@RequestParam() int reception_id) {
+		List<TestList> testCodes = administrationService.getTestCodesByAppointment(reception_id);
 		return testCodes;
 	}
 	@GetMapping("/appointment/test/time")
-	public void CountbyAppointment(@RequestParam() String appointment_date) throws ParseException {
+	public List<Appointment> CountbyAppointment(@RequestParam() String appointment_date) throws ParseException {
 		String hospitalCode = "DZ0001";		//나중에 프론트에서 받아올 예정
-		administrationService.CountbyAppointment(appointment_date, hospitalCode);
+		List<Appointment> timeAndCountList = administrationService.CountbyAppointment(appointment_date, hospitalCode);
+		return timeAndCountList;
+	}
+	@PutMapping("/appointment/test/update")
+	public void appointmentTestList(@RequestBody TestList testList  ) throws Exception {
+		//administrationService.appointmentTestList(testList,testCodes);
+		logger.info("ehlso");
+			//logger.info(testCodes.toString());
+		
 		
 	}
+	
+	@PutMapping("/appointment/test/state")
+	public void changeTestStateToAppointment(@RequestBody TestList testList) {
+		logger.info(testList.toString());
+		administrationService.changeTestStateToAppointment(testList);
+		
+	}
+	
 }

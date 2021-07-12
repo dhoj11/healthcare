@@ -74,6 +74,11 @@ public class AdministrationService {
 		reception.setReceptionInfo(receptionData);
 		int row = receptionDAO.insertReceptionAfterAppointment(reception);
 		
+		if(reception.getReception_kind().equals("검사")) {
+			int reception_id = receptionDAO.selectReceptionId(reception);
+			testDAO.updateTestListAfterReception(appointment_id, reception_id);
+		}
+		
 		if(row == 1) {
 			return true;
 		}else {
@@ -193,72 +198,98 @@ public class AdministrationService {
 		}
 	}
 	
-	public List<TestList> getTestCodesByAppointment(int appointment_id) {
-		List<TestList> testCodes = testDAO.selectTestsByAppointment(appointment_id);
+	public List<TestList> getTestCodesByAppointment(int reception_id) {
+		List<TestList> testCodes = testDAO.selectTestsByAppointment(reception_id);
 		return testCodes;
 	}
 	
-	public void CountbyAppointment(String appointment_date, String hospital_code) throws ParseException  {
-		//String[] times = {"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
-		Hospital timeSetting = hospitalDAO.selectTimeSetting(hospital_code);
-		String officeStart = timeSetting.getOfficehour_start();
-		String officeEnd = timeSetting.getOfficehour_end();
-		String lunchStart = timeSetting.getLunch_start();
-		String lunchEnd = timeSetting.getLunch_end();
-		int interval = timeSetting.getOfficehour_interval();
-		
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        Date offstartDate = format.parse(officeStart);
-        Date offEndDate = format.parse(officeEnd);
-        
-        logger.info(offstartDate.toString());
-        logger.info(offEndDate.toString());
-		
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(offstartDate);
-        while(true) {
-        	cal.add(Calendar.MINUTE, interval);
-        	if(offEndDate.compareTo(cal.getTime()) == 0) {
-        		break;
-        	}
-    		offstartDate = cal.getTime();
-    		logger.info(offstartDate.toString());
-        }
+	public List<Appointment> CountbyAppointment(String appointment_date, String hospital_code) throws ParseException  {
 
-		
-//		List<Appointment> getTimeAndCount = appointmentDAO.selectCountByAppointment(appointment_date);
-//		List<Appointment> timeAndCount = new ArrayList<Appointment>();
-		
-//		if(getTimeAndCount.size() > 0) {
-//			for(String time : times) {
-//				for(Appointment a : getTimeAndCount) {
-//					int index=0;
-//					if(time.equals(a.getAppointment_time())) {
-//						Appointment appointment = new Appointment();
-//						appointment.setAppointment_time(time);
-//						appointment.setCount(a.getCount());
-//						timeAndCount.add(appointment);
-//						logger.info("+++++++++++++++++++++"+timeAndCount.toString());
-//						break;
-//					}else {
-//						index++;
-//						if(index == getTimeAndCount.size()) {
-//							Appointment appointment = new Appointment();
-//							appointment.setAppointment_time(time);
-//							appointment.setCount(0);
-//							timeAndCount.add(appointment);
-//							logger.info("--------------------"+timeAndCount.toString());
-//						}else {
-//							logger.info(";;;;;;;;;;;;;;;;;;;;;"+timeAndCount.toString());
-//							continue;
-//						}
-//					}
-//				}
-//			}
-//		}
-		
-//		logger.info(getTimeAndCount.toString());
-//
-//		return timeAndCount;
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+		Hospital timeSetting = hospitalDAO.selectTimeSetting(hospital_code);
+		Date offstartDate = format.parse(timeSetting.getOfficehour_start());
+		Date offEndDate = format.parse(timeSetting.getOfficehour_end());
+		Date lunchstartDate = format.parse(timeSetting.getLunch_start());
+		Date lunchEndDate = format.parse(timeSetting.getLunch_end());
+		int interval = timeSetting.getOfficehour_interval();
+
+		List<String> times = new ArrayList<String>();
+
+		String time = format.format(offstartDate);
+		times.add(time);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(offstartDate);
+		while(true) {
+			cal.add(Calendar.MINUTE, interval);
+			if(offEndDate.compareTo(cal.getTime()) == 0) {
+				break;
+			}else if(cal.getTime().compareTo(lunchstartDate) >= 0 && cal.getTime().compareTo(lunchEndDate) <0 ) {
+				continue;
+			}
+			offstartDate = cal.getTime();
+			time = format.format(offstartDate);
+			times.add(time);
+		}
+
+		List<Appointment> getTimeAndCount = appointmentDAO.selectCountByAppointment(appointment_date);
+		List<Appointment> timeAndCountList = new ArrayList<Appointment>();
+
+		if(getTimeAndCount.size() > 0) {
+			for(String opTime : times) {
+				int index=0;
+				for(Appointment timeAndConunt : getTimeAndCount) {
+					if(opTime.equals(timeAndConunt.getAppointment_time())) {
+						Appointment appointment = new Appointment();
+						appointment.setAppointment_time(opTime);
+						appointment.setCount(timeAndConunt.getCount());
+						timeAndCountList.add(appointment);
+						break;
+					}else {
+						index++;
+						if(index == getTimeAndCount.size()) {
+							Appointment appointment = new Appointment();
+							appointment.setAppointment_time(opTime);
+							appointment.setCount(0);
+							timeAndCountList.add(appointment);
+						}else {
+							continue;
+						}
+					}
+				}
+			}
+		} else {
+			for(String opTime : times) {
+				Appointment appointment = new Appointment();
+				appointment.setAppointment_time(opTime);
+				appointment.setCount(0);
+				timeAndCountList.add(appointment);
+			}
+		}
+
+		return timeAndCountList;
+	}
+	
+	public void appointmentTestList(TestList testList, List<TestList> testCodes) {
+		int appointment_id = appointmentDAO.selectAppointmentId(testList);
+		logger.info("testList-----"+testCodes.toString());
+		for(TestList test : testCodes) {
+			testDAO.updateTestList(testList, appointment_id, test.getTest_code());
+		}
+	}
+	
+	public void changeTestStateToAppointment(TestList testList) {
+		List<String> testStateList = testDAO.selectTestState(testList.getTest_list_id());
+		logger.info(testStateList.toString());
+		int count = 0;
+		for(String state: testStateList) {
+			if(state.equals("예약")) {
+				count++;
+			}
+		}
+		if(count == testStateList.size()) {
+			receptionDAO.updateReceptionState(testList.getReception_id(), "예약");
+		}
 	}
 }

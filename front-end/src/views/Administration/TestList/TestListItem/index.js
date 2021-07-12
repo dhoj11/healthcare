@@ -3,7 +3,7 @@ import styles from "./TestListItem.module.css";
 
 function TestListItem(props) {
 
-  const {testCodeList, changeCheckedList, isReq, selectedTestCodes} = props;
+  const {rerenderer, testCodeList, changeCheckedList, isReq, selectedTestCodes} = props;
   const [isChecked, setIsChecked] = useState(false);
   const [state, setState] = useState("대기");
   const [req, setReq] = useState(-1);
@@ -22,6 +22,9 @@ function TestListItem(props) {
       })
     }
   },[isReq]);
+  /**
+   * 진행이면 reception_state도 진행으로 바꿔줌, test_list_id를 넘겨줘서 그 id에 해당하는 상태가 모두 완료이면 reception_state도 완료로 바꿔줌
+   */
 
   const handleClick = () => {
     if(isChecked === true) {
@@ -43,6 +46,7 @@ function TestListItem(props) {
         {
           { 
             대기 : <span style={{color: "#74b816"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
+            예약 : <span style={{color: "black"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             요청 : <span style={{color: "#fab005"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             진행 : <span style={{color: "#f03e3e"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             완료 : <span style={{color: "#1c7ed6"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>
