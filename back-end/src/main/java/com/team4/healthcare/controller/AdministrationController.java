@@ -227,9 +227,9 @@ public class AdministrationController {
 		return timeAndCountList;
 	}
 	@PutMapping("/appointment/test/update")
-	public void appointmentTestList(@RequestBody TestList testList  ) throws Exception {
+	public void appointmentTestList(@RequestBody TestList testList) throws Exception {
 		//administrationService.appointmentTestList(testList,testCodes);
-		logger.info("ehlso");
+		logger.info(testList.toString());
 			//logger.info(testCodes.toString());
 		
 		
