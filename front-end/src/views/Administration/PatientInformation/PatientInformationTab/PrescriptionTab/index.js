@@ -7,9 +7,10 @@ import React from "react";
 
 function PrescriptionTab(props) {
   
-  const [prescriptionList, setPrescriptionList] = useState([]);
   const { patientId } = props;
+  const [prescriptionList, setPrescriptionList] = useState([]);
   let curr = 0;
+  //const [curr, setCurr] = useState(0);
 
   useEffect(() => {
     const work = async() => {
@@ -23,10 +24,18 @@ function PrescriptionTab(props) {
    work();
   },[props]);
 
+  useEffect(() => {
+    console.log(prescriptionList);
+  },[prescriptionList])
+
   const rowRenderer = ({index, key, style}) => {
-    if(index !== 0) {
+    if(index !== 0 ) {
       curr = prescriptionList[index-1].treatment_id;
-    } 
+      //setCurr(prescriptionList[index-1].treatment_id)
+      console.log(curr);
+    }else {
+      curr = 0;
+    }
     return (
       <div key={key} style={style} className={`${styles.prescription_row} border-bottom d-flex`}>
       {prescriptionList[index].treatment_id !== curr ? (
@@ -93,7 +102,7 @@ function PrescriptionTab(props) {
                     rowCount={prescriptionList.length}
                     rowHeight={40}
                     rowRenderer={rowRenderer}
-                    overscanRowCount={5}/> //* overscanRowCount: 미리 5개의 여유분을 만들어 놔서 스크롤 시 로딩을 줄여줌*/}
+                    overscanRowCount={100}/> //* overscanRowCount: 미리 5개의 여유분을 만들어 놔서 스크롤 시 로딩을 줄여줌*/}
             );
           }}
         </AutoSizer>

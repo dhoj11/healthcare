@@ -33,4 +33,9 @@
 		set reception_id = #{reception_id}, test_list_state='대기'
 		where appointment_id = #{appointment_id}
 	</update>
+	<update id="updateTestListReq">
+		update tests_list
+		set test_list_req = 1, test_list_time=curtime(), test_list_state='요청'
+		where test_list_id=#{test_list_id} and test_code=#{test_code}
+	</update>
 </mapper>

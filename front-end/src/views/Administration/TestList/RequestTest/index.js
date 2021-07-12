@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
+import { requestTest } from "../../../../apis/administration";
 import styles from "./RequestTest.module.css";
 
 function RequestTest(props) {
 
-  const {testCodes, isOpen, close, ReqTest} = props;
+  const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
 
   const handleReqTest = async() => {
+    
     try{
-      //await requestTest(testCodes);
+      await requestTest(testCodes);
     }catch(error) {
       console.log(error.message);
     }
-    ReqTest();
+    setSelectedTestCodes([]);
+    setRerenderer(testCodes[0].reception_id);
     close();
   }
 

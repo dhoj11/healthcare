@@ -25,7 +25,9 @@ function TestTab(props) {
   const rowRenderer = ({index, key, style}) => {
     if(index !== 0) {
       curr = testList[index-1].treatment_id;
-    } 
+    }else {
+      curr = 0;
+    }
     return (
       <div key={key} style={style} className={`${styles.treatment_row} border-bottom d-flex`}>
       {testList[index].treatment_id !== curr ? (

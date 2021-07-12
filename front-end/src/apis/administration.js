@@ -115,3 +115,8 @@ export function changeTestStateToAppointment(test_list_id) {
   const promise = axios.put("http://localhost:8080/administration/appointment/test/state", test_list_id);
   return promise;
 }
+
+export function requestTest(testCodes) {
+  const promise = axios.put("http://localhost:8080/administration/test/request", testCodes);
+  return promise;
+}

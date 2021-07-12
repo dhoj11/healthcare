@@ -271,25 +271,24 @@ public class AdministrationService {
 		return timeAndCountList;
 	}
 	
-	public void appointmentTestList(TestList testList, List<TestList> testCodes) {
-		int appointment_id = appointmentDAO.selectAppointmentId(testList);
-		logger.info("testList-----"+testCodes.toString());
+	public void appointmentTestList(List<TestList> testList, List<TestList> testCodes) {
+		int appointment_id = appointmentDAO.selectAppointmentId(testList.get(0));
 		for(TestList test : testCodes) {
-			testDAO.updateTestList(testList, appointment_id, test.getTest_code());
+			testDAO.updateTestList(testList.get(0), appointment_id, test.getTest_code());
 		}
 	}
 	
 	public void changeTestStateToAppointment(TestList testList) {
 		List<String> testStateList = testDAO.selectTestState(testList.getTest_list_id());
 		logger.info(testStateList.toString());
-		int count = 0;
-		for(String state: testStateList) {
-			if(state.equals("예약")) {
-				count++;
-			}
-		}
-		if(count == testStateList.size()) {
+		if(testStateList.size() == 0) {
 			receptionDAO.updateReceptionState(testList.getReception_id(), "예약");
+		}
+	}
+	
+	public void requestTest(List<TestList> testCodes) {
+		for(TestList test : testCodes) {
+			testDAO.updateTestListReq(test);
 		}
 	}
 }
