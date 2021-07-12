@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteNotice } from "../../../../apis/dashboard";
 import DeleteModal from "../DeleteModal";
@@ -8,6 +9,7 @@ import styles from "./index.module.css";
 function NoticeModal(props) {
   const {showNoticeModal,closeNoticeModal,noticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
+  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
 
   
 
@@ -54,9 +56,16 @@ function NoticeModal(props) {
               <div className={styles.notice_info}>
                 <span>{noticeItem.staff_name}</span>
                 <span>{noticeItem.notice_date}</span>
-                <Link to={`/noticeeditor/updatenotice/${noticeItem.notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
+                {
+                  staff_authority === "병원장" ?
+                  <>
+                    <Link to={`/noticeeditor/updatenotice/${noticeItem.notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
+                    <span onClick={OpenDeleteModal}>삭제</span>
+                  </>
+                  :
+                  null
+                }
                 
-                <span onClick={OpenDeleteModal}>삭제</span>
               </div>
             </div>
 

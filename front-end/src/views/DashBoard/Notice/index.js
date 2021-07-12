@@ -13,7 +13,6 @@ function Notice(props) {
   const [showNoticeModal,setShowNoticeModal] = useState(false);
   const [noticeItem,setNoticeItem] = useState(null);
   const staff_authority = useSelector((state) => state.authReducer.staff_authority);
-  console.log("스태프스태프"+staff_authority);
   useEffect(() => {
 
     (async function() {

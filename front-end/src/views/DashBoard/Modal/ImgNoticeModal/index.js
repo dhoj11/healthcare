@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { deleteImgNotice } from "../../../../apis/dashboard";
 import DeleteModal from "../DeleteModal";
 import styles from "./index.module.css";
 function ImgNoticeModal(props) {
   const {showImgNoticeModal,closeImgNoticeModal,imgNoticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
+  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
 
   const contentRef = useRef();
   console.log(imgNoticeItem);
@@ -50,8 +52,16 @@ function ImgNoticeModal(props) {
               <div className={styles.img_notice_info}>
                 <span>{imgNoticeItem.staff_name}</span>
                 <span>{imgNoticeItem.img_notice_date}</span>
-                <span>수정</span>
-                <span onClick={OpenDeleteModal}>삭제</span>
+                {
+                  staff_authority ==="병원장" ?
+                    <>
+                      <span>수정</span>
+                      <span onClick={OpenDeleteModal}>삭제</span>
+                    </>
+                    :
+                    null
+                }
+                
               </div>
             </div>
 
