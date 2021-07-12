@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Comment.module.css";
@@ -71,4 +73,4 @@ function Comment(props){
   );
 }
 
-export default Comment;
+export default React.memo(Comment);

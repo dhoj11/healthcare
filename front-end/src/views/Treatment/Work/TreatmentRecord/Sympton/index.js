@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./Sympton.module.css";
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
@@ -48,4 +49,4 @@ function Sympton(props){
   );
 }
 
-export default Sympton;
+export default React.memo(Sympton);

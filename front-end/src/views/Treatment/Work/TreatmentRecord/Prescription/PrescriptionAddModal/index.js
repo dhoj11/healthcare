@@ -1,6 +1,6 @@
+import React from "react";
 import style from "./PrescriptionAddModal.module.css";
 import { Modal } from "react-bootstrap";
-import data from "../../../../data/medicine";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useState } from "react";
@@ -83,9 +83,9 @@ function PrescriptionAddModal(props){
           <div className={style.searchBody}>
             <div className={style.top}>
               <div className={style.search}>
-              <span className={style.title}>
+              {/* <span className={style.title}>
                   <span className={style.titleContent}>약처방</span>
-                </span>
+                </span> */}
                 <input type="text" className={`form-control-lg form-rounded ${style.input}`}
                        onChange={handleChange} />
                 <span className={style.searchButton} onClick={handleSearch}>
@@ -133,4 +133,4 @@ function PrescriptionAddModal(props){
   );
 }
 
-export default PrescriptionAddModal;
+export default React.memo(PrescriptionAddModal);

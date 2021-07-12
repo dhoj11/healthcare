@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import Date from "./common/Date";
 import Patients from "./common/Patients";
@@ -52,4 +53,4 @@ function Treatment(props){
   );
 }
 
-export default Treatment;
+export default React.memo(Treatment);

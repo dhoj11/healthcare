@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useCallback, useEffect, useState } from "react";
 import PatientInformationCard from "../Administration/common/PatientInformationCard";
 import Search from "./Search";
@@ -6,6 +8,8 @@ import style from "./test.module.css";
 import TestResult from "./TestResult";
 import TestList from "./TestList";
 import { getPateint, getPateintByTestListId, getTestList } from "../../apis/test";
+import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Test(props){
 
@@ -92,10 +96,16 @@ function Test(props){
         </div>
         <div className={style.leftMiddle}>
           <div className={style.patientCard}>
-            <PatientInformationCard patient={patient ||{"patient_id":"","patient_name":"", "patient_gender":"","patient_birth":(""),"patient_tel": "", "patient_medicine": "", "patient_disease": "", "patient_comment": ""}}/> 
-          </div>
+            { patient ?
+            <PatientInformationCard patient={patient}/> 
+              : <div className={style.noselect}>
+                 <span><FontAwesomeIcon icon={faUserCheck} className={style.selectIcon}/></span>
+                 <span className={style.content}> 환자를 선택해주세요.</span>
+              </div>
+            } 
+            </div>
           <div className={style.State}>
-            { buttonAllow ? <State testList={testList} changeState={changeState}/> : null }
+            { buttonAllow ? <State testList={testList} changeState={changeState}/> : <div className={style.noState}></div> }
           </div>
         </div>
         <div className={style.testList}>
@@ -109,4 +119,4 @@ function Test(props){
   );
 }
 
-export default Test;
+export default React.memo(Test);

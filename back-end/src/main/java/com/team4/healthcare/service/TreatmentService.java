@@ -119,6 +119,11 @@ public class TreatmentService {
 				List<Integer> test_details_id = treatmentDao.selectTestDetailsId(test_code);
 				treatmentDao.insertTestResult(test_list_id, test_code, test_details_id);
 			}
+			
+			int patient_id = treatmentDao.getPatiendId(treatment_id);
+			String staff_id = treatmentDao.getStaffId(treatment_id);
+			
+			treatmentDao.insertReception(patient_id, staff_id);
 		}
 	}
 	

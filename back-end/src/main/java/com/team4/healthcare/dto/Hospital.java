@@ -1,16 +1,16 @@
 package com.team4.healthcare.dto;
-
 import java.util.List;
 
+
 public class Hospital {
-	
-	private String hospital_code;
-	private String hospital_name;
-	private String officehour_start;
-	private String officehour_end;
-	private int officehour_interval;
-	private String lunch_start;
-	private String lunch_end;
+	public String hospital_code;
+	public String hospital_name;
+	public String officehour_start;
+	public String officehour_end;
+	public int officehour_interval;
+	public String lunch_start;
+	public String lunch_end;
+
 	public String getHospital_code() {
 		return hospital_code;
 	}
@@ -53,6 +53,7 @@ public class Hospital {
 	public void setLunch_end(String lunch_end) {
 		this.lunch_end = lunch_end;
 	}
+
 	@Override
 	public String toString() {
 		return "Hospital [hospital_code=" + hospital_code + ", hospital_name=" + hospital_name + ", officehour_start="

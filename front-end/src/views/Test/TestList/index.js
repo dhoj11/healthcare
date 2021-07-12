@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./TestList.module.css";
 import { useCallback, useEffect, useState } from "react";
 
@@ -118,7 +120,7 @@ function TestList(props){
   );
 }
 
-export default TestList;
+export default React.memo(TestList);
 
 
 

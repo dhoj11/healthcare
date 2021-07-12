@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./DetailAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -132,4 +133,4 @@ function DetailAddModal(props){
   );
 }
 
-export default DetailAddModal;
+export default React.memo(DetailAddModal);

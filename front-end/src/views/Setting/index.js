@@ -1,3 +1,4 @@
+import React from "react";
 import Account from "./Account";
 import Custom from "./Custom";
 import style from "./Setting.module.css";
@@ -15,4 +16,4 @@ function Setting(props){
   );
 }
 
-export default Setting;
+export default React.memo(Setting);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team4.healthcare.dto.Hospital;
 import com.team4.healthcare.dto.Staff;
 import com.team4.healthcare.service.AccountService;
 
@@ -46,14 +47,24 @@ public class AccountController {
     	accountService.createAccount(staff);
     }
     
-    @PutMapping("/staff")
-    public void update(@RequestBody Staff staff) {
+    @PostMapping("/staff/modify")
+    public void update(Staff staff) {
     	accountService.updateAccount(staff);
     }
     
     @DeleteMapping("/staff/{staff_id}")
     public void delete(@PathVariable("staff_id") String staff_id){
     	accountService.deleteAccount(staff_id);
+    }
+    
+    @GetMapping("/optime/{hospital_code}")
+    public Hospital getHospital(@PathVariable String hospital_code) {
+    	return accountService.getHospital(hospital_code);
+    }
+    
+    @PutMapping("/optime")
+    public void updateHospital(@RequestBody Hospital hospital) {
+    	accountService.updateHospital(hospital);
     }
 	   
 	   

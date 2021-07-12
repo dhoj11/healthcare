@@ -29,7 +29,7 @@
         	  ,#{staff_pic_type}
         	  ,NOW()
         	  ,1
-        	  ,'ROLE_DOCTOR' <!-- 수정 -->
+        	  ,#{authority}
         )
     </insert>
 
@@ -57,17 +57,19 @@
     
     <update id="updateStaff" parameterType="staff">
     	update staff
-    	set <if test="staff_password != null">
+    	 <trim prefix="SET" suffixOverrides=",">
+    		<if test="staff_password != null">
              	staff_password = #{staff_password},
-             </if>
-             <if test="staff_pic != null">
-             	 staff_pic_oname = #{staff_pic_oname}
-        		,staff_pic_sname = #{staff_pic_sname}
-        		,staff_pic_type = #{staff_pic_type}
-             </if>
-             <if test="staff_tel != null">
-    			staff_tel=#{staff_tel}
+            </if>
+            <if test="staff_pic != null">
+             	staff_pic_oname = #{staff_pic_oname},
+        		staff_pic_sname = #{staff_pic_sname},
+        		staff_pic_type = #{staff_pic_type},
+            </if>
+            <if test="staff_tel != null">
+    			staff_tel=#{staff_tel},
     		</if>
+    	</trim>
     	where staff_id = #{staff_id}
     </update>
     
@@ -75,6 +77,22 @@
     	update staff
     	set staff_enabled = 0
     	where staff_id = #{staff_id}
+    </update>
+    
+    <select id="getHospital" parameterType="string" resultType="hospital">
+    	select *
+    	from hospital
+    	where hospital_code = #{hospital_code}
+    </select>
+    
+    <update id="updateHospital" parameterType="hospital">
+    	update hospital
+    	set officehour_start = #{officehour_start},
+    		officehour_end = #{officehour_end},
+    		officehour_interval = #{officehour_interval},
+    		lunch_start = #{lunch_start},
+    		lunch_end = #{lunch_end}
+    	where hospital_code = #{hospital_code}
     </update>
     
     

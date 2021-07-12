@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./Account.module.css";
 import StaffAdd from "./StaffAdd";
 import StaffCard from "./StaffCard";
@@ -67,15 +69,22 @@ function Account(props){
 
   return(
     <div className={style.account}>
-      <div className={style.top}>
-        <StaffAdd staff={staff} handleAddStaff={handleAddStaff}/>
-      </div>
       <div className={style.body}>
-        <StaffCard staff={staff}/>
-        <StaffTable handleChangeStaffId={handleChangeStaffId} staffs={staffs}/>
+        <div className={style.top}>
+          <span className={style.title}>직원관리</span>
+          <StaffAdd staff={staff} handleAddStaff={handleAddStaff}/>
+        </div>
+        <div className={style.content}>
+          <div className={style.left}>
+            <StaffCard staff={staff}/>
+          </div>
+          <div className={style.right}>
+            <StaffTable handleChangeStaffId={handleChangeStaffId} staffs={staffs}/>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Account;
+export default React.memo(Account);

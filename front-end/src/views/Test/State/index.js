@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import Barcode from "./Barcode";
 import style from "./State.module.css"
@@ -55,4 +56,4 @@ function State(props){
   );
 }
 
-export default State;
+export default React.memo(State);

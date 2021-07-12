@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./Prescription.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -147,4 +148,4 @@ function Prescription(props){
   );
 }
 
-export default Prescription;
+export default React.memo(Prescription);
