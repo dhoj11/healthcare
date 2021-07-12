@@ -9,10 +9,13 @@ import { getImgNoticeList } from "../../../apis/dashboard";
 import { Link } from 'react-router-dom';
 import { faBatteryThreeQuarters, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 function ImgNotice(props) {
   const [showImgNoticeModal,setShowImgNoticeModal] = useState(false);
   const [imgNoticeItem,setImgNoticeItem] = useState(false);
   const [imgNotice,setImgNotice] = useState([]);
+  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+
   let infi= true;
   if(imgNotice.length<4){
     infi=false;
@@ -69,9 +72,15 @@ function ImgNotice(props) {
             );
           })}
       </Slider>
-      <Link to="/noticeeditor/writeimgnotice" className={styles.add_btn} >
-        <FontAwesomeIcon icon={faPlus} className={styles.plus}/>
-      </Link>
+      {
+        staff_authority ==="병원장" ?
+          <Link to="/noticeeditor/writeimgnotice" className={styles.add_btn} >
+            <FontAwesomeIcon icon={faPlus} className={styles.plus}/>
+          </Link>
+          :
+          null
+      }
+      
 
       </div>
       <ImgNoticeModal showImgNoticeModal={showImgNoticeModal} closeImgNoticeModal={closeImgNoticeModal} imgNoticeItem={imgNoticeItem}></ImgNoticeModal>
