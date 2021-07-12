@@ -108,7 +108,7 @@ public class TreatmentService {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.KOREA);
 		String today = sdf.format(date);
-		int test_list_id = Integer.parseInt(today +"0" +treatment_id);
+		int test_list_id = Integer.parseInt(today+treatment_id);
 				
 		int reception_id = treatmentDao.getReceptionId(treatment_id);
 		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, reception_id, test_list_id,treatment_tests);
