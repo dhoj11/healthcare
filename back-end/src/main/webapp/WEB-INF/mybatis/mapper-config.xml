@@ -24,5 +24,6 @@
 	<typeAlias alias="freeBoardAnswer" type="com.team4.healthcare.dto.FreeBoardAnswer"/>
 	<typeAlias alias="staff" type="com.team4.healthcare.dto.Staff"/>
 	<typeAlias alias="imgNotice" type="com.team4.healthcare.dto.ImgNotice"/>
+	<typeAlias alias="testDetail" type="com.team4.healthcare.dto.TestDetail"/>
 	</typeAliases>
 </configuration>

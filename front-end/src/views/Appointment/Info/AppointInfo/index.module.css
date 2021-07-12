@@ -8,12 +8,14 @@
   width: 100%;
   height: 30px;
   text-align: center;
-  background-color: #f1f3f5;
+  background-color: #F8FAFF;
 }
 .Info_table >.thead span{
   display:inline-block;
   height: 100%;
-  border: 1px solid lightgray;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid #dee2e6;
 
 }
 .Info_table >.thead span:nth-child(1){
@@ -34,7 +36,7 @@
   height: 30px;
   text-align: center;
   font-size: 14px;
- 
+  padding-top: 5px;
 }
 
 

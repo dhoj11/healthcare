@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.TestListDao">
+
+	<select id="selectTestCode" resultType="string" parameterType="int">
+		select test_code
+		from tests_list
+		where appointment_id = #{appointment_id}
+	</select>
+	
+	<select id="selectTestDetail" resultType="testDetail" parameterType="string">
+		select *
+		from test_details
+		where test_code =#{test_code};
+	</select>
+
+
+	<select id="selectByPatientIdReception" resultType="testList" parameterType="int">
+		select *
+		from tests_list
+		where test_list_state ='대기' and reception_id in (select reception_id
+														from reception
+														where patient_id = #{patient_id} and reception_kind='검사' )
+	</select>
+	<select id="selectByPatientIdAppointment" resultType="testList" parameterType="int">
+		select *
+		from tests_list
+		where test_list_state='대기' and appointment_id in (select appointment_id
+															from appointment
+															where patient_id = #{patient_id} and appointment_kind = '검사' and appointment_state='취소')
+	</select>
+</mapper>

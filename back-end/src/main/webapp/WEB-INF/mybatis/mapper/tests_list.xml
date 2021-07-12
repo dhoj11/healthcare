@@ -17,4 +17,6 @@
         and tests_list.treatment_id = treatment.treatment_id
         and treatment.patient_id = patient.patient_id
 	</select>
+	
+	
 </mapper>
