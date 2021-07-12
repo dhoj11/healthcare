@@ -69,7 +69,10 @@
   margin-bottom: 20px;
 
 }
-
+.body{
+  height: 370px;
+  overflow: auto;
+}
 .staff_body > div:nth-child(1){
   width: 30%;
   font-weight: 600;
