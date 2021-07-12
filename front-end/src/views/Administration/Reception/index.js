@@ -43,7 +43,7 @@ function Reception(props) {
 
   const getAllList = async() => {
     try {
-      const response = await getReceptionList();
+      const response = await getReceptionList("진료");
       setReceptionList(response.data);
       setState("전체");
     } catch (error) {

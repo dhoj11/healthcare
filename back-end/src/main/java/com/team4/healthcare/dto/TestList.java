@@ -8,7 +8,7 @@ public class TestList {
 	private int treatment_id;
 	private int test_list_req;
 	private int appointment_id;
-	private String test_list_data;
+	private String test_list_date;
 	private int test_list_saved;
 	
 	private String test_name;
@@ -75,12 +75,12 @@ public class TestList {
 		this.appointment_id = appointment_id;
 	}
 
-	public String getTest_list_data() {
-		return test_list_data;
+	public String getTest_list_date() {
+		return test_list_date;
 	}
 
-	public void setTest_list_data(String test_list_data) {
-		this.test_list_data = test_list_data;
+	public void setTest_list_date(String test_list_date) {
+		this.test_list_date = test_list_date;
 	}
 
 	public int getTest_list_saved() {
@@ -136,8 +136,11 @@ public class TestList {
 	public String toString() {
 		return "TestList [test_list_id=" + test_list_id + ", test_code=" + test_code + ", test_list_state="
 				+ test_list_state + ", test_list_time=" + test_list_time + ", treatment_id=" + treatment_id
-				+ ", test_list_req=" + test_list_req + ", appointment_id=" + appointment_id + ", test_list_data="
-				+ test_list_data + ", test_list_saved=" + test_list_saved + ", test_name=" + test_name
-				+ ", patient_name=" + patient_name + ", staff_id=" + staff_id + ", patient_id=" + patient_id + "]";
+				+ ", test_list_req=" + test_list_req + ", appointment_id=" + appointment_id + ", test_list_date="
+				+ test_list_date + ", test_list_saved=" + test_list_saved + ", test_name=" + test_name
+				+ ", patient_name=" + patient_name + ", patient_id=" + patient_id + ", reception_id=" + reception_id
+				+ ", staff_id=" + staff_id + "]";
 	}
+
+
 }

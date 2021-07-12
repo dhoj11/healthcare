@@ -66,5 +66,10 @@
     	where test_list_id = #{test_list_id}
     </update>
     
+    <select id="selectByCode" resultType="test" parameterType="string">
+    	select *
+    	from tests
+    	where test_code=#{test_code}
+    </select>
     
 </mapper>

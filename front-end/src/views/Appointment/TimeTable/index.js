@@ -30,7 +30,7 @@ function TimeTable(props) {
   },[tab])
   return(
     <div className={styles.TimeTable_contain}>
-        <div className={styles.date_contain}>
+        <div className={`${styles.date_contain} justify-content-between`}>
           <div className ={styles.showAppoint}>
             <button onClick={treatment} className={tab === "treatment" ? styles.clicked : styles.default }>진료</button>
             <button onClick={test} className={tab ==="test" ? styles.clicked : styles.default}>검사</button>
@@ -40,12 +40,22 @@ function TimeTable(props) {
             <div className={styles.date}>{moment(startDate).format("YYYY-MM-DD")}</div> 
             <button className={styles.rightbtn} onClick={nextDate}>{`>`} </button>
           </div>
+          <div className={styles.color}>
+            <span>예약</span>
+            <div></div>
+            <span>내원</span>
+            <div></div>
+            <span>취소</span>
+            <div></div>
+            <span>완료</span>
+            <div></div>
+          </div>
         </div>
         {
           tab === "treatment"?
           <Treatment startDate={startDate}></Treatment>
           :
-          <Test></Test>
+          <Test startDate={startDate}></Test>
         }
         
        

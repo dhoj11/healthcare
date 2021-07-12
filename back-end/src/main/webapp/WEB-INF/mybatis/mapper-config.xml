@@ -25,5 +25,6 @@
 	<typeAlias alias="staff" type="com.team4.healthcare.dto.Staff"/>
 	<typeAlias alias="imgNotice" type="com.team4.healthcare.dto.ImgNotice"/>
 	<typeAlias alias="hospital" type="com.team4.healthcare.dto.Hospital"/>
+	<typeAlias alias="testDetail" type="com.team4.healthcare.dto.TestDetail"/>
 	</typeAliases>
 </configuration>

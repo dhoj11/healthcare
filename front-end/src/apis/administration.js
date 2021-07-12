@@ -96,12 +96,22 @@ export function addNewAppointment(appointment) {
   return promise;
 }
 
-export function getTestCodesByAppointment(appointment_id) {
-  const promise = axios.get("http://localhost:8080/administration/test/testcode", {params:{appointment_id}});
+export function getTestCodesByReception(reception_id) {
+  const promise = axios.get("http://localhost:8080/administration/test/testcode", {params:{reception_id}});
   return promise;
 }
 
 export function CountbyAppointment(appointment_date) {
   const promise = axios.get("http://localhost:8080/administration/appointment/test/time", {params:{appointment_date}});
+  return promise;
+}
+
+export function appointmentTestList(testList) {
+  const promise = axios.put("http://localhost:8080/administration/appointment/test/update", testList);
+  return promise;
+}
+
+export function changeTestStateToAppointment(test_list_id) {
+  const promise = axios.put("http://localhost:8080/administration/appointment/test/state", test_list_id);
   return promise;
 }

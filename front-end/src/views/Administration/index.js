@@ -47,7 +47,7 @@ function Administration(props) {
           <div className={styles.reception_component}><Reception selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} finished={finished}/></div>
         </div>
         <div className={styles.testlist_component}>
-          <TestList testAppointmentId={testAppointmentId}/>
+          <TestList dayAppointment={dayAppointment} testAppointmentId={testAppointmentId}/>
         </div>
       </div>
       <div>

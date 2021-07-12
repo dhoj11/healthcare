@@ -39,4 +39,9 @@
 			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id, reception_kind) 
 	values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, null, '진료')
 	</insert>
+	<select id="selectReceptionId" resultType="int">
+		select reception_id
+		from reception
+		where reception_date=curdate() and patient_id=#{patient_id} and reception_kind=#{reception_kind}
+	</select>
 </mapper>

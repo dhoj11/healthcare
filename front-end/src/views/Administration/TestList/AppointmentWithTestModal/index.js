@@ -2,13 +2,13 @@ import styles from "./AppointmentWithTestModal.module.css";
 import {Modal} from "react-bootstrap";
 import Calendar from "../../../Appointment/Calendar"
 import {useState, useEffect} from "react";
-import {CountbyAppointment} from "../../../../apis/administration";
+import {CountbyAppointment,addNewAppointment, appointmentTestList, changeTestStateToAppointment} from "../../../../apis/administration";
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
 
 function AppointmentWithTestModal(props) {
   
-  const {testCodes, isOpen, close} = props;
+  const {setRerenderer, testCodes, isOpen, close} = props;
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
@@ -20,9 +20,17 @@ function AppointmentWithTestModal(props) {
     patient_id: "",
     appointment_kind: "검사"
   });
+  const [testList, setTestList] = useState({
+    patient_id: "",
+    test_list_id: "",
+    test_list_date: "",
+    test_list_time: "",
+    appointment_id: "",
+    treatment_id: ""
+  });
 
   useEffect(() => {
-    if(testCodes !== undefined) {
+    if(testCodes.length !== 0) {
       setStartDate(new Date());
       setAppointmentDate(moment().format("YYYY-MM-DD"));
       setAppointment({
@@ -32,9 +40,14 @@ function AppointmentWithTestModal(props) {
         appointment_kind: "검사"
       });
     }
+    console.log("testCodes",testCodes);
   },[isOpen]);
 
   useEffect(() => {
+    if(moment().diff(appointmentDate) >= 0) {
+      console.log("이전날짜");
+    }
+    console.log(appointmentDate);
     const work = async() => {
       try{
         const response = await CountbyAppointment(appointmentDate);
@@ -47,26 +60,60 @@ function AppointmentWithTestModal(props) {
     work();
   },[appointmentDate])
 
+  useEffect(() => {
+
+  })
+
   const changeDate = (date) => {
     const fmt = moment(date).format("YYYY-MM-DD");
     setStartDate(date);
     setAppointmentDate(fmt);
+    setTestList({
+      patient_id: testCodes[0].patient_id,
+      test_list_id: moment(appointmentDate).format("YYMMDD") + testCodes[0].treatment_id ,
+      test_list_date: appointmentDate,
+      test_list_time: appointmentTime,
+      appointment_id: "",
+      treatment_id: testCodes[0].treatment_id
+    })
   }
 
   const changeTime = (time) => {
     setAppointmentTime(time);
+    setTestList({
+      patient_id: testCodes[0].patient_id,
+      test_list_id: moment(appointmentDate).format("YYMMDD") + testCodes[0].treatment_id ,
+      test_list_date: appointmentDate,
+      test_list_time: time,
+      appointment_id: "",
+      treatment_id: testCodes[0].treatment_id
+    })
   }
 
   const newTestAppointment = async() => {
     //appointment추가, test_list_id,test_list_date,appointment_id update
-
+    const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime}
+    console.log(testList);
+    try{
+      //await addNewAppointment(newAppointment);
+      await appointmentTestList(testList);  //test_code 넣어주기
+      //다 예약이면 reception_state 바꿔줌
+      //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id});
+      
+      setRerenderer(testCodes[0].reception_id);
+    }catch(error) {
+      console.log(error.message);
+    }
+    // if(newAppointment.appointment_date === moment().format("YYYY-MM-DD")) {
+    //   dayAppointment(new Date());
+    // }
     close();
   }
 
   return (
     <>
     {isOpen ? (
-      testCodes !== undefined ? (
+      testCodes.length !== 0 ? (
         <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
         <Modal.Header closeButton>
           <Modal.Title>검사 예약</Modal.Title>
@@ -90,16 +137,17 @@ function AppointmentWithTestModal(props) {
             <div className="d-flex">
               <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
               <div>
-                <TimeSelector timeAndCount={timeAndCount} changeTime={changeTime}/>
+                <TimeSelector appointmentDate={appointmentDate} timeAndCount={timeAndCount} changeTime={changeTime}/>
               </div>
             </div>
+            <span className={styles.information_letter}>(예약 시간의 우측은 해당 예약 시간의 예약 건수를 보여줍니다!)</span>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <button className={styles.cancel_btn} onClick={close}>
             취소
           </button>
-          <button className={styles.appoint_btn} onClick={close}>
+          <button className={styles.appoint_btn} onClick={newTestAppointment}>
             확인
           </button>
         </Modal.Footer>
@@ -111,11 +159,11 @@ function AppointmentWithTestModal(props) {
         </Modal.Header>
         <Modal.Body>
         <div>
-            환자를 선택해주세요.
+            환자와 검사 목록을 선택해주세요.
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className={styles.appoint_btn} onClick={newTestAppointment}>
+          <button className={styles.appoint_btn} onClick={close}>
             확인
           </button>
         </Modal.Footer>
