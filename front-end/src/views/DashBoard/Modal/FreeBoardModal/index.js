@@ -8,6 +8,8 @@ import DeleteModal from "../DeleteModal";
 import AnswerDeleteModal from "../DeleteModal/AnswerDeleteModal";
 import styles from "./index.module.css";
 import UpdateModal from "./UpdateModal";
+import {useSelector } from "react-redux";
+
 function FreeBoardModal(props) {
   const {showFreeBoardModal, closeFreeBoardModal,freeBoardItem, freeBoardAnswer,addAnswerReRender,freeBoardReRender} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
@@ -16,6 +18,7 @@ function FreeBoardModal(props) {
   const [answer,setAnswer] = useState("");
   const [deleteAnswerId,setDeleteAnswerId] = useState(null);
 
+  const staff_name = useSelector((state) => state.authReducer.staff_name);
 
   const changeText = (e) => {
     setAnswer(e.target.value)
@@ -28,7 +31,7 @@ function FreeBoardModal(props) {
           "freeboard_answer_content":answer,
           "freeboard_answer_date":moment().format('YYYY-MM-DD'),
           "freeboard_answer_time": moment().format('HH:mm'),
-          "staff_name":"로그인Id"
+          "staff_name":staff_name
         }
         await createFreeBoardAnswer(newAnswer);
       } catch(error){
@@ -117,8 +120,16 @@ function FreeBoardModal(props) {
                     </div>
                   </div>
                   <div>
-                      <button className={styles.btn} onClick={OpenUpdateModal}>수정</button>
-                      <button className={styles.btn} onClick={OpenDeleteModal}>삭제</button>
+                    {
+                      freeBoardItem.staff_name ===staff_name ?
+                        <>
+                          <button className={styles.btn} onClick={OpenUpdateModal}>수정</button>
+                          <button className={styles.btn} onClick={OpenDeleteModal}>삭제</button>
+                        </>
+                        :
+                        null
+                    } 
+                      
                     </div>    
                 </div>
                 <div className={styles.title}>
@@ -154,7 +165,13 @@ function FreeBoardModal(props) {
                                 </div>                                
                               </div>
                               <div>
-                                <button className={styles.btn} onClick={() =>OpenAnswerDeleteModal(data.freeboard_answer_id)}>삭제</button>
+                                {
+                                  data.staff_name === staff_name ? 
+                                  <button className={styles.btn} onClick={() =>OpenAnswerDeleteModal(data.freeboard_answer_id)}>삭제</button>
+                                  :
+                                  null
+                                }
+                                
                               </div>                           
                             </div>
                             <div>

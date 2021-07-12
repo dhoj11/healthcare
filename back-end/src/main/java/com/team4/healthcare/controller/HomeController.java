@@ -59,6 +59,7 @@ public class HomeController {
 		map.put("authToken", authToken);
 		map.put("staff_name", dbStaff.getStaff_name());
 		map.put("staff_authority",dbStaff.getStaff_authority());
+
 		map.put("hospital_code", dbStaff.getHospital_code());
 		map.put("hospital_name", hospital_name);
 		
@@ -66,4 +67,3 @@ public class HomeController {
     }
 }
 
-//back-end test : dongho
