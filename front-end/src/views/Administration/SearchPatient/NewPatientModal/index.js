@@ -41,6 +41,28 @@ function NewPatientModal(props) {
   };
 
   const addNewPatient = () => {
+    if(newPatient.patient_name === "") {
+      alert("환자의 이름을 입력해주세요.")
+      return;
+    }else if(newPatient.patient_gender === "") {
+      alert("환자의 성별을 입력해주세요.")
+      return;
+    }else if(newPatient.patient_birth === "") {
+      alert("환자의 생년월일을 입력해주세요.")
+      return;
+    }else if(newPatient.patient_tel === "") {
+      alert("환자의 연락처를 입력해주세요.")
+      return;
+    }else if(newPatient.patient_medicine === "") {
+      alert("환자의 복용약물을 입력해주세요.")
+      return;
+    }else if(newPatient.patient_disease === "") {
+      alert("환자의 만성질환을 입력해주세요.")
+      return;
+    }else if(newPatient.patient_comment === "") {
+      alert("환자의 특이사항을 입력해주세요.")
+      return;
+    }
     addNewPaitent(newPatient);
     close();
   };

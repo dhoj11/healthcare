@@ -227,12 +227,13 @@ public class AdministrationController {
 		return timeAndCountList;
 	}
 	@PutMapping("/appointment/test/update")
-	public void appointmentTestList(@RequestBody TestList testList  ) throws Exception {
-		//administrationService.appointmentTestList(testList,testCodes);
-		logger.info("ehlso");
-			//logger.info(testCodes.toString());
+	public void appointmentTestList(@RequestBody Map<String,List<TestList>> testList) throws Exception {
+
+		List<TestList> testCodes = testList.get("testCodes");
+		List<TestList> newTestList = testList.get("testList");
 		
-		
+		administrationService.appointmentTestList(newTestList,testCodes);
+
 	}
 	
 	@PutMapping("/appointment/test/state")
@@ -240,6 +241,10 @@ public class AdministrationController {
 		logger.info(testList.toString());
 		administrationService.changeTestStateToAppointment(testList);
 		
+	}
+	@PutMapping("/test/request")
+	public void requestTest(@RequestBody List<TestList> testCodes) {
+		administrationService.requestTest(testCodes);
 	}
 	
 }

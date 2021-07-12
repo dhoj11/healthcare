@@ -10,13 +10,13 @@ function TestListItem(props) {
 
   useEffect(()=> {
     setIsChecked(false);
+    console.log(testCodeList);
   },[testCodeList]);
 
   useEffect(() => {
     if(isReq === true) {
       selectedTestCodes.map(testCode => {
         if(testCode === testCodeList.test_code) {
-          //db 상태 요청으로 바꿔줌
           setState("요청");
         }
       })
@@ -37,7 +37,11 @@ function TestListItem(props) {
   return (
     <div className={`border-bottom d-flex ${styles.code_row}`}>
         <span className={styles.test_code_item_code}>
+        {testCodeList.test_list_state === '대기'? 
           <input className="mr-1" type="checkbox" checked={isChecked} value={testCodeList.test_code} onClick={handleClick} onChange={(event)=>changeCheckedList(event, testCodeList)}/>
+          :
+          <input className="mr-1" type="checkbox" checked readOnly/>
+         }
           {testCodeList.test_code}
         </span>
         <span className={styles.test_code_item_name}>

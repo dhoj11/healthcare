@@ -8,7 +8,7 @@ import TimeSelector from "./TimeSelector";
 
 function AppointmentWithTestModal(props) {
   
-  const {setRerenderer, testCodes, isOpen, close} = props;
+  const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
@@ -93,20 +93,17 @@ function AppointmentWithTestModal(props) {
   const newTestAppointment = async() => {
     //appointment추가, test_list_id,test_list_date,appointment_id update
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime}
-    console.log(testList);
+    const newTestList = {testList: [testList], testCodes: testCodes};
     try{
-      //await addNewAppointment(newAppointment);
-      await appointmentTestList(testList);  //test_code 넣어주기
-      //다 예약이면 reception_state 바꿔줌
-      //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id});
-      
+      await addNewAppointment(newAppointment);
+      await appointmentTestList(newTestList);
+      await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
+
+      setSelectedTestCodes([]);
       setRerenderer(testCodes[0].reception_id);
     }catch(error) {
       console.log(error.message);
     }
-    // if(newAppointment.appointment_date === moment().format("YYYY-MM-DD")) {
-    //   dayAppointment(new Date());
-    // }
     close();
   }
 
