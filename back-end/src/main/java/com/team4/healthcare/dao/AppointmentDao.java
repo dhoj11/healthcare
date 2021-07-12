@@ -24,4 +24,5 @@ public interface AppointmentDao {
 	public int insertNewAppointment(Appointment appointment);
 	public Appointment selectTestAppointmentById(int appointment_id);
 	public List<Appointment> selectCountByAppointment(String appointment_date);
+	public List<Appointment> selectTestAppointmentByDate(@Param("appointment_date") String appointment_date,@Param("appointment_time") String appointment_time);
 }

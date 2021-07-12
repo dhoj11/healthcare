@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.team4.healthcare.dto.Test;
 
 import com.team4.healthcare.dao.TestDao;
 import com.team4.healthcare.dto.Patient;
@@ -60,7 +61,9 @@ public class TestService {
 		//testDao.updateTestResultSave(testResults.get(0).getTest_list_id());
 		
 	}
-	
+	public Test getTestByCode(String test_code) {
+		return testDao.selectByCode(test_code);
+	}
 	
 }
 

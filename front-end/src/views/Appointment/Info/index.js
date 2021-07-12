@@ -7,8 +7,6 @@ function Info(props) {
   const {selectPatientId} = props;
 
   const [appointItems,setAppointItems] = useState([]);
-  // const appointList = getAppointList();
-  // let appointItem=appointList.filter((data) => data.patient_id === props.selectPatientId);
   useEffect(() => {
     if(selectPatientId){
       (async function() {

@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Appointment;
 import com.team4.healthcare.dto.Patient;
+import com.team4.healthcare.dto.Test;
+import com.team4.healthcare.dto.TestDetail;
+import com.team4.healthcare.dto.TestList;
 import com.team4.healthcare.service.AppointmentService;
 import com.team4.healthcare.service.PatientService;
+import com.team4.healthcare.service.TestListService;
+import com.team4.healthcare.service.TestService;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -28,12 +33,17 @@ public class AppointmentController {
 	private static final Logger logger = LoggerFactory.getLogger(AppointmentController.class);
 	
 	
-	//appointment
+	
 	@Autowired
 	private AppointmentService appointmentService;
 	@Autowired
 	private PatientService patientService;
+	@Autowired
+	private TestListService testListService;
+	@Autowired
+	private TestService testService;
 	
+	//appointment
 	@GetMapping("/treatment")
 	public Map<String,Object> treatmentAppointmentList(@RequestParam("appointment_date") String appointment_date){
 		return appointmentService.getTreatmentAppointmentList(appointment_date);
@@ -54,7 +64,20 @@ public class AppointmentController {
 	public void cancelTreatmentAppointment(@PathVariable("appointment_id") int appointment_id) {
 		appointmentService.cancelTreatmentAppointment(appointment_id);
 	}
+	@GetMapping("/test")
+	public List<Appointment> testAppointmentList(@RequestParam("appointment_date") String appointment_date,@RequestParam("appointment_time") String appointment_time){
+		return appointmentService.getTestAppointmentByDate(appointment_date, appointment_time);
+	}
 	
+	@PutMapping("/test/{appointment_id}")
+	public void cancelTestAppointment(@PathVariable("appointment_id") int appointment_id) {
+		appointmentService.cancelTreatmentAppointment(appointment_id);
+	}
+	//test
+	@GetMapping("/testcode")
+	public Test getTestByCode(@RequestParam("test_code") String test_code) {
+		return testService.getTestByCode(test_code);
+	}
 	
 	//patient
 	@GetMapping("/patient")
@@ -65,6 +88,25 @@ public class AppointmentController {
 	@GetMapping("/patientbyname")
 	public List<Patient> patientListByName(@RequestParam("patient_name") String patient_name){
 		return patientService.getPatientListByName(patient_name);
+		
+	}
+	
+	//testList
+	@GetMapping("/testcodelist/{appointment_id}")
+	public List<String> testcodeList(@PathVariable("appointment_id") int appointment_id){
+		return testListService.getTestCode(appointment_id);
+	}
+	@GetMapping("/testlist/{patient_id}")
+	public List<TestList> testList(@PathVariable("patient_id") int patient_id){
+		return testListService.getTestListByPatientId(patient_id);
+	}
+	
+
+	
+	//testdetail
+	@GetMapping("/testdetail")
+	public List<TestDetail> testDetailList(@RequestParam("test_code") String test_code){
+		return testListService.getTestDetail(test_code);
 		
 	}
 

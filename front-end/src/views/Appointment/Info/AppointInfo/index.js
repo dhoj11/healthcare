@@ -1,3 +1,4 @@
+import moment from "moment";
 import styles from "./index.module.css";
 
 function AppointInfo(props) {

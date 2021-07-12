@@ -56,4 +56,8 @@ public class AppointmentService {
 	public void cancelTreatmentAppointment(int appointment_id) {
 		appointmentDao.cancelTreatmentAppointment(appointment_id);
 	}
+
+	public List<Appointment> getTestAppointmentByDate(String appointment_date, String appointment_time){
+		return appointmentDao.selectTestAppointmentByDate(appointment_date, appointment_time);
+	}
 }
