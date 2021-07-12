@@ -12,6 +12,8 @@ function AppHeader(props){
   const [time, setTime] = useState(moment());
   const staff_name = useSelector((state) => state.authReducer.staff_name);
   const staff_id = useSelector((state) => state.authReducer.staff_id);
+  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+  const hospital_name = useSelector((state) => state.authReducer.hospital_name);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -41,7 +43,7 @@ function AppHeader(props){
           staff_name !=="" ? 
           <>
           <FontAwesomeIcon icon={faHospital} className="hospitalIcon"/>
-        <span className="name">사조병원</span>
+        <span className="name">{hospital_name}</span>
           </>
           :
           null
@@ -57,7 +59,7 @@ function AppHeader(props){
         {
           staff_name !=="" ? 
           <>
-          <span className="name">{staff_name}</span>
+          <span className="name">{staff_authority} {staff_name}</span>
           <span className="logOut" onClick={logout}><FontAwesomeIcon icon={faSignOutAlt} className="logOutIcon" />log-out</span>
           </>
           :

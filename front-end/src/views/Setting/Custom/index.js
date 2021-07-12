@@ -1,12 +1,13 @@
 import React from "react";
 
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getOptime, updateOptime } from "../../../apis/account";
 import style from "./Custom.module.css";
 
 function Custom(props){
 
-  const hospital_code = process.env.REACT_APP_HOSPITAL_CODE;
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const[opTime, setOptime] = useState({
     officehour_start:"",

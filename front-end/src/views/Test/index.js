@@ -119,4 +119,4 @@ function Test(props){
   );
 }
 
-export default React.memo(Test);
+export default Test;

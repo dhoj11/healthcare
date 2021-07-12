@@ -16,7 +16,7 @@ import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment"
 
 function Patients(props){
 
-  const staff_id = "dhoj11"; // TODO : 리덕스 스토어의 상태로 staff_id 초기화
+  const staff_id = useSelector((state) => state.authReducer.staff_id);
   
   const patient = useSelector(state => state.treatmentReducer.patient);
 
