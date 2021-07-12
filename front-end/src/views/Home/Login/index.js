@@ -32,6 +32,10 @@ function Login(props){
               //SessionStorage에 인증 내용 저장(브라우저 갱신시 사용)
               sessionStorage.setItem("staff_id",response.data.staff_id);
               sessionStorage.setItem("authToken",response.data.authToken);
+              sessionStorage.setItem("staff_name",response.data.staff_name);
+              sessionStorage.setItem("staff_authority",response.data.staff_authority);
+              sessionStorage.setItem("hospital_code",response.data.hospital_code);
+              sessionStorage.setItem("hospital_name",response.data.hospital_name);
               history.push("/dashboard");
             })         
             .catch(() => {
