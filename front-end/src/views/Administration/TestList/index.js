@@ -153,7 +153,7 @@ function TestList(props) {
           <span className={styles.test_patient_name}>{patientName}</span>
           <div className={styles.test_button}>
             <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
-            <AppointmentWithTestModal setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+            <AppointmentWithTestModal setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
             <button type="button" className="btn btn-sm btn-outline-secondary" onClick={openReqTestModal}>검사요청</button>
             <RequestTest patientId={patientId} testCodes={selectedTestCodes} isOpen={reqTestModalOpen} close={closeReqTestModal} ReqTest={ReqTest}/>
           </div>
