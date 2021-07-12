@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+    import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteImgNotice } from "../../../../apis/dashboard";
 import DeleteModal from "../DeleteModal";
 import styles from "./index.module.css";
@@ -55,7 +56,7 @@ function ImgNoticeModal(props) {
                 {
                   staff_authority ==="병원장" ?
                     <>
-                      <span>수정</span>
+                      <Link to={`/noticeeditor/updateimgnotice/${imgNoticeItem.img_notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
                       <span onClick={OpenDeleteModal}>삭제</span>
                     </>
                     :

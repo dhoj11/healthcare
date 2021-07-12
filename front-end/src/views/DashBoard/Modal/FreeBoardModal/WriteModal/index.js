@@ -22,15 +22,24 @@ function WriteModal(props) {
   }
   const saveItem = async () => {
     try{
-      const newFreeBoardItem = {...freeBoardItem};
-      newFreeBoardItem.freeboard_date = moment().format("YYYY-MM-DD");
-      newFreeBoardItem.freeboard_time = moment().format("HH:mm");
-      newFreeBoardItem.staff_name = staff_name;
-      await createFreeBoard(newFreeBoardItem);
+      if(freeBoardItem.freeboard_title==="" || freeBoardItem.freeboard_content===""){
+        alert("제목과 내용을 입력해주세요");
+      }else{
+        const newFreeBoardItem = {...freeBoardItem};
+        newFreeBoardItem.freeboard_date = moment().format("YYYY-MM-DD");
+        newFreeBoardItem.freeboard_time = moment().format("HH:mm");
+        newFreeBoardItem.staff_name = staff_name;
+        await createFreeBoard(newFreeBoardItem);
+        setFreeBoardItem({
+          freeboard_title:"",
+          freeboard_content:""
+        });
+        closeWriteBoardModal();
+      }
+      
     } catch(error){
       throw error;
     }
-    closeWriteBoardModal();
   }
   return(
     <Modal

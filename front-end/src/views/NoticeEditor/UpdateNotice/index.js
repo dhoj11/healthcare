@@ -9,7 +9,7 @@ import { faEdit , faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import { createImgNotice, createNotice, getNotice, updateNotice } from '../../../apis/dashboard';
 import NoticeModal from '../../DashBoard/Modal/NoticeModal';
-function WriteNotice(props) {
+function UpdateNotice(props) {
 
   const notice_id = parseInt(props.match.params.notice_id);
   const [text, setText] = useState("");
@@ -51,6 +51,9 @@ function WriteNotice(props) {
     setTitle(e.target.value);
   }
   const modifyNotice = () =>{
+    if(text ==="" || title ==="" ||text==="<p><br></p>"){
+      alert("제목과 내용을 입력해주세요.");
+    }else{
       let notice = {
         notice_id:notice_id,
         notice_content:text,
@@ -65,16 +68,25 @@ function WriteNotice(props) {
           throw error;
         }
       })();
-    openCreateModal();
+      setText("");
+      setTitle("");
+      openCreateModal();
+    }
+      
   }
   const preview = () => {
-    let jsonData= {
-      notice_title:title,
-      notice_content:text,
-      notice_date: noticeItem.notice_date
-    };
-    setNoticeItem(jsonData);
-    openNoticeModal();
+    if(title==="" || text ===""||text==="<p><br></p>"){
+      alert("제목과 내용을 입력해주세요.")
+    }else{
+      let jsonData= {
+        notice_title:title,
+        notice_content:text,
+        notice_date: noticeItem.notice_date
+      };
+      setNoticeItem(jsonData);
+      openNoticeModal();
+    }
+    
   }
   const modules = {
     toolbar: [
@@ -169,4 +181,4 @@ function WriteNotice(props) {
   
   
 }
-export default WriteNotice;
+export default UpdateNotice;

@@ -12,8 +12,7 @@ function NoticeModal(props) {
   const staff_authority = useSelector((state) => state.authReducer.staff_authority);
 
   
-
-  const contentRef = useRef();
+  const contentRef = useRef();  
   useEffect(() => {
     if(showNoticeModal){
       contentRef.current.innerHTML=noticeItem.notice_content;
@@ -53,11 +52,20 @@ function NoticeModal(props) {
         <Modal.Header closeButton className={styles.notice_header}>
             <div className={styles.notice_top}>
               <div className={styles.notice_title}>{noticeItem.notice_title}</div>
+
               <div className={styles.notice_info}>
-                <span>{noticeItem.staff_name}</span>
-                <span>{noticeItem.notice_date}</span>
                 {
-                  staff_authority === "병원장" ?
+                  noticeItem.staff_name !==undefined ?
+                  <>
+                    <span>{noticeItem.staff_name}</span>
+                    <span>{noticeItem.notice_date}</span>
+                  </>
+                :null
+                }
+                
+                
+                {
+                  staff_authority === "병원장" && noticeItem.staff_name !==undefined ?
                   <>
                     <Link to={`/noticeeditor/updatenotice/${noticeItem.notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
                     <span onClick={OpenDeleteModal}>삭제</span>
@@ -67,6 +75,7 @@ function NoticeModal(props) {
                 }
                 
               </div>
+
             </div>
 
         </Modal.Header>

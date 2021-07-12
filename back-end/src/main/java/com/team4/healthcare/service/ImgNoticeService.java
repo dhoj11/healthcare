@@ -74,4 +74,25 @@ public class ImgNoticeService {
 	public void updateHitCount(int img_notice_id) {
 		imgNoticeDao.updateHitCount(img_notice_id);
 	}
+	
+	public void updateImgNotice(ImgNotice imgNotice) {
+		if(imgNotice.getImg_notice_attach()==null) {
+			System.out.println(imgNotice.getImg_notice_id());
+			imgNoticeDao.updateNoImg(imgNotice);
+		}else {
+			MultipartFile img_notice_attach =imgNotice.getImg_notice_attach();
+			imgNotice.setImg_notice_pic_oname(img_notice_attach.getOriginalFilename());
+			imgNotice.setImg_notice_pic_type(img_notice_attach.getContentType());
+			String saveName = new Date().getTime()+"-"+img_notice_attach.getOriginalFilename();
+			imgNotice.setImg_notice_pic_sname(saveName);
+			
+			File file = new File("D:/healthcarepic/"+saveName);
+			try {
+				img_notice_attach.transferTo(file);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			imgNoticeDao.updateImg(imgNotice);
+		}
+	}
 }
