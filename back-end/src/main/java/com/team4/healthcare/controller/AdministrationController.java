@@ -233,8 +233,7 @@ public class AdministrationController {
 		List<TestList> newTestList = testList.get("testList");
 		
 		administrationService.appointmentTestList(newTestList,testCodes);
-		
-		
+
 	}
 	
 	@PutMapping("/appointment/test/state")
@@ -242,6 +241,10 @@ public class AdministrationController {
 		logger.info(testList.toString());
 		administrationService.changeTestStateToAppointment(testList);
 		
+	}
+	@PutMapping("/test/request")
+	public void requestTest(@RequestBody List<TestList> testCodes) {
+		administrationService.requestTest(testCodes);
 	}
 	
 }

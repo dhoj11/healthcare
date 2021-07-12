@@ -18,13 +18,7 @@ function TestList(props) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false); 
   const [reqTestModalOpen, setReqTestModalOpen] = useState(false);
   const [rerenderer, setRerenderer] = useState();
-  const [isReq, setIsReq] = useState(false);  //검사 요청이 되었는지 아닌지
-  const ReqTest = () => {
-    setIsReq(true);
-  };
-  useEffect(() => {
-    setIsReq(false);
-  },[selectedTestCodes])
+  const [state, setState] = useState("");
 
   //예약 후 검사 접수
   useEffect(() => {
@@ -33,7 +27,7 @@ function TestList(props) {
       try {
         const response = await getReceptionList("검사");
         setTestPatientList(response.data);
-        //setState("전체");
+        setState("전체");
       } catch (error) {
         console.log(error.message);
         //history.push("./error"); 에러 컴포넌트로 이동
@@ -61,19 +55,6 @@ function TestList(props) {
   }
   },[rerenderer])
 
-  const listAll = () => {   //전체 클릭시 검사 환자 리스트 상태를 다시 당일 검사 환자 리스트로 세팅
-    //setTestPatientList(staticTestPatientList);
-  };
-
-  const getAllLength = () => {  //검사 환자 리스트의 전체 건수를 반환해줌
-    return testPatientList.length;
-  };
-
-  const listWithState = (testState) => {   //검사상태 클릭시 필터를 적용하여 클릭한 상태에 맞는 검사 환자 리스트 상태를 다시 세팅
-    //const filteredTestPatientList = staticTestPatientList.filter(testPatient => testPatient.state === testState);
-    //setTestPatientList(filteredTestPatientList);
-  };
-
   const openAppointmentModal = () => {
     setAppointmentModalOpen(true);
   };
@@ -89,6 +70,30 @@ function TestList(props) {
   const closeReqTestModal = () => {
     setReqTestModalOpen(false);
   };
+
+  const getLength = () => {  //검사 환자 리스트의 전체 건수를 반환해줌
+    return testPatientList.length;
+  };
+
+  const getAllList = async() => {
+    try {
+        const response = await getReceptionList("검사");
+        setTestPatientList(response.data);
+        setState("전체");
+      } catch (error) {
+        console.log(error.message);
+      }
+  };
+
+  const listWithState = async(testReceptionState) => {
+    try{
+      //const response = await getTestReceptionListByState(testReceptionState);
+      //setTestPatientList(response.data);
+      setState(testReceptionState);
+    }catch(error) {
+      console.log(error.message);
+    }
+  }
 
   const showAppointmentTestList = async(reception_id, patientId, patient_name) => {
     try{
@@ -116,7 +121,7 @@ function TestList(props) {
           {/* <div className="mb-2 ml-2 d-flex"> */}
           <div className={styles.test_patient_list_title}>
             <img className="mr-3" src="/resources/svg/clipboard-data.svg"></img><span className="mr-3">검사</span>
-            <div className="mr-2" onClick={listAll} style={{color : "#ffd43b"}}>전체 {getAllLength()} 건 </div>
+            <div className="mr-2" onClick={getAllList} style={{color : "#ffd43b"}}>전체  건 </div>
             {/* <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
             <div className="mr-2" onClick={()=> listWithState("진행중")}>진행중  | </div>
             <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div> */}
@@ -155,7 +160,7 @@ function TestList(props) {
             <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
             <AppointmentWithTestModal setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
             <button type="button" className="btn btn-sm btn-outline-secondary" onClick={openReqTestModal}>검사요청</button>
-            <RequestTest patientId={patientId} testCodes={selectedTestCodes} isOpen={reqTestModalOpen} close={closeReqTestModal} ReqTest={ReqTest}/>
+            <RequestTest setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} patientId={patientId} testCodes={selectedTestCodes} isOpen={reqTestModalOpen} close={closeReqTestModal} />
           </div>
         </div>
         <div className="d-flex bg-light">
@@ -172,7 +177,7 @@ function TestList(props) {
       <div className={styles.patient_list_content}>
           {
             testCodeList.map((testCodes, index) => (
-                <TestListItem rerenderer={rerenderer} testCodeList={testCodes} changeCheckedList={changeCheckedList} isReq={isReq} selectedTestCodes={selectedTestCodes} />
+                <TestListItem rerenderer={rerenderer} testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
             ))
           }
       </div>

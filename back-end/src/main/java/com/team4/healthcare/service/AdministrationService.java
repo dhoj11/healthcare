@@ -285,4 +285,10 @@ public class AdministrationService {
 			receptionDAO.updateReceptionState(testList.getReception_id(), "예약");
 		}
 	}
+	
+	public void requestTest(List<TestList> testCodes) {
+		for(TestList test : testCodes) {
+			testDAO.updateTestListReq(test);
+		}
+	}
 }
