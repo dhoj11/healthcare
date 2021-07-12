@@ -109,7 +109,14 @@
 		where appointment_date = #{appointment_date} and appointment_kind = '검사'
 		group by appointment_time
 	</select>
-	
+	<select id="selectAppointmentId" resultType="int">
+		select appointment_id
+		from appointment
+		where appointment_kind = '검사'
+				and appointment_date = #{test_list_date}
+				and appointment_time = #{test_list_time}
+				and patient_id = #{patient_id}
+	</select>
 	<select id="selectTestAppointmentByDate" resultType="appointment">
 		select appointment.*, patient.patient_name,patient_gender
 		from appointment, patient

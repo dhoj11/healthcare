@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
 import styles from "./RequestTest.module.css";
-import {getPatientList} from "../../data";
 
 function RequestTest(props) {
 
-  const {patientId, testCodes, isOpen, close, ReqTest} = props;
-  const [patient, setpatient] = useState({});
-  const staticPatientList = getPatientList();
-  const filteredPatient = staticPatientList.filter(patients => (patients.patient_id === patientId));
+  const {testCodes, isOpen, close, ReqTest} = props;
 
-  useEffect(() => {   //props가 변경될 때 patient의 상태를 props로 전해받은 patientId에 해당하는 환자로 세팅을 해줌
-    setpatient(filteredPatient[0]);
-  }, [patientId]);
-
-  const handleChange = () => {
+  const handleReqTest = async() => {
+    try{
+      //await requestTest(testCodes);
+    }catch(error) {
+      console.log(error.message);
+    }
     ReqTest();
     close();
   }
@@ -22,7 +19,7 @@ function RequestTest(props) {
   return (
     <>
     {isOpen ? (
-      patientId !== undefined ? (
+      testCodes.length !== 0 ? (
         <Modal show={isOpen} onHide={close} centered="true" className="modal">
         <Modal.Header closeButton>
           <Modal.Title>검사 요청</Modal.Title>
@@ -32,7 +29,7 @@ function RequestTest(props) {
             <div className={styles.row}>
               <div className={`${styles.border_title} border`}>환자 이름</div>
               <div>
-                {patient.patient_name}
+                {testCodes[0].patient_name}
               </div>
             </div>
             <div className={styles.row}>
@@ -41,7 +38,7 @@ function RequestTest(props) {
               <div className="d-flex">
                 {testCodes.map((testCode, index)=>(
                   <div key={index}>
-                    <input className="mr-2" type="checkbox" checked readOnly /><span className="mr-3">{testCode}</span>
+                    <input className="mr-2" type="checkbox" checked readOnly /><span className="mr-3">{testCode.test_code}</span>
                   </div>
                 ))}
               </div>
@@ -54,7 +51,7 @@ function RequestTest(props) {
           <button className={styles.cancel_btn} onClick={close}>
             취소
           </button>
-          <button className={styles.appoint_btn} onClick={handleChange}>
+          <button className={styles.appoint_btn} onClick={handleReqTest}>
             확인
           </button>
         </Modal.Footer>
@@ -66,7 +63,7 @@ function RequestTest(props) {
        </Modal.Header>
        <Modal.Body>
          <div>
-           환자를 선택해주세요.
+           환자와 검사 목록을 선택해주세요.
          </div>
        </Modal.Body>
        <Modal.Footer>

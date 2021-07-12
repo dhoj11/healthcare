@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.HospitalDao">
+	<select id="selectTimeSetting" resultType="hospital">
+		select hospital_code, hospital_name, officehour_start, officehour_end, officehour_interval, 
+				lunch_start, lunch_end
+		from hospital
+		where hospital_code = #{hospital_code}
+	</select>
+</mapper>
