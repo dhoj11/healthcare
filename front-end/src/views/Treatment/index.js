@@ -53,4 +53,4 @@ function Treatment(props){
   );
 }
 
-export default React.memo(Treatment);
+export default Treatment;

@@ -17,4 +17,10 @@
 		where staff_authority = "의사" and staff_enabled = 1
 		order by staff_join 
 	</select>
+	<select id="selectHospitalname" parameterType="String" resultType="String">
+		select hospital_name
+		from staff, hospital
+		where staff.hospital_code = hospital.hospital_code and staff_id = #{staff_id}
+		limit 1
+	</select>
 </mapper>

@@ -44,6 +44,7 @@ public class HomeController {
     	String staff_id = staff.getStaff_id();
     	String staff_password = staff.getStaff_password();
     	Staff dbStaff = staffService.getStaff(staff_id);
+    	String hospital_name = staffService.getHospitalName(staff_id);
     	//사용자 인증하기
 		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(staff_id, staff_password);
 		Authentication authentication = authenticationManager.authenticate(authReq);
@@ -57,8 +58,9 @@ public class HomeController {
 		map.put("staff_id", staff_id);
 		map.put("authToken", authToken);
 		map.put("staff_name", dbStaff.getStaff_name());
-		map.put("staff_authority",dbStaff.getAuthority());
-		
+		map.put("staff_authority",dbStaff.getStaff_authority());
+		map.put("hospital_code", dbStaff.getHospital_code());
+		map.put("hospital_name", hospital_name);
 		
 	    return map;
     }
