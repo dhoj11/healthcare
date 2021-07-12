@@ -4,8 +4,12 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { createAccouont } from "../../../../../apis/account";
+import { useSelector } from "react-redux";
 
 function StaffAddModal(props) {
+
+  
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const {isOpen, close} = props;
 
@@ -16,7 +20,7 @@ function StaffAddModal(props) {
       staff_id: "",
       staff_password:"",
       staff_tel:"",
-      staff_authority:"",
+      staff_authority:"의사",
   })
 
   const handleChange = (event) => {
@@ -37,7 +41,7 @@ function StaffAddModal(props) {
     evnet.preventDefault();
     try{
       const formData = new FormData();
-      formData.append("hospital_code", process.env.REACT_APP_HOSPITAL_CODE)
+      formData.append("hospital_code", hospital_code)
       formData.append("staff_name", account.staff_name);
       formData.append("staff_id", account.staff_id);
       formData.append("staff_password", account.staff_password);

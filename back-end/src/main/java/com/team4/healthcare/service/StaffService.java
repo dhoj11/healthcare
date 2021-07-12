@@ -26,6 +26,10 @@ public class StaffService {
 	public Staff getStaff(String staff_id) {
 		return staffDao.selectById(staff_id);
 	}
+	
+	public String getHospitalName(String staff_id) {
+		return staffDao.selectHospitalname(staff_id);
+	}
 	public void downloadAttach(String staff_id,HttpServletResponse response) {
 		try {
 			Staff staff = getStaff(staff_id);
