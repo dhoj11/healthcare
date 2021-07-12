@@ -15,5 +15,6 @@
 		select staff_id, staff_name
 		from staff
 		where staff_authority = "의사" and staff_enabled = 1
+		order by staff_join 
 	</select>
 </mapper>

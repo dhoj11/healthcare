@@ -76,9 +76,10 @@
 	</select>
 	
 	<select id="selectByPatientId" resultType="appointment" parameterType="int">
-		select *
+		select appointment_id,appointment_date, date_format(appointment_time, '%H:%i') as appointment_time , staff_id , appointment_state, patient_id, appointment_content , appointment_kind
 		from appointment
 		where patient_id =#{patient_id}
+		order by appointment_date desc
 	</select>
 	
 	<insert id="insertTreatmentAppointment" parameterType="appointment">
@@ -115,5 +116,10 @@
 				and appointment_date = #{test_list_date}
 				and appointment_time = #{test_list_time}
 				and patient_id = #{patient_id}
+	</select>
+	<select id="selectTestAppointmentByDate" resultType="appointment">
+		select appointment.*, patient.patient_name,patient_gender
+		from appointment, patient
+		where appointment_kind = '검사' and appointment_date =#{appointment_date} and appointment_time = #{appointment_time} and appointment.patient_id = patient.patient_id
 	</select>
 </mapper>

@@ -1,0 +1,53 @@
+.TimeTable{
+  width: 100%;
+  
+}
+.thead{
+  width: 100%;
+  background-color: #F8FAFF;
+  height: 35px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  position: sticky;
+	top: 54px;
+}
+
+.TimeTable .thead tr > th {
+  border: none !important;
+}
+.TimeTable{
+  vertical-align: middle;
+}
+
+.TimeTable .thead tr th:first-child{
+  border-radius: 10px 0 0 10px;
+  vertical-align: middle;
+}
+
+.TimeTable .thead tr th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.TimeTable .thead tr th:first-child{
+  width: 80px;
+}
+.TimeTable .tbody tr td:not(td:first-child){
+}
+.tbody td{
+  font-size: 14px;
+  font-weight: 500;
+  height: 50px;
+}
+.TimeTable .tbody tr td:not(td:last-child){
+  vertical-align: middle;
+  border-right: 1px solid #dee2e6;
+  text-align: center;
+}
+.TimeTable .tbody tr td{
+  vertical-align: middle;
+}
+
+.item_contain{
+  width: 80%;
+}

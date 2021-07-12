@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.team4.healthcare.dto.Patient;
 import com.team4.healthcare.dto.SummeryTest;
+import com.team4.healthcare.dto.Test;
 import com.team4.healthcare.dto.TestList;
 
 import com.team4.healthcare.dto.TestResult;
@@ -32,6 +33,7 @@ public interface TestDao{
     								);
     public void updateTestResult(TestResult testResults);
     public void updateTestResultSave(int test_list_id);
-	
+
+    public Test selectByCode(String test_code);
 
 }

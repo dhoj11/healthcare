@@ -1,0 +1,42 @@
+.default{
+  border-radius: 7px;
+  margin-right: 4px;
+  width: 300px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.appoint{
+  background-color: #4dabf7;
+}
+.appoint > :nth-child(3){
+  color:#00509b;
+}
+
+.cancel {
+  background-color: #ff8787;
+}
+.cancel > :nth-child(3){
+  color:#ac0000;
+}
+.complete {
+  background-color: #ffd43b;
+}
+.complete > :nth-child(3){
+  color:#9c7a00;
+}
+.visit{
+  background-color:#69db7c;
+}
+.visit > :nth-child(3){
+  color:#007013;
+}
+.addbtn{
+  margin-right: 20px;
+  background-color: #F8FAFF;
+  border: 1px solid #808080;
+  border-radius: 4px;
+}
+.addbtn:hover{
+  opacity: 0.8;
+}

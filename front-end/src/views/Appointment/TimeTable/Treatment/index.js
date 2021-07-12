@@ -2,11 +2,9 @@ import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { getTreatmentAppoint } from "../../../../apis/appointment";
-import { getAppointTime } from "../data/data";
 import Appoint from "../Modal/Appoint/Appoint";
 import styles from "./index.module.css";
 import Cancel from "../Modal/Cancel/Cancel";
-import { createMasonryCellPositioner } from "react-virtualized";
 
 function Treatment(props) {
   const {startDate} = props;
@@ -28,6 +26,7 @@ function Treatment(props) {
     const now=moment().format("YYYY-MM-DD HH:mm");
     const click=moment(moment(startDate).format("YYYY-MM-DD")+ " "+timelyAppoint.시간).format("YYYY-MM-DD HH:mm")
     if(now>click){
+      alert("현재 날짜와 시간이후만 업데이트 할 수 있습니다.");
       return;
     }
 
@@ -57,13 +56,14 @@ function Treatment(props) {
     
     
   }
+  const lunch_start = "13:00";
   //데이터 변환
   const axiosTreatmentAppointList = useCallback(async() => {
     try{
       const response =await getTreatmentAppoint(moment(startDate).format("YYYY-MM-DD"));
       const start_time ="10:00";
       const end_time ="18:00";
-      const lunch_start = "13:00";
+      
       const lunch_end = "14:00"
       const interval =30;
       let temp = start_time;
@@ -85,7 +85,6 @@ function Treatment(props) {
         let timelyData = new Object();
         timelyData.시간=time;
         for(let i=0;i<staffs.length;i++){
-          console.log(time);
           for(let item of doctorAppointment[i]){
               if(time === item.appointment_time){
                 timelyData[staffs[i].staff_name] = item;
@@ -97,7 +96,6 @@ function Treatment(props) {
         }
         treatmentAppoint.push(timelyData);
       }
-      console.log(treatmentAppoint)
       setAppointList(treatmentAppoint);
     } catch(error){
       throw error;
@@ -117,7 +115,7 @@ function Treatment(props) {
   return(    
     appointList !== null ?
     (
-    <table className= {styles.TimeTable}>
+    <table className= {`${styles.TimeTable} table`}>
       <thead className= {styles.thead}>
         <tr>
           {Object.keys(appointList[0]).map((data,index) => {
@@ -136,30 +134,43 @@ function Treatment(props) {
                 Object.values(timelyAppoint).map((appoint,index) => {
                   if(index ===0){
                     return(
-                      <td key={index}>{appoint}</td>
+                      <td className={styles.not_poniter} key={index}>{appoint}</td>
                     )
                   }else{
                     if((typeof appoint) !== "string"){
                       return(
-                        <td key={index} onClick={() =>openAppointmentModal(timelyAppoint,appoint,index)}>
-                          <div>
-                            <div>
+                        <td 
+                            key={index} 
+                            onClick={() =>openAppointmentModal(timelyAppoint,appoint,index)}
+                            >
+                          <div className ={styles.info}>
+                            <div className={appoint.appointment_state ==="예약" ? 
+                                  `${styles.appoint}`
+                                  : 
+                                  appoint.appointment_state ==="취소" ? 
+                                  `${styles.cancel}`
+                                  :
+                                  appoint.appointment_state ==="완료" ?
+                                  `${styles.complete}`
+                                  :
+                                  `${styles.visit}`}>
                               <span>{appoint.patient_name}</span>
                               <span>({appoint.patient_gender})</span>
                               <span>{appoint.appointment_state}</span>
+                              <div>
+                                {appoint.appointment_content}
+                               </div>
                             </div>
-                            <div>
-                              {appoint.appointment_content}
-                            </div>
-                          </div>
-                          
+                          </div>                         
                         </td>
                       )
                     }else{
+                      if(timelyAppoint.시간 ===lunch_start){
+                        return (<td className={styles.lunch}>점심시간</td>)
+                      }
                       return(
                         <td key={index} onClick={() =>openAppointmentModal(timelyAppoint,appoint,index)}>
-                          <div>
-                            
+                          <div>                            
                           </div>
                         </td>
                       )
