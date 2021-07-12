@@ -23,4 +23,10 @@
 		delete from img_notice
 		where img_notice_id = #{img_notice_id}
 	</delete>
+	
+	<update id="updateHitCount" parameterType="int">
+		update img_notice
+		set img_notice_hitcount =img_notice_hitcount+1
+		where img_notice_id = #{img_notice_id};
+	</update>
 </mapper>

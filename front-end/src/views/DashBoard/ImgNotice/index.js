@@ -5,7 +5,7 @@ import { getImgNotice } from "../data";
 import ImgNoticeModal from "../Modal/ImgNoticeModal";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getImgNoticeList } from "../../../apis/dashboard";
+import { getImgNoticeList, updateHitCount } from "../../../apis/dashboard";
 import { Link } from 'react-router-dom';
 import { faBatteryThreeQuarters, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +34,13 @@ function ImgNotice(props) {
     })();
   },[showImgNoticeModal])
   const openImgNoticeModal = (data) => {
+    (async function(){
+      try{
+        updateHitCount(data.img_notice_id);
+      } catch(error){
+        throw error;
+      }
+    })();
     setImgNoticeItem(data);
     setShowImgNoticeModal(true);
   }

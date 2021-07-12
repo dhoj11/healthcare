@@ -71,4 +71,7 @@ public class ImgNoticeService {
 	public void delete(int img_notice_id) {
 		imgNoticeDao.delete(img_notice_id);
 	}
+	public void updateHitCount(int img_notice_id) {
+		imgNoticeDao.updateHitCount(img_notice_id);
+	}
 }

@@ -88,6 +88,10 @@ public class DashBoardController {
 	public void deleteImgNotice(@PathVariable("img_notice_id") int img_notice_id) {
 		imgNoticeService.delete(img_notice_id);
 	}
+	@PutMapping("/imgnotice/{img_notice_id}") 
+	public void updateHitCount(@PathVariable("img_notice_id") int img_notice_id) {
+		imgNoticeService.updateHitCount(img_notice_id);
+	}
 	
 	
 	//freeboard
