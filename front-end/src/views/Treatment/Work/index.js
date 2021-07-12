@@ -1,3 +1,4 @@
+import React from "react";
 import TestResult from "./TestResult/";
 import TreatmentRecord from "./TreatmentRecord";
 
@@ -10,4 +11,4 @@ function Work(props){
   );
 }
 
-export default Work;
+export default React.memo(Work);

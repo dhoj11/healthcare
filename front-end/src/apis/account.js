@@ -17,13 +17,21 @@ export function createAccouont(account){
 export function downloadAttach(staff_id) {
   const promise =  axios.get("http://localhost:8080/account/staff/attach/" + staff_id, {responseType: "blob"});
   return promise;
-
 }
 
 export function updateAccount(account){
-  axios.put('http://localhost:8080/account/staff', account);
+  axios.post('http://localhost:8080/account/staff/modify', account);
 }
 
 export function deleteAccount(staff_id){
   axios.delete('http://localhost:8080/account/staff/' + staff_id);
+}
+
+export function getOptime(hospital_code){
+  const promise = axios.get("http://localhost:8080/account/optime/" + hospital_code);
+  return promise;
+}
+
+export function updateOptime(hospitalObj){
+  axios.put("http://localhost:8080/account/optime/", hospitalObj);
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./DiagnoseAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import { useCallback, useState } from "react";
@@ -53,9 +54,9 @@ function DiagnoseAddModal(props){
           <div className={style.searchBody}>
             <div className={style.top}>
               <div className={style.search}>
-                <span className={style.title}>
+                {/* <span className={style.title}>
                   <span className={style.titleContent}>질병진단</span>
-                </span>
+                </span> */}
                 <input type="text" className={`form-control-lg form-rounded ${style.input}`}
                        value={searchItem || ''} 
                        onChange={handleChange} />
@@ -99,4 +100,4 @@ function DiagnoseAddModal(props){
   );
 }
 
-export default DiagnoseAddModal;
+export default React.memo(DiagnoseAddModal);

@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./Blood.module.css";
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
@@ -97,4 +99,4 @@ function Blood(props){
   );
 }
 
-export default Blood;
+export default React.memo(Blood);

@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./StaffCard.module.css";
 import { faUserMd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -74,4 +76,4 @@ function StaffCard(props){
   );
 }
 
-export default StaffCard;
+export default React.memo(StaffCard);

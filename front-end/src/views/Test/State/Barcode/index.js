@@ -1,3 +1,5 @@
+import React from "react";
+
 import JsBarcode from 'jsbarcode'
 import { Modal } from "react-bootstrap";
 import { useEffect, useState } from 'react'
@@ -46,4 +48,4 @@ function Barcode(props){
     </>
   )}
 
-export default Barcode
+export default React.memo(Barcode);

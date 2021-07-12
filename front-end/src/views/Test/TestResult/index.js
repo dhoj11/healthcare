@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import React from "react";
+
+import { useEffect, useState } from "react";
 import style from "./TestResult.module.css";
 
 // 후에는 검사번호로 불러오기
@@ -129,4 +131,4 @@ function TestResult(props){
   );
 }
 
-export default TestResult;
+export default React.memo(TestResult);

@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import style from "./Diagnose.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
@@ -131,4 +132,4 @@ function Diagnose(props){
   );
 }
 
-export default Diagnose;
+export default React.memo(Diagnose);
