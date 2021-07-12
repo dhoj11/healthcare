@@ -1,10 +1,13 @@
 import moment from "moment";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { createFreeBoard } from "../../../../../apis/dashboard";
 import styles from "./index.module.css";
 
 function WriteModal(props) {
+
+  const staff_name = useSelector((state) => state.authReducer.staff_name);
   const {showWriteModal,closeWriteBoardModal} = props;
   const [freeBoardItem,setFreeBoardItem] = useState({
     freeboard_title:"",
@@ -22,7 +25,7 @@ function WriteModal(props) {
       const newFreeBoardItem = {...freeBoardItem};
       newFreeBoardItem.freeboard_date = moment().format("YYYY-MM-DD");
       newFreeBoardItem.freeboard_time = moment().format("HH:mm");
-      newFreeBoardItem.staff_name = "임시";
+      newFreeBoardItem.staff_name = staff_name;
       await createFreeBoard(newFreeBoardItem);
     } catch(error){
       throw error;
