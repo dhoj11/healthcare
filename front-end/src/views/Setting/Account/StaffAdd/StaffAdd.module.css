@@ -1,5 +1,11 @@
+.StaffAdd{
+  display: flex;
+  justify-content: right;
+  margin-right: 20px;
+}
+
 .button{
-  width: 100%;
+  width: 150px;
   background-color: #00253d;
   border-radius: 20px;
   padding: 10px 30px;
@@ -14,7 +20,7 @@
 }
 
 .button2{
-  width: 100%;
+  width: 150px;
   background-color: #965500;
   border-radius: 20px;
   padding: 10px 30px;
@@ -27,7 +33,6 @@
   background-color: #bb6a00;
   color: #fff;
 }
-
 
 .addIcon{
   margin-right: 10px;

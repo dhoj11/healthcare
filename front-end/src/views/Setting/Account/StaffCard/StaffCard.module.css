@@ -1,16 +1,13 @@
 .staffcard{
-  border-radius: 10px;
+  border-radius: 10px 0px 0px 10px;
   background-color: #fff;
-  width: 30%;
   height: 100%;
-  margin: 2px;
 }
 
 .top{
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: 50px;
 }
 
 .pic{

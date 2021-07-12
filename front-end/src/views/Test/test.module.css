@@ -31,14 +31,43 @@
   border-radius: 10px 10px 0px 0px;
   margin: 10px 0px;
   margin-bottom: 0;
+  height: 300px;
   /* justify-content: center; */
 }
+
+.noselect{
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.noselect .content{
+  font-size: 20px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+
+.selectIcon{
+  font-size: 80px;
+  color: rgb(0, 75, 146);
+  text-align: center;
+}
+
+
+.noState{
+  margin-top: 25px;
+}
+
 
 .State{
   background: #fff;
   border-radius: 0px 0px 10px 10px;
   text-align: center;
-  padding: 30px;
+  padding: 0px 30px 35px 30px;
 }
 .testList{
   background: #fff;

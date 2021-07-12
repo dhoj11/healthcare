@@ -1,3 +1,4 @@
+import React from "react";
 import Record from "./Record";
 import Comment from "./Comment";
 import Diagnose from "./Diagnose";
@@ -28,4 +29,4 @@ function TreatmentRecord(props){
   );
 }
 
-export default TreatmentRecord;
+export default React.memo(TreatmentRecord);

@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./TestAddModal.module.css";
 import { Modal } from "react-bootstrap";
 import { useCallback, useState } from "react";
@@ -48,9 +49,9 @@ function TestAddModal(props){
           <div className={style.searchBody}>
             <div className={style.top}>
               <div className={style.search}>
-              <span className={style.title}>
+              {/* <span className={style.title}>
                   <span className={style.titleContent}>검사의뢰</span>
-                </span>
+                </span> */}
                 <input type="text" className={`form-control-lg form-rounded ${style.input}`}
                        onChange={handleChange} />
                 <span className={style.searchButton} onClick={handleSearch}>
@@ -93,4 +94,4 @@ function TestAddModal(props){
   );
 }
 
-export default TestAddModal;
+export default React.memo(TestAddModal);

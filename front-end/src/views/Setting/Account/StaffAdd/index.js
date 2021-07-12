@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./StaffAdd.module.css";
 import { faUserPlus,  faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,4 +51,4 @@ function StaffAdd(props){
   );
 }
 
-export default StaffAdd;
+export default React.memo(StaffAdd);

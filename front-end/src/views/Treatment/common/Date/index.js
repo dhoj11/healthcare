@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./Date.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetEditBlockActoin, createSetPatientAction, createSetTreatmentAction } from "../../../../redux/treatment-reducer";
@@ -12,7 +14,6 @@ function Date(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
   const patient = useSelector(state => state.treatmentReducer.patient);
-  console.log("리렌더링",patient);
   const [treatments, setTreatments] = useState([]);
 
   const dispatch = useDispatch();
@@ -68,4 +69,4 @@ function Date(props){
   );
 }
 
-export default Date;
+export default React.memo(Date);

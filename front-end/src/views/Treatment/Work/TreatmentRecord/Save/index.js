@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Save.module.css";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
@@ -50,4 +51,4 @@ function Save(props){
   );
 }
 
-export default Save;
+export default React.memo(Save);

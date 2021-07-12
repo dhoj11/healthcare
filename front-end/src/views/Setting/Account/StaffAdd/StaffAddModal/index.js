@@ -1,5 +1,6 @@
 import style from "./StaffAddModal.module.css";
 
+import React from "react";
 import { Modal } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { createAccouont } from "../../../../../apis/account";
@@ -42,6 +43,9 @@ function StaffAddModal(props) {
       formData.append("staff_password", account.staff_password);
       formData.append("staff_tel", account.staff_tel);
       formData.append("staff_authority", account.staff_authority);
+      if(account.staff_authority == '의사') formData.append("authority", "ROLE_DOCTOR");
+      if(account.staff_authority == '간호') formData.append("authority", "ROLE_NURSE");
+      if(account.staff_authority == '임상') formData.append("authority", "ROLE_TESTER");
       if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
       await createAccouont(formData);
     } catch (error){
@@ -123,4 +127,4 @@ function StaffAddModal(props) {
   );
 }
 
-export default StaffAddModal;
+export default React.memo(StaffAddModal);

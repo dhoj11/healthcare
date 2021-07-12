@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./StaffModifyModal.module.css";
 
 import { Modal } from "react-bootstrap";
@@ -34,12 +36,12 @@ function StaffModifyModal(props){
   const handleModify = async(event) => {
     event.preventDefault();
     try{
-      // const formData = new FormData();
-      // formData.append("staff_id", newAccount.staff_id);
-      // formData.append("staff_password", newAccount.staff_password);
-      // formData.append("staff_tel", newAccount.staff_tel);
-      // formData.append("staff_pic", inputFile.current.files[0]);
-      await updateAccount(newAccount);
+      const formData = new FormData();
+      formData.append("staff_id", newAccount.staff_id);
+      formData.append("staff_password", newAccount.staff_password);
+      formData.append("staff_tel", newAccount.staff_tel);
+      if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
+      await updateAccount(formData);
     } catch (error) {
       console.log(error);
     }
@@ -135,4 +137,4 @@ function StaffModifyModal(props){
   );
 }
 
-export default StaffModifyModal;
+export default React.memo(StaffModifyModal);

@@ -1,3 +1,5 @@
+import React from "react";
+
 import style from "./StaffTable.module.css";
 
 /**
@@ -14,21 +16,23 @@ function StaffTable(props){
 
   return(
     <div className={style.staffTable}>
-    {
-    staffs.map((item, index) => {
-        return(
-            <div key={index} className={style.staffItem} onClick={ () => { handleChangeStaff(item.staff_id)} }>
-              <span className={style.no}>{index+1}</span>
-              <span className={ item.staff_authority === "의사" ? `${style.doctor}` : 
-               item.staff_authority === "간호" ? `${style.nurse}` :
-               item.staff_authority === "임상" ? `${style.tester}`:null               
-              }>{item.staff_authority}</span>
-              <span className={style.name}>{item.staff_name}</span>
-            </div>
-        )
-      })
-    }
+      <div className={style.list}>
+        {
+        staffs.map((item, index) => {
+            return(
+                <div key={index} className={style.staffItem} onClick={ () => { handleChangeStaff(item.staff_id)} }>
+                  <span className={style.no}>{index+1}</span>
+                  <span className={ item.staff_authority === "의사" ? `${style.doctor}` : 
+                  item.staff_authority === "간호" ? `${style.nurse}` :
+                  item.staff_authority === "임상" ? `${style.tester}`:null               
+                  }>{item.staff_authority}</span>
+                  <span className={style.name}>{item.staff_name}</span>
+                </div>
+            )
+          })
+        }
+     </div>
     </div>
   );
 }
-export default StaffTable;
+export default React.memo(StaffTable);

@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Patients.module.css";
@@ -127,4 +129,4 @@ function Patients(props){
   );
 }
 
-export default Patients;
+export default React.memo(Patients);

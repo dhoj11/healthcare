@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./Test.module.css";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -126,4 +127,4 @@ function Test(props){
   );
 }
 
-export default Test;
+export default React.memo(Test);

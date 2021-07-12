@@ -1,7 +1,5 @@
 package com.team4.healthcare.dto;
 
-
-import java.util.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Staff {
@@ -18,6 +16,7 @@ public class Staff {
 	private String staff_pic_oname;
 	private String staff_pic_sname;
 	private String staff_pic_type;
+	private String authority;
 
 	public String getStaff_id() {
 		return staff_id;
@@ -113,6 +112,14 @@ public class Staff {
 
 	public void setStaff_pic_type(String staff_pic_type) {
 		this.staff_pic_type = staff_pic_type;
+	}
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
 	@Override

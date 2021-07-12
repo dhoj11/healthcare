@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.team4.healthcare.controller.DashBoardController;
 import com.team4.healthcare.dao.AccountDao;
+import com.team4.healthcare.dto.Hospital;
 import com.team4.healthcare.dto.Staff;
 
 @Service
@@ -45,10 +46,8 @@ public class AccountService {
 			}
 		}
 		
-		logger.info("여기요기ㅕㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+staff.getStaff_password());
 		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 		staff.setStaff_password(bpe.encode(staff.getStaff_password()));
-		logger.info("여기요기ㅕㅇㅇ"+staff.getStaff_password());
 			
 		accountDao.insertStaff(staff);
 	}
@@ -98,16 +97,24 @@ public class AccountService {
 			}
 		}
 		
-		
-		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
-		staff.setStaff_password(bpe.encode(staff.getStaff_password()));
-		
+		if(staff.getStaff_password() != null) {
+			BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+			staff.setStaff_password(bpe.encode(staff.getStaff_password()));
+		}
 		
 		accountDao.updateStaff(staff);
 	}
 	
 	public void deleteAccount(String staff_id) {
 		accountDao.deleteStaff(staff_id);
+	}
+	
+	public Hospital getHospital(String hospital_code) {
+		return accountDao.getHospital(hospital_code);
+	}
+	
+	public void updateHospital(Hospital hospital) {
+		accountDao.updateHospital(hospital);
 	}
 
 }

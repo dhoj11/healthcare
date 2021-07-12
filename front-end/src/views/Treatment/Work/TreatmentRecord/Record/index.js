@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Record.module.css";
@@ -72,4 +73,4 @@ function Record(props){
   );
 }
 
-export default Record;
+export default React.memo(Record);

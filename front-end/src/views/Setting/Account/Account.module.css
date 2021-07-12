@@ -1,25 +1,44 @@
-
 .account{
-  position: relative;
   margin: 0 200px;
-  margin-top: 20px;
-  margin-bottom: 100px;
+  margin-top: 5px;
+}
+
+.account .body{
   display: flex;
   flex-direction: column;
-  height: 80%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding-bottom: 80px;
 }
 
-.top{
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 10px;
-}
-
-.body{
-  margin-top: 20px;
+.body .top{
   display: flex;
   flex-direction: row;
-  height: 100%;
+  justify-content: space-between;
+  margin: 30px;
+}
+
+.top .title{
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.body .content{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.content .left{
+  width: 30%;
+}
+
+.right{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 0px 10px 10px 0px;
 }
 
 .mainInfo hr{
