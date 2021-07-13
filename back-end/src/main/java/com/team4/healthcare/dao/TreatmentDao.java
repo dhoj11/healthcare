@@ -53,7 +53,7 @@ public interface TreatmentDao {
 	
 	public void insertTestList(
 							   @Param("treatment_id")int treatment_id
-							  ,@Param("reception_id")int reception_id
+						
 							  ,@Param("test_list_id")int test_list_id
 							  ,@Param("treatment_tests")List<TestList> treatment_tests
 							  );
@@ -73,6 +73,14 @@ public interface TreatmentDao {
 								@Param("patient_id") int patient_id
 							   ,@Param("staff_id") String staff_id
 								);
+	
+	public int getLatelyReceptionId();
+	
+	public void updateReceptionId(
+								@Param("test_list_id") int test_list_id
+							   ,@Param("latelyReceptionId") int latelyReceptionId
+								);
+	
 	
 	public List<Integer> getTestListId(int treatment_id);
 	

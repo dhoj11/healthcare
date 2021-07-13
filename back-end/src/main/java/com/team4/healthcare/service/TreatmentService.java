@@ -110,8 +110,8 @@ public class TreatmentService {
 		String today = sdf.format(date);
 		int test_list_id = Integer.parseInt(today+treatment_id);
 				
-		int reception_id = treatmentDao.getReceptionId(treatment_id);
-		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, reception_id, test_list_id,treatment_tests);
+		//int reception_id = treatmentDao.getReceptionId(treatment_id);
+		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id, treatment_tests);
 		
 		if(treatment_tests.size()>0) {
 			for(TestList test : treatment_tests) {
@@ -124,7 +124,11 @@ public class TreatmentService {
 			String staff_id = treatmentDao.getStaffId(treatment_id);
 			
 			treatmentDao.insertReception(patient_id, staff_id);
-		}
+			// tests_list 테이블에서 방금 생긴 접수 번호로 test_list_id 의 접수번호 update. 
+			int latelyReceptionId = treatmentDao.getLatelyReceptionId();
+			treatmentDao.updateReceptionId(test_list_id, latelyReceptionId);
+			
+		}	
 	}
 	
 	public List<TestResult> getTreatmentTestResult(int treatment_id) {
