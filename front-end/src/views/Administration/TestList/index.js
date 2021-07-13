@@ -45,7 +45,7 @@ function TestList(props) {
         try {
           let response = await getReceptionList("검사");
           setTestPatientList(response.data);
-          response = await getTestCodesByReception(rerenderer);
+          response = await getTestCodesByReception(rerenderer.reception_id);
           setTestCodeList(response.data);
           //setState("전체");
         } catch (error) {
@@ -184,7 +184,7 @@ function TestList(props) {
       <div className={styles.patient_list_content}>
           {
             testCodeList.map((testCodes, index) => (
-                <TestListItem rerenderer={rerenderer} testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
+                <TestListItem testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
             ))
           }
       </div>

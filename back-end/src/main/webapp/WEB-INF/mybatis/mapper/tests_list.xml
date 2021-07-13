@@ -26,7 +26,7 @@
 	<select id="selectTestState" resultType="string">
 		select test_list_state
 		from tests_list
-		where test_list_id = #{test_list_id}
+		where reception_id = #{reception_id} and test_list_state not in ('예약')
 	</select>
 	<update id="updateTestListAfterReception">
 		update tests_list
