@@ -5,17 +5,19 @@ import Calendar from "../../../Appointment/Calendar";
 import {getDoctorNameList, addNewAppointment} from "../../../../apis/administration";
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
+import React from "react";
 
 
 function AppointmentModal(props) {
   const {setRerenderer, dayAppointment, patient, isOpen, close} = props;
-  const [doctorList, setDoctorList] = useState([]);
+  const [doctorList, setDoctorList] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
   const [appointmentTime, setAppointmentTime] = useState("");
+  const [staff, setStaff] = useState("");
   const [appointment, setAppointment] = useState({
     appointment_date: moment().format("YYYY-MM-DD"),
-    staff_id: "",
+    staff_id: staff,
     patient_id: "",
     appointment_content: "",
     appointment_kind: "진료"
@@ -23,14 +25,6 @@ function AppointmentModal(props) {
 
   useEffect(() => {
     if(patient !== undefined) {
-      setStartDate(new Date());
-      setAppointmentDate(moment().format("YYYY-MM-DD"));
-      setAppointment({
-        staff_id: "",
-        patient_id: patient.patient_id,
-        appointment_content: "",
-        appointment_kind: "진료"
-      });
       const work = async() => {
         try{
           const response = await getDoctorNameList();
@@ -40,9 +34,20 @@ function AppointmentModal(props) {
         }
       };
       work();
+      setStartDate(new Date());
+      setAppointmentDate(moment().format("YYYY-MM-DD"));
+      setAppointment({
+        staff_id: staff,
+        patient_id: patient.patient_id,
+        appointment_content: "",
+        appointment_kind: "진료"
+      });
     }
   },[isOpen]);
-  
+
+  useEffect(() => {
+    setStaff(doctorList[0].staff_id);
+  },[doctorList])
 
   const changeDate = (date) => {
     const fmt = moment(date).format("YYYY-MM-DD");
@@ -62,18 +67,32 @@ function AppointmentModal(props) {
     });
   }
 
+  const handleRadioChange = (event) => {
+    setStaff(event.target.value);
+  }
+
   const newAppointment = async() => {
+    if(appointment.staff_id === "") {
+      alert("담당의를 선택해주세요.");
+      return;
+    }else if(appointment.appointment_content===""){
+      alert("진료 내용을 입력해주세요.");
+      return;
+    }else if(appointmentTime === "") {
+      alert("예약 시간을 선택해주세요.");
+      return;
+    }
+    setRerenderer(new Date());
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime};
-    console.log(newAppointment);
     try{
       await addNewAppointment(newAppointment);
-      setRerenderer(new Date());
     }catch(error) {
       console.log(error.message);
     }
     if(newAppointment.appointment_date === moment().format("YYYY-MM-DD")) {
       dayAppointment(new Date());
     }
+    setAppointmentTime("");
     close();
   }
 
@@ -94,11 +113,15 @@ function AppointmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
-              {doctorList.map((doctor, key)=>(
-                <div key={key}>
-                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleChange}/>
+              {doctorList.map((doctor, key, index)=>(
+                <>
+               
+                  <div key={key}>
+                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleRadioChange}/>
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
-                </div>
+                  </div>
+               
+                </>
               ))}
             </div>
           </div>
@@ -130,4 +153,4 @@ function AppointmentModal(props) {
   );
 }
 
-export default AppointmentModal;
+export default React.memo(AppointmentModal);

@@ -26,11 +26,11 @@
 }
 
 .test_code_list_title {
-  width:100px;
+  width:80px;
 }
 
 .test_patient_name {
-  color: #fcc419;
+  color: black;
   width:100px;
 }
 
@@ -60,10 +60,20 @@
 
 .test_button {
   display: flex;
-  margin-left: 188px;
+  margin-left: 208px;
 }
 
 .patient_list_content {
   height: 80%;
   overflow: auto;
+}
+
+.length {
+  margin-left: 120px;
+  color: #fcc419;
+}
+
+.reception_state {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }

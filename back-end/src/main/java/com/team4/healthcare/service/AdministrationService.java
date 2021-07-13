@@ -68,22 +68,19 @@ public class AdministrationService {
 		}
 	}
 	
-	public boolean addReceptionAfterAppointment(int appointment_id) {
+	public void addReceptionAfterAppointment(int appointment_id) {
 		Appointment receptionData = appointmentDAO.selectAppointmentById(appointment_id);
 		Reception reception = new Reception();
 		reception.setReceptionInfo(receptionData);
 		int row = receptionDAO.insertReceptionAfterAppointment(reception);
 		
+		//검사 접수이면 tests_list의 reception_id 변경
 		if(reception.getReception_kind().equals("검사")) {
 			int reception_id = receptionDAO.selectReceptionId(reception);
 			testDAO.updateTestListAfterReception(appointment_id, reception_id);
 		}
-		
-		if(row == 1) {
-			return true;
-		}else {
-			return false;
-		}
+		//환자의 최근 내원일 변경
+		patientDAO.updatePatientRecentVisit(reception.getPatient_id());
 	}
 	
 	public List<Appointment> getAppointmentListByState(String appointment_state) {
@@ -161,26 +158,49 @@ public class AdministrationService {
 		return staffList;
 	}
 	
-	public boolean addReceptionAfterVisit(Reception reception) {
+	public void addReceptionAfterVisit(Reception reception) {
 		int row = receptionDAO.insertReceptionAfterVisit(reception);
-		
-		if(row == 1) {
-			return true;
-		}else {
-			return false;
-		}
+		patientDAO.updatePatientRecentVisit(reception.getPatient_id());
 	}
 	
-	public List<String> isReserved(String staff_id, String appointment_date) {
-		String[] times = {"10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
-		List<String> timeSelect = new ArrayList<>(Arrays.asList(times));
-		List<String> reservedTimes = appointmentDAO.selectAppointment(staff_id, appointment_date);
+	public List<String> isReserved(String hospital_code, String staff_id, String appointment_date) throws ParseException {
 		
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+		Hospital timeSetting = hospitalDAO.selectTimeSetting(hospital_code);
+		Date offstartDate = format.parse(timeSetting.getOfficehour_start());
+		Date offEndDate = format.parse(timeSetting.getOfficehour_end());
+		Date lunchstartDate = format.parse(timeSetting.getLunch_start());
+		Date lunchEndDate = format.parse(timeSetting.getLunch_end());
+		int interval = timeSetting.getOfficehour_interval();
+
+		List<String> times = new ArrayList<String>();
+
+		String time = format.format(offstartDate);
+		times.add(time);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(offstartDate);
+		while(true) {
+			cal.add(Calendar.MINUTE, interval);
+			if(offEndDate.compareTo(cal.getTime()) == 0) {
+				break;
+			}else if(cal.getTime().compareTo(lunchstartDate) >= 0 && cal.getTime().compareTo(lunchEndDate) <0 ) {
+				continue;
+			}
+			offstartDate = cal.getTime();
+			time = format.format(offstartDate);
+			times.add(time);
+		}
+		
+		List<String> timeSelect = new ArrayList<String>();
+		timeSelect.addAll(times);
+		List<String> reservedTimes = appointmentDAO.selectAppointment(staff_id, appointment_date);
 		if(reservedTimes.size() > 0) {
-			for(String time : times) {
+			for(String opTime : times) {
 				for(String reserved: reservedTimes) {
-					if(time.equals(reserved)) {
-						timeSelect.remove(time);
+					if(opTime.equals(reserved)) {
+						timeSelect.remove(opTime);
 					}
 				}
 			}
@@ -290,5 +310,10 @@ public class AdministrationService {
 		for(TestList test : testCodes) {
 			testDAO.updateTestListReq(test);
 		}
+	}
+
+	public List<Reception> getTestReceptionListByState(String reception_state) {
+		List<Reception> receptionList = receptionDAO.selectTestReceptionListByState(reception_state);
+		return receptionList;
 	}
 }
