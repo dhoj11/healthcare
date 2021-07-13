@@ -39,22 +39,28 @@ function StaffAddModal(props) {
    */
   const handleAdd = async(evnet) => {
     evnet.preventDefault();
-    try{
-      const formData = new FormData();
-      formData.append("hospital_code", hospital_code)
-      formData.append("staff_name", account.staff_name);
-      formData.append("staff_id", account.staff_id);
-      formData.append("staff_password", account.staff_password);
-      formData.append("staff_tel", account.staff_tel);
-      formData.append("staff_authority", account.staff_authority);
-      if(account.staff_authority == '의사') formData.append("authority", "ROLE_DOCTOR");
-      if(account.staff_authority == '간호') formData.append("authority", "ROLE_NURSE");
-      if(account.staff_authority == '임상') formData.append("authority", "ROLE_TESTER");
-      if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
-      await createAccouont(formData);
-    } catch (error){
-      console.log(error);
-    }
+
+
+    if(account.staff_name == "" || account.staff_id == "" || account.staff_password == "" || account.staff_tel == ""){
+      alert("직원정보를 모두 입력해주세요");
+    } else{
+      try{
+        const formData = new FormData();
+        formData.append("hospital_code", hospital_code)
+        formData.append("staff_name", account.staff_name);
+        formData.append("staff_id", account.staff_id);
+        formData.append("staff_password", account.staff_password);
+        formData.append("staff_tel", account.staff_tel);
+        formData.append("staff_authority", account.staff_authority);
+        if(account.staff_authority == '의사') formData.append("authority", "ROLE_DOCTOR");
+        if(account.staff_authority == '간호') formData.append("authority", "ROLE_NURSE");
+        if(account.staff_authority == '임상') formData.append("authority", "ROLE_TESTER");
+        if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
+        await createAccouont(formData);
+      } catch (error){
+        console.log(error);
+      }
+  }
 
     props.handleAddStaff(account);
 
@@ -105,7 +111,7 @@ function StaffAddModal(props) {
             </div> */}
             <div className={style.item}>
               <span className={style.title}>연락처</span>
-              <input type="text" name="staff_tel" className={`form-control ${style.addInput}`} value={account.staff_tel} onChange={handleChange}/>
+              <input type="text" name="staff_tel" className={`form-control ${style.addInput}`} value={account.staff_tel} placeholder={"'-'포함 숫자입력"}onChange={handleChange}/>
             </div>
             <div className={`${style.item} ${style.role}`}>
               <span className={ account.staff_authority === "의사" ? `${style.selectRole}` : `${style.roleButton}`} onClick={()=>handleChangeRole("의사")}>의사</span>
@@ -122,8 +128,6 @@ function StaffAddModal(props) {
                 <input type="submit" className={style.join} value="등록"/>
               </div>
             </form>
-       
-
         </Modal.Body>
       </Modal>
     ):null}

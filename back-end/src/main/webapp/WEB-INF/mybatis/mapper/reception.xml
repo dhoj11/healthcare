@@ -42,7 +42,7 @@
 	<select id="selectReceptionId" resultType="int">
 		select reception_id
 		from reception
-		where reception_date=curdate() and patient_id=#{patient_id} and reception_kind=#{reception_kind}
+		where reception_date=curdate() and appointment_id=#{appointment_id} patient_id=#{patient_id} and reception_kind=#{reception_kind}
 	</select>
 		<select id="selectTestReceptionListByState" resultType="reception">
 		select reception_id, DATE_FORMAT(reception_date, '%Y-%m-%d') as reception_date, DATE_FORMAT(reception_time,'%H:%i') as reception_time, reception.staff_id

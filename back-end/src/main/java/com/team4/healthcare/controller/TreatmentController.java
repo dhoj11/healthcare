@@ -1,18 +1,14 @@
 package com.team4.healthcare.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Diagnose;
@@ -104,6 +100,11 @@ public class TreatmentController {
 	@GetMapping("/testresult/{treatment_id}")
 	public List<TestResult> treatmentTestResults(@PathVariable int treatment_id){
 		 return treatmentService.getTreatmentTestResult(treatment_id);
+	}
+	
+	@GetMapping("/staffname/{treatment_id}")
+	public String prevTreatmentStaffName(@PathVariable int treatment_id) {
+		return treatmentService.getStaffName(treatment_id);
 	}
 
 }

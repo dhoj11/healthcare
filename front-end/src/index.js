@@ -10,7 +10,7 @@ import rootReducer from './redux/root-reducer';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from "redux-devtools-extension"
 import { addAuthHeader } from './apis/axiosConfig';
-import { createSetAuthTokenAction, createSetStaffIdAction, createSetStaffNameAction, createSetStaffAuthorityAction, createSetHospitalCodeAction, createSetHospitalNameAction } from './redux/auth-reducer';
+import { createSetAuthTokenAction, createSetStaffIdAction, createSetStaffNameAction, createSetStaffAuthorityAction, createSetHospitalCodeAction, createSetHospitalNameAction, createSetAuthorityAction } from './redux/auth-reducer';
 
 const store = createStore(rootReducer, composeWithDevTools());
 //Redux에 인증 정보 설정
@@ -20,8 +20,7 @@ store.dispatch(createSetStaffNameAction(sessionStorage.getItem("staff_name") || 
 store.dispatch(createSetStaffAuthorityAction(sessionStorage.getItem("staff_authority") || ""));
 store.dispatch(createSetHospitalCodeAction(sessionStorage.getItem("hospital_code") || ""));
 store.dispatch(createSetHospitalNameAction(sessionStorage.getItem("hospital_name") || ""));
-//store.state.colorReducer
-//store.dispatch()
+store.dispatch(createSetAuthorityAction(sessionStorage.getItem("authority") || ""));
 
 //Axios에 인증 헤더 추가
 if(sessionStorage.getItem("staff_id")){

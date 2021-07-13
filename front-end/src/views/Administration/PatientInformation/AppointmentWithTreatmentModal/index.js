@@ -46,7 +46,9 @@ function AppointmentModal(props) {
   },[isOpen]);
 
   useEffect(() => {
+    if(doctorList !== undefined) {
     setStaff(doctorList[0].staff_id);
+    }
   },[doctorList])
 
   const changeDate = (date) => {

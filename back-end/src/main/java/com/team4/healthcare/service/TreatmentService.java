@@ -135,5 +135,10 @@ public class TreatmentService {
 		} else return null;
 	}
 	
+	public String getStaffName(int treatment_id) {
+		String staff_name = treatmentDao.selectStaffNameByTreatmentId(treatment_id);
+		return staff_name;
+	}
+	
 	
 }

@@ -77,5 +77,7 @@ public interface TreatmentDao {
 	public List<Integer> getTestListId(int treatment_id);
 	
 	public List<TestResult> selectTreatmentTestResults(List<Integer> test_list_id);
+	
+	public String selectStaffNameByTreatmentId(int treatment_id);
 
 }
