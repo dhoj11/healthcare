@@ -30,6 +30,7 @@ import com.team4.healthcare.dto.SummeryPrescription;
 import com.team4.healthcare.dto.SummeryTest;
 import com.team4.healthcare.dto.SummeryTreatment;
 import com.team4.healthcare.dto.TestList;
+import com.team4.healthcare.dto.Treatment;
 
 @Service
 public class AdministrationService {
@@ -74,9 +75,18 @@ public class AdministrationService {
 		reception.setReceptionInfo(receptionData);
 		int row = receptionDAO.insertReceptionAfterAppointment(reception);
 		
+		// 방금 추가된 접수 번호 불러와서
+		int reception_id = receptionDAO.selectReceptionId(reception, appointment_id);
+		
+		Treatment addTreatment = receptionDAO.getCurrentReception(reception_id);
+		// treatmentDTO 에 recetion_id, patient_id, staff_id 담고
+		
+		receptionDAO.addTreatment(addTreatment);
+		// treatment 테이블에 위에서 가져온거 reception_id, treatment_date (now()로), patient_id, staff_id 추가
+		
 		//검사 접수이면 tests_list의 reception_id 변경
 		if(reception.getReception_kind().equals("검사")) {
-			int reception_id = receptionDAO.selectReceptionId(reception);
+			
 			testDAO.updateTestListAfterReception(appointment_id, reception_id);
 		}
 		//환자의 최근 내원일 변경
