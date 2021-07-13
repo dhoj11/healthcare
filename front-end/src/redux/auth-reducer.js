@@ -35,7 +35,7 @@ export const createSetHospitalCodeAction = (hospital_code) => {
 export const createSetHospitalNameAction = (hospital_name) => {
   return {type:SET_HOSPITAL_NAME,hospital_name};
 }
-export const createSetAuthority = (authority) => {
+export const createSetAuthorityAction = (authority) => {
   return {type:SET_AUTHORITY,authority};
 }
 

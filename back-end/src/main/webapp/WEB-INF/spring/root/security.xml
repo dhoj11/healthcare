@@ -102,9 +102,10 @@
 			<bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 				<property name="hierarchy">
 					<value>
-						 ROLE_ADMIN > ROLE_DOCTOR
 						 ROLE_DOCTOR > ROLE_TESTER
-						 ROLE_DOCTOR > ROLE_NURSE
+						 ROLE_DOCTOR > ROLE_NURSE,
+						 
+						 ROLE_ADMIN > ROLE_DOCTOR
 					</value>
 				</property>
 			</bean>
