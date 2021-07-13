@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { login } from "../../../apis/auth";
 import { useDispatch } from "react-redux";
-import { createSetAuthTokenAction, createSetHospitalCodeAction, createSetHospitalNameAction, createSetStaffAuthorityAction, createSetStaffIdAction, createSetStaffNameAction } from "../../../redux/auth-reducer";
+import { createSetAuthority, createSetAuthTokenAction, createSetHospitalCodeAction, createSetHospitalNameAction, createSetStaffAuthorityAction, createSetStaffIdAction, createSetStaffNameAction } from "../../../redux/auth-reducer";
 import { addAuthHeader } from "../../../apis/axiosConfig";
 function Login(props){
   const [staff,setStaff] = useState({
@@ -16,7 +16,7 @@ function Login(props){
   const dispatch = useDispatch();
 
   const history = useHistory();
-  const handleLogin = async () => {
+  const handleLogin = async () => {;
     try{
       await login(staff)
             .then((response) => {
@@ -29,6 +29,7 @@ function Login(props){
               dispatch(createSetStaffAuthorityAction(response.data.staff_authority));
               dispatch(createSetHospitalCodeAction(response.data.hospital_code));
               dispatch(createSetHospitalNameAction(response.data.hospital_name));
+              dispatch(createSetAuthority(response.data.authority))
               //SessionStorage에 인증 내용 저장(브라우저 갱신시 사용)
               sessionStorage.setItem("staff_id",response.data.staff_id);
               sessionStorage.setItem("authToken",response.data.authToken);
@@ -36,6 +37,7 @@ function Login(props){
               sessionStorage.setItem("staff_authority",response.data.staff_authority);
               sessionStorage.setItem("hospital_code",response.data.hospital_code);
               sessionStorage.setItem("hospital_name",response.data.hospital_name);
+              sessionStorage.setItem("authority",response.data.authority);
               history.push("/dashboard");
             })         
             .catch(() => {
