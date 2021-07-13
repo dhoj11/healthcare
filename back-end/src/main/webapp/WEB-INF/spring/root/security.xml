@@ -29,8 +29,11 @@
 		<security:custom-filter ref="jwtAuthenticationFilter" before="BASIC_AUTH_FILTER" />		
 	
 		<!-- 요청 경로 권한 설정 -->
-		
-		
+		<security:intercept-url pattern="/treatment/*" access="hasRole('ROLE_DOCTOR')" method="GET"/>
+		<security:intercept-url pattern="/account/*" access="hasRole('ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/administration/*" access="hasRole('ROLE_NURSE')" method="GET"/>
+		<security:intercept-url pattern="/appointment/*" access="hasRole('ROLE_NURSE')" method="GET"/>
+		<security:intercept-url pattern="/test/*" access="hasRole('ROLE_TESTER')" method="GET"/>
 		
 		<security:intercept-url pattern="/**" access="permitAll"/>
 	</security:http>
@@ -100,8 +103,8 @@
 				<property name="hierarchy">
 					<value>
 						 ROLE_ADMIN > ROLE_DOCTOR
-						ROLE_DOCTOR > ROLE_TESTER
-						 ROLE_TESTER > ROLE_NURSE
+						 ROLE_DOCTOR > ROLE_TESTER
+						 ROLE_DOCTOR > ROLE_NURSE
 					</value>
 				</property>
 			</bean>

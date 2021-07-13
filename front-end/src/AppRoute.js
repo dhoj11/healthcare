@@ -12,14 +12,14 @@ import { useSelector } from "react-redux";
 
 function AppRoute(){
 
-  const role = useSelector(state => state.authReducer.staff_authority);
+  const role = useSelector(state => state.authReducer.authority);
 
   const access_role = (page) => {
-    if(page=== "treatment" ) if (role === "병원장" || role === "의사") return true; else return false;
-    if(page=== "test") if (role === "병원장" || role === "의사" || role === "임상") return true; else return false;
-    if(page=== "appointment") if (role === "병원장" || role === "의사" || role === "간호") return true; else return false;
-    if(page=== "administration") if (role === "병원장" || role === "의사" || role === "간호") return true; else return false; 
-    if(page=== "setting") if (role === "병원장") return true; else return false; 
+    if(page=== "treatment" ) if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR") return true; else return false;
+    if(page=== "test") if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_TESTER") return true; else return false;
+    if(page=== "appointment") if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_NURSE") return true; else return false;
+    if(page=== "administration") if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_NURSE") return true; else return false; 
+    if(page=== "setting") if (role === "ROLE_ADMIN") return true; else return false; 
   }
 
   const RouteIf = (
