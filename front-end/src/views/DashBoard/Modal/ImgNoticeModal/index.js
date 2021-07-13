@@ -8,7 +8,7 @@ import styles from "./index.module.css";
 function ImgNoticeModal(props) {
   const {showImgNoticeModal,closeImgNoticeModal,imgNoticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
-  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+  const authority = useSelector((state) => state.authReducer.authority);
 
   const contentRef = useRef();
   console.log(imgNoticeItem);
@@ -53,7 +53,7 @@ function ImgNoticeModal(props) {
                 <span>{imgNoticeItem.staff_name}</span>
                 <span>{imgNoticeItem.img_notice_date}</span>
                 {
-                  staff_authority ==="병원장" ?
+                  authority ==="ROLE_ADMIN" ?
                     <>
                       <span>수정</span>
                       <span onClick={OpenDeleteModal}>삭제</span>

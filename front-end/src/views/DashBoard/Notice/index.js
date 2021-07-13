@@ -12,7 +12,7 @@ function Notice(props) {
   const [notice , setNotice] = useState([]);
   const [showNoticeModal,setShowNoticeModal] = useState(false);
   const [noticeItem,setNoticeItem] = useState(null);
-  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+  const authority = useSelector((state) => state.authReducer.authority);
   useEffect(() => {
 
     (async function() {
@@ -40,7 +40,7 @@ function Notice(props) {
         </div>
         <div>
           {
-            staff_authority === "병원장" ?
+            authority === "ROLE_ADMIN" ?
               <Link to="/noticeeditor/writenotice" className={styles.link}>공지 작성</Link>
               :
               null
