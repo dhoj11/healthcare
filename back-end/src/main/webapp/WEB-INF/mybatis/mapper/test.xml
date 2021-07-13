@@ -44,20 +44,20 @@
     
       <select id="getTestResult" parameterType="int" resultType="testresult">
 
-SELECT test_list_id, tmp2.test_code, test_name, tmp2.test_details_id, test_result_value, test_details_code, test_details_name, test_details_unit, test_details_min, test_details_max 
-FROM (SELECT tmp.test_list_id, tmp.test_code, test_list_req, test_details_id, test_result_value
-FROM (select *
-		from tests_list
-		where test_list_id = #{test_list_id} AND test_list_req = 1) AS tmp, test_results
-WHERE tmp.test_list_id = test_results.test_list_id AND tmp.test_code = test_results.test_code) AS tmp2, test_details
-WHERE tmp2.test_details_id = test_details.test_details_id
+		SELECT test_list_id, tmp2.test_code, test_name, tmp2.test_details_id, test_result_value, test_details_code, test_details_name, test_details_unit, test_details_min, test_details_max 
+		FROM (SELECT tmp.test_list_id, tmp.test_code, test_list_req, test_details_id, test_result_value
+			  FROM (select *
+				    from tests_list
+					where test_list_id = #{test_list_id} AND test_list_req = 1) AS tmp, test_results
+			  WHERE tmp.test_list_id = test_results.test_list_id AND tmp.test_code = test_results.test_code) AS tmp2, test_details
+		WHERE tmp2.test_details_id = test_details.test_details_id
     		
     </select>
     
     <update id="updateTestListState">
     	update tests_list
     	set test_list_state = #{state}
-    	where test_list_id = #{test_list_id}
+    	where test_list_id = #{test_list_id} and test_list_req = 1
     </update>
     
     <update id="updateTestResult" parameterType="testresult">

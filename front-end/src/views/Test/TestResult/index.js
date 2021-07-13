@@ -74,6 +74,7 @@ function TestResult(props){
                   <th scope="col" className="col-3">검사명</th>
                   <th scope="col" className="col-1">처방코드</th>
                   <th scope="col" className="col-3">상세검사명</th>
+                  <th scope="col" className="col-2">참고치</th>
                   <th scope="col" className="col-1">결과값</th>
                 </tr>
               </thead>
@@ -86,9 +87,10 @@ function TestResult(props){
                       return(<tr key={index}>
                                 <td>{item.test_code}</td>
                                 <td>{item.test_name}</td>
+                                
                                 <td>{item.test_details_code}</td>
                                 <td>{item.test_details_name}</td>
-                             
+                                <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
                                            readOnly={isSaved && true}
                                            type="text"
@@ -97,7 +99,6 @@ function TestResult(props){
                                            onChange={(event) => handleChange(event, index)}>
                                           </input>
                                 </td>
-                                
                               </tr>
                             );
                     }
@@ -108,7 +109,7 @@ function TestResult(props){
                               <td></td>
                               <td>{item.test_details_code}</td>
                               <td>{item.test_details_name}</td>
-                        
+                              <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
                                            readOnly={isSaved && true}
                                            type="text"
