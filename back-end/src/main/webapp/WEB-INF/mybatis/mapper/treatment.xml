@@ -214,10 +214,11 @@
           ,test_details_max
           ,test_result_value
     from test_details, test_results
-    where test_results.test_details_id = test_details.test_details_id and
+    where test_results.test_details_id = test_details.test_details_id and (
     <foreach collection="list" item="item" separator="or">
    	test_list_id = #{item}
    	</foreach>
+   	)
    </select>
    
    <select id="selectStaffNameByTreatmentId" parameterType="int" resultType="string">
