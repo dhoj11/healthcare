@@ -33,3 +33,38 @@ margin-top: 80px;
   line-height: 1.5;
   border-radius: 0.25rem;
 }
+
+.information_content {
+  padding: 5px;
+  width: 400px;
+  height: 300px;
+}
+
+.information_null {
+  margin-top: 30px;
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+
+.icon_area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.patient_icon {
+  height: 9rem;
+  margin-right: 50px;
+}
+
+.information_alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 2rem;
+}
+
+.information_alert_letter {
+  font-size: 1.25rem;
+  font-weight: bold;
+}

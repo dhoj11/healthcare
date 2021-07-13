@@ -32,14 +32,12 @@ function ListItem(props) {
     try{
       
       await changeAppointmentState(appointment_id, event.target.value); //db 상태 바꿔줌
-      
+      await addReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
       if(event.target.value === "내원" && appointment_kind === "진료") {
-        //접수 컴포넌트에 추가, 진료테이블에 새로운 튜플 insert
-        await addReceptionAfterAppointment(appointment_id);
+        //접수 컴포넌트에 추가
         receptionPatient(appointment_id);
       } else if(event.target.value === "내원" && appointment_kind === "검사") {
-        //검사 컴포넌트에 추가, 진료테이블에 새로운 튜플 insert
-        await addReceptionAfterAppointment(appointment_id);
+        //검사 컴포넌트에 추가
         appointmentTest(appointment_id);
       }
     } catch(error) {

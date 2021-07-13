@@ -86,8 +86,8 @@ export function addReceptionAfterVisit(reception) {
   return promise;
 }
 
-export function isReserved(staff_id, appointment_date) {
-  const promise = auth.get("/administration/appointment/treatment/time", {params:{staff_id, appointment_date}});
+export function isReserved(hospital_code, staff_id, appointment_date) {
+  const promise = auth.get("/administration/appointment/treatment/time", {params:{hospital_code, staff_id, appointment_date}});
   return promise;
 }
 
@@ -101,8 +101,8 @@ export function getTestCodesByReception(reception_id) {
   return promise;
 }
 
-export function CountbyAppointment(appointment_date) {
-  const promise = auth.get("/administration/appointment/test/time", {params:{appointment_date}});
+export function CountbyAppointment(hospital_code, appointment_date) {
+  const promise = auth.get("/administration/appointment/test/time", {params:{hospital_code, appointment_date}});
   return promise;
 }
 
@@ -118,5 +118,10 @@ export function changeTestStateToAppointment(test_list_id) {
 
 export function requestTest(testCodes) {
   const promise = auth.put("/administration/test/request", testCodes);
+  return promise;
+}
+
+export function getTestReceptionListByState(reception_state) {
+  const promise = auth.get("/administration/reception/test/state", {params:{reception_state}});
   return promise;
 }

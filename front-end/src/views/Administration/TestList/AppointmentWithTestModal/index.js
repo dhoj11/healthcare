@@ -2,6 +2,7 @@ import styles from "./AppointmentWithTestModal.module.css";
 import {Modal} from "react-bootstrap";
 import Calendar from "../../../Appointment/Calendar"
 import {useState, useEffect} from "react";
+import { useSelector } from "react-redux";
 import {CountbyAppointment,addNewAppointment, appointmentTestList, changeTestStateToAppointment} from "../../../../apis/administration";
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
@@ -9,6 +10,7 @@ import TimeSelector from "./TimeSelector";
 function AppointmentWithTestModal(props) {
   
   const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
@@ -50,7 +52,7 @@ function AppointmentWithTestModal(props) {
     console.log(appointmentDate);
     const work = async() => {
       try{
-        const response = await CountbyAppointment(appointmentDate);
+        const response = await CountbyAppointment(hospital_code, appointmentDate);
         setTimeAndCount(response.data);
         console.log(response.data);
       }catch(error) {
@@ -58,7 +60,7 @@ function AppointmentWithTestModal(props) {
       }
     }
     work();
-  },[appointmentDate])
+  },[appointmentDate]);
 
   useEffect(() => {
 

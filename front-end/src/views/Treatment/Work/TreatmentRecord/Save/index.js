@@ -57,7 +57,7 @@ function Save(props){
 
   return(
     <>
-      { "" && !editBlock ?
+      { treatment!="" && !editBlock ?
       <div className={style.save} onClick={save}>
         <FontAwesomeIcon icon={faSave} className={style.addIcon}/> 저장
       </div>

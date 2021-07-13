@@ -37,69 +37,34 @@ public class AdministrationController {
 	@Autowired
 	private AdministrationService administrationService;
 	
-	/**
-	 * ���� ��¥�� �ش��ϴ� ���ฮ��Ʈ, ȯ�� �̸��� ������ �´�.
-	 * @return List<Appointment>
-	 */
 	@GetMapping("/appointment")
 	public List<Appointment> getAppointmentList() {
 		List<Appointment> appointmentList = administrationService.getAppointmentList();
 		return appointmentList;
 	}
 	
-	/**
-	 * ���� ���¸� �ٲ��ش�.
-	 */
 	@PutMapping("/appointment/{appointment_id}")
 	public void changeAppointmentState(@PathVariable int appointment_id,@RequestBody String appointment_state) {
-		boolean isChanged = administrationService.changeAppointmentState(appointment_id, appointment_state);
-		
-		if(isChanged) {
-			logger.info("���� ���� ���� �Ϸ�");
-		}else {
-			logger.info("���� ���� ���� ����");
-		}
+		administrationService.changeAppointmentState(appointment_id, appointment_state);
 	}
 	
-	/**
-	 * ���࿡�� �������� ���°� �ٲ�� ���� ���̺� Ʃ�� �߰�
-	 */
 	@PostMapping("/appointment/reception/{appointment_id}")
 	public void addReceptionAfterAppointment(@PathVariable int appointment_id) {
-		boolean isAdded = administrationService.addReceptionAfterAppointment(appointment_id);
-		
-		if(isAdded) {
-			logger.info("���� �� ���� �߰� ����");
-		}else {
-			logger.info("���� �� ���� �߰� ����");
-		}
+		administrationService.addReceptionAfterAppointment(appointment_id);
 	}
-	/**
-	 * ȯ��id�� �ش��ϴ� ȯ�� ��ü�� �����´�
-	 * @param patient_id
-	 * @return Patient
-	 */
+
 	@GetMapping("/{patient_id}")
 	public Patient getPatient(@PathVariable int patient_id) {
 		Patient patient = administrationService.getPatient(patient_id);
 		return patient;
 	}
 	
-	/**
-	 * ���� ���¿� ���� ���� ����Ʈ�� �����´�.
-	 * @param appointment_state
-	 * @return List<Appointment>
-	 */
 	@GetMapping("/appointment/state")
 	public List<Appointment> getAppointmentListByState(@RequestParam("appointment_state") String appointment_state) {
 		List<Appointment> appointmentList = administrationService.getAppointmentListByState(appointment_state);
 		return appointmentList;
 	}
 	
-	/**
-	 * ���� ����Ʈ�� �����´�.
-	 * @return List<Reception>
-	 */
 	@GetMapping("/reception")
 	public List<Reception> getReceptionList(@RequestParam("reception_kind") String reception_kind) {
 		List<Reception> receptionList = administrationService.getReceptionList(reception_kind);
@@ -112,18 +77,10 @@ public class AdministrationController {
 		return receptionList;
 	}
 	
-	/**
-	 * ���� ���¸� �ٲ��ش�.
-	 */
 	@PutMapping("/reception/{reception_id}")
 	public void changeReceptionState(@PathVariable int reception_id,@RequestBody String reception_state) {
-		boolean isChanged = administrationService.changeReceptionState(reception_id, reception_state);
-		
-		if(isChanged) {
-			logger.info("���� ���� ���� �Ϸ�");
-		}else {
-			logger.info("���� ���� ���� ����");
-		}
+		administrationService.changeReceptionState(reception_id, reception_state);
+
 	}
 	
 	@GetMapping("/patient")
@@ -132,29 +89,15 @@ public class AdministrationController {
 		return patientList;
 	}
 	
-	/**
-	 * �̸����� �˻��� ȯ�� ����Ʈ
-	 * @param patient_name
-	 * @return List<Patient>
-	 */
 	@GetMapping("/patient/searching")
 	public List<Patient> getSearchedPatientList(@RequestParam("patient_name") String patient_name) {
 		List<Patient> patientList = administrationService.getSearchedPatientList(patient_name);
 		return patientList;
 	}
-	/**
-	 * �ű� ȸ�� ���(add)
-	 * @param newPatient
-	 */
+
 	@PostMapping("/patient/new")
 	public void addNewPatient(@RequestBody Patient newPatient) {
-		boolean isAdded = administrationService.addNewPatient(newPatient);
-		
-		if(isAdded) {
-			logger.info("�ű� ȸ�� ��� �Ϸ�");
-		}else {
-			logger.info("�ű� ȸ�� ��� ����");
-		}
+		administrationService.addNewPatient(newPatient);
 	}
 	
 	@GetMapping("/patient/appointment")
@@ -189,30 +132,21 @@ public class AdministrationController {
 	
 	@PostMapping("/reception/visit")
 	public void addReceptionAfterVisit(@RequestBody Reception reception) {
-		boolean isAdded = administrationService.addReceptionAfterVisit(reception);
-		
-		if(isAdded) {
-			logger.info("�湮 ȯ�� ���� �Ϸ�");
-		}else {
-			logger.info("�湮 ȯ�� ���� ����");
-		}
+		administrationService.addReceptionAfterVisit(reception);
 	}
 	
 	@GetMapping("/appointment/treatment/time")
-	public List<String> isReserved(@RequestParam() String staff_id, @RequestParam() String appointment_date ) {
-		List<String> timeSelect = administrationService.isReserved(staff_id, appointment_date);
+	public List<String> isReserved(@RequestParam() String hospital_code, @RequestParam() String staff_id, @RequestParam() String appointment_date ) throws ParseException {
+		List<String> timeSelect = administrationService.isReserved(hospital_code, staff_id, appointment_date);
 		return timeSelect;
+//		logger.info(hospital_code);
+//		return null;
 	}
 	
 	@PostMapping("/appointment")
 	public void addNewAppointment(@RequestBody Appointment appointment) {
-		boolean isAdded = administrationService.addNewAppointment(appointment);
-		
-		if(isAdded) {
-			logger.info("���� ���� ��� �Ϸ�");
-		}else {
-			logger.info("���� ���� ��� ����");
-		}
+		administrationService.addNewAppointment(appointment);
+
 	}
 	
 	@GetMapping("/test/testcode")
@@ -221,9 +155,8 @@ public class AdministrationController {
 		return testCodes;
 	}
 	@GetMapping("/appointment/test/time")
-	public List<Appointment> CountbyAppointment(@RequestParam() String appointment_date) throws ParseException {
-		String hospitalCode = "DZ0001";		//나중에 프론트에서 받아올 예정
-		List<Appointment> timeAndCountList = administrationService.CountbyAppointment(appointment_date, hospitalCode);
+	public List<Appointment> CountbyAppointment(@RequestParam() String hospital_code, @RequestParam() String appointment_date) throws ParseException {
+		List<Appointment> timeAndCountList = administrationService.CountbyAppointment(appointment_date, hospital_code);
 		return timeAndCountList;
 	}
 	@PutMapping("/appointment/test/update")
@@ -247,4 +180,9 @@ public class AdministrationController {
 		administrationService.requestTest(testCodes);
 	}
 	
+	@GetMapping("/reception/test/state")
+	public List<Reception> getTestReceptionListByState(@RequestParam() String reception_state) {
+		List<Reception> receptionList = administrationService.getTestReceptionListByState(reception_state);
+		return receptionList;
+	}
 }

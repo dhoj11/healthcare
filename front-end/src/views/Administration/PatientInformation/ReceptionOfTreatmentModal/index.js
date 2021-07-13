@@ -4,7 +4,7 @@ import { getDoctorNameList, addReceptionAfterVisit } from "../../../../apis/admi
 import {useState, useEffect} from "react";
 
 function ReceptionOfTreatmentModal(props) {
-  const {patient, isOpen, close, visitReception} = props;
+  const {setRerenderer, patient, isOpen, close, visitReception} = props;
   const [doctorList, setDoctorList] = useState([]);
   const [receptionPatient, setReceptionPatient] = useState({
     patient_id: "",
@@ -48,6 +48,7 @@ function ReceptionOfTreatmentModal(props) {
       console.log(error)
     }
     visitReception(newReception);
+    setRerenderer(new Date());
     console.log(newReception);
     close();
   };
@@ -55,7 +56,7 @@ function ReceptionOfTreatmentModal(props) {
   return (
     <>
     {isOpen ? (
-      <Modal show={isOpen} onHide={close} centered="true" className="modal">
+      <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
       <Modal.Header closeButton>
         <Modal.Title>진료 접수</Modal.Title>
       </Modal.Header>
@@ -69,7 +70,7 @@ function ReceptionOfTreatmentModal(props) {
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
               {doctorList.map((doctor,key)=>(
-                <div key={key}>
+                <div key={key} className={styles.doctor_list}>
                   <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleChange}/> 
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
                 </div>
@@ -78,8 +79,8 @@ function ReceptionOfTreatmentModal(props) {
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료내용</div>
-            <div>
-              <input type="text" className="form-control" name="reception_content" onChange={handleChange}/>
+            <div className={styles.reception_content}>
+              <input type="text" className="form-control" placeholder="7자 이내로 적어주세요." name="reception_content" onChange={handleChange}/>
             </div>
           </div>
         </div>
