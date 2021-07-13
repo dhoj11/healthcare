@@ -58,9 +58,9 @@
     </update>
     
     <update id="updateTestResult" parameterType="testresult">
-		update test_results
-   		set test_result_value = #{test_result_value}
-   		where test_list_id = #{test_list_id} And test_code = #{test_code} And test_details_id = #{test_details_id}		
+      update test_results
+         set test_result_value = #{test_result_value}
+         where test_list_id = #{test_list_id} And test_code = #{test_code} And test_details_id = #{test_details_id}      
     </update>
     
     <update id="updateTestResultSave" parameterType="int">
