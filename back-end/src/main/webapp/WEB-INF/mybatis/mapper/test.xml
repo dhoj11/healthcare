@@ -42,11 +42,13 @@
 		LIMIT 1
     </select>
     
-    <select id="getTestResult" parameterType="int" resultType="testresult">
-    	select *
+      <select id="getTestResult" parameterType="int" resultType="testresult">
+    	    	select *
     	from test_results, test_details, tests_list
-    	where test_results.test_list_id = #{test_list_id} and test_results.test_details_id = test_details.test_details_id
-    		and tests_list.test_list_id = #{test_list_id} and tests_list.test_list_req = 1
+    	where 
+		 (tests_list.test_list_id =  #{test_list_id} and tests_list.test_list_req = 1)  and
+		 test_results.test_list_id =  #{test_list_id} and test_results.test_details_id = test_details.test_details_id
+    		
     </select>
     
     <update id="updateTestListState">
