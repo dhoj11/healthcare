@@ -47,18 +47,27 @@ function ListItem(props) {
             대기 : (<select className={styles.select_box} style={{color: "#74b816"}} value="대기" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
-                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
+                      <option style={{color: "#f59f00"}} value="진료">진료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>),
-            진료 : (<select className={styles.select_box} style={{color: "#f03e3e"}} value="진료" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
+            진료 : (<select className={styles.select_box} style={{color: "#f59f00"}} value="진료" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
-                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
+                      <option style={{color: "#f59f00"}} value="진료">진료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
                     </select>),
             완료 : (<select className={styles.select_box} style={{color: "#1c7ed6"}} value="완료" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
                       <option style={{color: "#74b816"}} value="대기">대기</option>
                       <option style={{color: "#1c7ed6"}} value="완료">완료</option>
-                      <option style={{color: "#f03e3e"}} value="진료">진료</option>
-                    </select>)
+                      <option style={{color: "#f59f00"}} value="진료">진료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
+                    </select>),
+            취소 : (<select className={styles.select_box} style={{color: "#f03e3e"}} value="취소" onChange={(event) =>handleStateChange(event, reception.reception_id, reception.appointment_id)}>
+                      <option style={{color: "#74b816"}} value="대기">대기</option>
+                      <option style={{color: "#1c7ed6"}} value="완료">완료</option>
+                      <option style={{color: "#f59f00"}} value="진료">진료</option>
+                      <option style={{color: "#f03e3e"}} value="취소">취소</option>
+                    </select>),
           }[state]
         }
         </div>

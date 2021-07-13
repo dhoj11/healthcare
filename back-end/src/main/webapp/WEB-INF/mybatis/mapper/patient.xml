@@ -30,4 +30,9 @@
 		from patient
 		where patient_name LIKE concat(#{patient_name},'%')
 	</select>
+	<update id="updatePatientRecentVisit" >
+		update patient
+		set patient_recent_visit = curdate()
+		where patient_id = #{patient_id}
+	</update>
 </mapper>

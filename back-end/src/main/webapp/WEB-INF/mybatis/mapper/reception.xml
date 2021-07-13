@@ -42,6 +42,29 @@
 	<select id="selectReceptionId" resultType="int">
 		select reception_id
 		from reception
-		where reception_date=curdate() and patient_id=#{patient_id} and reception_kind=#{reception_kind}
+		where reception_date=curdate() and appointment_id=#{appointment_id} and patient_id=#{reception.patient_id} and reception_kind=#{reception.reception_kind}
 	</select>
+		<select id="selectTestReceptionListByState" resultType="reception">
+		select reception_id, DATE_FORMAT(reception_date, '%Y-%m-%d') as reception_date, DATE_FORMAT(reception_time,'%H:%i') as reception_time, reception.staff_id
+				, reception_state, reception.patient_id, reception_content
+				, patient.patient_name, staff.staff_name
+		from reception, patient, staff
+		where reception.patient_id = patient.patient_id 
+				and reception.staff_id = staff.staff_id 
+				and reception_date = curdate()
+				and reception_state = #{reception_state}
+				and reception_kind = '검사'
+		order by reception_time;
+	</select>
+	
+	<select id="getCurrentReception" parameterType="int" resultType="treatment">
+		select reception_id, patient_id, staff_id
+		FROM reception
+		where reception_id = #{reception_id}
+	</select>
+	
+	<insert id="addTreatment" parameterType="treatment">
+		insert into treatment (reception_id, treatment_date, patient_id, staff_id)
+		values(#{reception_id}, NOW(), #{patient_id}, #{staff_id})
+	</insert>
 </mapper>
