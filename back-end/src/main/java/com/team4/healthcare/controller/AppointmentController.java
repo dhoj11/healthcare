@@ -14,15 +14,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Appointment;
+import com.team4.healthcare.dto.Hospital;
 import com.team4.healthcare.dto.Patient;
 import com.team4.healthcare.dto.Test;
 import com.team4.healthcare.dto.TestDetail;
 import com.team4.healthcare.dto.TestList;
 import com.team4.healthcare.service.AppointmentService;
+import com.team4.healthcare.service.HospitalService;
 import com.team4.healthcare.service.PatientService;
+import com.team4.healthcare.service.ReceptionService;
 import com.team4.healthcare.service.TestListService;
 import com.team4.healthcare.service.TestService;
 
@@ -42,6 +46,10 @@ public class AppointmentController {
 	private TestListService testListService;
 	@Autowired
 	private TestService testService;
+	@Autowired
+	private ReceptionService receptionService;
+	@Autowired
+	private HospitalService hospitalService;
 	
 	//appointment
 	@GetMapping("/treatment")
@@ -73,6 +81,15 @@ public class AppointmentController {
 	public void cancelTestAppointment(@PathVariable("appointment_id") int appointment_id) {
 		appointmentService.cancelTreatmentAppointment(appointment_id);
 	}
+	@PostMapping("/test")
+	public void createTestAppointment(@RequestBody Appointment appointment) {
+		appointmentService.insertTestAppointment(appointment);
+	}
+	@GetMapping("/maxappointmentid")
+	public int maxAppointmentId() {
+		return appointmentService.getMaxAppointmentId();
+	}
+	
 	//test
 	@GetMapping("/testcode")
 	public Test getTestByCode(@RequestParam("test_code") String test_code) {
@@ -88,7 +105,6 @@ public class AppointmentController {
 	@GetMapping("/patientbyname")
 	public List<Patient> patientListByName(@RequestParam("patient_name") String patient_name){
 		return patientService.getPatientListByName(patient_name);
-		
 	}
 	
 	//testList
@@ -100,6 +116,19 @@ public class AppointmentController {
 	public List<TestList> testList(@PathVariable("patient_id") int patient_id){
 		return testListService.getTestListByPatientId(patient_id);
 	}
+	@PutMapping("/testlist")
+	public void testListAppointment(@RequestBody TestList testList) {
+		System.out.println(testList.toString());
+		testListService.testListAppointment(testList);
+	}
+	@PutMapping("/testlistwait/{appointment_id}")
+	public void testListWait(@PathVariable("appointment_id") int appointment_id) {
+		testListService.testListWait(appointment_id);
+	}
+	@GetMapping("/testlisttreatmentid")
+	public int getTestListTreatmentId(@RequestParam("test_list_id") int test_list_id,@RequestParam("test_code") String test_code) {
+		return testListService.getTreatmentId(test_list_id, test_code);
+	}
 	
 
 	
@@ -107,7 +136,17 @@ public class AppointmentController {
 	@GetMapping("/testdetail")
 	public List<TestDetail> testDetailList(@RequestParam("test_code") String test_code){
 		return testListService.getTestDetail(test_code);
-		
+	}
+	
+	//reception
+	@GetMapping("/reception")
+	public String getReceptionStaffId(@RequestParam("test_list_id") int test_list_id, @RequestParam("test_code") String test_code) {
+		return receptionService.getReceptionStaffId(test_list_id,test_code);
+	}
+	//hospital
+	@GetMapping("/hospital")
+	public Hospital getTimeSetting(@RequestParam("hospital_code") String hospital_code) {
+		return hospitalService.getTimeSetting(hospital_code);
 	}
 
 

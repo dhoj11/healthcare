@@ -57,6 +57,13 @@
 		order by reception_time;
 	</select>
 	
+	<select id="selectReceptionStaffId" resultType="string">
+		select staff_id
+		from reception
+		where reception_id in (select reception_id
+								from tests_list
+								where test_list_id =#{test_list_id} and test_code =#{test_code})
+	</select>
 	<select id="getCurrentReception" parameterType="int" resultType="treatment">
 		select reception_id, patient_id, staff_id
 		FROM reception

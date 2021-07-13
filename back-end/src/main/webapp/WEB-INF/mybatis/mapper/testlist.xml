@@ -5,7 +5,7 @@
 	<select id="selectTestCode" resultType="string" parameterType="int">
 		select test_code
 		from tests_list
-		where appointment_id = #{appointment_id}
+		where appointment_id = #{appointment_id} and test_list_state='예약'
 	</select>
 	
 	<select id="selectTestDetail" resultType="testDetail" parameterType="string">
@@ -28,5 +28,23 @@
 		where test_list_state='대기' and appointment_id in (select appointment_id
 															from appointment
 															where patient_id = #{patient_id} and appointment_kind = '검사' and appointment_state='취소')
+	</select>
+	
+	<update id="testListAppointment" parameterType="testList">
+		update tests_list
+		set test_list_id=#{modify_test_list_id},test_list_state ='예약',appointment_id=#{appointment_id}, test_list_date=#{test_list_date}, test_list_time=#{test_list_time}
+		where test_list_id =#{test_list_id} and test_code =#{test_code}
+	</update>
+	
+	<update id="testListWait" parameterType="int">
+		update tests_list
+		set test_list_state ='대기'
+		where appointment_id=#{appointment_id} and test_list_state='예약'
+	</update>
+	
+	<select id="selectTreatmentId" resultType="int">
+		select treatment_id
+		from tests_list
+		where test_list_id =#{test_list_id} and test_code = #{test_code}
 	</select>
 </mapper>
