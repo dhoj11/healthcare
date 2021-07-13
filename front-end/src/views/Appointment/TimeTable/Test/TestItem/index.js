@@ -85,7 +85,7 @@ function TestItem(props) {
             size= "lg"
             centered="true"
             >
-            <Appoint></Appoint>
+            <Appoint startDate={startDate} time={time}></Appoint>
       </Modal>
     </>
   );

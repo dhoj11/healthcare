@@ -60,4 +60,11 @@ public class AppointmentService {
 	public List<Appointment> getTestAppointmentByDate(String appointment_date, String appointment_time){
 		return appointmentDao.selectTestAppointmentByDate(appointment_date, appointment_time);
 	}
+	
+	public void insertTestAppointment(Appointment appointment) {
+		appointmentDao.insertTestAppointment(appointment);
+	}
+	public int getMaxAppointmentId() {
+		return appointmentDao.selectMaxAppointmentId();
+	}
 }

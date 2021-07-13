@@ -13,4 +13,6 @@ public interface TestListDao {
 	public List<TestDetail> selectTestDetail(String test_code);
 	public List<TestList> selectByPatientIdReception(int patient_id);
 	public List<TestList> selectByPatientIdAppointment(int patient_id);
+	public void testListAppointment(TestList testList);
+	public void testListWait(int appointment_id);
 }

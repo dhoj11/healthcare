@@ -44,4 +44,12 @@
 		from reception
 		where reception_date=curdate() and patient_id=#{patient_id} and reception_kind=#{reception_kind}
 	</select>
+	
+	<select id="selectReceptionStaffId" resultType="string">
+		select staff_id
+		from reception
+		where reception_id in (select reception_id
+								from tests_list
+								where test_list_id =#{test_list_id} and test_code =#{test_code})
+	</select>
 </mapper>

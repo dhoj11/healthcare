@@ -10,7 +10,7 @@ function Test(props) {
   const setTime = useCallback(async() => {
     try{
       const lunch_start = "13:00";
-      const start_time ="10:00";
+      const start_time ="09:00";
       const end_time ="18:00";
       const lunch_end = "14:00"
       const interval =30;
@@ -51,7 +51,6 @@ function Test(props) {
               <TestItem startDate ={startDate} time={time}></TestItem>
             </tr>
           )
-          
         })}
       </tbody>
     </table>

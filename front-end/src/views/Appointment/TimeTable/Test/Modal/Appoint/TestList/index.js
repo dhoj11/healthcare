@@ -3,20 +3,29 @@ import { getTestListByPatientId } from "../../../../../../../apis/appointment";
 import styles from "./index.module.css";
 import TestItem from "./TestListItem";
 function TestList(props) {
-  const {selectPatientId} =props;
+  const {selectPatientId,setSelectTestListItem} =props;
   const [testList,setTestList] = useState([]);
+  const [selectTestItem,setSelectTestItem] = useState({
+    test_list_id:[],
+    test_code:[]
+  });
+  
+  useEffect(() => {
+    setSelectTestListItem(selectTestItem);
+  },[selectTestItem])
+
   useEffect(() => {
     if(selectPatientId){
       (async function() {
         try{
           const response = await getTestListByPatientId(selectPatientId);
+          console.log(response.data);
           setTestList(response.data);
         } catch(error){
           throw error;
         }
       })();
     }
-    
   },[props])
   return(
       selectPatientId ?(
@@ -28,9 +37,8 @@ function TestList(props) {
         </div>
         {testList.map((testItem,index) => {
           return(
-            <TestItem key={index} testItem={testItem}></TestItem>
+            <TestItem key={index} testItem={testItem} setSelectTestItem={setSelectTestItem} selectTestItem={selectTestItem}></TestItem>
           )
-          
         })}
         
       </div>
