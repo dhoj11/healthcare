@@ -2,22 +2,25 @@ import {Modal} from "react-bootstrap";
 import {useState, useEffect} from "react";
 import styles from "./AppointmentWithTreatmentModal.module.css";
 import Calendar from "../../../Appointment/Calendar";
-import {getDoctorNameList, addNewAppointment} from "../../../../apis/administration";
+import {getDoctorNameList, addNewAppointment, isReserved} from "../../../../apis/administration";
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
+import { useSelector } from "react-redux";
 import React from "react";
 
 
 function AppointmentModal(props) {
   const {setRerenderer, dayAppointment, patient, isOpen, close} = props;
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
+
   const [doctorList, setDoctorList] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
   const [appointmentTime, setAppointmentTime] = useState("");
   const [staff, setStaff] = useState("");
+  const [possibleTime, setPossibleTime] = useState();
   const [appointment, setAppointment] = useState({
     appointment_date: moment().format("YYYY-MM-DD"),
-    staff_id: staff,
     patient_id: "",
     appointment_content: "",
     appointment_kind: "진료"
@@ -37,7 +40,6 @@ function AppointmentModal(props) {
       setStartDate(new Date());
       setAppointmentDate(moment().format("YYYY-MM-DD"));
       setAppointment({
-        staff_id: staff,
         patient_id: patient.patient_id,
         appointment_content: "",
         appointment_kind: "진료"
@@ -46,8 +48,36 @@ function AppointmentModal(props) {
   },[isOpen]);
 
   useEffect(() => {
+    if(appointmentDate !== "" && staff !== "") {
+      const work = async() => {
+        try{
+          const response = await isReserved(hospital_code, staff, appointmentDate);
+          setPossibleTime(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      }
+      work();
+    }
+  },[appointmentDate]);
+
+  useEffect(() => {
+    if(appointmentDate !== "" && staff !== "") {
+      const work = async() => {
+        try{
+          const response = await isReserved(hospital_code, staff, appointmentDate);
+          setPossibleTime(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      }
+      work();
+    }
+  },[staff]);
+
+  useEffect(() => {
     if(doctorList !== undefined) {
-    setStaff(doctorList[0].staff_id);
+      setStaff(doctorList[0].staff_id);
     }
   },[doctorList])
 
@@ -74,7 +104,7 @@ function AppointmentModal(props) {
   }
 
   const newAppointment = async() => {
-    if(appointment.staff_id === "") {
+    if(staff === "") {
       alert("담당의를 선택해주세요.");
       return;
     }else if(appointment.appointment_content===""){
@@ -85,7 +115,7 @@ function AppointmentModal(props) {
       return;
     }
     setRerenderer(new Date());
-    const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime};
+    const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime, staff_id: staff};
     try{
       await addNewAppointment(newAppointment);
     }catch(error) {
@@ -119,7 +149,7 @@ function AppointmentModal(props) {
                 <>
                
                   <div key={key}>
-                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} onChange={handleRadioChange}/>
+                  <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} checked={doctor.staff_id === staff} onChange={handleRadioChange}/>
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
                   </div>
                
@@ -136,7 +166,7 @@ function AppointmentModal(props) {
           <div className="d-flex">
             <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
             <div>
-              <TimeSelector appointmentDate={appointmentDate} staffId={appointment.staff_id} changeTime={changeTime}/>
+              <TimeSelector possibleTime={possibleTime} appointmentDate={appointmentDate} staffId={staff} changeTime={changeTime}/>
             </div>
           </div>
         </div>

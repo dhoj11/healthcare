@@ -7,6 +7,11 @@ function RequestTest(props) {
 
   const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
 
+  useEffect(() => {
+
+    console.log("--------------------------",testCodes);
+  }, [testCodes])
+
   const handleReqTest = async() => {
     
     try{
@@ -15,7 +20,7 @@ function RequestTest(props) {
       console.log(error.message);
     }
     setSelectedTestCodes([]);
-    setRerenderer(testCodes[0].reception_id);
+    setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});
     close();
   }
 

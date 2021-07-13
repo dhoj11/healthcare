@@ -3,7 +3,7 @@ import styles from "./TestListItem.module.css";
 
 function TestListItem(props) {
 
-  const {rerenderer, testCodeList, changeCheckedList, isReq, selectedTestCodes} = props;
+  const {testCodeList, changeCheckedList, isReq, selectedTestCodes} = props;
   const [isChecked, setIsChecked] = useState(false);
   const [state, setState] = useState("대기");
   const [req, setReq] = useState(-1);

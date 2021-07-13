@@ -308,11 +308,19 @@ public class AdministrationService {
 		}
 	}
 	
-	public void changeTestStateToAppointment(TestList testList) {
-		List<String> testStateList = testDAO.selectTestState(testList.getTest_list_id());
+//	public void changeTestStateToAppointment(TestList testList) {
+//		List<String> testStateList = testDAO.selectTestState(testList.getReception_id());
+//		logger.info(testStateList.toString());
+//		if(testStateList.size() == 0) {
+//			receptionDAO.updateReceptionState(testList.getReception_id(), "예약");
+//		}
+//	}
+	
+	public void changeTestStateToAppointment(int reception_id) {
+		List<String> testStateList = testDAO.selectTestState(reception_id);
 		logger.info(testStateList.toString());
 		if(testStateList.size() == 0) {
-			receptionDAO.updateReceptionState(testList.getReception_id(), "예약");
+			receptionDAO.updateReceptionState(reception_id, "예약");
 		}
 	}
 	
