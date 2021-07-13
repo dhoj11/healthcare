@@ -53,6 +53,9 @@ export function testListAppointment(testList){
 export function testListWait(appointment_id){
   return auth.put("/appointment/testlistwait/"+appointment_id);
 }
+export function getTestListTreatmentId(test_list_id,test_code){
+  return auth.get("/appointment/testlisttreatmentid",{params:{test_list_id,test_code}});
+}
 
 //test
 export function getTestByCode(test_code){
