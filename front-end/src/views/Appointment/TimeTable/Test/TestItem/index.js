@@ -7,7 +7,7 @@ import Cancel from "../Modal/Cancel";
 
 import styles from "./index.module.css";
 function TestItem(props) {
-  const {startDate,time} = props;
+  const {startDate,time,lunch_start} = props;
   let appointment_date = moment(startDate).format("YYYY-MM-DD"); //데이터 변환
   const [testAppoint,setTestAppoint] = useState([]);
   const [clickedAppointment,setClickedAppointment] = useState({});
@@ -44,7 +44,7 @@ function TestItem(props) {
     <>
     <td>
       {
-        time==="13:00" ?
+        time===lunch_start ?
         <div> 점심시간</div>
         :
         <div className={`d-flex`}>

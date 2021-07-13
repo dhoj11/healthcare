@@ -5,10 +5,27 @@ import styles from "./index.module.css";
 import moment from "moment";
 import Treatment from "./Treatment";
 import Test from "./Test";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getTimeSetting } from "../../../apis/appointment";
+import { useSelector } from "react-redux";
 function TimeTable(props) {
   const {startDate,changeDate} = props;
   const [tab,setTab] = useState("treatment");
+  const [hospital,setHospital] = useState(null);
+  const hospital_code = useSelector((state) => state.authReducer.hospital_code);
+  //병원 근무시간 저장
+  useEffect(() => {
+    (async function() {
+      const response=await getTimeSetting(hospital_code);
+      response.data.lunch_start = response.data.lunch_start.substr(0,5);
+      response.data.lunch_end = response.data.lunch_end.substr(0,5);
+      response.data.officehour_start = response.data.officehour_start.substr(0,5);
+      response.data.officehour_end = response.data.officehour_end.substr(0,5);
+      console.log(response.data);
+      setHospital(response.data);
+    })();
+  },[])
+
   // 이전 이후 날짜 클릭
   const prevDate = () => {
     let date = new Date(startDate);
@@ -53,9 +70,9 @@ function TimeTable(props) {
         </div>
         {
           tab === "treatment"?
-          <Treatment startDate={startDate}></Treatment>
+          <Treatment startDate={startDate} hospital={hospital}></Treatment>
           :
-          <Test startDate={startDate}></Test>
+          <Test startDate={startDate} hospital={hospital}></Test>
         }
         
        
