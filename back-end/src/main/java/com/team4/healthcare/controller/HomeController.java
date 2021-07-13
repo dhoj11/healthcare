@@ -37,8 +37,6 @@ public class HomeController {
     @Autowired
     private StaffService staffService;
     
-
-    
     @PostMapping("/auth/login")
     public Map<String,String> login(@RequestBody Staff staff){
     	String staff_id = staff.getStaff_id();
