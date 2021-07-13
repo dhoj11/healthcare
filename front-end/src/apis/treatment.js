@@ -68,3 +68,8 @@ export function getTreatmentTestResults(treatment_id){
   const promise = axios.get('http://localhost:8080/treatment/testresult/' + treatment_id);
   return promise;
 }
+
+export function getPrevDoctorName(treatment_id){
+  const promise = axios.get('http://localhost:8080/treatment/staffname/' + treatment_id);
+  return promise;
+}

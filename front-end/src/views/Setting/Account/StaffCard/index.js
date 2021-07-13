@@ -51,6 +51,7 @@ function StaffCard(props){
       <div className={style.intro}>
         <div className={style.mainInfo}>
         <span className={ staff.staff_authority === "의사" ? `${style.role} ${style.doctor}` : 
+                          staff.staff_authority === "병원장" ? `${style.role} ${style.owner}` :
                           staff.staff_authority === "간호" ? `${style.role} ${style.nurse}` :
                           staff.staff_authority === "임상" ? `${style.role} ${style.tester}`:null               
                           }>{staff.staff_authority}</span>

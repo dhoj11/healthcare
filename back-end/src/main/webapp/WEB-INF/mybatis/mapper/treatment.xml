@@ -209,4 +209,11 @@
    	test_list_id = #{item}
    	</foreach>
    </select>
+   
+   <select id="selectStaffNameByTreatmentId" parameterType="int" resultType="string">
+   	select staff_name
+   	from treatment, staff
+   	where treatment.treatment_id = #{treatment_id} and treatment.staff_id = staff.staff_id
+   	limit 1;
+   </select>
 </mapper>
