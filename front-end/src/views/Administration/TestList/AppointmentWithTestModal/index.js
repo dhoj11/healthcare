@@ -62,10 +62,6 @@ function AppointmentWithTestModal(props) {
     work();
   },[appointmentDate]);
 
-  useEffect(() => {
-
-  })
-
   const changeDate = (date) => {
     const fmt = moment(date).format("YYYY-MM-DD");
     setStartDate(date);
@@ -99,10 +95,10 @@ function AppointmentWithTestModal(props) {
     try{
       await addNewAppointment(newAppointment);
       await appointmentTestList(newTestList);
-      await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
-
+      //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
+      await changeTestStateToAppointment(testCodes[0].reception_id); //reception_state 바꿔줌
       setSelectedTestCodes([]);
-      setRerenderer(testCodes[0].reception_id);
+      setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});
     }catch(error) {
       console.log(error.message);
     }

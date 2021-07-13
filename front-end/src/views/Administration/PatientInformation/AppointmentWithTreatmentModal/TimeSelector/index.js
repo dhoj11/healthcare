@@ -7,30 +7,30 @@ import moment from "moment";
 
 
 function TimeSelector(props) {
-  const { appointmentDate, staffId, changeTime } = props;
+  const { possibleTime, appointmentDate, staffId, changeTime } = props;
   
-  const [possibleTime, setPossibleTime] = useState();
+  //const [possibleTime, setPossibleTime] = useState();
   const [timeSelect, setTimeSelect] = useState();
   const [loading, setLoading] = useState(false);
   const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
-  useEffect(() => {
-    setLoading(true);
-    if(appointmentDate !== "" && staffId !== "") {
-      const work = async() => {
-        try{
-          const response = await isReserved(hospital_code, staffId, appointmentDate);
-          setPossibleTime(response.data);
-        }catch(error) {
-          console.log(error.message);
-        }
-      }
-      work();
-    }
-    return(() => {
-      setLoading(false);
-    })
-  },[props]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   if(appointmentDate !== "" && staffId !== "") {
+  //     const work = async() => {
+  //       try{
+  //         const response = await isReserved(hospital_code, staffId, appointmentDate);
+  //         setPossibleTime(response.data);
+  //       }catch(error) {
+  //         console.log(error.message);
+  //       }
+  //     }
+  //     work();
+  //   }
+  //   return(() => {
+  //     setLoading(false);
+  //   })
+  // },[props]);
 
   const selectTime = (time) => {
     setTimeSelect(time);
@@ -61,7 +61,7 @@ function TimeSelector(props) {
     ) 
     : 
     (
-      null
+     <div>나오니?</div>
     )}
     </>
   );
