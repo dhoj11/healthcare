@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import PatientInformaionCard from "../common/PatientInformationCard";
 
 function PatientInformationCard(props) {
+
+  const {patient} = props;
   
   return (
     <>
-    {props.patient !== undefined ? (<PatientInformaionCard patient={props.patient}/>):(null)}
+    {patient !== undefined ? (<PatientInformaionCard patient={patient}/>):(null)}
     </>
   );
 }

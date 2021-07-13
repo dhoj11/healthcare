@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
-import { createSetAuthTokenAction, createSetStaffAuthorityAction, createSetStaffIdAction, createSetStaffNameAction, createSetHospitalCodeAction, createSetHospitalNameAction } from "./redux/auth-reducer";
+import { createSetAuthTokenAction, createSetStaffAuthorityAction, createSetStaffIdAction, createSetStaffNameAction, createSetHospitalCodeAction, createSetHospitalNameAction, createSetAuthority, createSetAuthorityAction } from "./redux/auth-reducer";
 import { removeAuthHeader } from "./apis/axiosConfig";
 import { useHistory } from "react-router";
 
@@ -31,6 +31,8 @@ function AppHeader(props){
      dispatch(createSetStaffAuthorityAction(""));
      dispatch(createSetHospitalCodeAction(""));
      dispatch(createSetHospitalNameAction(""));
+     dispatch(createSetStaffAuthorityAction(""));
+     dispatch(createSetAuthorityAction(""));
      removeAuthHeader();
      //SessionStorage에 인증 내용 제거
      sessionStorage.removeItem("staff_id");
@@ -39,6 +41,8 @@ function AppHeader(props){
      sessionStorage.removeItem("staff_authority");
      sessionStorage.removeItem("hospital_code");
      sessionStorage.removeItem("hospital_name");
+     sessionStorage.removeItem("staff_authority");
+     sessionStorage.removeItem("authority");
      
      history.push("/");
   }

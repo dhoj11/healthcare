@@ -13,3 +13,5 @@ export function addAuthHeader(authToken) {
 export function removeAuthHeader() {
   delete auth.defaults.headers.common["authToken"];
 }
+
+export default auth;

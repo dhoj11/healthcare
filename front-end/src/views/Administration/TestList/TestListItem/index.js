@@ -50,7 +50,7 @@ function TestListItem(props) {
         {
           { 
             대기 : <span style={{color: "#74b816"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
-            예약 : <span style={{color: "black"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
+            예약 : <span style={{color: "#495057"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             요청 : <span style={{color: "#fab005"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             진행 : <span style={{color: "#f03e3e"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>,
             완료 : <span style={{color: "#1c7ed6"}} className={styles.test_code_item}>{testCodeList.test_list_state}</span>

@@ -50,7 +50,7 @@ function Staff(props) {
               </div>
               <div>
                 <div className={
-                                data.staff_authority === "의사" || data.staff_authority === "병원장"? 
+                                data.staff_authority === "의사"? 
                                   `${styles.authority} ${styles.doctor_bg}` 
                                   : 
                                   (data.staff_authority === "간호" ? `${styles.authority} ${styles.nurse_bg}` : `${styles.authority} ${styles.clinic_bg}`)
@@ -74,7 +74,7 @@ function Staff(props) {
                 </div>
                 <div>
                   <div className={
-                                  data.staff_authority === "의사" || data.staff_authority === "병원장"? 
+                                  data.staff_authority === "의사" ? 
                                     `${styles.authority} ${styles.doctor_bg}` 
                                     : 
                                     (data.staff_authority === "간호" ? `${styles.authority} ${styles.nurse_bg}` : `${styles.authority} ${styles.clinic_bg}`)

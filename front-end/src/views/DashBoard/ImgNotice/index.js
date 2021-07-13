@@ -14,7 +14,7 @@ function ImgNotice(props) {
   const [showImgNoticeModal,setShowImgNoticeModal] = useState(false);
   const [imgNoticeItem,setImgNoticeItem] = useState(false);
   const [imgNotice,setImgNotice] = useState([]);
-  const staff_authority = useSelector((state) => state.authReducer.staff_authority);
+  const authority = useSelector((state) => state.authReducer.authority);
 
   let infi= true;
   if(imgNotice.length<4){
@@ -73,7 +73,7 @@ function ImgNotice(props) {
           })}
       </Slider>
       {
-        staff_authority ==="병원장" ?
+        authority ==="ROLE_ADMIN" ?
           <Link to="/noticeeditor/writeimgnotice" className={styles.add_btn} >
             <FontAwesomeIcon icon={faPlus} className={styles.plus}/>
           </Link>

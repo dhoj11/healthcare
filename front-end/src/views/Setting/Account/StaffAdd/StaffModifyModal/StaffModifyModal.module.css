@@ -93,7 +93,7 @@
 
 .remove{
   width: 100%;
-  background-color: #d13024;
+  background-color: #9c0e04;
   border-radius: 20px;
   padding: 10px 30px;
   color: #fff;
@@ -101,7 +101,7 @@
 }
 
 .remove:hover{
-  background-color: #f55e53;
+  background-color: #b81b10;
 }
 
 .noSelect{

@@ -43,31 +43,37 @@ function TestItem(props) {
   return(
     <>
     <td>
-      <div className={`d-flex`}>
-      <button className={`${styles.addbtn}`} onClick={openAppointModal}>예약</button>
-      {testAppoint.map((appointItem,index) => {
-        return(
-            <>
-            <div key={index} 
-                 onClick = {() => openModal(appointItem)}
-                className={appointItem.appointment_state ==="예약" ? 
-                          `${styles.appoint} ${styles.default}`
-                          : 
-                          appointItem.appointment_state ==="취소" ? 
-                          `${styles.cancel} ${styles.default}`
-                          :
-                          appointItem.appointment_state ==="완료" ?
-                          `${styles.complete} ${styles.default}`
-                          :
-                          `${styles.visit} ${styles.default}`}>
-              <span>{appointItem.patient_name}</span>
-              <span>({appointItem.patient_gender})</span>
-              <div><span>{appointItem.appointment_state}</span></div>   
-            </div>
-            </>      
-        );
-      })}
-      </div>
+      {
+        time==="13:00" ?
+        <div> 점심시간</div>
+        :
+        <div className={`d-flex`}>
+        <button className={`${styles.addbtn}`} onClick={openAppointModal}>예약</button>
+        {testAppoint.map((appointItem,index) => {
+          return(
+              <>
+              <div key={index} 
+                  onClick = {() => openModal(appointItem)}
+                  className={appointItem.appointment_state ==="예약" ? 
+                            `${styles.appoint} ${styles.default}`
+                            : 
+                            appointItem.appointment_state ==="취소" ? 
+                            `${styles.cancel} ${styles.default}`
+                            :
+                            appointItem.appointment_state ==="완료" ?
+                            `${styles.complete} ${styles.default}`
+                            :
+                            `${styles.visit} ${styles.default}`}>
+                <span>{appointItem.patient_name}</span>
+                <span>({appointItem.patient_gender})</span>
+                <div><span>{appointItem.appointment_state}</span></div>   
+              </div>
+              </>      
+          );
+        })}
+        </div>
+      }
+      
     </td>
     
       <Modal

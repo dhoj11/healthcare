@@ -7,12 +7,12 @@ import React from "react";
 function AppointmentTab(props) {
   
   const [appointmentList, setAppointmentList] = useState([]);
-  const { rerenderer, patientId } = props;
+  const { patient } = props;
 
   useEffect(() => {
     const work = async() => {
       try{
-        const response = await checkAppointmentList(patientId);
+        const response = await checkAppointmentList(patient.patient_id);
         setAppointmentList(response.data);
       }catch(error) {
         console.log(error.message);
