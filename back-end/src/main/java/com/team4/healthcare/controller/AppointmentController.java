@@ -125,6 +125,10 @@ public class AppointmentController {
 	public void testListWait(@PathVariable("appointment_id") int appointment_id) {
 		testListService.testListWait(appointment_id);
 	}
+	@GetMapping("/testlisttreatmentid")
+	public int getTestListTreatmentId(@RequestParam("test_list_id") int test_list_id,@RequestParam("test_code") String test_code) {
+		return testListService.getTreatmentId(test_list_id, test_code);
+	}
 	
 
 	

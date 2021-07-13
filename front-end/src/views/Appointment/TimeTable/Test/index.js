@@ -21,6 +21,9 @@ function Test(props) {
         if(!(lunch_start<temp && temp<lunch_end)){
           appointmentTime[i++] =temp;
         }
+        if(temp ==="23:30"){
+          break;
+        }
         temp =moment(moment().format("YYYY-MM-DD")+" "+temp).add(interval,'m').format("HH:mm");
       }
       setAppointmentHour(appointmentTime);      

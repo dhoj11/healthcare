@@ -68,11 +68,16 @@ function Treatment(props) {
       let appointmentTime =new Array();
       let i=0;
       
+      
       while(temp<end_time){
         if(!(hospital.lunch_start<temp && temp<lunch_end)){
           appointmentTime[i++] =temp;
         }
-        temp =moment(moment().format("YYYY-MM-DD")+" "+temp).add(interval,'m').format("HH:mm");
+        if(temp ==="23:30"){
+          break;
+        }
+        temp =moment(moment().format("YYYY-MM-DD")+" "+temp).add(interval,'m').format("HH:mm")
+        
       }
 
 

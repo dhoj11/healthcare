@@ -36,4 +36,7 @@ public class TestListService {
 	public void testListWait(int appointment_id) {
 		testListDao.testListWait(appointment_id);
 	}
+	public int getTreatmentId(int test_list_id,String test_code) {
+		return testListDao.selectTreatmentId(test_list_id, test_code);
+	}
 }

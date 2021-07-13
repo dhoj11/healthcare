@@ -3,7 +3,7 @@ import SearchPatient from "../../../../SearchPatient/index";
 import TestList from "./TestList";
 import styles from "./index.module.css";
 import moment from "moment";
-import { createTestappointment, getReceptionStaffId, maxAppointmentId, testListAppointment } from "../../../../../../apis/appointment";
+import { createTestappointment, getReceptionStaffId, getTestListTreatmentId, maxAppointmentId, testListAppointment } from "../../../../../../apis/appointment";
 
 function Appoint(props) {
   const {startDate,time} = props;
@@ -36,13 +36,20 @@ function Appoint(props) {
           });
           const response2=await maxAppointmentId();
           const appointment_id=response2.data;
+          const modifyAppointmentDate = moment(appointment_date).format("YYMMDD");
           for(let i=0; i<selectTestItem.test_code.length;i++){
+            const response = await getTestListTreatmentId(selectTestItem.test_list_id[i],selectTestItem.test_code[i]);
+            const treatment_id = response.data;
+            const modify_test_list_id = modifyAppointmentDate+treatment_id;
+            console.log(modify_test_list_id);
             await testListAppointment({
               test_list_id:selectTestItem.test_list_id[i],
               test_code:selectTestItem.test_code[i],
               appointment_id:appointment_id,              
               test_list_date: appointment_date,
-              test_list_time: time
+              test_list_time: time,
+              modify_test_list_id:modify_test_list_id
+              
             })
           }
         } catch(error){

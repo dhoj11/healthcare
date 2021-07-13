@@ -32,7 +32,7 @@
 	
 	<update id="testListAppointment" parameterType="testList">
 		update tests_list
-		set test_list_state ='예약',appointment_id=#{appointment_id}, test_list_date=#{test_list_date}, test_list_time=#{test_list_time}
+		set test_list_id=#{modify_test_list_id},test_list_state ='예약',appointment_id=#{appointment_id}, test_list_date=#{test_list_date}, test_list_time=#{test_list_time}
 		where test_list_id =#{test_list_id} and test_code =#{test_code}
 	</update>
 	
@@ -42,4 +42,9 @@
 		where appointment_id=#{appointment_id} and test_list_state='예약'
 	</update>
 	
+	<select id="selectTreatmentId" resultType="int">
+		select treatment_id
+		from tests_list
+		where test_list_id =#{test_list_id} and test_code = #{test_code}
+	</select>
 </mapper>
