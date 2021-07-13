@@ -122,4 +122,13 @@
 		from appointment, patient
 		where appointment_kind = '검사' and appointment_date =#{appointment_date} and appointment_time = #{appointment_time} and appointment.patient_id = patient.patient_id
 	</select>
+	
+	<insert id="insertTestAppointment" parameterType="appointment">
+		insert into appointment(appointment_date,appointment_time,staff_id,appointment_state,patient_id,appointment_kind)
+		values(#{appointment_date},#{appointment_time},#{staff_id},'예약',#{patient_id},'검사')
+	</insert>
+	<select id="selectMaxAppointmentId" resultType="int">
+		select max(appointment_id)
+		from appointment
+	</select>
 </mapper>
