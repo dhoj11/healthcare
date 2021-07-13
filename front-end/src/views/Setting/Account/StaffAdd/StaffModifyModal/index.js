@@ -119,9 +119,9 @@ function StaffModifyModal(props){
               <div className={style.actionButton}>
                 <span className={style.cancel} onClick={handleClose}>취소</span>
                 <input type="submit" className={style.join} value="수정"/>
-              </div>
-              <div className={style.removeButton}>
+                <div className={style.removeButton}>
                 <span className={style.remove} onClick={handleRemove}>퇴사</span>
+              </div>
               </div>
             </form>
           </>

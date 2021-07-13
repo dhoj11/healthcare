@@ -24,7 +24,9 @@ function StaffTable(props){
                   <span className={style.no}>{index+1}</span>
                   <span className={ item.staff_authority === "의사" ? `${style.doctor}` : 
                   item.staff_authority === "간호" ? `${style.nurse}` :
-                  item.staff_authority === "임상" ? `${style.tester}`:null               
+                  item.staff_authority === "임상" ? `${style.tester}`:
+                  item.staff_authority === "병원장" ? `${style.owner}`:
+                  null               
                   }>{item.staff_authority}</span>
                   <span className={style.name}>{item.staff_name}</span>
                 </div>
