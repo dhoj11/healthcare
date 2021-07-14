@@ -54,10 +54,18 @@ function NoticeModal(props) {
               <div className={styles.notice_title}>{noticeItem.notice_title}</div>
 
               <div className={styles.notice_info}>
-                <span>{noticeItem.staff_name}</span>
-                <span>{noticeItem.notice_date}</span>
                 {
-                  authority === "ROLE_ADMIN" ?
+                  noticeItem.staff_name !==undefined ?
+                  <>
+                    <span>{noticeItem.staff_name}</span>
+                    <span>{noticeItem.notice_date}</span>
+                  </>
+                  :
+                  null
+                }
+                
+                {
+                  authority === "ROLE_ADMIN" && noticeItem.staff_name !==undefined ?
                   <>
                     <Link to={`/noticeeditor/updatenotice/${noticeItem.notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
                     <span onClick={OpenDeleteModal}>삭제</span>
