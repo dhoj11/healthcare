@@ -7,7 +7,7 @@ import Cancel from "../Modal/Cancel";
 
 import styles from "./index.module.css";
 function TestItem(props) {
-  const {startDate,time} = props;
+  const {startDate,time,lunch_start} = props;
   let appointment_date = moment(startDate).format("YYYY-MM-DD"); //데이터 변환
   const [testAppoint,setTestAppoint] = useState([]);
   const [clickedAppointment,setClickedAppointment] = useState({});
@@ -39,35 +39,41 @@ function TestItem(props) {
   }
   useEffect(() => {
     axiosTestList();
-  },[startDate,showCancelModal])
+  },[startDate,showCancelModal,showAppointModal])
   return(
     <>
-    <td>
-      <div className={`d-flex`}>
-      <button className={`${styles.addbtn}`} onClick={openAppointModal}>예약</button>
-      {testAppoint.map((appointItem,index) => {
-        return(
-            <>
-            <div key={index} 
-                 onClick = {() => openModal(appointItem)}
-                className={appointItem.appointment_state ==="예약" ? 
-                          `${styles.appoint} ${styles.default}`
-                          : 
-                          appointItem.appointment_state ==="취소" ? 
-                          `${styles.cancel} ${styles.default}`
-                          :
-                          appointItem.appointment_state ==="완료" ?
-                          `${styles.complete} ${styles.default}`
-                          :
-                          `${styles.visit} ${styles.default}`}>
-              <span>{appointItem.patient_name}</span>
-              <span>({appointItem.patient_gender})</span>
-              <div><span>{appointItem.appointment_state}</span></div>   
-            </div>
-            </>      
-        );
-      })}
-      </div>
+    <td className={styles.td}>
+      {
+        time===lunch_start ?
+        <div> 점심시간</div>
+        :
+        <div className={`d-flex`}>
+        <button className={`${styles.addbtn}`} onClick={openAppointModal}>예약</button>
+        {testAppoint.map((appointItem,index) => {
+          return(
+              <>
+              <div key={index} 
+                  onClick = {() => openModal(appointItem)}
+                  className={appointItem.appointment_state ==="예약" ? 
+                            `${styles.appoint} ${styles.default}`
+                            : 
+                            appointItem.appointment_state ==="취소" ? 
+                            `${styles.cancel} ${styles.default}`
+                            :
+                            appointItem.appointment_state ==="완료" ?
+                            `${styles.complete} ${styles.default}`
+                            :
+                            `${styles.visit} ${styles.default}`}>
+                <span>{appointItem.patient_name}</span>
+                <span>({appointItem.patient_gender})</span>
+                <div><span>{appointItem.appointment_state}</span></div>   
+              </div>
+              </>      
+          );
+        })}
+        </div>
+      }
+      
     </td>
     
       <Modal
@@ -85,7 +91,7 @@ function TestItem(props) {
             size= "lg"
             centered="true"
             >
-            <Appoint></Appoint>
+            <Appoint startDate={startDate} time={time} appointModalClose={appointModalClose}></Appoint>
       </Modal>
     </>
   );

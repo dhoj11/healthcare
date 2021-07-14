@@ -1,30 +1,36 @@
 import styles from "./TimeSelector.module.css";
-import {getAppointmentTime} from "../../../data";
 import {Fragment, useState, useEffect} from "react";
 import {isReserved} from "../../../../../apis/administration";
 import React from "react";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 
 function TimeSelector(props) {
-  const { appointmentDate, staffId, changeTime } = props;
-  const appointmentTime = getAppointmentTime();   //예약 가능한 시간을 가지고 옴
-  const [possibleTime, setPossibleTime] = useState();
+  const { possibleTime, appointmentDate, staffId, changeTime } = props;
+  
+  //const [possibleTime, setPossibleTime] = useState();
   const [timeSelect, setTimeSelect] = useState();
+  const [loading, setLoading] = useState(false);
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
-  useEffect(() => {
-    console.log(staffId);
-    if(appointmentDate !== "" && staffId !== "") {
-      const work = async() => {
-        try{
-          const response = await isReserved(staffId, appointmentDate);
-          setPossibleTime(response.data);
-        }catch(error) {
-          console.log(error.message);
-        }
-      }
-      work();
-    }
-  },[props])
+  // useEffect(() => {
+  //   setLoading(true);
+  //   if(appointmentDate !== "" && staffId !== "") {
+  //     const work = async() => {
+  //       try{
+  //         const response = await isReserved(hospital_code, staffId, appointmentDate);
+  //         setPossibleTime(response.data);
+  //       }catch(error) {
+  //         console.log(error.message);
+  //       }
+  //     }
+  //     work();
+  //   }
+  //   return(() => {
+  //     setLoading(false);
+  //   })
+  // },[props]);
 
   const selectTime = (time) => {
     setTimeSelect(time);
@@ -39,9 +45,15 @@ function TimeSelector(props) {
         <div>
           {
             possibleTime.map((time, index) => (
-              <Fragment key={index}>
+              <>
+              {moment(appointmentDate+" "+time).format("YYYY-MM-DD HH:mm") > moment().format("YYYY-MM-DD HH:mm")? 
+              ( <Fragment key={index}>
                 <button className={ timeSelect === time ? `${styles.selected_time_box}` : `${styles.time_box}`} value={time} onClick={() => selectTime(time)}>{time}</button>
-            </Fragment>
+            </Fragment>)
+            :
+            (null)}
+             
+            </>
             ))
           }
         </div>
@@ -49,20 +61,10 @@ function TimeSelector(props) {
     ) 
     : 
     (
-      <div className={styles.time_select}>
-      <div>
-        {
-          appointmentTime.map((time, index) => (
-            <Fragment key={index}>
-              <button className={ timeSelect === time ? `${styles.selected_time_box}` : `${styles.time_box}`} value={time} onClick={() => selectTime(time)}>{time}</button>
-          </Fragment>
-          ))
-        }
-      </div>
-    </div>
+     <div>나오니?</div>
     )}
     </>
   );
 }
 
-export default React.memo(TimeSelector);
+export default TimeSelector;

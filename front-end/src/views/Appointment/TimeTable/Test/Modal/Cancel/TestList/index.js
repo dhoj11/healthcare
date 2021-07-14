@@ -18,7 +18,7 @@ function TestList(props) {
         throw error;
       }
     })();
-  },[props])
+  },[])
   return(
       
       <Accordion >

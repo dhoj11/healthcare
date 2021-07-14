@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Accordion, Button, Card, Collapse } from "react-bootstrap";
-import { getTestCodeList,cancelAppointment } from "../../../../../../apis/appointment";
+import { getTestCodeList,cancelAppointment, testListWait } from "../../../../../../apis/appointment";
 import styles from "./index.module.css";
 import TestList from "./TestList";
 
@@ -18,13 +18,14 @@ function Cancel(props) {
         throw error;
       }
     })();
-  },[props])
+  },[])
 
   //예약 취소
   const cancelTestAppointment= () => {
     (async function() {
       try{
         await cancelAppointment(clickedAppointment.appointment_id);
+        await testListWait(clickedAppointment.appointment_id);
         CancelModalClose(); 
       } catch(error){
         throw error;
@@ -55,7 +56,6 @@ function Cancel(props) {
           return(
             <TestList key={index} testCode={testCode}></TestList>
           )
-          
         })}
         
       </div>

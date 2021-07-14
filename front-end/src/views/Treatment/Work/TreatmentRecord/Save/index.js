@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Save.module.css";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createSetEditBlockActoin } from "../../../../../redux/treatment-reducer";
-import { saveTreatment } from "../../../../../apis/treatment";
+import { getPrevDoctorName, saveTreatment } from "../../../../../apis/treatment";
 
 /**
  * 진료페이지의 각 입력내용은 redux 스토어의 상태 변수로 관리된다.
@@ -22,6 +22,7 @@ function Save(props){
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
   const dispatch = useDispatch();
+  const [staffName, setStaffName] = useState("");
 
   const save = async () => {
 
@@ -40,12 +41,30 @@ function Save(props){
     }
   }
 
+
+  const getDoctorName = useCallback(async() => {
+    try{
+      const response = await getPrevDoctorName(treatment);
+      setStaffName(response.data);
+    }catch(error){
+      console.log(error);
+    }
+  },[treatment]);
+
+  useEffect( ()=>{
+    if(treatment!=="") getDoctorName();
+  },[treatment])
+
   return(
     <>
-      { !editBlock &&
+      { treatment!="" && !editBlock ?
       <div className={style.save} onClick={save}>
         <FontAwesomeIcon icon={faSave} className={style.addIcon}/> 저장
       </div>
+      :
+      treatment != "" ?
+      <div>이전 진료의 : {staffName} </div>
+      : null
       }
     </>
   );

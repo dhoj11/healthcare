@@ -14,7 +14,8 @@ const SET_AUTH_TOKEN = "auth/setAuthToken";
 const SET_STAFF_NAME = "auth/setStaffName";
 const SET_STAFF_AUTHORITY = "auth/setStaffAuthority";
 const SET_HOSPITAL_CODE = "auth/setHospitalCode";
-const SET_HOSPITAL_NAME = "auth/setHospitalName"
+const SET_HOSPITAL_NAME = "auth/setHospitalName";
+const SET_AUTHORITY = "auth/setAuthority";
 //액션 생성 함수 선언
 export const createSetStaffIdAction = (staff_id) => {
   return {type:SET_STAFF_ID,staff_id};
@@ -34,6 +35,9 @@ export const createSetHospitalCodeAction = (hospital_code) => {
 export const createSetHospitalNameAction = (hospital_name) => {
   return {type:SET_HOSPITAL_NAME,hospital_name};
 }
+export const createSetAuthorityAction = (authority) => {
+  return {type:SET_AUTHORITY,authority};
+}
 
 //리듀스 선언
 const authReducer = (state=initialState,action) => {
@@ -49,7 +53,9 @@ const authReducer = (state=initialState,action) => {
     return {...state, hospital_code:action.hospital_code};
   } else if(action.type === SET_HOSPITAL_NAME){
     return {...state, hospital_name:action.hospital_name};
-  } else{
+  } else if(action.type === SET_AUTHORITY){
+    return {...state, authority:action.authority};
+  }else{
     return state;
   }
 };

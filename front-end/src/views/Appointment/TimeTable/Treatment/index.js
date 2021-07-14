@@ -7,7 +7,7 @@ import styles from "./index.module.css";
 import Cancel from "../Modal/Cancel/Cancel";
 
 function Treatment(props) {
-  const {startDate} = props;
+  const {startDate,hospital} = props;
   const [appointList,setAppointList] = useState(null);
 
   const [showAppointModal, setShowAppointModal] = useState(false);
@@ -56,25 +56,28 @@ function Treatment(props) {
     
     
   }
-  const lunch_start = "13:00";
   //데이터 변환
   const axiosTreatmentAppointList = useCallback(async() => {
     try{
       const response =await getTreatmentAppoint(moment(startDate).format("YYYY-MM-DD"));
-      const start_time ="10:00";
-      const end_time ="18:00";
-      
-      const lunch_end = "14:00"
-      const interval =30;
+      const start_time =hospital.officehour_start;
+      const end_time =hospital.officehour_end;
+      const lunch_end = hospital.lunch_end;
+      const interval =hospital.officehour_interval;
       let temp = start_time;
       let appointmentTime =new Array();
       let i=0;
       
+      
       while(temp<end_time){
-        if(!(lunch_start<temp && temp<lunch_end)){
+        if(!(hospital.lunch_start<temp && temp<lunch_end)){
           appointmentTime[i++] =temp;
         }
-        temp =moment(moment().format("YYYY-MM-DD")+" "+temp).add(interval,'m').format("HH:mm");
+        if(temp ==="23:30"){
+          break;
+        }
+        temp =moment(moment().format("YYYY-MM-DD")+" "+temp).add(interval,'m').format("HH:mm")
+        
       }
 
 
@@ -103,8 +106,11 @@ function Treatment(props) {
   })
 
   useEffect(() => {
-    axiosTreatmentAppointList();
-  },[startDate])
+    if(hospital !==null){
+      axiosTreatmentAppointList();
+    }
+    
+  },[props])
   
 
   //모달 관리
@@ -113,7 +119,7 @@ function Treatment(props) {
 
 
   return(    
-    appointList !== null ?
+    appointList !== null && hospital !==null?
     (
     <table className= {`${styles.TimeTable} table`}>
       <thead className= {styles.thead}>
@@ -126,6 +132,7 @@ function Treatment(props) {
         </tr>
       </thead>
       <tbody className={styles.tbody}>
+        {console.log(appointList)}
         {appointList.map((timelyAppoint,index) => {
           return(
             
@@ -134,10 +141,11 @@ function Treatment(props) {
                 Object.values(timelyAppoint).map((appoint,index) => {
                   if(index ===0){
                     return(
-                      <td className={styles.not_poniter} key={index}>{appoint}</td>
+                      <td className={styles.not_poniter} key={appoint}>{appoint}</td>
                     )
                   }else{
                     if((typeof appoint) !== "string"){
+                      
                       return(
                         <td 
                             key={index} 
@@ -165,8 +173,8 @@ function Treatment(props) {
                         </td>
                       )
                     }else{
-                      if(timelyAppoint.시간 ===lunch_start){
-                        return (<td className={styles.lunch}>점심시간</td>)
+                      if(timelyAppoint.시간 ===hospital.lunch_start){
+                        return (<td key={index} className={styles.lunch}>점심시간</td>)
                       }
                       return(
                         <td key={index} onClick={() =>openAppointmentModal(timelyAppoint,appoint,index)}>

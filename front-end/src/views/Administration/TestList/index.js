@@ -1,10 +1,12 @@
 import styles from "./TestList.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import AppointmentWithTestModal from "./AppointmentWithTestModal";
 import TestPatientListItem from "./TestPatientListItem";
 import TestListItem from "./TestListItem";
 import RequestTest from "./RequestTest";
-import {getReceptionList, getTestCodesByReception} from "../../../apis/administration";
+import {getReceptionList, getTestCodesByReception,getTestReceptionListByState} from "../../../apis/administration";
 
 function TestList(props) {
 
@@ -43,7 +45,7 @@ function TestList(props) {
         try {
           let response = await getReceptionList("검사");
           setTestPatientList(response.data);
-          response = await getTestCodesByReception(rerenderer);
+          response = await getTestCodesByReception(rerenderer.reception_id);
           setTestCodeList(response.data);
           //setState("전체");
         } catch (error) {
@@ -87,8 +89,8 @@ function TestList(props) {
 
   const listWithState = async(testReceptionState) => {
     try{
-      //const response = await getTestReceptionListByState(testReceptionState);
-      //setTestPatientList(response.data);
+      const response = await getTestReceptionListByState(testReceptionState);
+      setTestPatientList(response.data);
       setState(testReceptionState);
     }catch(error) {
       console.log(error.message);
@@ -121,10 +123,12 @@ function TestList(props) {
           {/* <div className="mb-2 ml-2 d-flex"> */}
           <div className={styles.test_patient_list_title}>
             <img className="mr-3" src="/resources/svg/clipboard-data.svg"></img><span className="mr-3">검사</span>
-            <div className="mr-2" onClick={getAllList} style={{color : "#ffd43b"}}>전체  건 </div>
-            {/* <div className="mr-2" onClick={()=> listWithState("완료")}>완료  | </div>
-            <div className="mr-2" onClick={()=> listWithState("진행중")}>진행중  | </div>
-            <div className="mr-2" onClick={()=> listWithState("대기")}>대기 </div> */}
+            <div className={styles.reception_state} onClick={getAllList} >전체 &nbsp;| </div>
+            <div className={styles.reception_state} onClick={()=> listWithState("예약")}>예약 &nbsp;| </div>
+            <div className={styles.reception_state} onClick={()=> listWithState("대기")}>대기 &nbsp;| </div>
+            <div className={styles.reception_state} onClick={()=> listWithState("진행")}>진행 &nbsp;| </div>
+            <div className={styles.reception_state} onClick={()=> listWithState("완료")}>완료</div>
+            <div className={styles.length} >{state} : 총 {getLength()} 건</div>
           </div>
           <div className="d-flex bg-light">
           <span className={`border ${styles.test_border}`}>
@@ -155,7 +159,10 @@ function TestList(props) {
         <div className="mb-1 ml-2 d-flex">
           <img className="mr-3" src="/resources/svg/card-list.svg"></img>
           <span className={styles.test_code_list_title}>검사 목록</span>
-          <span className={styles.test_patient_name}>{patientName}</span>
+          <div className={styles.test_patient_name}>
+            <FontAwesomeIcon icon={faUser} className="mr-1"/>
+            <span >{patientName}</span>
+          </div>
           <div className={styles.test_button}>
             <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
             <AppointmentWithTestModal setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
@@ -177,7 +184,7 @@ function TestList(props) {
       <div className={styles.patient_list_content}>
           {
             testCodeList.map((testCodes, index) => (
-                <TestListItem rerenderer={rerenderer} testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
+                <TestListItem testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
             ))
           }
       </div>

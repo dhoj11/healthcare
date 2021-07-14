@@ -6,7 +6,6 @@ const auth = axios.create({
   baseURL : "http://localhost:8080"
 })
 
-
 export function addAuthHeader(authToken) {
   auth.defaults.headers.common["authToken"] = authToken;
 }
@@ -14,3 +13,5 @@ export function addAuthHeader(authToken) {
 export function removeAuthHeader() {
   delete auth.defaults.headers.common["authToken"];
 }
+
+export default auth;

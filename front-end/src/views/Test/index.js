@@ -100,7 +100,7 @@ function Test(props){
             <PatientInformationCard patient={patient}/> 
               : <div className={style.noselect}>
                  <span><FontAwesomeIcon icon={faUserCheck} className={style.selectIcon}/></span>
-                 <span className={style.content}> 환자를 선택해주세요.</span>
+                 <span className={style.content}> 검사자를 선택해주세요.</span>
               </div>
             } 
             </div>

@@ -150,9 +150,9 @@
    </select>
    
    <insert id="insertTestList" parameterType="map">
-   	insert into tests_list (test_list_id, reception_id, test_code, test_list_time, treatment_id, test_list_date)
+   	insert into tests_list (test_list_id, test_code, test_list_time, treatment_id, test_list_date)
    	<foreach collection="treatment_tests" item="item" open="values(" separator="),(" close=")">
-   		#{test_list_id}, #{reception_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
+   		#{test_list_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
    	</foreach>
    </insert>
    
@@ -191,8 +191,18 @@
    <insert id="insertReception">
    	insert into reception (reception_date, reception_time, patient_id, staff_id, reception_kind)
    	values(NOW(), NOW(), #{patient_id}, #{staff_id}, '검사')
-   	
    </insert>
+   
+   <select id="getLatelyReceptionId" resultType="int">
+   	select max(reception_id)
+   	from reception
+   </select>
+   
+   <update id="updateReceptionId">
+   	update tests_list
+   	set reception_id = #{latelyReceptionId}
+   	where test_list_id = #{test_list_id}
+   </update>
    
    <select id="selectTreatmentTestResults" parameterType="java.util.List" resultType="testresult">
     select test_details.test_code
@@ -204,9 +214,17 @@
           ,test_details_max
           ,test_result_value
     from test_details, test_results
-    where test_results.test_details_id = test_details.test_details_id and
+    where test_results.test_details_id = test_details.test_details_id and (
     <foreach collection="list" item="item" separator="or">
    	test_list_id = #{item}
    	</foreach>
+   	)
+   </select>
+   
+   <select id="selectStaffNameByTreatmentId" parameterType="int" resultType="string">
+   	select staff_name
+   	from treatment, staff
+   	where treatment.treatment_id = #{treatment_id} and treatment.staff_id = staff.staff_id
+   	limit 1;
    </select>
 </mapper>

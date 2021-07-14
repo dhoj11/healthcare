@@ -16,8 +16,17 @@ public class TestList {
 
 	private int patient_id;
 	private int reception_id;
-
+	
 	private String staff_id;
+	private String modify_test_list_id;
+	
+	public String getModify_test_list_id() {
+		return modify_test_list_id;
+	}
+
+	public void setModify_test_list_id(String modify_test_list_id) {
+		this.modify_test_list_id = modify_test_list_id;
+	}
 
 	public int getTest_list_id() {
 		return test_list_id;

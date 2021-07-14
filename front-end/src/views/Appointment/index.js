@@ -10,7 +10,6 @@ function Appointment(props) {
 
   const [startDate, setStartDate] = useState(new Date());
   // const [tAppointment,setTAppointment] = useState(getTAppoint());
-
   const [selectPatientId,setSelectPatientId] = useState("");
   
 
