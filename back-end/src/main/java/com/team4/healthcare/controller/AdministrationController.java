@@ -169,10 +169,17 @@ public class AdministrationController {
 
 	}
 	
-	@PutMapping("/appointment/test/state")
-	public void changeTestStateToAppointment(@RequestBody TestList testList) {
-		logger.info(testList.toString());
-		administrationService.changeTestStateToAppointment(testList);
+//	@PutMapping("/appointment/test/state")
+//	public void changeTestStateToAppointment(@RequestBody TestList testList) {
+//		logger.info(testList.toString());
+//		administrationService.changeTestStateToAppointment(testList);
+//		
+//	}
+	
+	@PutMapping("/appointment/test/state/{reception_id}")
+	public void changeTestStateToAppointment(@PathVariable int reception_id) {
+		logger.info(String.valueOf(reception_id));
+		administrationService.changeTestStateToAppointment(reception_id);
 		
 	}
 	@PutMapping("/test/request")
