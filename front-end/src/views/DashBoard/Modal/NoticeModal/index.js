@@ -12,8 +12,7 @@ function NoticeModal(props) {
   const authority = useSelector((state) => state.authReducer.authority);
 
   
-
-  const contentRef = useRef();
+  const contentRef = useRef();  
   useEffect(() => {
     if(showNoticeModal){
       contentRef.current.innerHTML=noticeItem.notice_content;
@@ -53,6 +52,7 @@ function NoticeModal(props) {
         <Modal.Header closeButton className={styles.notice_header}>
             <div className={styles.notice_top}>
               <div className={styles.notice_title}>{noticeItem.notice_title}</div>
+
               <div className={styles.notice_info}>
                 <span>{noticeItem.staff_name}</span>
                 <span>{noticeItem.notice_date}</span>
@@ -67,6 +67,7 @@ function NoticeModal(props) {
                 }
                 
               </div>
+
             </div>
 
         </Modal.Header>

@@ -39,10 +39,10 @@ function TestItem(props) {
   }
   useEffect(() => {
     axiosTestList();
-  },[startDate,showCancelModal])
+  },[startDate,showCancelModal,showAppointModal])
   return(
     <>
-    <td>
+    <td className={styles.td}>
       {
         time===lunch_start ?
         <div> 점심시간</div>
@@ -91,7 +91,7 @@ function TestItem(props) {
             size= "lg"
             centered="true"
             >
-            <Appoint startDate={startDate} time={time}></Appoint>
+            <Appoint startDate={startDate} time={time} appointModalClose={appointModalClose}></Appoint>
       </Modal>
     </>
   );

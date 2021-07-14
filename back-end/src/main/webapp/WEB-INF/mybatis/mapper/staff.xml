@@ -4,6 +4,7 @@
 	<select id="selectByAll" resultType="staff">
 		select *
 		from staff
+		where staff_enabled = 1
 	</select>
 	
 	<select id="selectById" parameterType="String" resultType="staff">

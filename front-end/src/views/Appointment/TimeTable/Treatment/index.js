@@ -132,6 +132,7 @@ function Treatment(props) {
         </tr>
       </thead>
       <tbody className={styles.tbody}>
+        {console.log(appointList)}
         {appointList.map((timelyAppoint,index) => {
           return(
             
@@ -140,10 +141,11 @@ function Treatment(props) {
                 Object.values(timelyAppoint).map((appoint,index) => {
                   if(index ===0){
                     return(
-                      <td className={styles.not_poniter} key={index}>{appoint}</td>
+                      <td className={styles.not_poniter} key={appoint}>{appoint}</td>
                     )
                   }else{
                     if((typeof appoint) !== "string"){
+                      
                       return(
                         <td 
                             key={index} 
@@ -172,7 +174,7 @@ function Treatment(props) {
                       )
                     }else{
                       if(timelyAppoint.시간 ===hospital.lunch_start){
-                        return (<td className={styles.lunch}>점심시간</td>)
+                        return (<td key={index} className={styles.lunch}>점심시간</td>)
                       }
                       return(
                         <td key={index} onClick={() =>openAppointmentModal(timelyAppoint,appoint,index)}>

@@ -6,7 +6,7 @@ import moment from "moment";
 import { createTestappointment, getReceptionStaffId, getTestListTreatmentId, maxAppointmentId, testListAppointment } from "../../../../../../apis/appointment";
 
 function Appoint(props) {
-  const {startDate,time} = props;
+  const {startDate,time,appointModalClose} = props;
   const [selectPatientId,setSelectPatientId] = useState("");
   const selectedPatientId = (id) => {
     setSelectPatientId(id);
@@ -52,13 +52,14 @@ function Appoint(props) {
               
             })
           }
+          appointModalClose();
         } catch(error){
           throw error;
         }
       })();
-      console.log();
     }
   }
+
   return(
     <>
     <div className="d-flex ml-5">
@@ -70,7 +71,7 @@ function Appoint(props) {
       </div>
     </div>
     <div className={styles.btn_contain}>
-        <button className={styles.prev_btn}>이전</button>
+        <button className={styles.prev_btn} onClick={appointModalClose}>이전</button>
         <button className={styles.appoint_btn} onClick={appointment}>예약</button>
       </div>
     </>
