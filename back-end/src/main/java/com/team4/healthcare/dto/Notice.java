@@ -5,7 +5,7 @@ import java.util.Date;
 public class Notice {
 	
 	private int notice_id;
-	private int staff_id;
+	private String staff_id;
 	private String notice_date;
 	private String notice_content;
 	private String notice_title;
@@ -23,10 +23,11 @@ public class Notice {
 	public void setNotice_id(int notice_id) {
 		this.notice_id = notice_id;
 	}
-	public int getStaff_id() {
+	
+	public String getStaff_id() {
 		return staff_id;
 	}
-	public void setStaff_id(int staff_id) {
+	public void setStaff_id(String staff_id) {
 		this.staff_id = staff_id;
 	}
 	public String getNotice_date() {
