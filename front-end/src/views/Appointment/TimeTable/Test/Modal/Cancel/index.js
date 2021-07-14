@@ -18,7 +18,7 @@ function Cancel(props) {
         throw error;
       }
     })();
-  },[props])
+  },[])
 
   //예약 취소
   const cancelTestAppointment= () => {
