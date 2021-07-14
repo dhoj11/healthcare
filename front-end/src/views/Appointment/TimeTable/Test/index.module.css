@@ -1,6 +1,7 @@
 .TimeTable{
   width: 100%;
-  
+  white-space: nowrap;
+  table-layout: fixed;
 }
 .thead{
   width: 100%;

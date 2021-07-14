@@ -73,6 +73,10 @@ public class DashBoardController {
 	public List<ImgNotice> imgNoticeList() {
 		return imgNoticeService.getImgNoticeList();
 	}
+	@GetMapping("/imgnotice/{img_notice_id}")
+	public ImgNotice imgnotice(@PathVariable("img_notice_id") int img_notice_id) {
+		return imgNoticeService.getImgNotice(img_notice_id);
+	}
 	
 	@PostMapping("/imgnotice")
 	public void createImgNotice(ImgNotice imgNotice) {
@@ -88,6 +92,16 @@ public class DashBoardController {
 	public void deleteImgNotice(@PathVariable("img_notice_id") int img_notice_id) {
 		imgNoticeService.delete(img_notice_id);
 	}
+	@PutMapping("/imgnotice/{img_notice_id}") 
+	public void updateHitCount(@PathVariable("img_notice_id") int img_notice_id) {
+		imgNoticeService.updateHitCount(img_notice_id);
+	}
+	@PostMapping("/updateimgnotice")
+	public void updateImgNotice(ImgNotice imgNotice) {
+		logger.info(imgNotice.getImg_notice_content());
+		imgNoticeService.updateImgNotice(imgNotice);
+	}
+	
 	
 	
 	//freeboard
@@ -95,7 +109,6 @@ public class DashBoardController {
 	public List<FreeBoard> freeBoardList() {
 		return freeBoardService.getFreeBoardList();
 	}
-	
 	@PostMapping("/freeboard")
 	public void createFreeBoard(@RequestBody FreeBoard freeBoard) {
 		freeBoardService.create(freeBoard);

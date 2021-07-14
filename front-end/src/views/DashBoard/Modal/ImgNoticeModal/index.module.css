@@ -24,7 +24,11 @@
 .close:hover{
   opacity: 0.8;
 }
-
+.modify{
+  margin-right: 10px;
+  color: #808080;
+  font-size: 14px;
+}
 
 .img_notice_top{
   text-align: center;

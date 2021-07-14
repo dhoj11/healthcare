@@ -25,20 +25,26 @@ function FreeBoardModal(props) {
   }
   const addAnswer = async() => {
       try{
-        const newAnswer=
-        {
-          "freeboard_id":freeBoardItem.freeboard_id,
-          "freeboard_answer_content":answer,
-          "freeboard_answer_date":moment().format('YYYY-MM-DD'),
-          "freeboard_answer_time": moment().format('HH:mm'),
-          "staff_name":staff_name
+        if(answer ===""){
+          alert("댓글 내용을 입력해주세요");
+        }else{
+          const newAnswer=
+          {
+            "freeboard_id":freeBoardItem.freeboard_id,
+            "freeboard_answer_content":answer,
+            "freeboard_answer_date":moment().format('YYYY-MM-DD'),
+            "freeboard_answer_time": moment().format('HH:mm'),
+            "staff_name":staff_name
+          }
+          await createFreeBoardAnswer(newAnswer);
+          setAnswer("");
+          addAnswerReRender();
         }
-        await createFreeBoardAnswer(newAnswer);
+        
       } catch(error){
         throw error;
       }
-    setAnswer("");
-    addAnswerReRender();
+    
   }
   const deleteItem = () => {
     (async function() {

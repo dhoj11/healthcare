@@ -62,6 +62,7 @@ function TestResult(props){
 
     await saveTestResult(testResults)
     setIsSaved(true);
+    alert("저장되었습니다.");
   }
   
   return(
@@ -74,6 +75,7 @@ function TestResult(props){
                   <th scope="col" className="col-3">검사명</th>
                   <th scope="col" className="col-1">처방코드</th>
                   <th scope="col" className="col-3">상세검사명</th>
+                  <th scope="col" className="col-2">참고치</th>
                   <th scope="col" className="col-1">결과값</th>
                 </tr>
               </thead>
@@ -86,18 +88,18 @@ function TestResult(props){
                       return(<tr key={index}>
                                 <td>{item.test_code}</td>
                                 <td>{item.test_name}</td>
+                                
                                 <td>{item.test_details_code}</td>
                                 <td>{item.test_details_name}</td>
-                             
+                                <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
-                                           readOnly={isSaved && true}
+                                           //readOnly={isSaved && true}
                                            type="text"
                                            name={item.test_details_id}
                                            value={item.test_result_value || ""} 
                                            onChange={(event) => handleChange(event, index)}>
                                           </input>
                                 </td>
-                                
                               </tr>
                             );
                     }
@@ -108,9 +110,9 @@ function TestResult(props){
                               <td></td>
                               <td>{item.test_details_code}</td>
                               <td>{item.test_details_name}</td>
-                        
+                              <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
-                                           readOnly={isSaved && true}
+                                           //readOnly={isSaved && true}
                                            type="text"
                                            name={item.test_details_id}
                                            value={item.test_result_value || ""} 
@@ -126,7 +128,7 @@ function TestResult(props){
               </tbody>
             </table>
             </div>
-          { testList && !isSaved && <div className={style.saveButton} onClick={saveResult}>저장</div> }
+          { testList && <div className={style.saveButton} onClick={saveResult}>저장</div> }
     </div>
   );
 }
