@@ -10,7 +10,7 @@ import {getReceptionList, getTestCodesByReception,getTestReceptionListByState} f
 
 function TestList(props) {
 
-  const {dayAppointment,testAppointmentId} = props;
+  const {testAppointmentId, selectedPatient} = props;
   
   const [testPatientList, setTestPatientList] = useState([]);    //모든 검사 환자 리스트를 초기 상태로 선언
   const [testCodeList, setTestCodeList] = useState([]);   //검사 리스트 빈 배열로 초기 상태 선언
@@ -106,6 +106,7 @@ function TestList(props) {
     }
     setPatientName(patient_name);
     setSelectedTestCodes([]);   //이전에 선택된 검사 리스트를 빈 배열로 세팅
+    selectedPatient(patientId);
   }
   
   const changeCheckedList = (event, testCode) => {
