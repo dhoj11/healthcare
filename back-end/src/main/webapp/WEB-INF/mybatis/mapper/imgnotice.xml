@@ -23,4 +23,21 @@
 		delete from img_notice
 		where img_notice_id = #{img_notice_id}
 	</delete>
+	
+	<update id="updateHitCount" parameterType="int">
+		update img_notice
+		set img_notice_hitcount =img_notice_hitcount+1
+		where img_notice_id = #{img_notice_id};
+	</update>
+	
+	<update id="updateNoImg" parameterType="imgNotice">
+		update img_notice
+		set img_notice_title =#{img_notice_title}, img_notice_content=#{img_notice_content}
+		where img_notice_id =#{img_notice_id}
+	</update>
+	<update id="updateImg" parameterType="imgNotice">
+		update img_notice
+		set img_notice_title =#{img_notice_title}, img_notice_content=#{img_notice_content}, img_notice_pic_oname=#{img_notice_pic_oname}, img_notice_pic_sname=#{img_notice_pic_sname},img_notice_pic_type=#{img_notice_pic_type}
+		where img_notice_id =#{img_notice_id}
+	</update>
 </mapper>

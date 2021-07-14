@@ -29,8 +29,17 @@ export function getImgNoticeList(){
 export function imgNoticeDownloadAttach(img_notice_id){
   return axios.get("http://localhost:8080/dashboard/imgnotice/downloadAttach/" + img_notice_id);
 }
+export function getImgNotice(img_notice_id){
+  return axios.get("http://localhost:8080/dashboard/imgnotice/"+img_notice_id);
+}
 export function deleteImgNotice(img_notice_id){
   return axios.delete("http://localhost:8080/dashboard/imgnotice/" +img_notice_id);
+}
+export function updateHitCount(img_notice_id){
+  return axios.put("http://localhost:8080/dashboard/imgnotice/" +img_notice_id);
+}
+export function updateImgNotice(imgNotice){
+  return axios.post("http://localhost:8080/dashboard/updateimgnotice",imgNotice);
 }
 
 
