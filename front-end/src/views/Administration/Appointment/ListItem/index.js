@@ -1,6 +1,6 @@
 import styles from "./ListItem.module.css";
 import {useEffect, useState} from "react";
-import { changeAppointmentState, addReceptionAfterAppointment } from "../../../../apis/administration";
+import { changeAppointmentState, addReceptionAfterAppointment, addTestReceptionAfterAppointment } from "../../../../apis/administration";
 import React from "react";
 
 function ListItem(props) {
@@ -38,7 +38,7 @@ function ListItem(props) {
         receptionPatient(appointment_id);
       } else if(event.target.value === "내원" && appointment_kind === "검사") {
         //검사 컴포넌트에 추가
-        await addReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
+        await addTestReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
         appointmentTest(appointment_id);
       }
     } catch(error) {

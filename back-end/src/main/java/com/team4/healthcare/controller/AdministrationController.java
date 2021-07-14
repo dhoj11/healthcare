@@ -52,6 +52,11 @@ public class AdministrationController {
 	public void addReceptionAfterAppointment(@PathVariable int appointment_id) {
 		administrationService.addReceptionAfterAppointment(appointment_id);
 	}
+	
+	@PostMapping("/appointment/reception/test/{appointment_id}")
+	public void addTestReceptionAfterAppointment(@PathVariable int appointment_id) {
+		administrationService.addTestReceptionAfterAppointment(appointment_id);
+	}
 
 	@GetMapping("/{patient_id}")
 	public Patient getPatient(@PathVariable int patient_id) {

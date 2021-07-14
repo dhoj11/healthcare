@@ -78,17 +78,28 @@ public class AdministrationService {
 		// 방금 추가된 접수 번호 불러와서
 		int reception_id = receptionDAO.selectReceptionId(reception, appointment_id);
 		
-		Treatment addTreatment = receptionDAO.getCurrentReception(reception_id);
 		// treatmentDTO 에 recetion_id, patient_id, staff_id 담고
+		Treatment addTreatment = receptionDAO.getCurrentReception(reception_id);
 		
-		receptionDAO.addTreatment(addTreatment);
 		// treatment 테이블에 위에서 가져온거 reception_id, treatment_date (now()로), patient_id, staff_id 추가
+		receptionDAO.addTreatment(addTreatment);
 		
-		//검사 접수이면 tests_list의 reception_id 변경
-		if(reception.getReception_kind().equals("검사")) {
-			
-			testDAO.updateTestListAfterReception(appointment_id, reception_id);
-		}
+		//환자의 최근 내원일 변경
+		patientDAO.updatePatientRecentVisit(reception.getPatient_id());
+	}
+	
+	public void addTestReceptionAfterAppointment(int appointment_id) {
+		Appointment receptionData = appointmentDAO.selectAppointmentById(appointment_id);
+		Reception reception = new Reception();
+		reception.setReceptionInfo(receptionData);
+		int row = receptionDAO.insertReceptionAfterAppointment(reception);
+		
+		// 방금 추가된 접수 번호 불러와서
+		int reception_id = receptionDAO.selectReceptionId(reception, appointment_id);
+		
+		//테스트리스트의 접수 번호를 방금 추가된 접수 번호로 변경
+		testDAO.updateTestListAfterReception(appointment_id, reception_id);
+		
 		//환자의 최근 내원일 변경
 		patientDAO.updatePatientRecentVisit(reception.getPatient_id());
 	}

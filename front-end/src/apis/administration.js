@@ -16,6 +16,11 @@ export function addReceptionAfterAppointment(appointment_id) {
   return promise;
 }
 
+export function addTestReceptionAfterAppointment(appointment_id) {
+  const promise = auth.post("/administration/appointment/reception/test/" + appointment_id);
+  return promise;
+}
+
 export function getPatient(patient_id) {
   const promise = auth.get("/administration/" + patient_id);
   return promise;
