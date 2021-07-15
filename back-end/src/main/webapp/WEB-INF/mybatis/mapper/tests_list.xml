@@ -24,10 +24,19 @@
 		where treatment_id=#{testList.treatment_id} and test_code = #{test_code}
 	</update>
 	<select id="selectTestState" resultType="string">
-		select test_list_state
+				select test_list_state
 		from tests_list
-		where reception_id = #{reception_id} and test_list_state not in ('예약')
+		where reception_id = #{reception_id} and test_list_state not IN ('예약')
 	</select>
+	
+	<select id="selectTestState2" resultType="string">
+				select test_list_state
+		from tests_list
+		where reception_id = #{reception_id}
+		and test_list_state not IN ('예약')
+		and test_list_state not IN ('완료')
+	</select>
+	
 	<update id="updateTestListAfterReception">
 		update tests_list
 		set reception_id = #{reception_id}, test_list_state='대기'

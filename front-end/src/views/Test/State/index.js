@@ -25,13 +25,17 @@ function State(props){
     setTestList(props.testList);
   },[props.testList])
 
+  useEffect(()=>{
+    setTestList(props.testList);
+  },[props.testList])
+
   /**
    * 선택한 검사의 검사진행상태를 변경한다.
    */
   const handleChangeSate = async (state) => {
     if(testList){
       try{
-        await changeTestListState(testList, state)
+        await changeTestListState(testList.test_list_id, testList.reception_id, state)
         props.changeState(testList, state);
       }catch(error){
         console.log(error);

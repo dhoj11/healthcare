@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Test(props){
 
-  const[testList, setTestList] = useState(); // testListId
+  const[testList, setTestList] = useState({test_list_id:"", patient_id: "", reception_id:""}); // testListId
   const[patient, setPatient] = useState();
   const[testLists, setTestLists] = useState();
   const[isSaved, setIsSaved] = useState(false);
@@ -58,10 +58,11 @@ function Test(props){
    */
   const changeTestList = useCallback( async (arg) => {
     try{
+      //console.log(arg)
     if(arg && arg !== ""){
       const response = await getPateint(arg.patient_id);
       setPatient(response.data);
-      setTestList(arg.test_list_id);
+      setTestList({test_list_id : arg.test_list_id, patient_id: arg.patient_id, reception_id : arg.reception_id});
       setButtonAllow(true);
     }
   }catch(error){
@@ -72,10 +73,15 @@ function Test(props){
   const changeState = useCallback ((testList, state)=> {
     let newTestLists = [...testLists];  
     for(let index in newTestLists){
-      if(newTestLists[index].test_list_id === testList)
-        newTestLists[index].test_list_state = state;
+      if(newTestLists[index].test_list_id === testList.test_list_id){
+        if(newTestLists[index].reception_id === testList.reception_id)
+          newTestLists[index].test_list_state = state;
+      }
     }
     setTestLists(newTestLists);
+
+          // DB 접수 테이블에서 상태 바꿔주는 코드 작성
+
   },[testLists]);
 
   useEffect(()=>{
