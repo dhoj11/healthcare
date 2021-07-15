@@ -20,13 +20,13 @@ export function getPateintByTestListId(test_list_id){
   return promise;
 }
 
-export function getTestResult(test_list_id){
-  const promise = auth.get('/test/testresult/' + test_list_id);
+export function getTestResult(test_list_id, reception_id){ 
+  const promise = auth.get('/test/testresult/', {params:{test_list_id, reception_id}});
   return promise;
 }
 
-export function changeTestListState(test_list_id, state){
-  auth.put('/test/testlist/' , {test_list_id, state});
+export function changeTestListState(test_list_id, reception_id, state){
+  auth.put('/test/testlist/' , {test_list_id, reception_id, state});
 }
 
 export function saveTestResult(testResults){

@@ -42,15 +42,35 @@ public class TestService {
 		return patient;
 	}
 	
-	public List<TestResult> getTestResult(int test_list_id){
-		List<TestResult> result = testDao.getTestResult(test_list_id);
+	public List<TestResult> getTestResult(int test_list_id, int reception_id){
+		List<TestResult> result = testDao.getTestResult(test_list_id, reception_id);
 		return result;
 	}
 	
 	public void updateTestListState(Map<String,String> obj) {
 		int test_list_id = Integer.parseInt(obj.get("test_list_id"));
+		int reception_id = Integer.parseInt(obj.get("reception_id"));
 		String state = obj.get("state");
-		testDao.updateTestListState(test_list_id, state);
+		
+		testDao.updateTestListState(test_list_id, reception_id, state);
+		List<String> stateList = testDao.getTestStateList(test_list_id);
+		
+		for(String item : stateList) {
+			if(item.equals("진행")) {
+				testDao.updateTestReceptionState(reception_id, "진행");
+				break;
+			}
+			if(item.equals("요청")) {
+				testDao.updateTestReceptionState(reception_id, "진행");
+				break;
+			}
+			if(item.equals("대기")) {
+				testDao.updateTestReceptionState(reception_id, "진행");
+				break;
+			}
+			// state_list가 예약이거나 완료이면 -> 완료
+			testDao.updateTestReceptionState(reception_id, "완료");	
+		}
 	}
 	
 	public void updateTestResult(List<TestResult> testResults) {
