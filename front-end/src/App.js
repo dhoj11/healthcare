@@ -19,15 +19,14 @@ function App() {
     }});
 
     
-
     
     return (() => {
       (console.log("언마운트"));
     });
   },[]);
+  
   return (
     <div className="main">
-      <div>hihihihi</div>
         <div className="header">
           <AppHeader/>
         </div>
