@@ -5,25 +5,26 @@ import AppRoute from "./AppRoute";
 import AppHeader from './AppHeader';
 import { useEffect } from 'react';
 import Paho from "paho-mqtt";
-import { useDispatch } from 'react-redux';
-import {createSetClientAction} from "./redux/mqtt-reducer";
-
+import { createSetClientAction } from './redux/mqtt-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMqttMessage } from './apis/message';
 function App() {
-
   const dispatch = useDispatch();
   useEffect(() => {
-    const client = new Paho.Client("localhost", 61614, "client-" + new Date().getTime());
+    const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
-    if(sessionStorage.getItem("staff_id")) {
-      //토픽 설정
-    }else {
-      //토픽 설정 X
-    }
-    return (() => {
-      client.disconnect();
-    })
-  },[]);
+    client.connect({onSuccess: () => {
+      console.log("접속 성공");
+      client.subscribe("/");
+    }});
 
+    
+    
+    return (() => {
+      (console.log("언마운트"));
+    });
+  },[]);
+  
   return (
     <div className="main">
         <div className="header">

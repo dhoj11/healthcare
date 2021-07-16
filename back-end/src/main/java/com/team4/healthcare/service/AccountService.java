@@ -39,7 +39,7 @@ public class AccountService {
 			staff.setStaff_pic_type(staff_attach_pic.getContentType());
 			
 			try {
-				File file = new File("C:/dz_uploadfiles/account/" + staff.getStaff_pic_sname());
+				File file = new File("D:/healthcarepic/" + staff.getStaff_pic_sname());
 				staff_attach_pic.transferTo(file);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -90,7 +90,7 @@ public class AccountService {
 			staff.setStaff_pic_type(staff_attach_pic.getContentType());
 			
 			try {
-				File file = new File("C:/dz_uploadfiles/account/" + staff.getStaff_pic_sname());
+				File file = new File("D:/healthcarepic/" + staff.getStaff_pic_sname());
 				staff_attach_pic.transferTo(file);
 			} catch (Exception e) {
 				e.printStackTrace();

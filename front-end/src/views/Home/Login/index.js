@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { login } from "../../../apis/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSetAuthorityAction, createSetAuthTokenAction, createSetHospitalCodeAction, createSetHospitalNameAction, createSetStaffAuthorityAction, createSetStaffIdAction, createSetStaffNameAction } from "../../../redux/auth-reducer";
 import { addAuthHeader } from "../../../apis/axiosConfig";
+import Paho from "paho-mqtt";
+import { sendMqttMessage } from "../../../apis/message";
+
 function Login(props){
   const [staff,setStaff] = useState({
     staff_id:"",
@@ -14,8 +17,8 @@ function Login(props){
     hospital_code:""
   })
   const dispatch = useDispatch();
-
   const history = useHistory();
+  const client = useSelector((state) => state.mqttReducer.client);
   const handleLogin = async () => {;
     try{
       await login(staff)
@@ -29,7 +32,7 @@ function Login(props){
               dispatch(createSetStaffAuthorityAction(response.data.staff_authority));
               dispatch(createSetHospitalCodeAction(response.data.hospital_code));
               dispatch(createSetHospitalNameAction(response.data.hospital_name));
-              dispatch(createSetAuthorityAction(response.data.authority))
+              dispatch(createSetAuthorityAction(response.data.authority));
               //SessionStorage에 인증 내용 저장(브라우저 갱신시 사용)
               sessionStorage.setItem("staff_id",response.data.staff_id);
               sessionStorage.setItem("authToken",response.data.authToken);
@@ -38,6 +41,22 @@ function Login(props){
               sessionStorage.setItem("hospital_code",response.data.hospital_code);
               sessionStorage.setItem("hospital_name",response.data.hospital_name);
               sessionStorage.setItem("authority",response.data.authority);
+              client.unsubscribe("/");
+              client.subscribe("/"+response.data.hospital_code+"/"+response.data.staff_authority);
+
+              (async function() {
+                try{
+                  await sendMqttMessage({
+                    topic : "/"+response.data.hospital_code+"/의사",
+                    content : "Hello"
+                  });
+                } catch(error){
+                  throw error;
+                }
+              })();
+              client.onMessageArrived = (msg) => {
+                console.log(JSON.parse(msg.payloadString).content);
+              }
               history.push("/dashboard");
             })         
             .catch(() => {

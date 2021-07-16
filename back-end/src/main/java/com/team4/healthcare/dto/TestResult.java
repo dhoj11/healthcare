@@ -13,6 +13,8 @@ public class TestResult {
 	private String test_details_min;
 	private String test_details_max;
 	
+	private int reception_id;
+	
 	public int getTest_list_id() {
 		return test_list_id;
 	}
@@ -73,6 +75,12 @@ public class TestResult {
 	}
 	public void setTest_details_max(String test_details_max) {
 		this.test_details_max = test_details_max;
+	}
+	public int getReception_id() {
+		return reception_id;
+	}
+	public void setReception_id(int reception_id) {
+		this.reception_id = reception_id;
 	}
 	
 	

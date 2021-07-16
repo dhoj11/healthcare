@@ -14,6 +14,7 @@ public interface ReceptionDao {
 	public List<Reception> selectReceptionListByState(String reception_state);
 	public int updateReceptionState(@Param("reception_id") int reception_id, @Param("reception_state") String reception_state);
 	public int insertReceptionAfterVisit(Reception reception);
+	public int getLatelyReceptionId();
 	public int selectReceptionId(Reception reception);
 	public String selectReceptionStaffId(@Param("test_list_id") int test_list_id, @Param("test_code") String test_code);
 	public int selectReceptionId(@Param("reception") Reception reception, @Param("appointment_id") int appointment_id);

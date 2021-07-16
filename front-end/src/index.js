@@ -26,6 +26,7 @@ store.dispatch(createSetAuthorityAction(sessionStorage.getItem("authority") || "
 if(sessionStorage.getItem("staff_id")){
   addAuthHeader(sessionStorage.getItem("authToken"));
 }
+
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

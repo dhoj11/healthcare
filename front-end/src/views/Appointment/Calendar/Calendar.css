@@ -5,7 +5,10 @@
   padding: 30px 30px;
   font-size: 17px;
 }
-
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected{
+  background-color: white;
+   color: black;
+}
 .react-datepicker__header{
   background-color: white;
   border: white;

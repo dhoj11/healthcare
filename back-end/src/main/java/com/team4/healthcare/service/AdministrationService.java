@@ -191,8 +191,15 @@ public class AdministrationService {
 	public void addReceptionAfterVisit(Reception reception) {
 		int row = receptionDAO.insertReceptionAfterVisit(reception);
 		patientDAO.updatePatientRecentVisit(reception.getPatient_id());
+		
+		Treatment addTreatment = new Treatment();
+		int latelyReceptionId = receptionDAO.getLatelyReceptionId();
+		addTreatment.setReception_id(latelyReceptionId);
+		addTreatment.setPatient_id(reception.getPatient_id());
+		addTreatment.setStaff_id(reception.getStaff_id());
+		receptionDAO.addTreatment(addTreatment);
 	}
-	
+
 	public List<String> isReserved(String hospital_code, String staff_id, String appointment_date) throws ParseException {
 		
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -337,6 +344,12 @@ public class AdministrationService {
 //	}
 	
 	public void changeTestStateToAppointment(int reception_id) {
+		
+		List<String> testStateList2 = testDAO.selectTestState2(reception_id);
+		if(testStateList2.size() ==0) {
+			receptionDAO.updateReceptionState(reception_id, "완료");
+		}
+		
 		List<String> testStateList = testDAO.selectTestState(reception_id);
 		logger.info(testStateList.toString());
 		if(testStateList.size() == 0) {

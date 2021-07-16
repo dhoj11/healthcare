@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Patient;
@@ -46,9 +46,9 @@ public class TestController {
 		return testService.getPatientByTestListId(test_list_id);
 	}
 	
-	@GetMapping("/testresult/{test_list_id}")
-	public List<TestResult> testResult(@PathVariable int test_list_id){
-		return testService.getTestResult(test_list_id);
+	@GetMapping("/testresult/")
+	public List<TestResult> testResult(@RequestParam() int test_list_id, @RequestParam() int reception_id){
+		return testService.getTestResult(test_list_id, reception_id);
 	}
 	
 	@PutMapping("/testlist")
