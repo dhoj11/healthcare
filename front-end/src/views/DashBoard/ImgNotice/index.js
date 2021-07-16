@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 import { faBatteryThreeQuarters, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
+import { Modal } from "react-bootstrap";
 function ImgNotice(props) {
   const [showImgNoticeModal,setShowImgNoticeModal] = useState(false);
   const [imgNoticeItem,setImgNoticeItem] = useState(false);
   const [imgNotice,setImgNotice] = useState([]);
   const authority = useSelector((state) => state.authReducer.authority);
-
   let infi= true;
   if(imgNotice.length<4){
     infi=false;
@@ -33,6 +33,8 @@ function ImgNotice(props) {
       setImgNotice(response.data);
     })();
   },[showImgNoticeModal])
+
+  //모달창 열기
   const openImgNoticeModal = (data) => {
     (async function(){
       try{
@@ -44,9 +46,13 @@ function ImgNotice(props) {
     setImgNoticeItem(data);
     setShowImgNoticeModal(true);
   }
+
+
+  //모달창 닫기
   const closeImgNoticeModal = () => {
     setShowImgNoticeModal(false);
   }
+
   return(
     <>
       <div className={styles.ImgNotice_contain}>
@@ -56,7 +62,7 @@ function ImgNotice(props) {
               <div key={index} className={styles.imgItem}>
                 <div className={styles.Item} onClick={() =>openImgNoticeModal(data)}>
                   <div className={styles.img_contain}>
-                    <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${data.img_notice_id}`} width="300px" height="160px" ></img>
+                    <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${data.img_notice_id}`} width="300px" height="160px"></img>
                   </div>
                   <div className={styles.ImgNoticeItem}>
                     <div className={styles.ImgNotice_title}>

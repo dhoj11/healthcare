@@ -42,43 +42,44 @@ function ImgNoticeModal(props) {
     {
       showImgNoticeModal ? (
         <Modal
-      show={showImgNoticeModal} 
-      onHide={closeImgNoticeModal}
-      size="lg"
-      centered="true"
-      >
-        <Modal.Header closeButton className={styles.img_notice_header}>
-            <div className={styles.img_notice_top}>
-              <div className={styles.img_notice_title}>{imgNoticeItem.img_notice_title}</div>
-              <div className={styles.img_notice_info}>
-                <span>{imgNoticeItem.staff_name}</span>
-                <span>{imgNoticeItem.img_notice_date}</span>
-                {
-                  authority ==="ROLE_ADMIN" ?
-                    <>
-                      <Link to={`/noticeeditor/updateimgnotice/${imgNoticeItem.img_notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
-                      <span onClick={OpenDeleteModal}>삭제</span>
-                    </>
-                    :
-                    null
-                }
-                
-              </div>
-            </div>
+          show={showImgNoticeModal} 
+          onHide={closeImgNoticeModal}
+          size="lg"
+          centered="true"
+          >
+            <Modal.Header closeButton className={styles.img_notice_header}>
+                <div className={styles.img_notice_top}>
+                  <div className={styles.img_notice_title}>{imgNoticeItem.img_notice_title}</div>
+                  <div className={styles.img_notice_info}>
+                    <span>{imgNoticeItem.staff_name}</span>
+                    <span>{imgNoticeItem.img_notice_date}</span>
+                    {
+                      authority ==="ROLE_ADMIN" ?
+                        <>
+                          <Link to={`/noticeeditor/updateimgnotice/${imgNoticeItem.img_notice_id}`} className={styles.link}><span className={styles.modify}>수정</span></Link>
+                          <span onClick={OpenDeleteModal}>삭제</span>
+                        </>
+                        :
+                        null
+                    }
+                    
+                  </div>
+                </div>
 
-        </Modal.Header>
-        <Modal.Body>
-          <div className={styles.img_notice_content}>
-            <span ref={contentRef}></span>
-          </div>
-          
-        </Modal.Body>
-        <Modal.Footer>
-          <div>
-            <button onClick={closeImgNoticeModal} className={styles.close}>확인</button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={styles.img_notice_content}>
+              <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${imgNoticeItem.img_notice_id}`} width="100%" className="mb-4"></img>
+                <span ref={contentRef}></span>
+              </div>
+              
+            </Modal.Body>
+            <Modal.Footer>
+              <div>
+                <button onClick={closeImgNoticeModal} className={styles.close}>확인</button>
+              </div>
+            </Modal.Footer>
+          </Modal>
       ) :
       null
     }

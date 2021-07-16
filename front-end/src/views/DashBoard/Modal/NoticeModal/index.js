@@ -10,7 +10,7 @@ function NoticeModal(props) {
   const {showNoticeModal,closeNoticeModal,noticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
   const authority = useSelector((state) => state.authReducer.authority);
-
+  console.log(noticeItem);
   
   const contentRef = useRef();  
   useEffect(() => {
@@ -82,7 +82,20 @@ function NoticeModal(props) {
         <Modal.Body>
           
           <div className={styles.notice_content}>
+          {
+            noticeItem.notice_image !== undefined ?
+            <img src={noticeItem.notice_image} width="100%"  className="mb-4"></img>
+            :
+              noticeItem.img_notice_id !== undefined ?
+              <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${noticeItem.img_notice_id}`} width="100%"  className="mb-4"></img>
+              :
+              null
+          }
+          {
             
+            
+
+          }
             <span ref={contentRef}></span>
           </div>
         </Modal.Body>

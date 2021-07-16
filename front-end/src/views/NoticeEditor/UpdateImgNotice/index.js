@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import { createImgNotice, createNotice, getImgNotice, getNotice, updateImgNotice, updateNotice } from '../../../apis/dashboard';
 import NoticeModal from '../../DashBoard/Modal/NoticeModal';
 function UpdateImgNotice(props) {
-
   const notice_id = parseInt(props.match.params.img_notice_id);
   const [text, setText] = useState("");
   const [title,setTitle] = useState("");
@@ -91,12 +90,29 @@ function UpdateImgNotice(props) {
     if(title==="" || text ===""||text==="<p><br></p>"){
       alert("제목과 내용을 입력해주세요.")
     }else{
-      let jsonData= {
-        notice_title:title,
-        notice_content:text,
-        notice_date: noticeItem.notice_date
-      };
-      setNoticeItem(jsonData);
+      if(inputFile.current.files[0] !==undefined){
+        const imageUrl = URL.createObjectURL(inputFile.current.files[0]);
+        let jsonData= {
+          img_notice_id:noticeItem.img_notice_id,
+          notice_title:title,
+          notice_content:text,
+          notice_date: noticeItem.notice_date,
+          notice_image:imageUrl
+        };
+        setNoticeItem(jsonData);
+
+      } else{
+        let jsonData= {
+          img_notice_id:noticeItem.img_notice_id,
+          notice_title:title,
+          notice_content:text,
+          notice_date: noticeItem.notice_date
+        };
+        setNoticeItem(jsonData);
+
+      }
+      
+      
       openNoticeModal();
     }
     
