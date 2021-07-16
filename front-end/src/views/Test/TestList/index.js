@@ -24,7 +24,7 @@ function TestList(props){
 
   useEffect(() => { 
     const newTestListData = testListData.reduce( (acc, current) => {
-      if (acc.findIndex(({ test_list_id }) => test_list_id === current.test_list_id) === -1) {
+      if (acc.findIndex(({ test_list_id, reception_id }) => (test_list_id === current.test_list_id && reception_id === current.reception_id)) === -1) {
         acc.push(current);
       }
       return acc;
@@ -41,7 +41,7 @@ function TestList(props){
   },[]);
   
   useEffect(()=>{
-    // testList - // {test_list_id: "", patient_id: ""}
+    // testList - // {test_list_id: "", patient_id: ""} + reception_id 추가해주자..
     props.changeTestList(testList); 
   },[testList])
 
@@ -67,7 +67,7 @@ function TestList(props){
               { listState === "all" ?
                 testLists.length > 0 && testLists.map((item, index) => {
                   return (<tr key={index}
-                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
+                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id, reception_id: item.reception_id})}>
                     <th>{index+1}</th>
                     {/* <th>{item.patient_id}</th> */}
                     <th>{item.patient_name}</th>

@@ -22,7 +22,7 @@ function TestResult(props){
   const getResults = async () => {
     if(testList!=null && testList!=undefined && testList !=""){
       try{
-        const promise = await getTestResult(testList);
+        const promise = await getTestResult(testList.test_list_id, testList.reception_id);
         setTestResults(promise.data);
       }catch(error){
         console.log(error);

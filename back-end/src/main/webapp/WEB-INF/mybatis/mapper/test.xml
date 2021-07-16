@@ -8,7 +8,15 @@
     </select>
     
     <select id="selectTestList" resultType="testlist">
-   		select test_list_id, test_code, test_list_state, test_list_time, appointment_id, treatment.reception_id, patient.patient_id, patient.patient_name, test_list_saved
+   		select test_list_id
+   			 , test_code
+				 , test_list_state
+   			 , test_list_time
+				 , appointment_id
+   			 , patient.patient_id
+   			 , patient.patient_name
+   			 , test_list_saved
+   			 , tests_list.reception_id
     	from tests_list, treatment, patient
     	where tests_list.treatment_id = treatment.treatment_id 
     	  And tests_list.test_list_req = 1
@@ -42,13 +50,13 @@
 		LIMIT 1
     </select>
     
-      <select id="getTestResult" parameterType="int" resultType="testresult">
+      <select id="getTestResult"  resultType="testresult">
 
-		SELECT test_list_id, tmp2.test_code, test_name, tmp2.test_details_id, test_result_value, test_details_code, test_details_name, test_details_unit, test_details_min, test_details_max 
+	SELECT test_list_id, tmp2.test_code, test_name, tmp2.test_details_id, test_result_value, test_details_code, test_details_name, test_details_unit, test_details_min, test_details_max 
 		FROM (SELECT tmp.test_list_id, tmp.test_code, test_list_req, test_details_id, test_result_value
 			  FROM (select *
 				    from tests_list
-					where test_list_id = #{test_list_id} AND test_list_req = 1) AS tmp, test_results
+					where test_list_id = #{test_list_id} AND test_list_req = 1 AND reception_id = #{reception_id}) AS tmp, test_results
 			  WHERE tmp.test_list_id = test_results.test_list_id AND tmp.test_code = test_results.test_code) AS tmp2, test_details
 		WHERE tmp2.test_details_id = test_details.test_details_id
     		
@@ -57,13 +65,32 @@
     <update id="updateTestListState">
     	update tests_list
     	set test_list_state = #{state}
-    	where test_list_id = #{test_list_id} and test_list_req = 1
+    	where test_list_id = #{test_list_id} and test_list_req = 1 and reception_id=#{reception_id}
     </update>
     
     <update id="updateTestResult" parameterType="testresult">
       update test_results
          set test_result_value = #{test_result_value}
          where test_list_id = #{test_list_id} And test_code = #{test_code} And test_details_id = #{test_details_id}      
+    </update>
+    
+    <select id="getReceptionIdByTestListId" parameterType="int" resultType="int">
+    	select reception_id
+    	from tests_list
+    	where test_list_id = #{test_list_id} and test_list_req = 1
+    	limit 1
+    </select>
+    
+    <select id="getTestStateList" parameterType="int" resultType="string">
+    	select test_list_state
+    	from tests_list
+    	where test_list_id = #{test_list_id}
+    </select>    
+    
+    <update id = "updateTestReceptionState">
+    	update reception
+    	set reception_state = #{state}
+    	where reception_id = #{reception_id}
     </update>
     
     <update id="updateTestResultSave" parameterType="int">

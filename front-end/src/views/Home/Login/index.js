@@ -32,7 +32,7 @@ function Login(props){
               dispatch(createSetStaffAuthorityAction(response.data.staff_authority));
               dispatch(createSetHospitalCodeAction(response.data.hospital_code));
               dispatch(createSetHospitalNameAction(response.data.hospital_name));
-              dispatch(createSetAuthorityAction(response.data.authority))
+              dispatch(createSetAuthorityAction(response.data.authority));
               //SessionStorage에 인증 내용 저장(브라우저 갱신시 사용)
               sessionStorage.setItem("staff_id",response.data.staff_id);
               sessionStorage.setItem("authToken",response.data.authToken);

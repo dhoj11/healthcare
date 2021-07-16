@@ -39,6 +39,12 @@
 			(reception_date, reception_time, patient_id, reception_content, staff_id, appointment_id, reception_kind) 
 	values (curdate(), curtime(), #{patient_id}, #{reception_content}, #{staff_id}, null, '진료')
 	</insert>
+	
+	<select id = "getLatelyReceptionId" resultType="int">
+		select max(reception_id)
+		from reception
+	</select>
+	
 	<select id="selectReceptionId" resultType="int">
 		select reception_id
 		from reception

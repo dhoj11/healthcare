@@ -20,17 +20,22 @@ public interface TestDao{
     public List<TestList> selectTestsByAppointment(int reception_id);
     public int updateTestList(@Param("testList") TestList testList, @Param("appointment_id") int appointment_id, @Param("test_code") String test_code);
     public List<String> selectTestState(int test_list_id);
+    public List<String> selectTestState2(int test_list_id);
     public void updateTestListAfterReception(@Param("appointment_id") int appointment_id, @Param("reception_id") int reception_id);
     /* 아래 동호작성 나중에 주석 지웁니다. */
     public List<TestList> selectTestList();
     public Patient selectPatient(int pateint_id);
     public int isValidTestList(int test_list_id);
     public Patient getPatientByTestListId(int test_list_id);
-    public List<TestResult> getTestResult(int test_list_id);
+    public List<TestResult> getTestResult(@Param("test_list_id") int test_list_id, @Param("reception_id") int reception_id);
     public void updateTestListState(
     								@Param("test_list_id")int test_list_id,
+    								@Param("reception_id")int reception_id,
     								@Param("state")String state
     								);
+    public int getReceptionIdByTestListId(int test_list_id);
+    public List<String> getTestStateList(int test_list_id);
+    public void updateTestReceptionState(@Param("reception_id") int reception_id, @Param("state") String state);
     public void updateTestResult(TestResult testResults);
     public void updateTestResultSave(int test_list_id);
 
