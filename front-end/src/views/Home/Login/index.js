@@ -42,12 +42,12 @@ function Login(props){
               sessionStorage.setItem("hospital_name",response.data.hospital_name);
               sessionStorage.setItem("authority",response.data.authority);
               client.unsubscribe("/");
-              client.subscribe("/"+response.data.hospital_code+"/"+response.data.staff_authority);
+              client.subscribe("/"+response.data.hospital_code+"/"+response.data.authority);
 
               (async function() {
                 try{
                   await sendMqttMessage({
-                    topic : "/"+response.data.hospital_code+"/의사",
+                    topic : "/"+response.data.hospital_code+"/ROLE_ADMIN",
                     content : "Hello"
                   });
                 } catch(error){
