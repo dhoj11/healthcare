@@ -122,7 +122,7 @@ function FreeBoardModal(props) {
                     </div>
                     <div className={styles.wirter_content}>
                         <div className={styles.writer_name}>{freeBoardItem.staff_name}</div>
-                        <div className={styles.write_date}>{(freeBoardItem.freeboard_date).substr(5,5)} {freeBoardItem.freeboard_time}</div>
+                        <div className={styles.write_date}>{moment(freeBoardItem.freeboard_date).format("MM/DD")} {freeBoardItem.freeboard_time.substring(0,5)}</div>
                     </div>
                   </div>
                   <div>
@@ -184,7 +184,7 @@ function FreeBoardModal(props) {
                               {data.freeboard_answer_content}
                             </div>
                             <div className={styles.answer_date}>
-                              {(data.freeboard_answer_date).substr(5,5)} {data.freeboard_answer_time}
+                              {moment(data.freeboard_answer_date).format("MM/DD")} {data.freeboard_answer_time.substring(0,5)}
                             </div>
                           </div>
                         </div>

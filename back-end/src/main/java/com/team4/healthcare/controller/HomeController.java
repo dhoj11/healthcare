@@ -1,11 +1,14 @@
 package com.team4.healthcare.controller;
 
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.security.JwtUtil;
-
 import com.team4.healthcare.dto.Staff;
+import com.team4.healthcare.mqtt.MqttTemplate;
 import com.team4.healthcare.service.StaffService;
 import com.team4.healthcare.service.TestService;
 
@@ -36,6 +39,9 @@ public class HomeController {
     private TestService testService;
     @Autowired
     private StaffService staffService;
+    
+    @Autowired 
+	private MqttTemplate mqttTemplate;
     
     @PostMapping("/auth/login")
     public Map<String,String> login(@RequestBody Staff staff){
@@ -62,6 +68,23 @@ public class HomeController {
 		map.put("hospital_name", hospital_name);
 		
 	    return map;
+    }
+    
+    @RequestMapping("/sendMqttMessage")
+    public void sendMqttMessage(String topic, String content, HttpServletResponse res) {
+       try {
+          mqttTemplate.sendMessage(topic, content);
+       
+          JSONObject json = new JSONObject();
+          json.put("result", "success");
+          res.setContentType("application/json; charset=UTF-8");
+          PrintWriter writer = res.getWriter();
+          writer.write(json.toString());
+          writer.flush();
+          writer.close();
+       } catch(Exception e) {
+          e.printStackTrace();
+       }
     }
 }
 

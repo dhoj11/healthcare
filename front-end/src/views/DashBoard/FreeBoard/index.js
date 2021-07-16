@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getFreeBoard, getFreeBoardAnswerList, getFreeBoardList } from "../../../apis/dashboard";
@@ -17,6 +18,7 @@ function FreeBoard(props) {
       try{
         const response = await getFreeBoardList();
         setFreeBoard(response.data);
+        console.log(response.data);
       } catch(error){
         throw error;
       }
@@ -84,10 +86,24 @@ function FreeBoard(props) {
           freeBoard.map((data,index) => {
             return(
               <div key={index} className={`${styles.FreeBoard_item} d-flex justify-content-between`} onClick={() => openFreeBoardModal(data)}>
-                <div className={styles.FreeBoard_title}>{data.freeboard_title}</div>
+                <div className={styles.FreeBoard_top}>
+                  <div className={styles.FreeBoard_title}> 
+                    {data.freeboard_title}
+                  </div>
+                  <div className={styles.Freeboard_content}> 
+                    {data.freeboard_content}
+                  </div>
+                  <div className={styles.Freeboard_content}>
+                    {
+                      data.freeboard_date !==moment().format("YYYY-MM-DD") ?
+                      <span>{moment(data.freeboard_date).format("MM/DD")} | </span>
+                      :
+                      <span>{data.freeboard_time.substring(0,5)} | </span>
+                    }                  
+                    <span>{data.staff_name}</span>                
+                  </div>
+                </div>
                 <div className={styles.FreeBoard_etc}>
-                  <span>{data.freeboard_date}</span>
-                  <span>{data.patient_name}</span>
                   <i class="far fa-comment"></i>
                   <span>{data.freeboard_comment_count}</span>
                 </div>
@@ -99,7 +115,6 @@ function FreeBoard(props) {
     </div>
     <FreeBoardModal showFreeBoardModal={showFreeBoardModal} closeFreeBoardModal={closeFreeBoardModal} freeBoardItem={freeBoardItem} freeBoardAnswer={freeBoardAnswer} addAnswerReRender={addAnswerReRender} freeBoardReRender={freeBoardReRender}></FreeBoardModal>
     <WriteModal showWriteModal={showWriteModal} closeWriteBoardModal={closeWriteBoardModal}></WriteModal>
-
     </>
   );
 }

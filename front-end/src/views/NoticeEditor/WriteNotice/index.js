@@ -94,18 +94,37 @@ function WriteNotice(props) {
    
   }
   const preview = () => {
-    if(title==="" || text ===""||text==="<p><br></p>"){
-      alert("제목과 내용을 입력해주세요.")
+    if(props.match.url ==="/noticeeditor/writenotice"){
+      if(title==="" || text ===""||text==="<p><br></p>"){
+        alert("제목과 내용을 입력해주세요.")
+      }else{
+        let jsonData= {
+          notice_title:title,
+          notice_content:text,
+          notice_date:moment().format("YYYY-MM-DD"),
+        };
+        setNoticeItem(jsonData);
+        openNoticeModal();
+      }
     }else{
-      let jsonData= {
-        notice_title:title,
-        notice_content:text,
-        notice_date:moment().format("YYYY-MM-DD")
-      };
-      setNoticeItem(jsonData);
-      openNoticeModal();
+      if(text ==="" || title ==="" ||text==="<p><br></p>"){
+        alert("제목과 내용을 입력해주세요.")
+      } else if(inputFile.current.files[0] ===undefined){
+        alert("사진을 첨부해주세요");
+      }
+      else{
+        const imageUrl = URL.createObjectURL(inputFile.current.files[0]);
+        let jsonData= {
+          notice_title:title,
+          notice_content:text,
+          notice_date:moment().format("YYYY-MM-DD"),
+          notice_image:imageUrl
+        };
+        setNoticeItem(jsonData);
+        openNoticeModal();
+      }
     }
-   
+    
   }
   const modules = {
     toolbar: [
