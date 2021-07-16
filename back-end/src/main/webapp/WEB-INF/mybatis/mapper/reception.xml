@@ -80,4 +80,6 @@
 		insert into treatment (reception_id, treatment_date, patient_id, staff_id)
 		values(#{reception_id}, NOW(), #{patient_id}, #{staff_id})
 	</insert>
+	
+	
 </mapper>

@@ -15,14 +15,15 @@ function TestListItem(props) {
         throw error;
       }
     })();
-  },[props]);
+  },[]);
 
   //체크박스 선택하거나 선택해제 했을 때 testcode 값 배열에 저장 및 삭제 (concat,filter)
   const handleChange = (event) => {
     if(event.target.checked){
       setSelectTestItem(prevSelectTestItem => ({
         test_list_id:prevSelectTestItem.test_list_id.concat(testItem.test_list_id),
-        test_code: prevSelectTestItem.test_code.concat(event.target.value)
+        test_code: prevSelectTestItem.test_code.concat(event.target.value),
+        reception_id:prevSelectTestItem.reception_id.concat(testItem.reception_id)
       }        
       ))
     }else{
@@ -34,11 +35,14 @@ function TestListItem(props) {
         }
       })
       let temp=selectTestItem.test_list_id;
+      let tempReceptionId=selectTestItem.reception_id;
       //checkbox에 해제 된 test_list_id 값 제거
       temp.splice(idx,1);
+      tempReceptionId.splice(idx,1);
       setSelectTestItem(prevSelectTestItem => ({
         test_list_id: temp,
-        test_code:prevSelectTestItem.test_code.filter(item => item!==event.target.value)
+        test_code:prevSelectTestItem.test_code.filter(item => item!==event.target.value),
+        reception_id:tempReceptionId
       }
       ))
     }

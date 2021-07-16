@@ -3,7 +3,7 @@ import SearchPatient from "../../../../SearchPatient/index";
 import TestList from "./TestList";
 import styles from "./index.module.css";
 import moment from "moment";
-import { createTestappointment, getReceptionStaffId, getTestListTreatmentId, maxAppointmentId, testListAppointment } from "../../../../../../apis/appointment";
+import { createTestappointment, getReceptionStaffId, getTestListTreatmentId, maxAppointmentId, testListAppointment, updateReceptionState } from "../../../../../../apis/appointment";
 
 function Appoint(props) {
   const {startDate,time,appointModalClose} = props;
@@ -17,6 +17,7 @@ function Appoint(props) {
   const setSelectTestListItem = (item) => {
     setSelectTestItem(item);
   };
+  console.log(selectTestItem);
   //checkbox선택한 것들 예약해주기
   const appointment = () => {
     let appointment_date = moment(startDate).format("YYYY-MM-DD");
@@ -37,6 +38,7 @@ function Appoint(props) {
           const response2=await maxAppointmentId();
           const appointment_id=response2.data;
           const modifyAppointmentDate = moment(appointment_date).format("YYMMDD");
+          //검사항목 예약 해주기
           for(let i=0; i<selectTestItem.test_code.length;i++){
             const response = await getTestListTreatmentId(selectTestItem.test_list_id[i],selectTestItem.test_code[i]);
             const treatment_id = response.data;
@@ -49,8 +51,13 @@ function Appoint(props) {
               test_list_date: appointment_date,
               test_list_time: time,
               modify_test_list_id:modify_test_list_id
-              
             })
+          }
+          let newReceptionIdArr = new Set(selectTestItem.reception_id);
+          newReceptionIdArr = [...newReceptionIdArr];
+          //접수테이블 state 바꿔주기
+          for(let j=0; j<newReceptionIdArr.length;j++){
+            await updateReceptionState(newReceptionIdArr[j]);
           }
           appointModalClose();
         } catch(error){
