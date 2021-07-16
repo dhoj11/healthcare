@@ -71,7 +71,7 @@ public class HomeController {
     }
     
     @RequestMapping("/sendMqttMessage")
-    public void sendMqttMessage(String topic, String content, HttpServletResponse res) {
+    public void sendMqttMessage(String topic, Map<String, String> content, HttpServletResponse res) {
        try {
           mqttTemplate.sendMessage(topic, content);
        
