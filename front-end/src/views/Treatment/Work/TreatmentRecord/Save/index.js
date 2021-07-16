@@ -5,6 +5,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createSetEditBlockActoin } from "../../../../../redux/treatment-reducer";
 import { getPrevDoctorName, saveTreatment } from "../../../../../apis/treatment";
+import { sendMqttMessage } from "../../../../../apis/message";
 
 /**
  * 진료페이지의 각 입력내용은 redux 스토어의 상태 변수로 관리된다.
@@ -21,6 +22,8 @@ function Save(props){
   const curTests = useSelector(state => state.treatmentReducer.curTests);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
+
   const dispatch = useDispatch();
   const [staffName, setStaffName] = useState("");
 
@@ -36,6 +39,14 @@ function Save(props){
                             ,treatment_tests : curTests }
 
       await saveTreatment(treatmentObj);
+
+      // MQTT 메세지 보내기
+      await sendMqttMessage({
+        topic : "/"+ hospital_code +"/ROLE_NURSE",
+        content : //
+      })
+
+
     }catch(error){
       console.log(error);
     }

@@ -1,5 +1,7 @@
 package com.team4.healthcare.mqtt;
 
+import java.util.Map;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -29,17 +31,19 @@ public class MqttTemplate {
    }
    
    
-   public void sendMessage(String topic, String content) {
+   public void sendMessage(String topic, Map<String, String> content) {
       try {
          MqttMessage message = new MqttMessage();
          
          JSONObject jsonObject = new JSONObject();
          jsonObject.put("topic", topic);
-         jsonObject.put("content", content);
+         
+         jsonObject.put("content", content.toString());
+         
          String json = jsonObject.toString();
          message.setPayload(json.getBytes());
          
-         message.setQos(0); //Default: 1
+         message.setQos(0); 
          
          mqttClient.publish(topic, message);
       } catch (Exception e) {
