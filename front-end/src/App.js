@@ -8,20 +8,24 @@ import Paho from "paho-mqtt";
 import { createSetClientAction } from './redux/mqtt-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMqttMessage } from './apis/message';
+import { createMasonryCellPositioner } from 'react-virtualized';
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
-      console.log("접속 성공");
       client.subscribe("/");
-    }});
 
-    
-    
+      if(sessionStorage.getItem("staff_id")){
+        client.unsubscribe("/");
+        client.subscribe("/"+sessionStorage.getItem("hospital_code"));
+        client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority"));
+        client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority")+"/"+sessionStorage.getItem("staff_id"));
+      }
+    }});
     return (() => {
-      (console.log("언마운트"));
+      client.disconnect();
     });
   },[]);
   
