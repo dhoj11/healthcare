@@ -14,7 +14,7 @@ function AppHeader(props){
   const staff_id = useSelector((state) => state.authReducer.staff_id);
   const staff_authority = useSelector((state) => state.authReducer.staff_authority);
   const hospital_name = useSelector((state) => state.authReducer.hospital_name);
-
+  const client = useSelector((state) =>state.mqttReducer.client);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect( () => {
@@ -43,8 +43,8 @@ function AppHeader(props){
      sessionStorage.removeItem("hospital_name");
      sessionStorage.removeItem("staff_authority");
      sessionStorage.removeItem("authority");
-     
-     history.push("/");
+     client.disconnect();
+     window.location.replace("/")
   }
   return(
     <div className="appHeader">

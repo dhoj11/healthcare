@@ -42,21 +42,19 @@ function Login(props){
               sessionStorage.setItem("hospital_name",response.data.hospital_name);
               sessionStorage.setItem("authority",response.data.authority);
               client.unsubscribe("/");
-              client.subscribe("/"+response.data.hospital_code+"/"+response.data.staff_authority);
-
+              client.subscribe("/"+sessionStorage.getItem("hospital_code"));
+              client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority"));
+              client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority")+"/"+sessionStorage.getItem("staff_id"));
               (async function() {
                 try{
                   await sendMqttMessage({
-                    topic : "/"+response.data.hospital_code+"/의사",
-                    content : "Hello"
+                    topic : "/"+response.data.hospital_code+"/ROLE_ADMIN",
+                    content : "메세지 보낸거 오나요"
                   });
                 } catch(error){
                   throw error;
                 }
               })();
-              client.onMessageArrived = (msg) => {
-                console.log(JSON.parse(msg.payloadString).content);
-              }
               history.push("/dashboard");
             })         
             .catch(() => {
