@@ -7,7 +7,8 @@ function TestList(props) {
   const [testList,setTestList] = useState([]);
   const [selectTestItem,setSelectTestItem] = useState({
     test_list_id:[],
-    test_code:[]
+    test_code:[],
+    reception_id:[]
   });
   
   useEffect(() => {
@@ -19,14 +20,13 @@ function TestList(props) {
       (async function() {
         try{
           const response = await getTestListByPatientId(selectPatientId);
-          console.log(response.data);
           setTestList(response.data);
         } catch(error){
           throw error;
         }
       })();
     }
-  },[props])
+  },[selectPatientId])
   return(
       selectPatientId ?(
         testList.length !==0 ?

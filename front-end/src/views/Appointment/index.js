@@ -12,7 +12,6 @@ function Appointment(props) {
   // const [tAppointment,setTAppointment] = useState(getTAppoint());
   const [selectPatientId,setSelectPatientId] = useState("");
   
-
   const changeDate = (date) => {
     console.log(moment(date).format("YYYY-MM-DD"));
     setStartDate(date);
