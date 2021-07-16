@@ -5,8 +5,13 @@ import Reception from "./Reception";
 import TestList from "./TestList";
 import SearchPatient from "./SearchPatient";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function Administration(props) {
+
+  const client = useSelector((state) => state.mqttReducer.client);
+
+  console.log(client);
 
   const [globalPatientId, setGlobalPatientId] = useState();   //환자의 전역 상태 선언
   const selectedPatient = (patientId) => {    //전역 상태인 환자의 정보를 바꾸는 함수, 자식 컴포넌트에서 부모 컴포넌트의 상태(globalPatient)를 바꿔줌

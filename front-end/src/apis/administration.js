@@ -56,6 +56,11 @@ export function searchPatient(patient_name) {
   return promise;
 }
 
+export function checkPatientTel(patient_tel) {
+  const promise = auth.get("/administration/patient/check/tel", {params:{patient_tel}});
+  return promise;
+}
+
 export function addNewPatient(newPatient) {
   const promise = auth.post("/administration/patient/new", newPatient);
   return promise;
@@ -130,3 +135,5 @@ export function getTestReceptionListByState(reception_state) {
   const promise = auth.get("/administration/reception/test/state", {params:{reception_state}});
   return promise;
 }
+
+

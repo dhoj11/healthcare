@@ -9,7 +9,7 @@ import TimeSelector from "./TimeSelector";
 
 function AppointmentWithTestModal(props) {
   
-  const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
+  const {dayAppointment, setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
   const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
@@ -99,6 +99,7 @@ function AppointmentWithTestModal(props) {
       await changeTestStateToAppointment(testCodes[0].reception_id); //reception_state 바꿔줌
       setSelectedTestCodes([]);
       setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});
+      dayAppointment(new Date());
     }catch(error) {
       console.log(error.message);
     }

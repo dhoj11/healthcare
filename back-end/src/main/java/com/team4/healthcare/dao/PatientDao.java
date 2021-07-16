@@ -12,4 +12,5 @@ public interface PatientDao {
 	public int insertNewPatient(Patient newPatient);
 	public List<Patient> selectPatientByName(String patient_name);
 	public int updatePatientRecentVisit(int patient_id);
+	public List<Patient> selectPatientByTel(String patient_tel);
 }

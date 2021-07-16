@@ -10,7 +10,7 @@ import {getReceptionList, getTestCodesByReception,getTestReceptionListByState} f
 
 function TestList(props) {
 
-  const {testAppointmentId, selectedPatient} = props;
+  const {dayAppointment, testAppointmentId, selectedPatient} = props;
   
   const [testPatientList, setTestPatientList] = useState([]);    //모든 검사 환자 리스트를 초기 상태로 선언
   const [testCodeList, setTestCodeList] = useState([]);   //검사 리스트 빈 배열로 초기 상태 선언
@@ -166,7 +166,7 @@ function TestList(props) {
           </div>
           <div className={styles.test_button}>
             <button type="button" className="btn btn-sm btn-outline-secondary mr-2" onClick={openAppointmentModal}>검사예약</button>
-            <AppointmentWithTestModal setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
+            <AppointmentWithTestModal dayAppointment={dayAppointment} setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} testCodes={selectedTestCodes} isOpen={appointmentModalOpen} close={closeAppointmentModal}/>
             <button type="button" className="btn btn-sm btn-outline-secondary" onClick={openReqTestModal}>검사요청</button>
             <RequestTest setSelectedTestCodes={setSelectedTestCodes} setRerenderer={setRerenderer} patientId={patientId} testCodes={selectedTestCodes} isOpen={reqTestModalOpen} close={closeReqTestModal} />
           </div>

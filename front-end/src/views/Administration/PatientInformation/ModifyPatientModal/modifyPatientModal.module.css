@@ -1,0 +1,24 @@
+.register_form_row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.border_title {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.register_form_birth {
+  width: 70%;
+  display: flex;
+}
+
+.medicine {
+  line-height: 40px;
+  align-items: center;
+}

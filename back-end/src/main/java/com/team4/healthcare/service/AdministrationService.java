@@ -144,6 +144,15 @@ public class AdministrationService {
 		return patientList;
 	}
 	
+	public boolean checkTel(String patient_tel) {
+		List<Patient> list = patientDAO.selectPatientByTel(patient_tel);
+		if(list.size() == 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public boolean addNewPatient(Patient newPatient) {
 		int row = patientDAO.insertNewPatient(newPatient);
 		

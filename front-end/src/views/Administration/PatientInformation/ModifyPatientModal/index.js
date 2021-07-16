@@ -1,62 +1,60 @@
 import {Modal, Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import styles from "./NewPatientModal.module.css"
+import styles from "./modifyPatientModal.module.css"
 import moment from "moment";
 import {checkPatientTel} from "../../../../apis/administration"
 
-function NewPatientModal(props) {
+function ModifyPatientModal(props) {
 
-  const {isOpen, close, addNewPaitent} = props;
+  const {isOpen, close, patient} = props;
   const [isChecked, setIsChecked] = useState("");
-  const [newPatient, setNewPatient] = useState({
-    patient_name: "",
-    patient_gender: "",
-    patient_birth: "",
-    patient_tel: "",
-    patient_recent_visit: moment().format('YYYY-MM-DD'),
-    patient_medicine: "",
-    patient_disease: "",
-    patient_comment: ""
+  const [modify, setModify] = useState({
+    patient_name: patient.patient_name,
+    patient_gender: patient.patient_gender,
+    patient_birth: patient.patient_birth,
+    patient_tel: patient.patient_tel,
+    patient_medicine: patient.patient_medicine,
+    patient_disease: patient.patient_disease,
+    patient_comment: patient.patient_comment
   })
 
-  useEffect(() => {
-    setNewPatient({
-      patient_name: "",
-      patient_gender: "",
-      patient_birth: "",
-      patient_tel: "",
-      patient_recent_visit: moment().format('YYYY-MM-DD'),
-      patient_medicine: "",
-      patient_disease: "",
-      patient_comment: ""
-    })
-    return (() => {
+  // useEffect(() => {
+  //   setModify({
+  //     patient_name: "",
+  //     patient_gender: "",
+  //     patient_birth: "",
+  //     patient_tel: "",
+  //     patient_medicine: "",
+  //     patient_disease: "",
+  //     patient_comment: ""
+  //   })
+  //   return (() => {
       
-    });
-  }, [props.isOpen]);
+  //   });
+  // }, [props.isOpen]);
 
   const handleChange = (event) => {
-    setNewPatient({
-      ...newPatient,
+    setModify({
+      ...modify,
       [event.target.name] : event.target.value
     });
   };
 
   const checkTel = async() => {
-    if(newPatient.patient_tel === "") {
+    if(modify.patient_tel === "") {
       alert("환자의 연락처를 입력해주세요.")
       return;
     }
     try {
-      const response = await checkPatientTel(newPatient.patient_tel);
+      const response = await checkPatientTel(modify.patient_tel);
       if(response.data === true) {
         alert("사용 가능한 연락처입니다.");
         setIsChecked(response.data);
       }else {
         alert("이미 존재하는 연락처입니다.");
         setIsChecked(response.data);
-        setNewPatient({
-          ...newPatient,
+        setModify({
+          ...modify,
           patient_tel: ""
         });
         return;
@@ -66,26 +64,26 @@ function NewPatientModal(props) {
     }
   }
 
-  const addNewPatient = () => {
-    if(newPatient.patient_name === "") {
+  const modifyPatient = () => {
+    if(modify.patient_name === "") {
       alert("환자의 이름을 입력해주세요.")
       return;
-    }else if(newPatient.patient_gender === "") {
+    }else if(modify.patient_gender === "") {
       alert("환자의 성별을 입력해주세요.")
       return;
-    }else if(newPatient.patient_birth === "") {
+    }else if(modify.patient_birth === "") {
       alert("환자의 생년월일을 입력해주세요.")
       return;
-    }else if(newPatient.patient_tel === "") {
+    }else if(modify.patient_tel === "") {
       alert("환자의 연락처를 입력해주세요.")
       return;
-    }else if(newPatient.patient_medicine === "") {
+    }else if(modify.patient_medicine === "") {
       alert("환자의 복용약물을 입력해주세요.")
       return;
-    }else if(newPatient.patient_disease === "") {
+    }else if(modify.patient_disease === "") {
       alert("환자의 만성질환을 입력해주세요.")
       return;
-    }else if(newPatient.patient_comment === "") {
+    }else if(modify.patient_comment === "") {
       alert("환자의 특이사항을 입력해주세요.")
       return;
     }else if(isChecked === "") {
@@ -95,7 +93,7 @@ function NewPatientModal(props) {
       alert("이미 존재하는 연락처입니다.")
       return;
     }
-    addNewPaitent(newPatient);
+    
     close();
   };
 
@@ -104,21 +102,21 @@ function NewPatientModal(props) {
     {isOpen ? (
       <Modal show={isOpen} onHide={close} centered="true" className="modal">
       <Modal.Header closeButton>
-        <Modal.Title>신규환자등록</Modal.Title>
+        <Modal.Title>환자 정보 수정</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="register-form">
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>이름</div>
             <div>
-              <input className="form-control" name="patient_name" value={newPatient.patient_name} onChange={handleChange}/>
+              <input className="form-control" name="patient_name" value={modify.patient_name} onChange={handleChange}/>
             </div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>생년월일</div>
             <div className={styles.register_form_birth}>
               <div className="d-flex">
-                <input type="date" name="patient_birth" className="form-control" value={newPatient.patient_birth} onChange={handleChange}/>
+                <input type="date" name="patient_birth" className="form-control" value={modify.patient_birth} onChange={handleChange}/>
               </div>
             </div>
           </div>
@@ -138,7 +136,7 @@ function NewPatientModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>연락처</div>
             <div>
-              <input type="text" name="patient_tel" className="form-control" placeholder="'-' 포함 숫자 입력" value={newPatient.patient_tel} onChange={handleChange}/>
+              <input type="text" name="patient_tel" className="form-control" placeholder="'-' 포함 숫자 입력" value={modify.patient_tel} onChange={handleChange}/>
             </div>
             <div>
               <button className="btn btn-sm btn-secondary ml-2" onClick={checkTel}> 중복검사 </button>
@@ -152,10 +150,10 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_medicine" value={newPatient.patient_medicine} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_medicine" value={modify.patient_medicine} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="patient_medicine" className="form-control" placeholder="" value={newPatient.patient_medicine} onChange={handleChange}/>
+                  <input type="text" name="patient_medicine" className="form-control" placeholder="" value={modify.patient_medicine} onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -168,10 +166,10 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_disease" value={newPatient.patient_disease} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_disease" value={modify.patient_disease} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="patient_disease" className="form-control" placeholder="" value={newPatient.patient_disease} onChange={handleChange}/>
+                  <input type="text" name="patient_disease" className="form-control" placeholder="" value={modify.patient_disease} onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -184,10 +182,10 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_comment" value={newPatient.patient_comment} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_comment" value={modify.patient_comment} onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
-                  <input type="text" name="patient_comment" className="form-control" placeholder="" value={newPatient.patient_comment} onChange={handleChange}/>
+                  <input type="text" name="patient_comment" className="form-control" placeholder="" value={modify.patient_comment} onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -198,7 +196,7 @@ function NewPatientModal(props) {
         <Button variant="secondary" onClick={close}>
           취소
         </Button>
-        <Button variant="primary" onClick={addNewPatient}>
+        <Button variant="primary" onClick={modifyPatient}>
           등록
         </Button>
       </Modal.Footer>
@@ -208,4 +206,4 @@ function NewPatientModal(props) {
   );
 }
 
-export default NewPatientModal;
+export default ModifyPatientModal;

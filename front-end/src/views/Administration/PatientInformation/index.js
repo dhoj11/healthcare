@@ -2,6 +2,7 @@ import styles from "./PatientInformation.module.css";
 import PatientInformationCard from "./PatientInformationCard";
 import AppointmentModal from "./AppointmentWithTreatmentModal";
 import ReceptionModal from "./ReceptionOfTreatmentModal";
+import ModifyModal from "./ModifyPatientModal";
 import PatientInformationTab from "./PatientInformationTab";
 import { useState, useEffect } from "react";
 import {getPatient} from "../../../apis/administration";
@@ -15,6 +16,7 @@ function PatientInformation(props) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [receptionRerenderer, setreceptionRerenderer] = useState("");
   const [appointmentRerenderer, setAppointemntRerenderer] = useState("");
+  const [modifyModalOpen, setModifyModalOpen] = useState(false);
 
   const openReceptionModal = () => {
     setReceptionModalOpen(true);
@@ -32,6 +34,13 @@ function PatientInformation(props) {
     setAppointmentModalOpen(false);
   };
 
+  const openModifyModal = () => {
+    setModifyModalOpen(true);
+  };
+
+  const closeModifyModal = () => {
+    setModifyModalOpen(false);
+  };
   useEffect(() => {
     if(selectedPatientId !== undefined) {
       //비동기 통신
@@ -88,8 +97,14 @@ function PatientInformation(props) {
     <>
       {patient !== undefined ? 
       (<div className={styles.patient_information}>
-      <div>
-        <PatientInformationCard patient={patient}/>
+      <div className="d-flex">
+        <div>
+          <PatientInformationCard patient={patient}/>
+        </div>
+        <div className={styles.patient_modify}>
+          <button className="btn btn-sm btn-secondary" onClick={openModifyModal}> 수정 </button>
+          <ModifyModal patient={patient} isOpen={modifyModalOpen} close={closeModifyModal}/>
+        </div>
       </div>
       <div className={styles.patient_information_tab}>
         <PatientInformationTab patient={patient}/>
