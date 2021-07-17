@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { getTestListByPatientId } from "../../../../../../../apis/appointment";
 import styles from "./index.module.css";
 import TestItem from "./TestListItem";
+
+/*
+  Title : Appointment_TimeTable_Test_Modal_Appoint_TestList
+  Description : 현재 선택한 환자의 검사해야 할 항목 보여주는 화면
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function TestList(props) {
   const {selectPatientId,setSelectTestListItem} =props;
   const [testList,setTestList] = useState([]);

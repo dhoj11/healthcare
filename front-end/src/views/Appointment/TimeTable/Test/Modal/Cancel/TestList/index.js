@@ -3,7 +3,14 @@ import { Accordion } from "react-bootstrap";
 import { getTestDetailList } from "../../../../../../../apis/appointment";
 import styles from "./index.module.css";
 
-//TestCode에 해당하는 testDetail 컴포넌트
+/*
+  Title : Appointment_TimeTable_Test_Modal_Cacel_TestList
+  Description : 예약되어 있는 검사항목(TestList) 상세정보
+               
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function TestList(props) {
   const {testCode} = props;
   const [testDetailList,setTestDetailList] = useState([]);
