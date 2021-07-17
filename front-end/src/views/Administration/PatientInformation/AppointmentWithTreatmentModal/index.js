@@ -147,12 +147,10 @@ function AppointmentModal(props) {
             <div className="d-flex">
               {doctorList.map((doctor, key, index)=>(
                 <>
-               
                   <div key={key}>
                   <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} checked={doctor.staff_id === staff} onChange={handleRadioChange}/>
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
                   </div>
-               
                 </>
               ))}
             </div>

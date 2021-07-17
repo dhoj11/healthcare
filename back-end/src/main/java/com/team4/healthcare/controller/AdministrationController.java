@@ -203,4 +203,8 @@ public class AdministrationController {
 		List<Reception> receptionList = administrationService.getTestReceptionListByState(reception_state);
 		return receptionList;
 	}
+	@PutMapping("/patient/modify")
+	public void modifyPatientInfo(@RequestBody Patient patient) {
+		logger.info(patient.toString());
+	}
 }

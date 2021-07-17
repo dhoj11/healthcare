@@ -136,4 +136,8 @@ export function getTestReceptionListByState(reception_state) {
   return promise;
 }
 
+export function modifyPatientInfo(modify) {
+  const promise = auth.put("administration/patient/modify", modify);
+  return promise;
+}
 
