@@ -25,6 +25,7 @@ function Test(props){
   * setPatient  - 검사리스트에서 검사번호로 환자 아이디를 찾고, 환자리스트에서 환자 정보를 가져와 환자상태 업데이트
   * setTestList - 검사번호로 검사상태변수 업데이트
   */
+ 
   const getList = async () => {
     try{
       const response = await getTestList();

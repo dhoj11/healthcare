@@ -12,10 +12,12 @@
 	</select>
 
    <select id = "selectPatientIds" parameterType="string" resultType="int">
-	select distinct(treatment.patient_id) <!-- distinct 삭제해도 동작 -->
-   	from treatment
+	select distinct(treatment.patient_id) 
+   	from treatment, reception
    	where treatment.staff_id = #{staff_id}
    		  and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+   		  AND treatment.reception_id = reception.reception_id
+   		  AND reception_state != '취소'
    		  ORDER BY treatment_id
    </select>
    
@@ -42,11 +44,13 @@
    </select>
    
     <select id = "selectNowTreatment" resultType="treatment">
-	select treatment_id
+select treatment_id
    		  ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
    		  ,treatment_saved
-   	from treatment
-   	where patient_id = #{patient_id} and staff_id = #{staff_id} AND treatment_date = date_format(NOW(), '%Y-%m-%d')
+   	from treatment, reception
+   	where treatment.patient_id = #{patient_id} and treatment.staff_id = #{staff_id} AND treatment_date = date_format(NOW(), '%Y-%m-%d')
+   	AND treatment.reception_id = reception.reception_id
+   	AND reception_state != '취소'
     
    </select>
    
@@ -58,10 +62,12 @@ select treatment_id
    	where patient_id = #{patient_id} AND treatment_date != date_format(NOW(), '%Y-%m-%d')
    </select>
    
-   <select id ="selectTreatmentIsComplete" parameterType="int" resultType="int">
+   <select id ="selectTreatmentIsComplete" resultType="int">
    	select treatment_saved
    	from treatment
-   	where patient_id = #{patient_id} and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+   	where patient_id = #{patient_id} 
+   	and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+   	and staff_id = #{staff_id}
    	order by treatment_date
    </select>
    
@@ -259,5 +265,11 @@ select treatment_id
    	from treatment, staff
    	where treatment.treatment_id = #{treatment_id} and treatment.staff_id = staff.staff_id
    	limit 1;
+   </select>
+   
+   <select id="selectPatientNameByTreatmentId" parameterType="int" resultType="string">
+   	select patient_name
+   	from treatment, patient
+   	where treatment.treatment_id = #{treatment_id} and treatment.patient_id = patient.patient_id
    </select>
 </mapper>

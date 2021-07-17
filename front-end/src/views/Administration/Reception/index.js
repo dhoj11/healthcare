@@ -14,9 +14,10 @@ function Reception(props) {
   const client = useSelector((state) => state.mqttReducer.client);
   
   const MqttBroker = () => {
+    if(client!==""){
     client.onMessageArrived = (msg) => {
         let message = JSON.parse(msg.payloadString);
-        message = message.content.split('/');
+       // message = message.content.split('/');
         //#1
         // message[0] : type  : alert || rerender  ex)alert
         // message[1] : component_name             ex)Administration
@@ -28,11 +29,14 @@ function Reception(props) {
         // message[2] : content                    ex)
         console.log(message);
       }
+    }
     };
   
-  useEffect(()=>{
-    if(client!=="") MqttBroker();
-  },[client])
+  // useEffect(()=>{
+  //   if(client!=="") MqttBroker();
+  // },[client])
+
+  MqttBroker();
 
   //예약 후 접수
   useEffect(() => {

@@ -7,7 +7,8 @@ const initialState = {
   curDiagnoses:{},
   curPrescriptions:{},
   curTests:{},
-
+  
+  listState:"all",
   editBlock:true
 }
 
@@ -19,6 +20,7 @@ const SET_CURCOMMENT ="record/SetCurComment";
 const SET_CURDIAGNOSES ="record/SetCurDiagnoses";
 const SET_CURPRESCRIPTIONS ="record/SetCurPrescriptions";
 const SET_CURPTESTS ="record/SetCurTests";
+const SET_LISTSTATE ="treatment/SetListState";
 const SET_EDITBLOCK ="treatment/SetEditBlock";
 
 export const createSetWorkActoin = (work) => {
@@ -53,6 +55,10 @@ export const createSetCurTestsActoin = (curTests) => {
   return {type:SET_CURPTESTS, curTests};
 };
 
+export const createSetListStateActoin = (listState) => {
+  return {type:SET_LISTSTATE, listState};
+};
+
 export const createSetEditBlockActoin = (editBlock) => {
   return {type:SET_EDITBLOCK, editBlock};
 };
@@ -75,7 +81,9 @@ export const treatmentReducer = (state=initialState, action) => {
     case SET_CURPRESCRIPTIONS :
       return {...state, curPrescriptions: action.curPrescriptions}       
     case SET_CURPTESTS :
-      return {...state, curTests: action.curTests}    
+      return {...state, curTests: action.curTests}  
+    case SET_LISTSTATE :
+        return {...state, listState: action.listState}        
     case SET_EDITBLOCK :
       return { ...state, editBlock: action.editBlock}   
     default :
