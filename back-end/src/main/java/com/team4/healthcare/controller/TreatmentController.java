@@ -47,9 +47,9 @@ public class TreatmentController {
 		return treatmentService.getNowTreatment(patient_id, staff_id);
 	}
 	
-	@GetMapping("/treatmentIsComplete/{patient_id}")
-	public String treatmentComplete(@PathVariable int patient_id) {
-		String treatmentState = treatmentService.getTreatmentIsComplete(patient_id);
+	@GetMapping("/treatmentIsComplete")
+	public String treatmentComplete(@RequestParam() int patient_id, @RequestParam() String staff_id) {
+		String treatmentState = treatmentService.getTreatmentIsComplete(patient_id, staff_id);
 		return treatmentState;
 	}
 	
@@ -111,6 +111,11 @@ public class TreatmentController {
 	@GetMapping("/staffname/{treatment_id}")
 	public String prevTreatmentStaffName(@PathVariable int treatment_id) {
 		return treatmentService.getStaffName(treatment_id);
+	}
+	
+	@GetMapping("/patientname/{treatment_id}")
+	public String patientName(@PathVariable int treatment_id) {
+		return treatmentService.getPatientName(treatment_id);
 	}
 
 }

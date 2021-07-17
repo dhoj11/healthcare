@@ -24,7 +24,10 @@ public interface TreatmentDao {
 										@Param("patient_id")int patient_id
 									   ,@Param("staff_id")String staff_id
 										);
-	public List<Integer> selectTreatmentIsComplete(int patient_id);
+	public List<Integer> selectTreatmentIsComplete(
+										@Param("patient_id")int patient_id
+									   ,@Param("staff_id")String staff_id
+									   );
 	public List<Treatment> selectTreatments(int pateint_id);
 	public String selectTreatmentRecord(int treatment_id);
 	public String selectTreatmentComment(int treatment_id);
@@ -97,5 +100,7 @@ public interface TreatmentDao {
 	public List<TestResult> selectTreatmentTestResults(List<Integer> test_list_id);
 	
 	public String selectStaffNameByTreatmentId(int treatment_id);
+	
+	public String selectPatientNameByTreatmentId(int treatment_id);
 
 }

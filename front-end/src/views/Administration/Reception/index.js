@@ -63,7 +63,7 @@ function Reception(props) {
       }
     }
   };
-    MqttBroker();
+  MqttBroker();
 
   const getAllList = async() => {
     try {

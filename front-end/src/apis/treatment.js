@@ -15,8 +15,8 @@ export function getNowTreatment(patient_id, staff_id){
   return promise;
 }
 
-export function isTreatmentComplete(patient_id){
-  const promise = auth.get('/treatment/treatmentIsComplete/' + patient_id);
+export function isTreatmentComplete(patient_id, staff_id){
+  const promise = auth.get('/treatment/treatmentIsComplete', {params:{patient_id, staff_id}});
   return promise;
 }
 
@@ -76,5 +76,10 @@ export function getTreatmentTestResults(treatment_id){
 
 export function getPrevDoctorName(treatment_id){
   const promise = auth.get('/treatment/staffname/' + treatment_id);
+  return promise;
+}
+
+export function getPatientName(treatment_id){
+  const promise = auth.get('/treatment/patientname/' + treatment_id);
   return promise;
 }
