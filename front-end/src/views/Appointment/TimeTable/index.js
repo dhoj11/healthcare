@@ -8,12 +8,23 @@ import Test from "./Test";
 import { useCallback, useEffect, useState } from "react";
 import { getTimeSetting } from "../../../apis/appointment";
 import { useSelector } from "react-redux";
+
+/*
+  Title : Appointment_TimeTable 
+  Description : 진료예약과 검사예약 테이블 두개의 컴포넌트로 구성됨
+
+  Date : 2021-07-01
+  Author : 조운호
+*/
 function TimeTable(props) {
   const {startDate,changeDate} = props;
-  const [tab,setTab] = useState("treatment");
-  const [hospital,setHospital] = useState(null);
-  const hospital_code = useSelector((state) => state.authReducer.hospital_code);
-  //병원 근무시간 저장
+  const [tab,setTab] = useState("treatment"); // 진료,검사 탭
+  const [hospital,setHospital] = useState(null);  //병원 정보
+  const hospital_code = useSelector((state) => state.authReducer.hospital_code); 
+
+  /*
+    # 병원 근무시간 저장
+  */
   useEffect(() => {
     (async function() {
       const response=await getTimeSetting(hospital_code);
@@ -21,12 +32,13 @@ function TimeTable(props) {
       response.data.lunch_end = response.data.lunch_end.substr(0,5);
       response.data.officehour_start = response.data.officehour_start.substr(0,5);
       response.data.officehour_end = response.data.officehour_end.substr(0,5);
-      console.log(response.data);
       setHospital(response.data);
     })();
   },[])
 
-  // 이전 이후 날짜 클릭
+  /*
+    # 이전 이후 날짜 클릭
+  */
   const prevDate = () => {
     let date = new Date(startDate);
     date.setDate(date.getDate()-1);
@@ -38,13 +50,16 @@ function TimeTable(props) {
     changeDate(date);
   }
 
-  //진료 검사 탭
+  /*
+    # 진료 검사 탭
+  */
   const treatment = useCallback(() => {
     setTab("treatment");
   },[tab])
   const test = useCallback(() => {
     setTab("test");
   },[tab])
+  
   return(
     <div className={styles.TimeTable_contain}>
         <div className={`${styles.date_contain} justify-content-between`}>
