@@ -46,6 +46,11 @@ function Save(props){
         content : "rerender/Administration_Reception/"
       })
 
+      await sendMqttMessage({
+        topic : "/"+ hospital_code +"/ROLE_NURSE",
+        content : "rerender/Administration_Appointment/"
+      })
+
 
     }catch(error){
       console.log(error);
