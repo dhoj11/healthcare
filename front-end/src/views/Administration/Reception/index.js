@@ -1,13 +1,38 @@
 import styles from "./Reception.module.css";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import { useEffect } from "react";
 import ListItem from "./ListItem";
 import {getReceptionList, getReceptionListByState} from "../../../apis/administration";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMqttMessage } from "../../../apis/message";
 
 function Reception(props) {
   const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
   const [receptionList, setReceptionList] = useState([]);
   const [state, setState] = useState("");
+
+  const client = useSelector((state) => state.mqttReducer.client);
+  
+  const MqttBroker = () => {
+    client.onMessageArrived = (msg) => {
+        let message = JSON.parse(msg.payloadString);
+        message = message.content.split('/');
+        //#1
+        // message[0] : type  : alert || rerender  ex)alert
+        // message[1] : component_name             ex)Administration
+        // message[2] : content                    ex)조운호 진료완료
+
+        //#2
+        // message[0] : type  : alert || rerender  ex)rerender
+        // message[1] : component_name             ex)Administration_Reception
+        // message[2] : content                    ex)
+        console.log(message);
+      }
+    };
+  
+  useEffect(()=>{
+    if(client!=="") MqttBroker();
+  },[client])
 
   //예약 후 접수
   useEffect(() => {

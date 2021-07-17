@@ -1,23 +1,33 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { getTestAppointmentList } from "../../../../../apis/appointment";
 import Appoint from "../Modal/Appoint";
 import Cancel from "../Modal/Cancel";
-
 import styles from "./index.module.css";
+/*
+  Title : Appointment_TimeTable_Test_Testitem
+  Description : 날짜와 시간에 맞는 예약정보 list
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function TestItem(props) {
-  const {startDate,time,lunch_start} = props;
+  const {startDate,time,lunch_start,appointmentHour} = props;
   let appointment_date = moment(startDate).format("YYYY-MM-DD"); //데이터 변환
   const [testAppoint,setTestAppoint] = useState([]);
-  const [clickedAppointment,setClickedAppointment] = useState({});
+  const [clickedAppointment,setClickedAppointment] = useState({});  //선택한 예약정보
   const [showCancelModal, setCancelModal]=useState(false);
   const [showAppointModal, setAppointModal]=useState(false);
 
+  //모달창 관리
   const CancelModalClose = () => setCancelModal(false);
   const appointModalClose = () => setAppointModal(false);
 
-  //해당 날짜와 시간에 해당하는 예약정보 가져오기
+  /*
+    # 해당 날짜와 시간에 해당하는 예약정보 가져오기
+  */
   const axiosTestList = async() => {
     try{
       const response = await getTestAppointmentList(appointment_date,time);
@@ -26,6 +36,7 @@ function TestItem(props) {
       throw error;
     }
   }
+
   //취소 모달창 오픈
   const openModal = (appointItem) => {
     if(appointItem.appointment_state === "예약"){
@@ -39,7 +50,7 @@ function TestItem(props) {
   }
   useEffect(() => {
     axiosTestList();
-  },[startDate,showCancelModal,showAppointModal])
+  },[startDate,showCancelModal,appointmentHour])
   return(
     <>
     <td className={styles.td}>

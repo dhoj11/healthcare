@@ -39,10 +39,21 @@ public class TreatmentService {
 		return treatmentList;
 	}
 	
+	public List<Treatment> getNowTreatment(int patient_id, String staff_id) {
+		List<Treatment> nowTreatment = treatmentDao.selectNowTreatment(patient_id, staff_id);
+		return nowTreatment;
+	}
+	
 	public String getTreatmentIsComplete(int patient_id) {
-		int treatmentState = treatmentDao.selectTreatmentIsComplete(patient_id);
-		if(treatmentState==1) return "complete";
-		else return "before";
+		List<Integer> treatmentState = treatmentDao.selectTreatmentIsComplete(patient_id);
+		
+		for(int item : treatmentState) {
+			if(item == 0) {
+				return "before";
+			}	
+		}
+		return "complete";
+		
 	}
 	
 	public String getTreatmentRecord(int treatment_id) {
@@ -110,7 +121,6 @@ public class TreatmentService {
 		String today = sdf.format(date);
 		int test_list_id = Integer.parseInt(today+treatment_id);
 				
-		//int reception_id = treatmentDao.getReceptionId(treatment_id);
 		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id, treatment_tests);
 		
 		if(treatment_tests.size()>0) {
@@ -128,7 +138,12 @@ public class TreatmentService {
 			int latelyReceptionId = treatmentDao.getLatelyReceptionId();
 			treatmentDao.updateReceptionId(test_list_id, latelyReceptionId);
 			
-		}	
+		}
+		
+		int reception_id = treatmentDao.getReceptionId(treatment_id);
+		treatmentDao.updateReceptionState(reception_id);
+		Integer appointment_id = treatmentDao.getAppointmentId(reception_id);
+		if(appointment_id != null) treatmentDao.updateAppointmentState(appointment_id);
 	}
 	
 	public List<TestResult> getTreatmentTestResult(int treatment_id) {

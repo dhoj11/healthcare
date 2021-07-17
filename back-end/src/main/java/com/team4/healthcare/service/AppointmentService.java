@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team4.healthcare.dao.AppointmentDao;
+import com.team4.healthcare.dao.ReceptionDao;
 import com.team4.healthcare.dao.StaffDao;
+import com.team4.healthcare.dao.TestListDao;
 import com.team4.healthcare.dto.Appointment;
 import com.team4.healthcare.dto.Staff;
 
@@ -24,6 +26,11 @@ public class AppointmentService {
 	AppointmentDao appointmentDao;
 	@Autowired
 	StaffDao staffDao;
+	@Autowired
+	TestListDao testListDao;
+	@Autowired
+	ReceptionDao receptionDao;
+	
 	
 	public List<Appointment> getDoctorTreatmentApoointment(String staff_id,String appointment_date) {
 		return appointmentDao.selectDoctorTreatmentAppointment(staff_id, appointment_date);
@@ -53,8 +60,11 @@ public class AppointmentService {
 		appointmentDao.insertTreatmentAppointment(appointment);
 	}
 	
+	//검사예약 취소
 	public void cancelTreatmentAppointment(int appointment_id) {
+		//예약 취소
 		appointmentDao.cancelTreatmentAppointment(appointment_id);
+		
 	}
 
 	public List<Appointment> getTestAppointmentByDate(String appointment_date, String appointment_time){

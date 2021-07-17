@@ -71,6 +71,9 @@ export function getTestDetailList(test_code){
 export function getReceptionStaffId(test_list_id,test_code){
   return auth.get("/appointment/reception",{params:{test_list_id,test_code}})
 }
+export function updateReceptionState(reception_id){
+  return auth.put("/appointment/reception/"+reception_id);
+}
 
 //hospital
 export function getTimeSetting(hospital_code){

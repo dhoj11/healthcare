@@ -42,7 +42,7 @@ function Test(props){
     try{
       if(arg && arg !== ""){
         const response = await getPateintByTestListId(arg);
-        setTestList(arg); 
+        setTestList({test_list_id:arg, reception_id:0}); 
         setPatient(response.data);
         setButtonAllow(false);
       }

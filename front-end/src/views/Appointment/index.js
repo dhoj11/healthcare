@@ -6,20 +6,20 @@ import SearchPatient from "./SearchPatient";
 import Info from "./Info";
 import styles from "./index.module.css";
 import moment from "moment";
+/*
+  Title : Appointment
+  Description : 캘린더, 환자검색, 예약정보, 타임테이블 총 네개의 컴포넌트로 구성
+
+  Date : 2021-07-01
+  Author : 조운호
+*/
 function Appointment(props) {
-
-  const [startDate, setStartDate] = useState(new Date());
-  // const [tAppointment,setTAppointment] = useState(getTAppoint());
-  const [selectPatientId,setSelectPatientId] = useState("");
+  const [startDate, setStartDate] = useState(new Date()); //현재 선택된 날짜
+  const [selectPatientId,setSelectPatientId] = useState(""); //선택한 환자 아이디
   
-
   const changeDate = (date) => {
-    console.log(moment(date).format("YYYY-MM-DD"));
     setStartDate(date);
-  }
-  console.log(startDate);
- 
-
+  } 
   const selectedPatientId = (id) => {
     setSelectPatientId(id);
   }

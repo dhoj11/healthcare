@@ -4,12 +4,40 @@ import { useCallback, useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import { getAppointmentList, getAppointmentListByState } from "../../../apis/administration";
 import React from "react";
+import { useSelector } from "react-redux";
 function Appointment(props) {
 
   const {sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
   const [appointmentList, setAppointmentList] = useState([]);
   const [state, setState] = useState("");
-  console.log("dkdkdkdkdkdk");
+  const client = useSelector((state) => state.mqttReducer.client);
+
+
+  /*
+    # 예약 or 취소 시 Mqtt 메세지 도착
+      1. 현재 보고 있는 state(전체,예약,내원,완료,취소) 에 따라 appointmentList 다름
+      2. state(전체) => getAllList() 호출
+      3. state(예약,내원,완료,취소) => listWithState() 호출
+    by 운호
+  */ 
+  const MqttBroker = () => {
+    if(client!==""){
+      client.onMessageArrived = (msg) => {
+        let message = JSON.parse(msg.payloadString);
+        message = message.content.split('/');
+        if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
+          if(state ==="전체"){
+            getAllList();
+          } else{
+            listWithState(state);
+          }
+        }
+      }
+    }
+  }
+  // useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
+  MqttBroker();
+
   useEffect(() => {
     //비동기 통신
     const work = async () => {
@@ -18,11 +46,10 @@ function Appointment(props) {
         setAppointmentList(response.data);
         setState("전체");
       } catch (error) {
-        console.log(error.message);
         //history.push("./error"); 에러 컴포넌트로 이동
       }
     };
-    work();
+    work();  
   },[sameDayAppointment]);
 
   const getLength = () => {  //예약 리스트의 건 수를 반환
@@ -35,7 +62,6 @@ function Appointment(props) {
         setAppointmentList(response.data);
         setState("전체");
       } catch (error) {
-        console.log(error.message);
       }
   };
 
@@ -45,7 +71,6 @@ function Appointment(props) {
       setAppointmentList(response.data);
       setState(appointmentState);
     }catch(error) {
-      console.log(error.message);
     }
   }
 
@@ -98,3 +123,23 @@ function Appointment(props) {
 }
 
 export default React.memo(Appointment);
+
+
+  // // 환자 내원했을 때
+  // / /예약셀렉트 박스에서 내원으로 바꿨을 때 이벤트 걸어주면 될 듯
+  // // 진료페이지 환자 리스트 추가 되는 부분
+  // // 아래 정상동작 합니다.
+  // // 뒤에 /ROLE_ADMIN/{staff_id} 로 보내야 합니다. 
+  // // /ROLE_DOCTOR/{staff_id} 한테도 보내야 할 것 같아요.
+  // // 
+  // const sendMessage = async()=>{
+  //   try{
+  //   await sendMqttMessage({
+  //     topic : "/"+ hospital_code +"/ROLE_ADMIN/dhoj11",
+  //     content : "rerender/Treatment_Patients"
+  //   })
+  //   }catch(error){
+  //     console.log(error);
+  //   } 
+  // }
+  // //

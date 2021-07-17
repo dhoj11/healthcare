@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import { Accordion, Button, Card, Collapse } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { getTestCodeList,cancelAppointment, testListWait } from "../../../../../../apis/appointment";
+import { sendMqttMessage } from "../../../../../../apis/message";
 import styles from "./index.module.css";
 import TestList from "./TestList";
 
+/*
+  Title : Appointment_TimeTable_Test_Modal_Cacel
+  Description : 1. 검사 예약 취소를 할 수 있는 모달창(예약되어 있는 셀 클릭시)
+                2. 예약되어 있는 검사항목(TestList) 보여줌
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function Cancel(props) {
   const {clickedAppointment, CancelModalClose} = props;
   const [testCodeList,setTestCodeList] = useState([]);
-
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
   //예약번호로 예약되어있는 TestCode 리스트 가져오기
   useEffect(() => {
     (async function() {
@@ -20,13 +30,26 @@ function Cancel(props) {
     })();
   },[])
 
-  //예약 취소
+  /*
+    예약취소
+      1. 예약 state 취소
+      2. testlist state 대기 
+      3. Mqtt 메세지 보내기
+  */
   const cancelTestAppointment= () => {
     (async function() {
       try{
         await cancelAppointment(clickedAppointment.appointment_id);
         await testListWait(clickedAppointment.appointment_id);
         CancelModalClose(); 
+        await sendMqttMessage({
+          topic:"/"+hospital_code,
+          content:"rerender/Appointment_TimeTable_Test"
+        })
+        await sendMqttMessage({
+          topic:"/"+hospital_code,
+          content:"rerender/Administration_Appointment"
+        })
       } catch(error){
         throw error;
       }
