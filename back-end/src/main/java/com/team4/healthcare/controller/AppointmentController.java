@@ -143,6 +143,13 @@ public class AppointmentController {
 	public String getReceptionStaffId(@RequestParam("test_list_id") int test_list_id, @RequestParam("test_code") String test_code) {
 		return receptionService.getReceptionStaffId(test_list_id,test_code);
 	}
+	@PutMapping("/reception/{reception_id}")
+	public void updateReceptionState(@PathVariable("reception_id") int reception_id) {
+		testListService.updateReceptionState(reception_id);
+	}
+	
+	
+	
 	//hospital
 	@GetMapping("/hospital")
 	public Hospital getTimeSetting(@RequestParam("hospital_code") String hospital_code) {

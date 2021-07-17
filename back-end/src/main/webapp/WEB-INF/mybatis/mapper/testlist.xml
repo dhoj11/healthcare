@@ -47,4 +47,16 @@
 		from tests_list
 		where test_list_id =#{test_list_id} and test_code = #{test_code}
 	</select>
+	
+	<select id="selectState" resultType="string" parameterType="int">
+		select test_list_state
+		from tests_list
+		where reception_id =#{reception_id}
+	</select>
+	
+	<select id="selectReceptionIdByAppointmentId" resultType="int" parameterType="int">
+		select reception_id
+		from tests_list
+		where appointment_id=#{appointment_id}
+	</select>
 </mapper>

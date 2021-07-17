@@ -1,13 +1,36 @@
-import { cancelTreatmentAppointment } from "../../../../../apis/appointment";
+import { useSelector } from "react-redux";
+import { cancelTreatmentAppointment } from "../../../../../../apis/appointment";
+import { sendMqttMessage } from "../../../../../../apis/message";
 import styles from "./Cancel.module.css";
+/*
+  Title : Appointment_TimeTable_Treatment_Modal_Cancel
+  Description : 진료 예약 취소를 할 수 있는 모달창 (예약되어 있는 셀 클릭시)
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function ComName(props) {
   const {CancelModalClose,clickedappoint,axiosTreatmentAppointList} = props;
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
+  /*
+    # 예약 취소하기
+      1. 예약 취소
+      2. MQTT 메세지 보내기
+      3. 예약취소 모달창 close
+  */
   const appointCancel = () => {
     (async function() {
       try{
-        cancelTreatmentAppointment(clickedappoint.appointment_id);
-        axiosTreatmentAppointList();
+        await cancelTreatmentAppointment(clickedappoint.appointment_id);
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Appointment_TimeTable_Treatment"
+        })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_Appointment"
+        })
         CancelModalClose();
       } catch(error){
         throw error;

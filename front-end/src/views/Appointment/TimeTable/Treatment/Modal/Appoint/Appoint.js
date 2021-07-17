@@ -1,19 +1,32 @@
 import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { AutoSizer, List } from "react-virtualized";
-import { createTretmentAppointment, getPatientList, getPatientListByName } from "../../../../../apis/appointment";
+import { createTretmentAppointment, getPatientList, getPatientListByName } from "../../../../../../apis/appointment";
+import { sendMqttMessage } from "../../../../../../apis/message";
 import styles from "./Appoint.module.css";
+
+/*
+  Title : Appointment_TimeTable_Treatment_Modal_Appoint
+  Description : 진료 예약을 할 수 있는 모달창 (환자선택,진료내용 입력)
+
+  Date : 2021-07-10
+  Author : 조운호
+*/
 function Appoint(props) {
   const {selectAppointInfo,AppointModalClose, startDate, axiosTreatmentAppointList} =props;
   const [patientList, setPatientList]= useState([]);
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
   const [appointInfo, setAppointInfo] = useState({
     selectPatientId:"",
     treatmentContent:""   
-  });
-  const [searchedName, setSearchedName] = useState("");
+  }); //예약할 정보
+  const [searchedName, setSearchedName] = useState(""); //환자검색 이름
   const [select,setSelect] = useState("");
 
-  //환자 리스트 뽑아오기
+  /*
+    # 환자리스트 가져오기
+  */
   const axiosPatientList= useCallback(async () => {
     try{
       const response = await getPatientList();
@@ -26,11 +39,14 @@ function Appoint(props) {
     axiosPatientList();
   },[])
 
-  //예약
+  /*
+    # 예약하기
+      1. 예약 생성
+      2. MQTT 메세지 보내기
+      3. 예약 모달창 close
+  */
   const makeAppointment = () => {
     console.log(selectAppointInfo);
-    // console.log();
-    // let appointment_date =;
     const appointment = {
       appointment_date :  moment(startDate).format("YYYY-MM-DD"),
       appointment_time : selectAppointInfo.appointment_time,
@@ -43,14 +59,24 @@ function Appoint(props) {
     (async function() {
       try{
         await createTretmentAppointment(appointment);
-        axiosTreatmentAppointList();
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Appointment_TimeTable_Treatment"
+        })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_Appointment"
+        })
         AppointModalClose();
       } catch(error){
         throw error;
       }
     })();
-
   };
+
+  /*
+    # AutoSizer
+  */
   const rowRenderer = ({index, key,style}) => {
     return (
       <div key={key}
@@ -79,9 +105,11 @@ function Appoint(props) {
     );
   };
 
+
   const changeName = (e) => {
     setSearchedName(e.target.value);
   }
+
   const searchName = (e) => {
     (async function() {
       try{
@@ -93,6 +121,7 @@ function Appoint(props) {
       }
     })(); 
   }
+
   const selectPatient =useCallback((e,id) => {
     console.log(id);
     setSelect(id);
@@ -101,6 +130,7 @@ function Appoint(props) {
       selectPatientId:id
     });
   },[appointInfo])
+
   const setTreatmentcontent = (e) => {
     console.log("aaaaaaa",e.target.value);
     setAppointInfo({      

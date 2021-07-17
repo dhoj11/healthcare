@@ -17,4 +17,6 @@ public interface TestListDao {
 	public void testListAppointment(TestList testList);
 	public void testListWait(int appointment_id);
 	public int selectTreatmentId(@Param("test_list_id") int test_list_id, @Param("test_code") String test_code );
+	public List<String> selectState(int reception_id);
+	public List<Integer> selectReceptionIdByAppointmentId(int appointment_id);
 }
