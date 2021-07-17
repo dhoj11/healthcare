@@ -13,7 +13,7 @@ function Appointment(props) {
   const client = useSelector((state) => state.mqttReducer.client);
 
 
-  /* -------------------------------------------------------------------------------
+  /*
     # 예약 or 취소 시 Mqtt 메세지 도착
       1. 현재 보고 있는 state(전체,예약,내원,완료,취소) 에 따라 appointmentList 다름
       2. state(전체) => getAllList() 호출
