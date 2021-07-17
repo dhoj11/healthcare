@@ -12,27 +12,6 @@ function Reception(props) {
   const [state, setState] = useState("");
 
   const client = useSelector((state) => state.mqttReducer.client);
-  
-  const MqttBroker = () => {
-    client.onMessageArrived = (msg) => {
-        let message = JSON.parse(msg.payloadString);
-        message = message.content.split('/');
-        //#1
-        // message[0] : type  : alert || rerender  ex)alert
-        // message[1] : component_name             ex)Administration
-        // message[2] : content                    ex)조운호 진료완료
-
-        //#2
-        // message[0] : type  : alert || rerender  ex)rerender
-        // message[1] : component_name             ex)Administration_Reception
-        // message[2] : content                    ex)
-        console.log(message);
-      }
-    };
-  
-  useEffect(()=>{
-    if(client!=="") MqttBroker();
-  },[client])
 
   //예약 후 접수
   useEffect(() => {
@@ -65,6 +44,26 @@ function Reception(props) {
     };
     work();
   },[visitReception]);
+
+  const MqttBroker = () => {
+    if(client !=="") {
+      client.onMessageArrived = (msg) => {
+          let message = JSON.parse(msg.payloadString);
+          message = message.content.split('/');
+          if(message[0] === "rerender" && message[1] === "Administration_Reception") {
+            if(state ==="전체"){
+              getAllList();
+            } else{
+              listWithState(state);
+            }
+          }
+          // else if(message[0] === "alert" && message[1] === "Administration_Reception") {
+          //   //토스트메시지
+          // }
+      }
+    }
+  };
+    MqttBroker();
 
   const getAllList = async() => {
     try {

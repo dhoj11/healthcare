@@ -1,6 +1,5 @@
-import { getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import { useCallback, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import { getAppointmentList, getAppointmentListByState } from "../../../apis/administration";
 import React from "react";
@@ -22,6 +21,7 @@ function Appointment(props) {
   */ 
   const MqttBroker = () => {
     if(client!==""){
+      console.log("메시지 받음");
       client.onMessageArrived = (msg) => {
         let message = JSON.parse(msg.payloadString);
         message = message.content.split('/');

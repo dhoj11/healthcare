@@ -76,6 +76,20 @@ function AppointmentModal(props) {
   },[staff]);
 
   useEffect(() => {
+    if(appointmentDate !== "" && staff !== "") {
+      const work = async() => {
+        try{
+          const response = await isReserved(hospital_code, staff, appointmentDate);
+          setPossibleTime(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      }
+      work();
+    }
+  },[isOpen]);
+
+  useEffect(() => {
     if(doctorList !== undefined) {
       setStaff(doctorList[0].staff_id);
     }
@@ -125,6 +139,7 @@ function AppointmentModal(props) {
       dayAppointment(new Date());
     }
     setAppointmentTime("");
+    setAppointmentDate("");
     close();
   }
 

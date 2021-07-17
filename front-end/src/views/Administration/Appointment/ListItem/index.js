@@ -1,19 +1,25 @@
 import styles from "./ListItem.module.css";
 import {useEffect, useState} from "react";
 import { changeAppointmentState, addReceptionAfterAppointment, addTestReceptionAfterAppointment } from "../../../../apis/administration";
+import { sendMqttMessage } from "../../../../apis/message";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function ListItem(props) {
 
   const {index, appointment, selectPatient, receptionPatient, appointmentTest, isFinished} = props;
   const [state, setState] = useState(appointment.appointment_state);
-
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
   useEffect(() => {
     if(appointment.appointment_id === isFinished) {
       const work = async () => {
         try{
-          await changeAppointmentState(isFinished, "완료");
-          setState("완료");
+          await changeAppointmentState(isFinished, "취소");
+          setState("취소");
+          await sendMqttMessage({
+            topic : "/"+hospital_code,
+            content : "rerender/Appointment_TimeTable_Treatment"
+            })
         }catch(error) {
           console.log(error.message);
         }
@@ -31,7 +37,7 @@ function ListItem(props) {
     setState(event.target.value);
     try{
       
-      await changeAppointmentState(appointment_id, event.target.value); //db 상태 바꿔줌
+      await changeAppointmentState(appointment_id, event.target.value); 
       if(event.target.value === "내원" && appointment_kind === "진료") {
         //접수 컴포넌트에 추가
         await addReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
@@ -41,6 +47,41 @@ function ListItem(props) {
         await addTestReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
         appointmentTest(appointment_id);
       }
+      if(appointment_kind === "진료") {
+        await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Appointment_TimeTable_Treatment"
+        })
+        if(event.target.value === "내원") {
+          await sendMqttMessage({
+            topic : "/"+hospital_code,
+            content : "rerender/Administration_Reception"
+          });
+          await sendMqttMessage({
+            topic : "/"+hospital_code+"/ROLE_DOCTOR/"+appointment.staff_id,
+            content : "rerender/Treatment_Patients"
+          });
+          await sendMqttMessage({
+            topic : "/"+hospital_code+"/ROLE_ADMIN/"+appointment.staff_id,
+            content : "rerender/Treatment_Patients"
+          });
+        }
+      }else {
+        await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Appointment_TimeTable_Test"
+        })
+        if(event.target.value === "내원") {
+          await sendMqttMessage({
+            topic : "/"+hospital_code,
+            content : "rerender/Administration_TestList"
+          })
+        }
+      }
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Administration_Appointment"
+      })
     } catch(error) {
       console.log(error.message);
      }

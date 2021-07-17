@@ -98,8 +98,8 @@ function AppointmentWithTestModal(props) {
       //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
       await changeTestStateToAppointment(testCodes[0].reception_id); //reception_state 바꿔줌
       setSelectedTestCodes([]);
-      setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});
-      dayAppointment(new Date());
+      setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});  //검사 접수 상태 
+      dayAppointment(new Date());   //당일검사
     }catch(error) {
       console.log(error.message);
     }
