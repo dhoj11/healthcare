@@ -44,8 +44,8 @@ public class TreatmentService {
 		return nowTreatment;
 	}
 	
-	public String getTreatmentIsComplete(int patient_id) {
-		List<Integer> treatmentState = treatmentDao.selectTreatmentIsComplete(patient_id);
+	public String getTreatmentIsComplete(int patient_id, String staff_id) {
+		List<Integer> treatmentState = treatmentDao.selectTreatmentIsComplete(patient_id, staff_id);
 		
 		for(int item : treatmentState) {
 			if(item == 0) {
@@ -157,6 +157,11 @@ public class TreatmentService {
 	public String getStaffName(int treatment_id) {
 		String staff_name = treatmentDao.selectStaffNameByTreatmentId(treatment_id);
 		return staff_name;
+	}
+	
+	public String getPatientName(int treatment_id) {
+		String patient_name = treatmentDao.selectPatientNameByTreatmentId(treatment_id);
+		return patient_name;
 	}
 	
 	
