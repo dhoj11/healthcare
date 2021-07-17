@@ -8,7 +8,7 @@ import { getTestResult, saveTestResult } from "../../../apis/test";
 
 function TestResult(props){
 
-  const[testList, setTestList] = useState([]);         // 선택/검색한 검사번호
+  const[testList, setTestList] = useState();         // 선택/검색한 검사번호
   const[testResults, setTestResults] = useState([]); // 왼쪽 테이블에서 하나의 검사를 선택했을 때 오른쪽에 표시되는 검사 목록
   const[isSaved, setIsSaved] = useState();
   let prevItem;  
@@ -20,7 +20,7 @@ function TestResult(props){
    * 
    */
   const getResults = async () => {
-    if(testList!=null && testList!=undefined && testList !=""){
+    if(testList != null && testList != undefined && testList.test_list_id !=""){
       try{
         const promise = await getTestResult(testList.test_list_id, testList.reception_id);
         setTestResults(promise.data);

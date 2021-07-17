@@ -17,22 +17,40 @@ import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment"
 function Patients(props){
 
   const staff_id = useSelector((state) => state.authReducer.staff_id);
-  
   const patient = useSelector(state => state.treatmentReducer.patient);
 
+  const client = useSelector((state) => state.mqttReducer.client);
+
   const [curPatient, setCurPatient] = useState({patient_id:patient});
-  const [listState, setListState] = useState();
+  const [listState, setListState] = useState("all");
   const [patients, setPateints] = useState([]);
+  
+  const[rerender, setRerender] = useState(new Date().getMilliseconds());
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setListState("all");
-  },[]);
+  const MqttBroker = () => {
+    client.onMessageArrived = (msg) => {
+        let message = JSON.parse(msg.payloadString);
+        message = message.content.split('/');
+        if(message[0] == "rerender" && message[1] == "Treatment_Patients")
+          setRerender(new Date().getMilliseconds());
+      }
+    };
+  
+  useEffect(()=>{
+    if(client!=="") MqttBroker();
+  },[client])
+
+   useEffect(()=>{
+     getPateints();
+   },[rerender])
 
   const getPateints = async() => {
     try{
       const response = await getPateintList(staff_id);
       let newPatients = response.data;
+
       if(newPatients){
         newPatients.map( async (item, index) => {
           let isComplete = await isTreatmentComplete(item.patient_id);
@@ -129,4 +147,4 @@ function Patients(props){
   );
 }
 
-export default React.memo(Patients);
+export default Patients;
