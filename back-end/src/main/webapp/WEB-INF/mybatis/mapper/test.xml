@@ -56,7 +56,11 @@
 		FROM (SELECT tmp.test_list_id, tmp.test_code, test_list_req, test_details_id, test_result_value
 			  FROM (select *
 				    from tests_list
-					where test_list_id = #{test_list_id} AND test_list_req = 1 AND reception_id = #{reception_id}) AS tmp, test_results
+					where test_list_id = #{test_list_id} AND test_list_req = 1 
+					<if test='reception_id !=0'>
+						AND reception_id = #{reception_id}
+					</if>	
+					) AS tmp, test_results
 			  WHERE tmp.test_list_id = test_results.test_list_id AND tmp.test_code = test_results.test_code) AS tmp2, test_details
 		WHERE tmp2.test_details_id = test_details.test_details_id
     		

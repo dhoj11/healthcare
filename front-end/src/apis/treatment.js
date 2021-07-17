@@ -10,6 +10,11 @@ export function getTreatmentList(patient_id){
   return promise;
 }
 
+export function getNowTreatment(patient_id, staff_id){
+  const promise = auth.get('/treatment/nowtreatment', {params:{patient_id, staff_id}})
+  return promise;
+}
+
 export function isTreatmentComplete(patient_id){
   const promise = auth.get('/treatment/treatmentIsComplete/' + patient_id);
   return promise;

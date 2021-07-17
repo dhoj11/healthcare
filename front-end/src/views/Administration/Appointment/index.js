@@ -123,3 +123,23 @@ function Appointment(props) {
 }
 
 export default React.memo(Appointment);
+
+
+  // // 환자 내원했을 때
+  // / /예약셀렉트 박스에서 내원으로 바꿨을 때 이벤트 걸어주면 될 듯
+  // // 진료페이지 환자 리스트 추가 되는 부분
+  // // 아래 정상동작 합니다.
+  // // 뒤에 /ROLE_ADMIN/{staff_id} 로 보내야 합니다. 
+  // // /ROLE_DOCTOR/{staff_id} 한테도 보내야 할 것 같아요.
+  // // 
+  // const sendMessage = async()=>{
+  //   try{
+  //   await sendMqttMessage({
+  //     topic : "/"+ hospital_code +"/ROLE_ADMIN/dhoj11",
+  //     content : "rerender/Treatment_Patients"
+  //   })
+  //   }catch(error){
+  //     console.log(error);
+  //   } 
+  // }
+  // //

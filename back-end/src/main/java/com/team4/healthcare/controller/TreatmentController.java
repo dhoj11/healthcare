@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Diagnose;
@@ -39,6 +40,11 @@ public class TreatmentController {
 	@GetMapping("/treatments/{patient_id}")
 	public List<Treatment> treatmentList(@PathVariable int patient_id){
 		return treatmentService.getTreatmentList(patient_id);
+	}
+	
+	@GetMapping("/nowtreatment")
+	public List<Treatment> nowTreatment(@RequestParam() int patient_id, @RequestParam() String staff_id){
+		return treatmentService.getNowTreatment(patient_id, staff_id);
 	}
 	
 	@GetMapping("/treatmentIsComplete/{patient_id}")

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import ListItem from "./ListItem";
 import {getReceptionList, getReceptionListByState} from "../../../apis/administration";
 import { useDispatch, useSelector } from "react-redux";
+import { sendMqttMessage } from "../../../apis/message";
 
 function Reception(props) {
   const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
@@ -32,7 +33,6 @@ function Reception(props) {
   useEffect(()=>{
     if(client!=="") MqttBroker();
   },[client])
-
 
   //예약 후 접수
   useEffect(() => {

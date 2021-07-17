@@ -1,3 +1,9 @@
+.treatmentList{
+  display: flex;
+  flex-direction: column;
+}
+
+
 .selectDate{
   background: #fff;
   border-radius: 10px;

@@ -37,7 +37,6 @@ public class MqttTemplate {
          
          JSONObject jsonObject = new JSONObject();
          jsonObject.put("topic", topic);
-         
          jsonObject.put("content", content);
          
          String json = jsonObject.toString();

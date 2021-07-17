@@ -20,7 +20,11 @@ public interface TreatmentDao {
 	
 	public List<Integer> selectPatientIds(String staff_id);
 	public List<Patient> selectPatients(List<Integer> patientidList);
-	public int selectTreatmentIsComplete(int patient_id);
+	public List<Treatment> selectNowTreatment(
+										@Param("patient_id")int patient_id
+									   ,@Param("staff_id")String staff_id
+										);
+	public List<Integer> selectTreatmentIsComplete(int patient_id);
 	public List<Treatment> selectTreatments(int pateint_id);
 	public String selectTreatmentRecord(int treatment_id);
 	public String selectTreatmentComment(int treatment_id);
@@ -50,6 +54,12 @@ public interface TreatmentDao {
 							  );
 	
 	public int getReceptionId(int treatment_id);
+		
+	public void updateReceptionState(int reception_id);
+	
+	public Integer getAppointmentId(int reception_id);
+	
+	public void updateAppointmentState(int appointment_id);
 	
 	public void insertTestList(
 							   @Param("treatment_id")int treatment_id

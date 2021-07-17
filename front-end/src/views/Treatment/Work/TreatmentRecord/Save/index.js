@@ -43,7 +43,7 @@ function Save(props){
       // MQTT 메세지 보내기
       await sendMqttMessage({
         topic : "/"+ hospital_code +"/ROLE_NURSE",
-        content : ""
+        content : "rerender/Administration_Reception/"
       })
 
 
