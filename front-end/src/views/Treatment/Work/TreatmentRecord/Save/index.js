@@ -39,8 +39,7 @@ function Save(props){
                             ,treatment_tests : curTests }
 
       const testListObj = { treatment_id : treatment, treatment_tests : curTests };
-      //const patientName = await getPatientName(treatment);
-
+  
       await saveTreatment(treatmentObj);
       await insertTestList(testListObj);
       await updateAppointmentAndReceptionState(treatment);
@@ -73,11 +72,12 @@ function Save(props){
         })
       }
 
-      // //진료완료 alert 보내기
-      // await sendMqttMessage({
-      //   topic : "/"+ hospital_code,
-      //   content : "alert/Administration/" + patientName.data + " 환자 진료완료"
-      // })
+      //진료완료 alert 보내기
+      const patientName = await getPatientName(treatment);
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "alert/Administration/" + patientName.data + " 환자 진료완료"
+      })
 
 
 

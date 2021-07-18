@@ -116,5 +116,11 @@ public class AccountService {
 	public void updateHospital(Hospital hospital) {
 		accountDao.updateHospital(hospital);
 	}
+	
+	public int checkDuplicateId(String staff_id) {
+		int result = accountDao.checkDuplicateId(staff_id);
+		if(result == 1) return 0;
+		else return 1;
+	}
 
 }

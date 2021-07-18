@@ -66,6 +66,11 @@ public class AccountController {
     public void updateHospital(@RequestBody Hospital hospital) {
     	accountService.updateHospital(hospital);
     }
+    
+    @GetMapping("/checkid/{staff_id}")
+    public int checkDuplicateId(@PathVariable("staff_id") String staff_id) {
+    	return accountService.checkDuplicateId(staff_id);
+    }
 	   
 	   
 

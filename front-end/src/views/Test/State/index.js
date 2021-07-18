@@ -5,12 +5,16 @@ import style from "./State.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarcode, faVial, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { changeTestListState } from "../../../apis/test";
+import { useSelector } from "react-redux";
+import { sendMqttMessage } from "../../../apis/message";
 
 
 function State(props){
 
   const [barcodeModalOpen, setBarcodeModalOpen] = useState(false);
   const [testList, setTestList] = useState();
+
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const closeBarcodeModal = () => {
     setBarcodeModalOpen(false);
@@ -37,6 +41,27 @@ function State(props){
       try{
         await changeTestListState(testList.test_list_id, testList.reception_id, state)
         props.changeState(testList, state);
+
+        // 예약 페이지 검사 타임 테이블
+        await sendMqttMessage({
+          topic : "/"+ hospital_code,
+          content : "rerender/Appointment_TimeTable_Test"
+        })
+
+        // 접수 페이지 예약 테이블
+        await sendMqttMessage({
+          topic : "/"+ hospital_code,
+          content : "rerender/Administration_Appointment"
+        })
+
+        // 접수페이지 검사 테이블
+        await sendMqttMessage({
+          topic : "/"+ hospital_code,
+          content : "rerender/Administration_TestList"
+        })
+
+        
+        
       }catch(error){
         console.log(error);
       }

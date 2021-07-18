@@ -16,8 +16,29 @@
   font-weight: 600;
 }
 
+.id{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
 .addInput{
   width: 250px!important;
+}
+
+.addInputId{
+  width: 160px!important;
+}
+.idcheck{
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0px 0px 0px 2px;
+  border: 1px solid #d3d3d3;
+  padding: 7px 15px;
+}
+
+.idcheck:hover{
+  background-color: #f0f0f0;
 }
 
 .role{

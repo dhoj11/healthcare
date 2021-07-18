@@ -95,5 +95,11 @@
     	where hospital_code = #{hospital_code}
     </update>
     
+    <select id="checkDuplicateId" parameterType="string" resultType="int">
+    	SELECT exists( select staff_id
+		FROM staff
+		WHERE staff_id=#{staff_id} LIMIT 1)
+    </select>
+    
     
 </mapper>
