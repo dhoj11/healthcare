@@ -1,11 +1,14 @@
 import styles from "./ListItem.module.css";
 import {useEffect, useState} from "react";
 import {changeReceptionState} from "../../../../apis/administration";
+import { sendMqttMessage } from "../../../../apis/message";
+import { useSelector } from "react-redux";
 
 function ListItem(props) {
   
   const {index, reception, selectPatient, finished} = props;
   const [state, setState] = useState(reception.reception_state);
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
     //reception이 변경되면 state도 reception_state 다시 세팅해줌.
     useEffect(()=> {
@@ -16,13 +19,25 @@ function ListItem(props) {
     setState(event.target.value);
     try{
       await changeReceptionState(reception_id, event.target.value);
+      if(event.target.value==="진료") {
+
+      }else if(event.target.value === "취소") {
+        await sendMqttMessage({
+          topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
+          content : "rerender/Treatment_Patients"
+          })
+      }
     }catch(error) {
       console.log(error.message);
     }
-    if(event.target.value === "완료" && appointment_id !== null) {
+    if(event.target.value === "취소" && appointment_id !== null) {
       console.log(appointment_id);
       finished(appointment_id);
     }
+    await sendMqttMessage({
+      topic : "/"+hospital_code,
+      content : "rerender/Administration_Reception"
+      })
   };
 
   return (

@@ -144,6 +144,15 @@ public class AdministrationService {
 		return patientList;
 	}
 	
+	public boolean checkTel(String patient_tel) {
+		List<Patient> list = patientDAO.selectPatientByTel(patient_tel);
+		if(list.size() == 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public boolean addNewPatient(Patient newPatient) {
 		int row = patientDAO.insertNewPatient(newPatient);
 		
@@ -320,7 +329,7 @@ public class AdministrationService {
 	}
 	
 	public void appointmentTestList(List<TestList> testList, List<TestList> testCodes) {
-		int appointment_id = appointmentDAO.selectAppointmentId(testList.get(0));
+		int appointment_id = appointmentDAO.selectMaxAppointmentId();
 		for(TestList test : testCodes) {
 			testDAO.updateTestList(testList.get(0), appointment_id, test.getTest_code());
 		}

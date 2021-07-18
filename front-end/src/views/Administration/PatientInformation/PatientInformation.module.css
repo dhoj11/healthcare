@@ -8,8 +8,10 @@
 }
 
 .patient_information_tab {
-  margin: 20px;
-  height: 250px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  height: 260px;
 }
 
 .button_area {
@@ -56,4 +58,10 @@
 .patient_alert_letter {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.patient_modify {
+  height: 100px;
+  padding: 10px;
+  margin-left: 130px;
 }

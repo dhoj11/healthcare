@@ -4,7 +4,7 @@ import style from "./Save.module.css";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createSetEditBlockActoin } from "../../../../../redux/treatment-reducer";
-import { getPatientName, getPrevDoctorName, saveTreatment } from "../../../../../apis/treatment";
+import { getPatientName, getPrevDoctorName, insertTestList, saveTreatment, updateAppointmentAndReceptionState } from "../../../../../apis/treatment";
 import { sendMqttMessage } from "../../../../../apis/message";
 
 /**
@@ -38,9 +38,12 @@ function Save(props){
                             ,treatment_prescriptions : curPrescriptions
                             ,treatment_tests : curTests }
 
-      const patientName = await getPatientName(treatment);
+      const testListObj = { treatment_id : treatment, treatment_tests : curTests };
+      //const patientName = await getPatientName(treatment);
 
       await saveTreatment(treatmentObj);
+      await insertTestList(testListObj);
+      await updateAppointmentAndReceptionState(treatment);
 
       // MQTT 메세지 보내기
 
@@ -70,11 +73,11 @@ function Save(props){
         })
       }
 
-      //진료완료 alert 보내기
-      await sendMqttMessage({
-        topic : "/"+ hospital_code,
-        content : "alert/Administration/" + patientName.data + " 환자 진료완료"
-      })
+      // //진료완료 alert 보내기
+      // await sendMqttMessage({
+      //   topic : "/"+ hospital_code,
+      //   content : "alert/Administration/" + patientName.data + " 환자 진료완료"
+      // })
 
 
 

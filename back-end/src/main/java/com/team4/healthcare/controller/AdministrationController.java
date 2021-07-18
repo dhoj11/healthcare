@@ -99,7 +99,13 @@ public class AdministrationController {
 		List<Patient> patientList = administrationService.getSearchedPatientList(patient_name);
 		return patientList;
 	}
-
+	
+	@GetMapping("patient/check/tel")
+	public boolean checkTel(@RequestParam("patient_tel") String patient_tel) {
+		boolean isExisted = administrationService.checkTel(patient_tel);
+		return isExisted;
+	}
+	
 	@PostMapping("/patient/new")
 	public void addNewPatient(@RequestBody Patient newPatient) {
 		administrationService.addNewPatient(newPatient);
@@ -196,5 +202,9 @@ public class AdministrationController {
 	public List<Reception> getTestReceptionListByState(@RequestParam() String reception_state) {
 		List<Reception> receptionList = administrationService.getTestReceptionListByState(reception_state);
 		return receptionList;
+	}
+	@PutMapping("/patient/modify")
+	public void modifyPatientInfo(@RequestBody Patient patient) {
+		logger.info(patient.toString());
 	}
 }

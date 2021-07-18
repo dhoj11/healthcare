@@ -16,7 +16,7 @@
 		select patient_id, patient_name, patient_tel, patient_birth, patient_medicine
 				, patient_disease, patient_comment, patient_gender, patient_recent_visit
 		from patient
-		where patient_name = #{patient_name}
+		where patient_name LIKE concat('%',#{patient_name},'%')
 	</select>
 	<insert id="insertNewPatient" parameterType="patient">
 		insert into patient
@@ -28,11 +28,17 @@
 	<select id="selectPatientByName" parameterType="String" resultType="patient">
 		select *
 		from patient
-		where patient_name LIKE concat(#{patient_name},'%')
+		where patient_name LIKE concat('%',#{patient_name},'%')
 	</select>
 	<update id="updatePatientRecentVisit" >
 		update patient
 		set patient_recent_visit = curdate()
 		where patient_id = #{patient_id}
 	</update>
+	<select id="selectPatientByTel" resultType="patient">
+		select patient_id, patient_name, patient_tel, patient_birth, patient_medicine
+				, patient_disease, patient_comment, patient_gender, patient_recent_visit
+		from patient
+		where patient_tel = #{patient_tel}		
+	</select>
 </mapper>

@@ -9,7 +9,7 @@ import TimeSelector from "./TimeSelector";
 
 function AppointmentWithTestModal(props) {
   
-  const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
+  const {dayAppointment, setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
   const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const [startDate, setStartDate] = useState(new Date());   //calendar에 전해줄 상태
@@ -98,7 +98,8 @@ function AppointmentWithTestModal(props) {
       //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
       await changeTestStateToAppointment(testCodes[0].reception_id); //reception_state 바꿔줌
       setSelectedTestCodes([]);
-      setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});
+      setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});  //검사 접수 상태 
+      dayAppointment(new Date());   //당일검사
     }catch(error) {
       console.log(error.message);
     }

@@ -102,49 +102,48 @@ public class TreatmentService {
 		return treatmentSympton;
 	}
 	
-	public void saveTreatment(TreatmentSave treatment) {
-		
-		int treatment_id = treatment.getTreatment_id();
-		String treatment_record = treatment.getTreatment_record();
-		String treatment_comment = treatment.getTreatment_comment();
-		
-		List<Diagnose> treatment_diagnoses = treatment.getTreatment_diagnoses();
-		List<Prescription> treatment_prescriptions = treatment.getTreatment_prescriptions();
-		List<TestList> treatment_tests = treatment.getTreatment_tests(); 
-		
-		treatmentDao.updateTreatment(treatment_id, treatment_record, treatment_comment);
-		if(treatment_diagnoses.size()>0) treatmentDao.insertDiagnose(treatment_id, treatment_diagnoses);
-		if(treatment_prescriptions.size()>0) treatmentDao.insertPrescription(treatment_id,treatment_prescriptions);
-		
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.KOREA);
-		String today = sdf.format(date);
-		int test_list_id = Integer.parseInt(today+treatment_id);
-				
-		if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id, treatment_tests);
-		
-		if(treatment_tests.size()>0) {
-			for(TestList test : treatment_tests) {
-				String test_code = test.getTest_code();
-				List<Integer> test_details_id = treatmentDao.selectTestDetailsId(test_code);
-				treatmentDao.insertTestResult(test_list_id, test_code, test_details_id);
-			}
-			
-			int patient_id = treatmentDao.getPatiendId(treatment_id);
-			String staff_id = treatmentDao.getStaffId(treatment_id);
-			
-			treatmentDao.insertReception(patient_id, staff_id);
-			// tests_list 테이블에서 방금 생긴 접수 번호로 test_list_id 의 접수번호 update. 
-			int latelyReceptionId = treatmentDao.getLatelyReceptionId();
-			treatmentDao.updateReceptionId(test_list_id, latelyReceptionId);
-			
-		}
-		
-		int reception_id = treatmentDao.getReceptionId(treatment_id);
-		treatmentDao.updateReceptionState(reception_id);
-		Integer appointment_id = treatmentDao.getAppointmentId(reception_id);
-		if(appointment_id != null) treatmentDao.updateAppointmentState(appointment_id);
-	}
+	 public void saveTreatment(TreatmentSave treatment) {
+	      
+	      int treatment_id = treatment.getTreatment_id();
+	      String treatment_record = treatment.getTreatment_record();
+	      String treatment_comment = treatment.getTreatment_comment();
+	      
+	      int reception_id = treatmentDao.getReceptionId(treatment_id);
+	      treatmentDao.updateReceptionState(reception_id);
+	      Integer appointment_id = treatmentDao.getAppointmentId(reception_id);
+	      if(appointment_id != null) treatmentDao.updateAppointmentState(appointment_id);
+	      
+	      List<Diagnose> treatment_diagnoses = treatment.getTreatment_diagnoses();
+	      List<Prescription> treatment_prescriptions = treatment.getTreatment_prescriptions();
+	      List<TestList> treatment_tests = treatment.getTreatment_tests(); 
+	      
+	      Date date = new Date();
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.KOREA);
+	      String today = sdf.format(date);
+	      int test_list_id = Integer.parseInt(today+treatment_id);
+	            
+	      if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id, treatment_tests);
+	      
+	      if(treatment_tests.size()>0) {
+	         for(TestList test : treatment_tests) {
+	            String test_code = test.getTest_code();
+	            List<Integer> test_details_id = treatmentDao.selectTestDetailsId(test_code);
+	            treatmentDao.insertTestResult(test_list_id, test_code, test_details_id);
+	         }
+	         
+	         int patient_id = treatmentDao.getPatiendId(treatment_id);
+	         String staff_id = treatmentDao.getStaffId(treatment_id);
+	         
+	         treatmentDao.insertReception(patient_id, staff_id);
+	         // tests_list 테이블에서 방금 생긴 접수 번호로 test_list_id 의 접수번호 update. 
+	         int latelyReceptionId = treatmentDao.getLatelyReceptionId();
+	         treatmentDao.updateReceptionId(test_list_id, latelyReceptionId);
+	      }
+	      
+	      treatmentDao.updateTreatment(treatment_id, treatment_record, treatment_comment);
+	      if(treatment_diagnoses.size()>0) treatmentDao.insertDiagnose(treatment_id, treatment_diagnoses);
+	      if(treatment_prescriptions.size()>0) treatmentDao.insertPrescription(treatment_id,treatment_prescriptions);
+	   }
 	
 	public List<TestResult> getTreatmentTestResult(int treatment_id) {
 		List<Integer> test_list_id = treatmentDao.getTestListId(treatment_id);

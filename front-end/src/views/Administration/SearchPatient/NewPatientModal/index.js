@@ -2,10 +2,12 @@ import {Modal, Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import styles from "./NewPatientModal.module.css"
 import moment from "moment";
+import {checkPatientTel} from "../../../../apis/administration"
 
 function NewPatientModal(props) {
 
   const {isOpen, close, addNewPaitent} = props;
+  const [isChecked, setIsChecked] = useState("");
   const [newPatient, setNewPatient] = useState({
     patient_name: "",
     patient_gender: "",
@@ -40,6 +42,30 @@ function NewPatientModal(props) {
     });
   };
 
+  const checkTel = async() => {
+    if(newPatient.patient_tel === "") {
+      alert("환자의 연락처를 입력해주세요.")
+      return;
+    }
+    try {
+      const response = await checkPatientTel(newPatient.patient_tel);
+      if(response.data === true) {
+        alert("사용 가능한 연락처입니다.");
+        setIsChecked(response.data);
+      }else {
+        alert("이미 존재하는 연락처입니다.");
+        setIsChecked(response.data);
+        setNewPatient({
+          ...newPatient,
+          patient_tel: ""
+        });
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const addNewPatient = () => {
     if(newPatient.patient_name === "") {
       alert("환자의 이름을 입력해주세요.")
@@ -61,6 +87,12 @@ function NewPatientModal(props) {
       return;
     }else if(newPatient.patient_comment === "") {
       alert("환자의 특이사항을 입력해주세요.")
+      return;
+    }else if(isChecked === "") {
+      alert("연락처 중복 검사가 필요합니다.");
+      return;
+    }else if(isChecked === false) {
+      alert("이미 존재하는 연락처입니다.")
       return;
     }
     addNewPaitent(newPatient);
@@ -107,6 +139,9 @@ function NewPatientModal(props) {
             <div className={`${styles.border_title} border`}>연락처</div>
             <div>
               <input type="text" name="patient_tel" className="form-control" placeholder="'-' 포함 숫자 입력" value={newPatient.patient_tel} onChange={handleChange}/>
+            </div>
+            <div>
+              <button className="btn btn-sm btn-secondary ml-2" onClick={checkTel}> 중복검사 </button>
             </div>
           </div>
           <div className={styles.register_form_row}>

@@ -7,6 +7,7 @@ import moment from "moment";
 import TimeSelector from "./TimeSelector";
 import { useSelector } from "react-redux";
 import React from "react";
+import {sendMqttMessage} from "../../../../apis/message";
 
 
 function AppointmentModal(props) {
@@ -76,6 +77,20 @@ function AppointmentModal(props) {
   },[staff]);
 
   useEffect(() => {
+    if(appointmentDate !== "" && staff !== "") {
+      const work = async() => {
+        try{
+          const response = await isReserved(hospital_code, staff, appointmentDate);
+          setPossibleTime(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      }
+      work();
+    }
+  },[isOpen]);
+
+  useEffect(() => {
     if(doctorList !== undefined) {
       setStaff(doctorList[0].staff_id);
     }
@@ -118,6 +133,16 @@ function AppointmentModal(props) {
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime, staff_id: staff};
     try{
       await addNewAppointment(newAppointment);
+      if(appointmentDate === moment().format("YYYY-MM-DD")) {
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Appointment_TimeTable_Treatment"
+        })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_Appointment"
+        })
+      }
     }catch(error) {
       console.log(error.message);
     }
@@ -125,6 +150,7 @@ function AppointmentModal(props) {
       dayAppointment(new Date());
     }
     setAppointmentTime("");
+    setAppointmentDate("");
     close();
   }
 
@@ -147,12 +173,10 @@ function AppointmentModal(props) {
             <div className="d-flex">
               {doctorList.map((doctor, key, index)=>(
                 <>
-               
                   <div key={key}>
                   <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} checked={doctor.staff_id === staff} onChange={handleRadioChange}/>
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
                   </div>
-               
                 </>
               ))}
             </div>

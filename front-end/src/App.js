@@ -3,7 +3,7 @@ import './reset.css';
 import AppMenu from "./AppMenu";
 import AppRoute from "./AppRoute";
 import AppHeader from './AppHeader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Paho from "paho-mqtt";
 import { createSetClientAction } from './redux/mqtt-reducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,10 @@ import { sendMqttMessage } from './apis/message';
 import { createMasonryCellPositioner } from 'react-virtualized';
 function App() {
   const dispatch = useDispatch();
+  const [chatShow,setChatShow] = useState(false);
+  const chatToggle = () => {
+    setChatShow(!chatShow);
+  }
   useEffect(() => {
     const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
@@ -28,7 +32,7 @@ function App() {
       client.disconnect();
     });
   },[]);
-  
+
   return (
     <div className="main">
         <div className="header">
@@ -36,13 +40,13 @@ function App() {
         </div>
         <div className="body">
           <div className="sidebar">
-            <AppMenu/>
+            <AppMenu chatToggle={chatToggle}/>
           </div>
           <div className="content">
-            <AppRoute/>
+            <AppRoute className="approute"/>
           </div>
-        </div>    
-        
+        </div>
+
     </div>
   );
 }

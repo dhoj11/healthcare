@@ -2,10 +2,13 @@ import styles from "./ReceptionOfTreatmentModal.module.css"
 import {Modal,} from "react-bootstrap";
 import { getDoctorNameList, addReceptionAfterVisit } from "../../../../apis/administration";
 import {useState, useEffect} from "react";
+import {sendMqttMessage} from "../../../../apis/message";
+import { useSelector } from "react-redux";
 
 function ReceptionOfTreatmentModal(props) {
   const {setRerenderer, patient, isOpen, close, visitReception} = props;
   const [doctorList, setDoctorList] = useState([]);
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
   const [receptionPatient, setReceptionPatient] = useState({
     patient_id: "",
     reception_content: "",
@@ -44,6 +47,14 @@ function ReceptionOfTreatmentModal(props) {
     const newReception = {...receptionPatient};
     try{
       await addReceptionAfterVisit(newReception);
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Treatment_Patients"
+      })
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Administration_Reception"
+      })
     }catch(error) {
       console.log(error)
     }

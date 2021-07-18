@@ -24,10 +24,10 @@
 		from reception, patient, staff
 		where reception.patient_id = patient.patient_id 
 				and reception.staff_id = staff.staff_id 
-				and reception_date = curdate()
+				and reception_date = '2021-07-18'
 				and reception_state = #{reception_state}
 				and reception_kind = '진료'
-		order by reception_time;
+		order by reception_id;
 	</select>
 	<update id="updateReceptionState">
 		update reception 
