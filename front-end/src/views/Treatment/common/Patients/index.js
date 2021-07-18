@@ -20,42 +20,25 @@ function Patients(props){
   const patient = useSelector(state => state.treatmentReducer.patient);
   const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
-  const client = useSelector((state) => state.mqttReducer.client);
-
   const [curPatient, setCurPatient] = useState({patient_id:patient});
   const [listState, setListState] = useState("all");
   const [patients, setPateints] = useState();
+
+  const mqttRerenderMessage = props.mqttRerenderMessage;
   
   //const[rerender, setRerender] = useState(new Date().getMilliseconds());
 
   const dispatch = useDispatch();
 
-  // 환자 리스트에서 대기 탭 누르고 있는 상태에서 
-  // 메세지 수신시 patients는 업데이트 되나 제대로 뿌려지지 않음
-  // 전체 선택시에는 문제 없음
-
-  const MqttBroker = () => {
-    if(client!=="") {
-      client.onMessageArrived = (msg) => {
-          let message = JSON.parse(msg.payloadString);
-          message = message.content.split('/');
-          if(message[0] == "rerender" && message[1] == "Treatment_Patients"){
-            //setRerender(new Date().getMilliseconds());
-            getPateints();
-          }
-          console.log(patients);
-        }
+  useEffect(()=>{
+    if(mqttRerenderMessage !== ""){
+      if(mqttRerenderMessage.message[1] === "Treatment_Patients"){
+        getPateints();
       }
-    };
-  
-    MqttBroker();
-
-  //  useEffect(()=>{
-  //    getPateints();
-  //  },[rerender])
+    }
+  },[mqttRerenderMessage])
 
   const getPateints = async() => {
-    console.log("실행");
     try{
       const response = await getPateintList(staff_id);
       let newPatients = response.data;
