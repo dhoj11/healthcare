@@ -42,7 +42,7 @@ public class MqttTemplate {
          String json = jsonObject.toString();
          message.setPayload(json.getBytes());
          
-         message.setQos(0); 
+         message.setQos(1); 
          
          mqttClient.publish(topic, message);
       } catch (Exception e) {

@@ -1,12 +1,13 @@
+import { getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import {useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import { getAppointmentList, getAppointmentListByState } from "../../../apis/administration";
 import React from "react";
 import { useSelector } from "react-redux";
 function Appointment(props) {
 
-  const {sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
+  const {mqttMessage, sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
   const [appointmentList, setAppointmentList] = useState([]);
   const [state, setState] = useState("");
   const client = useSelector((state) => state.mqttReducer.client);
@@ -19,24 +20,27 @@ function Appointment(props) {
       3. state(예약,내원,완료,취소) => listWithState() 호출
     by 운호
   */ 
-  const MqttBroker = () => {
-    if(client!==""){
-      console.log("메시지 받음");
-      client.onMessageArrived = (msg) => {
-        let message = JSON.parse(msg.payloadString);
-        message = message.content.split('/');
-        if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
-          if(state ==="전체"){
-            getAllList();
-          } else{
-            listWithState(state);
-          }
-        }
-      }
-    }
-  }
-  // useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
-  MqttBroker();
+  // const MqttBroker = () => {
+  //   if(client!==""){
+  //     client.onMessageArrived = (msg) => {
+  //       console.log("예약 메시지 수신");
+  //       let message = JSON.parse(msg.payloadString);
+  //       message = message.content.split('/');
+  //       if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
+  //         if(state ==="전체"){
+  //           getAllList();
+  //         } else{
+  //           listWithState(state);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // //useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
+  // MqttBroker();
+  // useEffect(() => {
+  //   if(client !== "") MqttBroker();
+  // },[client])
 
   useEffect(() => {
     //비동기 통신
@@ -51,6 +55,18 @@ function Appointment(props) {
     };
     work();  
   },[sameDayAppointment]);
+
+  useEffect(() => {
+    if(mqttMessage !== "") {
+      if(mqttMessage.message[0] === "rerender" && mqttMessage.message[1] === "Administration_Appointment") {
+        if(state === "전체") {
+          getAllList();
+        }else {
+          listWithState(state);
+        }
+      }
+  }
+  },[mqttMessage])
 
   const getLength = () => {  //예약 리스트의 건 수를 반환
     return appointmentList.length;
@@ -123,23 +139,3 @@ function Appointment(props) {
 }
 
 export default React.memo(Appointment);
-
-
-  // // 환자 내원했을 때
-  // / /예약셀렉트 박스에서 내원으로 바꿨을 때 이벤트 걸어주면 될 듯
-  // // 진료페이지 환자 리스트 추가 되는 부분
-  // // 아래 정상동작 합니다.
-  // // 뒤에 /ROLE_ADMIN/{staff_id} 로 보내야 합니다. 
-  // // /ROLE_DOCTOR/{staff_id} 한테도 보내야 할 것 같아요.
-  // // 
-  // const sendMessage = async()=>{
-  //   try{
-  //   await sendMqttMessage({
-  //     topic : "/"+ hospital_code +"/ROLE_ADMIN/dhoj11",
-  //     content : "rerender/Treatment_Patients"
-  //   })
-  //   }catch(error){
-  //     console.log(error);
-  //   } 
-  // }
-  // //

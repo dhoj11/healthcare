@@ -1,7 +1,7 @@
 import styles from "./ListItem.module.css";
 import {useEffect, useState} from "react";
 import {changeReceptionState} from "../../../../apis/administration";
-import {sendMqttMessage} from "../../../../apis/message";
+import { sendMqttMessage } from "../../../../apis/message";
 import { useSelector } from "react-redux";
 
 function ListItem(props) {
@@ -19,27 +19,25 @@ function ListItem(props) {
     setState(event.target.value);
     try{
       await changeReceptionState(reception_id, event.target.value);
-      if(event.target.value === "진료") {
-        await sendMqttMessage({
-          topic : "/"+ hospital_code + "/" + reception.staff_id,
-          content : "alert/Treatment"
-        })
+      if(event.target.value==="진료") {
+
       }else if(event.target.value === "취소") {
         await sendMqttMessage({
-          topic : "/"+ hospital_code + "/" + reception.staff_id,
+          topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
           content : "rerender/Treatment_Patients"
-        })
+          })
       }
-      await sendMqttMessage({
-        topic : "/"+ hospital_code,
-        content : "rerender/Administration_Reception"
-      })
     }catch(error) {
       console.log(error.message);
     }
     if(event.target.value === "취소" && appointment_id !== null) {
+      console.log(appointment_id);
       finished(appointment_id);
     }
+    await sendMqttMessage({
+      topic : "/"+hospital_code,
+      content : "rerender/Administration_Reception"
+      })
   };
 
   return (

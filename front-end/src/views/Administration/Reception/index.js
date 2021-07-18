@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import ListItem from "./ListItem";
 import {getReceptionList, getReceptionListByState} from "../../../apis/administration";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMqttMessage } from "../../../apis/message";
 
 function Reception(props) {
-  const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
+  const {mqttMessage, selectedPatient, receptionAppointmentId, visitReception, finished} = props;
   const [receptionList, setReceptionList] = useState([]);
   const [state, setState] = useState("");
 
@@ -29,6 +28,19 @@ function Reception(props) {
     work();
   },[receptionAppointmentId]);
 
+  useEffect(() => {
+    if(mqttMessage !=="") {
+      if(mqttMessage.message[0] === "rerender" && mqttMessage.message[1] === "Administration_Reception") {
+        console.log("접수 메시지 받았니?");
+        if(state === "전체") {
+          getAllList();
+        }else {
+          listWithState(state);
+        }
+      }
+  }
+  },[mqttMessage])
+
   //방문 접수 : props로 받아온 객체를 receptionList에 concat해줌
   useEffect(() => {
     //비동기 통신
@@ -45,30 +57,12 @@ function Reception(props) {
     work();
   },[visitReception]);
 
-  const MqttBroker = () => {
-    if(client !=="") {
-      client.onMessageArrived = (msg) => {
-          let message = JSON.parse(msg.payloadString);
-          message = message.content.split('/');
-          if(message[0] === "rerender" && message[1] === "Administration_Reception") {
-            if(state ==="전체"){
-              getAllList();
-            } else{
-              listWithState(state);
-            }
-          }
-          // else if(message[0] === "alert" && message[1] === "Administration_Reception") {
-          //   //토스트메시지
-          // }
-      }
-    }
-  };
-  MqttBroker();
-
   const getAllList = async() => {
     try {
+      console.log("getAllLit 실행")
       const response = await getReceptionList("진료");
       setReceptionList(response.data);
+      console.log("--------데이터",response.data);
       setState("전체");
     } catch (error) {
       console.log(error.message);

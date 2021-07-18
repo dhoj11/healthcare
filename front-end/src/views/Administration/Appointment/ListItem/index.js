@@ -37,7 +37,7 @@ function ListItem(props) {
     setState(event.target.value);
     try{
       
-      await changeAppointmentState(appointment_id, event.target.value); 
+      await changeAppointmentState(appointment_id, event.target.value);
       if(event.target.value === "내원" && appointment_kind === "진료") {
         //접수 컴포넌트에 추가
         await addReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
@@ -47,6 +47,7 @@ function ListItem(props) {
         await addTestReceptionAfterAppointment(appointment_id); //접수 테이블에 생성
         appointmentTest(appointment_id);
       }
+
       if(appointment_kind === "진료") {
         await sendMqttMessage({
         topic : "/"+hospital_code,
@@ -66,7 +67,7 @@ function ListItem(props) {
             content : "rerender/Treatment_Patients"
           });
         }
-      }else {
+      }else if(appointment_kind==="검사"){
         await sendMqttMessage({
         topic : "/"+hospital_code,
         content : "rerender/Appointment_TimeTable_Test"
@@ -145,4 +146,4 @@ function ListItem(props) {
   );
 }
 
-export default React.memo(ListItem);
+export default ListItem;

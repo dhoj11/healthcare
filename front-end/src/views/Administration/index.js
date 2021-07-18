@@ -9,8 +9,6 @@ import { useSelector } from "react-redux";
 
 function Administration(props) {
 
-  // const client = useSelector((state) => state.mqttReducer.client);
-
   // console.log(client);
 
   const [globalPatientId, setGlobalPatientId] = useState();   //환자의 전역 상태 선언
@@ -44,20 +42,36 @@ function Administration(props) {
     setSameDayAppointment(flag);
   }
 
+  const client = useSelector((state) => state.mqttReducer.client);
+  const [mqttMessage, setMqttMessage] = useState("");
+
+  const MqttBroker = () => {
+    console.log("mqtt broker 실행");
+    client.onMessageArrived = (msg) => {
+      console.log("접수 메시지 수신");
+      let message = JSON.parse(msg.payloadString);
+      message = message.content.split('/');
+      setMqttMessage({message, date: new Date()});
+    }
+  };
+useEffect(()=>{
+  if(client!=="") MqttBroker();
+},[client])
+
   return (
     <div className={styles.first_content}>
       <div>
         <div className={styles.second_content}>
-          <div className={styles.appointment_component}><Appointment sameDayAppointment={sameDayAppointment} selectedPatient={selectedPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished}/></div>
-          <div className={styles.reception_component}><Reception selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} finished={finished}/></div>
+          <div className={styles.appointment_component}><Appointment mqttMessage={mqttMessage} sameDayAppointment={sameDayAppointment} selectedPatient={selectedPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished}/></div>
+          <div className={styles.reception_component}><Reception mqttMessage={mqttMessage} selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} finished={finished}/></div>
         </div>
         <div className={styles.testlist_component}>
-          <TestList dayAppointment={dayAppointment} testAppointmentId={testAppointmentId} selectedPatient={selectedPatient}/>
+          <TestList mqttMessage={mqttMessage} dayAppointment={dayAppointment} testAppointmentId={testAppointmentId} selectedPatient={selectedPatient}/>
         </div>
       </div>
       <div>
-        <div className={styles.search_patient_component}><SearchPatient selectedPatient={selectedPatient}/></div>
-        <div className={styles.patient_information_component}><PatientInformation dayAppointment={dayAppointment} selectedPatientId={globalPatientId} visitReception={visitReception}/></div>
+        <div className={styles.search_patient_component}><SearchPatient mqttMessage={mqttMessage} selectedPatient={selectedPatient}/></div>
+        <div className={styles.patient_information_component}><PatientInformation mqttMessage={mqttMessage} dayAppointment={dayAppointment} selectedPatientId={globalPatientId} visitReception={visitReception}/></div>
         
       </div>
     </div>

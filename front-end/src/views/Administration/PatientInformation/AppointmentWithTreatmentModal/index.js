@@ -7,6 +7,7 @@ import moment from "moment";
 import TimeSelector from "./TimeSelector";
 import { useSelector } from "react-redux";
 import React from "react";
+import {sendMqttMessage} from "../../../../apis/message";
 
 
 function AppointmentModal(props) {
@@ -132,6 +133,16 @@ function AppointmentModal(props) {
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime, staff_id: staff};
     try{
       await addNewAppointment(newAppointment);
+      if(appointmentDate === moment().format("YYYY-MM-DD")) {
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Appointment_TimeTable_Treatment"
+        })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_Appointment"
+        })
+      }
     }catch(error) {
       console.log(error.message);
     }

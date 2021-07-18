@@ -66,6 +66,7 @@ export function getTreatmentSympton(treatment_id){
 }
 
 export function saveTreatment(treatmentObj){
+  console.log(">>>>>");
   auth.post('/treatment/save', treatmentObj);
 }
 
@@ -82,4 +83,12 @@ export function getPrevDoctorName(treatment_id){
 export function getPatientName(treatment_id){
   const promise = auth.get('/treatment/patientname/' + treatment_id);
   return promise;
+}
+
+export function insertTestList(testListObj){
+  auth.post('/treatment/testlist', testListObj);
+}
+
+export function updateAppointmentAndReceptionState(treatment_id){
+  auth.put('/treatment/appointment-and-reception-state/' + treatment_id);
 }
