@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import Date from "./common/Date";
 import Patients from "./common/Patients";
 import style from "./index.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSetPatientAction, createSetTreatmentAction, createSetWorkActoin } from "../../redux/treatment-reducer";
 import Work from "./Work";
 
@@ -16,9 +16,28 @@ function Treatment(props){
   const [work, setWork] = useState({});
   const dispatch = useDispatch();
 
+  const client = useSelector((state) => state.mqttReducer.client);
+  const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
+  const [mattAlertMessage, SetmattAlertMessage] = useState("");
+
+  const MqttBroker = () => {
+    client.onMessageArrived = (msg) => {
+      let message = JSON.parse(msg.payloadString);
+      message = message.content.split('/');
+      if(message[0] === "rerender")
+        SetMqttRerenderMessage({message});
+      if(message[0] === "alert")
+        SetmattAlertMessage({message});
+    }
+  };
+  
+  useEffect(()=>{
+    if(client!=="") MqttBroker();
+  },[client])
+
   useEffect(() => {
-      setWork("TreatmentRecord");
-  }, []);
+    setWork("TreatmentRecord");
+  },[]);
 
   const changeWork = useCallback((work) => {
     setWork(work);
@@ -33,9 +52,6 @@ function Treatment(props){
     dispatch(createSetPatientAction(""));
   },[])
 
-  // 2021.06.19. 현재 work 가 바뀔 때 마다 공통컴포넌트 Date, Patients가 re-render 됨
-  // 추후 고치자
-
   return(
     <div className={style.treatmentMain}>
       <div className={style.selectWork}>
@@ -47,7 +63,7 @@ function Treatment(props){
         <div className={style.treatmentWorkArea}>
           <Work work={work}/>
         </div>
-        <Patients/>
+        <Patients mqttRerenderMessage={mqttRerenderMessage}/>
       </div>
     </div>
   );

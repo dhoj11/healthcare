@@ -79,7 +79,7 @@ function TestList(props){
               : listState === "before" ?
                 testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "요청"}).map((item, index)=> {
                     return (<tr key={index}
-                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
+                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id, reception_id: item.reception_id})}>
                       <th>{index+1}</th>
                       {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
@@ -91,7 +91,7 @@ function TestList(props){
                 : listState === "ing" ?
                   testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "진행"}).map((item, index)=> {
                     return (<tr key={index}
-                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
+                              onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id, reception_id: item.reception_id})}>
                       <th>{index+1}</th>
                       {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
@@ -103,7 +103,7 @@ function TestList(props){
                   : listState === "complete" ?
                     testLists.length > 0 && testLists.filter( item => { return item.test_list_state === "완료"}).map((item, index)=> {
                     return (<tr key={index}
-                            onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id})}>
+                            onClick={ () => setTestList({test_list_id: item.test_list_id, patient_id: item.patient_id, reception_id: item.reception_id})}>
                       <th>{index+1}</th>
                       {/* <th>{item.patient_id}</th> */}
                       <th>{item.patient_name}</th>
