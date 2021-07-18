@@ -66,6 +66,9 @@ function TestList(props) {
         }else {
           listWithState(state);
         }
+        if(mqttMessage.message[2] !== null) {
+          console.log(mqttMessage.message[2]);
+        }
       }
     }
   },[mqttMessage])

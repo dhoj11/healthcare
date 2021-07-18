@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import {CountbyAppointment,addNewAppointment, appointmentTestList, changeTestStateToAppointment} from "../../../../apis/administration";
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
+import {sendMqttMessage} from "../../../../apis/message";
 
 function AppointmentWithTestModal(props) {
   
@@ -95,11 +96,19 @@ function AppointmentWithTestModal(props) {
     try{
       await addNewAppointment(newAppointment);
       await appointmentTestList(newTestList);
-      //await changeTestStateToAppointment({test_list_id: testCodes[0].test_list_id, reception_id: testCodes[0].reception_id}); //reception_state 바꿔줌
-      await changeTestStateToAppointment(testCodes[0].reception_id); //reception_state 바꿔줌
+      await changeTestStateToAppointment({reception_id: testCodes[0].reception_id,appointment_id:testCodes[0].appointment_id}); //reception_state, appointment_state 바꿔줌
       setSelectedTestCodes([]);
       setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});  //검사 접수 상태 
       dayAppointment(new Date());   //당일검사
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "rerender/Administration_TestList"
+      })
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "rerender/Administration_Appointment"
+      })
+      
     }catch(error) {
       console.log(error.message);
     }

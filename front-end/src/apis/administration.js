@@ -121,8 +121,8 @@ export function appointmentTestList(testList) {
   return promise;
 }
 
-export function changeTestStateToAppointment(reception_id) {
-  const promise = auth.put("/administration/appointment/test/state/" + reception_id);
+export function changeTestStateToAppointment(testList) {
+  const promise = auth.put("/administration/appointment/test/state", testList);
   return promise;
 }
 
