@@ -58,6 +58,12 @@ useEffect(()=>{
   if(client!=="") MqttBroker();
 },[client])
 
+useEffect(()=>{
+  if(mqttMessage !== "" && mqttMessage.message[0] === "alert") {
+    //toast 메시지
+  }
+},[mqttMessage])
+
   return (
     <div className={styles.first_content}>
       <div>

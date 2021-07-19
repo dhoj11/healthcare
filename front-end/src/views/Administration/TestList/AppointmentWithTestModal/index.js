@@ -7,6 +7,7 @@ import {CountbyAppointment,addNewAppointment, appointmentTestList, changeTestSta
 import moment from "moment";
 import TimeSelector from "./TimeSelector";
 import {sendMqttMessage} from "../../../../apis/message";
+import React from "react";
 
 function AppointmentWithTestModal(props) {
   
@@ -42,14 +43,21 @@ function AppointmentWithTestModal(props) {
         patient_id: testCodes[0].patient_id,
         appointment_kind: "검사"
       });
+      const work = async() => {
+        try{
+          const response = await CountbyAppointment(hospital_code, appointmentDate);
+          setTimeAndCount(response.data);
+          console.log(response.data);
+        }catch(error) {
+          console.log(error.message);
+        }
+      }
+      work();
     }
     console.log("testCodes",testCodes);
   },[isOpen]);
 
   useEffect(() => {
-    if(moment().diff(appointmentDate) >= 0) {
-      console.log("이전날짜");
-    }
     console.log(appointmentDate);
     const work = async() => {
       try{
@@ -97,7 +105,6 @@ function AppointmentWithTestModal(props) {
       await addNewAppointment(newAppointment);
       await appointmentTestList(newTestList);
       await changeTestStateToAppointment({reception_id: testCodes[0].reception_id,appointment_id:testCodes[0].appointment_id}); //reception_state, appointment_state 바꿔줌
-      setSelectedTestCodes([]);
       setRerenderer({reception_id:testCodes[0].reception_id, date: new Date()});  //검사 접수 상태 
       dayAppointment(new Date());   //당일검사
       await sendMqttMessage({
@@ -179,4 +186,4 @@ function AppointmentWithTestModal(props) {
   );
     }
 
-export default AppointmentWithTestModal;
+export default React.memo(AppointmentWithTestModal);

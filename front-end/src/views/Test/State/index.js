@@ -57,7 +57,7 @@ function State(props){
         // 접수페이지 검사 테이블
         await sendMqttMessage({
           topic : "/"+ hospital_code,
-          content : "rerender/Administration_TestList"
+          content : "rerender/Administration_TestList/" + testList.reception_id
         })
 
         

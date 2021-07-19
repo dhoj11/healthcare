@@ -2,91 +2,91 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.healthcare.dao.TreatmentDao">
 
-	<select id="selectTreatmentHistory" resultType="summeryTreatment">
-		select DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, treatment.treatment_id, treatment.staff_id, staff.staff_name, diagnose.disease_code, disease.disease_name
-		from treatment, staff, diagnose, disease
-		where treatment.staff_id = staff.staff_id 
-			and treatment.treatment_id = diagnose.treatment_id
-		    and diagnose.disease_code = disease.disease_code
-			and patient_id = #{patient_id}
-	</select>
+   <select id="selectTreatmentHistory" resultType="summeryTreatment">
+      select DATE_FORMAT(treatment_date, '%Y-%m-%d') as treatment_date, treatment.treatment_id, treatment.staff_id, staff.staff_name, diagnose.disease_code, disease.disease_name
+      from treatment, staff, diagnose, disease
+      where treatment.staff_id = staff.staff_id 
+         and treatment.treatment_id = diagnose.treatment_id
+          and diagnose.disease_code = disease.disease_code
+         and patient_id = #{patient_id}
+   </select>
 
    <select id = "selectPatientIds" parameterType="string" resultType="int">
-	select distinct(treatment.patient_id) 
-   	from treatment, reception
-   	where treatment.staff_id = #{staff_id}
-   		  and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
-   		  AND treatment.reception_id = reception.reception_id
-   		  AND reception_state != '취소'
-   		  ORDER BY treatment_id
+   select distinct(treatment.patient_id) 
+      from treatment, reception
+      where treatment.staff_id = #{staff_id}
+           and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+           AND treatment.reception_id = reception.reception_id
+           AND reception_state != '취소'
+           ORDER BY treatment_id
    </select>
    
    <select id = "selectPatients" parameterType="java.util.List" resultType="patient">
-   	select patient_id
-   		  ,patient_name
-   		  ,patient_tel
-   		  ,FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(date_format(patient_birth, '%Y-%m-%d'),'-','') AS UNSIGNED)) / 10000 ) AS patient_birth
-   		  ,patient_medicine
-   		  ,patient_disease
-   		  ,patient_comment
-   		  ,patient_gender
-   		  ,patient_recent_visit
-   	from patient
-   	where
-   	<foreach collection="list" item="item" separator="or">
-   	patient_id= #{item}
-   	</foreach>
-   	order by field(patient_id,
-   	<foreach collection="list" item="item" separator=",">
-   	#{item}
-   	</foreach>
-   	)
+      select patient_id
+           ,patient_name
+           ,patient_tel
+           ,FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(date_format(patient_birth, '%Y-%m-%d'),'-','') AS UNSIGNED)) / 10000 ) AS patient_birth
+           ,patient_medicine
+           ,patient_disease
+           ,patient_comment
+           ,patient_gender
+           ,patient_recent_visit
+      from patient
+      where
+      <foreach collection="list" item="item" separator="or">
+      patient_id= #{item}
+      </foreach>
+      order by field(patient_id,
+      <foreach collection="list" item="item" separator=",">
+      #{item}
+      </foreach>
+      )
    </select>
    
     <select id = "selectNowTreatment" resultType="treatment">
 select treatment_id
-   		  ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
-   		  ,treatment_saved
-   	from treatment, reception
-   	where treatment.patient_id = #{patient_id} and treatment.staff_id = #{staff_id} AND treatment_date = date_format(NOW(), '%Y-%m-%d')
-   	AND treatment.reception_id = reception.reception_id
-   	AND reception_state != '취소'
+           ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
+           ,treatment_saved
+      from treatment, reception
+      where treatment.patient_id = #{patient_id} and treatment.staff_id = #{staff_id} AND treatment_date = date_format(NOW(), '%Y-%m-%d')
+      AND treatment.reception_id = reception.reception_id
+      AND reception_state != '취소'
     
    </select>
    
    <select id = "selectTreatments" parameterType="int" resultType="treatment">
 select treatment_id
-   		  ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
-   		  ,treatment_saved
-   	from treatment
-   	where patient_id = #{patient_id} AND treatment_date != date_format(NOW(), '%Y-%m-%d')
+           ,date_format(treatment_date, '%Y-%m-%d') as treatment_date
+           ,treatment_saved
+      from treatment
+      where patient_id = #{patient_id} AND treatment_date != date_format(NOW(), '%Y-%m-%d')
    </select>
    
    <select id ="selectTreatmentIsComplete" resultType="int">
-   	select treatment_saved
-   	from treatment
-   	where patient_id = #{patient_id} 
-   	and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
-   	and staff_id = #{staff_id}
-   	order by treatment_date
+      select treatment_saved
+      from treatment
+      where patient_id = #{patient_id} 
+      and date_format(treatment_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+      and staff_id = #{staff_id}
+      order by treatment_date
    </select>
    
    <select id ="selectTreatmentRecord" parameterType="int" resultType="string">
-   	select treatment_record
-   	from treatment
-   	where treatment_id = #{treatment_id}
+      select treatment_record
+      from treatment
+      where treatment_id = #{treatment_id}
    </select>
    
    <select id ="selectTreatmentComment" parameterType="int" resultType="string">
-   	select treatment_comment
-   	from treatment
-   	where treatment_id = #{treatment_id}
+      select treatment_comment
+      from treatment
+      where treatment_id = #{treatment_id}
    </select>
    
    <select id="selectTreatmentDiagnoses" parameterType="int" resultType="diagnose">
-	select diagnose_id
-			,diagnose.disease_code
-   		,disease.disease_name
+   select diagnose_id
+         ,diagnose.disease_code
+         ,disease.disease_name
     from diagnose, disease
    where diagnose.disease_code = disease.disease_code AND diagnose.treatment_id = #{treatment_id}
    </select>
@@ -99,14 +99,14 @@ select treatment_id
    </select>
    
    <select id ="selectTreatmentPrescriptions" parameterType="int" resultType="prescription">
-   	select prescription.medicine_code
-   	      ,medicine_name
-   	      ,medicine_kind
-   	      ,medicine_type
-   	      ,prescription_comment
-   	      ,prescription_amount
-   	from prescription, medicine
-   	where prescription.medicine_code = medicine.medicine_code and treatment_id = #{treatment_id}
+      select prescription.medicine_code
+            ,medicine_name
+            ,medicine_kind
+            ,medicine_type
+            ,prescription_comment
+            ,prescription_amount
+      from prescription, medicine
+      where prescription.medicine_code = medicine.medicine_code and treatment_id = #{treatment_id}
    </select>
    
    <select id ="selectMedicines" parameterType="string" resultType="medicine">
@@ -117,159 +117,162 @@ select treatment_id
    
    <select id ="selectTreatmentTestList" parameterType="int" resultType="testlist">
     select tests_list.test_code
-   		  ,tests.test_name
+           ,tests.test_name
     from tests_list, tests
     where tests_list.test_code = tests.test_code and treatment_id= #{treatment_id}
    </select>
    
    <select id ="selectTests" parameterType="string" resultType="test">
-   	select test_code
-   		  ,test_name
+      select test_code
+           ,test_name
     from tests
     where test_name like CONCAT('%',#{test_name},'%')
    </select>
    
    <select id="selectReceptionId" parameterType="int" resultType="int">
-   	select reception_id
-   	from treatment
-   	where treatment_id = #{treatment_id}
+      select reception_id
+      from treatment
+      where treatment_id = #{treatment_id}
    </select>
    
    <select id ="selectTreatmentSympton" parameterType="int" resultType="string">
-   	select reception_content
-   	from reception
-   	where reception_id = #{reception_id}
+      select reception_content
+      from reception
+      where reception_id = #{reception_id}
    </select>
    
    <update id ="updateTreatment">
-   	update treatment
-   	set treatment_record = #{treatment_record}
-   	   ,treatment_comment = #{treatment_comment}
-   	   ,treatment_saved = 1
-   	where treatment_id = #{treatment_id}
+      update treatment
+      set treatment_record = #{treatment_record}
+         ,treatment_comment = #{treatment_comment}
+         ,treatment_saved = 1
+      where treatment_id = #{treatment_id}
    </update>
    
    <insert id ="insertDiagnose" parameterType="map">
-   	insert into diagnose (treatment_id, disease_code)
-   	<foreach collection="treatment_diagnoses" item="item" open="values(" separator="),(" close=")">
-   		#{treatment_id}, #{item.disease_code}
-   	</foreach>
+      insert into diagnose (treatment_id, disease_code)
+      <foreach collection="treatment_diagnoses" item="item" open="values(" separator="),(" close=")">
+         #{treatment_id}, #{item.disease_code}
+      </foreach>
    </insert>
    
    <insert id="insertPrescription" parameterType="map">
-   	insert into prescription (treatment_id, medicine_code, prescription_comment, prescription_amount)
-   	<foreach collection="treatment_prescriptions" item="item" open="values(" separator="),(" close=")">
-   		#{treatment_id}, #{item.medicine_code}, #{item.prescription_comment}, #{item.prescription_amount}
-   	</foreach>
+      insert into prescription (treatment_id, medicine_code, prescription_comment, prescription_amount)
+      <foreach collection="treatment_prescriptions" item="item" open="values(" separator="),(" close=")">
+         #{treatment_id}, #{item.medicine_code}, #{item.prescription_comment}, #{item.prescription_amount}
+      </foreach>
    </insert>
    
    <select id="getReceptionId" parameterType="int" resultType="int">
-   	select reception_id
-   	from treatment
-   	where treatment_id = #{treatment_id}
-   	limit 1
+      select reception_id
+      from treatment
+      where treatment_id = #{treatment_id}
+      limit 1
    </select>
    
    <update id="updateReceptionState" parameterType="int">
-   	update reception
-   	set reception_state = "완료"
-   	where reception_id = #{reception_id}
+      update reception
+      set reception_state = "완료"
+      where reception_id = #{reception_id}
    </update>
    
    <select id="getAppointmentId" parameterType="int" resultType="int">
-   	select appointment.appointment_id
-   	from appointment, reception
-   	where appointment.appointment_id = reception.appointment_id and reception_id = #{reception_id}
+      select appointment.appointment_id
+      from appointment, reception
+      where appointment.appointment_id = reception.appointment_id and reception_id = #{reception_id}
    </select>
    
    <update id ="updateAppointmentState" parameterType="int">
-   	update appointment
-   	set appointment_state = "완료"
-   	where appointment_id = #{appointment_id}
+      update appointment
+      set appointment_state = "완료"
+      where appointment_id = #{appointment_id}
    </update>
    
    <insert id="insertTestList" parameterType="map">
-   	insert into tests_list (test_list_id, test_code, test_list_time, treatment_id, test_list_date)
-   	<foreach collection="treatment_tests" item="item" open="values(" separator="),(" close=")">
-   		#{test_list_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
-   	</foreach>
+      insert into tests_list (test_list_id, test_code, test_list_time, treatment_id, test_list_date)
+      <foreach collection="treatment_tests" item="item" open="values(" separator="),(" close=")">
+         #{test_list_id}, #{item.test_code}, NOW(), #{treatment_id}, NOW()
+      </foreach>
    </insert>
    
    
    <select id="selectTestDetailsId" parameterType="String" resultType="int">
-   	select test_details_id
-   	from test_details
-   	where test_code = #{test_code}
+      select test_details_id
+      from test_details
+      where test_code = #{test_code}
    </select>
    
    <insert id="insertTestResult" parameterType="map">
-   	insert into test_results (test_list_id, test_details_id, test_code)
-   	<foreach collection="test_details_id" item="item" open="values(" separator="),(" close=")">
-   		#{test_list_id}, #{item}, #{test_code}
-   	</foreach>
+      insert into test_results (test_list_id, test_details_id, test_code)
+      <foreach collection="test_details_id" item="item" open="values(" separator="),(" close=")">
+         #{test_list_id}, #{item}, #{test_code}
+      </foreach>
    </insert>
    
-   <select id="getPatiendId" parameterType="int" resultType="int">
-   	select patient_id
-   	from treatment
-   	where treatment_id = #{treatment_id}
+<!--    <select id="getPatiendId" parameterType="int" resultType="int">
+      select patient_id
+      from treatment
+      where treatment_id = #{treatment_id}
    </select>
    
    <select id="getStaffId" parameterType="int" resultType="string">
-   	select staff_id
-   	from treatment
-   	where treatment_id = #{treatment_id}
-   </select>
+      select staff_id
+      from treatment
+      where treatment_id = #{treatment_id}
+   </select> -->
 
    <select id="getTestListId" parameterType="int" resultType="int">
-   	select distinct(test_list_id) 
-   	from tests_list
-   	where treatment_id = #{treatment_id}
+      select distinct(test_list_id) 
+      from tests_list
+      where treatment_id = #{treatment_id}
    </select>
    
-   <insert id="insertReception">
-   	insert into reception (reception_date, reception_time, patient_id, staff_id, reception_kind)
-   	values(NOW(), NOW(), #{patient_id}, #{staff_id}, '검사')
+   <insert id="insertReception" parameterType="int">
+      INSERT INTO reception(reception_date, reception_time, patient_id, staff_id, reception_kind)
+   SELECT date_format(NOW(), '%Y-%m-%d') AS reception_date , NOW() AS reception_time, patient_id, staff_id, '검사' AS reception_kind
+   FROM treatment
+   WHERE treatment_id = #{treatment_id}
    </insert>
    
-   <select id="getLatelyReceptionId" resultType="int">
-   	select max(reception_id)
-   	from reception
-   </select>
+<!--    <select id="getLatelyReceptionId" resultType="int">
+      (select max(reception_id)
+      from reception)
+   </select> -->
    
-   <update id="updateReceptionId">
-   	update tests_list
-   	set reception_id = #{latelyReceptionId}
-   	where test_list_id = #{test_list_id}
+   <update id="updateReceptionId" parameterType="int">
+      update tests_list
+      set reception_id = (select max(reception_id)
+                     from reception)
+      where test_list_id = #{test_list_id}
    </update>
    
    <select id="selectTreatmentTestResults" parameterType="java.util.List" resultType="testresult">
     select test_details.test_code
-    	  ,test_name
-    	  ,test_details_code
+         ,test_name
+         ,test_details_code
           ,test_details_name
-    	  ,test_details_unit
+         ,test_details_unit
           ,test_details_min
           ,test_details_max
           ,test_result_value
     from test_details, test_results
     where test_results.test_details_id = test_details.test_details_id and (
     <foreach collection="list" item="item" separator="or">
-   	test_list_id = #{item}
-   	</foreach>
-   	)
+      test_list_id = #{item}
+      </foreach>
+      )
    </select>
    
    <select id="selectStaffNameByTreatmentId" parameterType="int" resultType="string">
-   	select staff_name
-   	from treatment, staff
-   	where treatment.treatment_id = #{treatment_id} and treatment.staff_id = staff.staff_id
-   	limit 1;
+      select staff_name
+      from treatment, staff
+      where treatment.treatment_id = #{treatment_id} and treatment.staff_id = staff.staff_id
+      limit 1;
    </select>
    
    <select id="selectPatientNameByTreatmentId" parameterType="int" resultType="string">
-   	select patient_name
-   	from treatment, patient
-   	where treatment.treatment_id = #{treatment_id} and treatment.patient_id = patient.patient_id
+      select patient_name
+      from treatment, patient
+      where treatment.treatment_id = #{treatment_id} and treatment.patient_id = patient.patient_id
    </select>
 </mapper>

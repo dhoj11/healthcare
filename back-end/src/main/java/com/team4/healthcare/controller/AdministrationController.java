@@ -205,6 +205,6 @@ public class AdministrationController {
 	}
 	@PutMapping("/patient/modify")
 	public void modifyPatientInfo(@RequestBody Patient patient) {
-		logger.info(patient.toString());
+		administrationService.modifyPatientInfo(patient);
 	}
 }

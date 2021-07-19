@@ -17,6 +17,10 @@ function RequestTest(props) {
         topic : "/"+hospital_code,
         content : "rerender/Test"
         })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_TestList/"+testCodes[0].reception_id
+          })
     }catch(error) {
       console.log(error.message);
     }

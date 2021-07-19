@@ -379,4 +379,9 @@ public class AdministrationService {
 		List<Reception> receptionList = receptionDAO.selectTestReceptionListByState(reception_state);
 		return receptionList;
 	}
+
+	public void modifyPatientInfo(Patient patient) {
+		int row = patientDAO.updatePatientInfo(patient);
+		
+	}
 }

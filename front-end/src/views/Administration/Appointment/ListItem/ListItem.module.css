@@ -11,4 +11,9 @@
 
 .select_box {
   margin-left: 32px;
+ 
+}
+
+.select_box:hover {
+  border-color: #888;
 }
