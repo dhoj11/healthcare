@@ -20,7 +20,10 @@ function ListItem(props) {
     try{
       await changeReceptionState(reception_id, event.target.value);
       if(event.target.value==="진료") {
-
+        await sendMqttMessage({
+          topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
+          content : "alert/Treatment/" + reception.patient_name + "님 진료실 들어가십니다."
+        })
       }else if(event.target.value === "취소") {
         await sendMqttMessage({
           topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
