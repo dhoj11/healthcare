@@ -99,3 +99,4 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,maven,eclipse
 front-end/.env
+back-end/src/main/java/com/team4/healthcare/dao/StaffDAO.java
