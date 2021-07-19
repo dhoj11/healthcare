@@ -21,6 +21,7 @@ function TestList(props) {
   const [reqTestModalOpen, setReqTestModalOpen] = useState(false);
   const [rerenderer, setRerenderer] = useState();
   const [state, setState] = useState("");
+  const [selectedReceptionId, setSelectedReceptionId] = useState("");   //검사 페이지에서 상태가 바뀔 때 현재 보고 있는 환자의 검사 목록과 같을 때만 리렌더링 해주게끔 하기 위해
 
   //예약 후 검사 접수
   useEffect(() => {
@@ -47,6 +48,7 @@ function TestList(props) {
           setTestPatientList(response.data);
           response = await getTestCodesByReception(rerenderer.reception_id);
           setTestCodeList(response.data);
+          setSelectedTestCodes([]);
           //setState("전체");
         } catch (error) {
           console.log(error.message);
@@ -65,6 +67,21 @@ function TestList(props) {
           getAllList();
         }else {
           listWithState(state);
+        }
+        console.log(selectedReceptionId);
+        console.log(mqttMessage.message[2]);
+        if(mqttMessage.message[2] !== undefined && mqttMessage.message[2] === String(selectedReceptionId)) {
+          console.log("reception_id 들어오고 현재 보고 있는 사람이구")
+          const work = async () => {
+            try {
+              let response = await getTestCodesByReception(mqttMessage.message[2]);
+              setTestCodeList(response.data);
+              //setState("전체");
+            } catch (error) {
+              console.log(error.message);
+            }
+          };
+          work();
         }
       }
     }
@@ -116,6 +133,7 @@ function TestList(props) {
     try{
       const response = await getTestCodesByReception(reception_id);
       setTestCodeList(response.data);
+      setSelectedReceptionId(reception_id);
     }catch(error) {
       console.log(error.message);
     }

@@ -16,9 +16,10 @@ function App() {
     setChatShow(!chatShow);
   }
   useEffect(() => {
-    const client = new Paho.Client("kosa3.iptime.org", 61614 , "client-" + new Date().getTime());
+    const client = new Paho.Client("localhost", 61614, "client-" + new Date().getMilliseconds);
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
+      console.log("연결성공");
       client.subscribe("/");
 
       if(sessionStorage.getItem("staff_id")){

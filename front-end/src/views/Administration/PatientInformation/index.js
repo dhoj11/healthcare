@@ -17,6 +17,7 @@ function PatientInformation(props) {
   const [receptionRerenderer, setreceptionRerenderer] = useState("");
   const [appointmentRerenderer, setAppointemntRerenderer] = useState("");
   const [modifyModalOpen, setModifyModalOpen] = useState(false);
+  const [modifyRenderer, setModifyRenderer] = useState("");
 
   const openReceptionModal = () => {
     setReceptionModalOpen(true);
@@ -41,6 +42,10 @@ function PatientInformation(props) {
   const closeModifyModal = () => {
     setModifyModalOpen(false);
   };
+
+  const modifyPatient = () => {
+    setModifyRenderer(new Date());
+  }
   useEffect(() => {
     if(selectedPatientId !== undefined) {
       //비동기 통신
@@ -73,25 +78,7 @@ function PatientInformation(props) {
       };
       work();
     }
-  },[receptionRerenderer]);
-
-  useEffect(() => {
-    
-    if(selectedPatientId !== undefined) {
-      //비동기 통신
-      const work = async () => {
-        try {
-          const response = await getPatient(selectedPatientId);
-          setPatient(response.data);
-          console.log(response.data);
-        } catch (error) {
-          console.log(error.message);
-          //history.push("./error"); 에러 컴포넌트로 이동
-        }
-      };
-      work();
-    }
-  },[appointmentRerenderer]);
+  },[appointmentRerenderer, modifyRenderer, receptionRerenderer]);
 
   return (
     <>
@@ -103,7 +90,7 @@ function PatientInformation(props) {
         </div>
         <div className={styles.patient_modify}>
           <button className="btn btn-sm btn-secondary" onClick={openModifyModal}> 수정 </button>
-          <ModifyModal patient={patient} isOpen={modifyModalOpen} close={closeModifyModal}/>
+          <ModifyModal modifyPatientRenderer={modifyPatient} patient={patient} isOpen={modifyModalOpen} close={closeModifyModal}/>
         </div>
       </div>
       <div className={styles.patient_information_tab}>

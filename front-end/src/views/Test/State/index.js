@@ -60,6 +60,14 @@ function State(props){
           content : "rerender/Administration_TestList/" + testList.reception_id
         })
 
+
+        // 검사완료 alert 보내기
+        if(state === "완료"){
+          await sendMqttMessage({
+            topic : "/"+ hospital_code,
+            content : "alert/Administration/test/" + " 환자 검사완료완료"
+          })
+       }
         
         
       }catch(error){

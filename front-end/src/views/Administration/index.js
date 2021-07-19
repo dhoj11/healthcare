@@ -7,6 +7,10 @@ import SearchPatient from "./SearchPatient";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+//import 'animate.css';
+
 
 function Administration(props) {
 
@@ -58,6 +62,24 @@ function Administration(props) {
 useEffect(()=>{
   if(client!=="") MqttBroker();
 },[client])
+
+useEffect(()=>{
+  if(mqttMessage !== "" && mqttMessage.message[0] === "alert") {
+    //toast 메시지
+      // store.addNotification({
+      //   title: 'Dropbox',
+      //   message: mqttMessage.message[1],
+      //   type: 'default',                        
+      //   container: 'bottom-right',               
+      //   animationIn: ["animate__animated", "animate__fadeIn"],
+      //   animationOut: ["animate__animated", "animate__fadeOut"],
+      //   dismiss: {
+      //     duration: 3000,
+      //     onScreen: true
+      //   }
+      // })
+  }
+},[mqttMessage])
 
   return (
     <div className={styles.first_content}>
