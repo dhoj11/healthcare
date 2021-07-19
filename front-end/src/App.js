@@ -9,6 +9,7 @@ import { createSetClientAction } from './redux/mqtt-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMqttMessage } from './apis/message';
 import { createMasonryCellPositioner } from 'react-virtualized';
+import ReactNotifications from 'react-notifications-component'
 function App() {
   const dispatch = useDispatch();
   const [chatShow,setChatShow] = useState(false);
@@ -19,6 +20,7 @@ function App() {
     const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
+      console.log("연결");
       client.subscribe("/");
 
       if(sessionStorage.getItem("staff_id")){
@@ -35,6 +37,7 @@ function App() {
 
   return (
     <div className="main">
+      <ReactNotifications />
         <div className="header">
           <AppHeader/>
         </div>
