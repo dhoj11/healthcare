@@ -9,6 +9,7 @@ import NoticeEditor from "./views/NoticeEditor";
 import Error from "./views/Error";
 import Setting from "./views/Setting";
 import { useSelector } from "react-redux";
+import React from "react";
 
 function AppRoute(){
 
@@ -51,5 +52,5 @@ function AppRoute(){
     </Switch>
   );
 }
-export default AppRoute;
+export default React.memo(AppRoute);
 

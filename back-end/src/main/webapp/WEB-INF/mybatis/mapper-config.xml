@@ -26,5 +26,10 @@
 	<typeAlias alias="imgNotice" type="com.team4.healthcare.dto.ImgNotice"/>
 	<typeAlias alias="hospital" type="com.team4.healthcare.dto.Hospital"/>
 	<typeAlias alias="testDetail" type="com.team4.healthcare.dto.TestDetail"/>
+	<typeAlias alias="room" type="com.team4.healthcare.dto.Room"/>
+	<typeAlias alias="participant" type="com.team4.healthcare.dto.Participant"/>
+	<typeAlias alias="chat" type="com.team4.healthcare.dto.Chat"/>
+	
+	
 	</typeAliases>
 </configuration>
