@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSetPatientAction, createSetTreatmentAction, createSetWorkActoin } from "../../redux/treatment-reducer";
 import Work from "./Work";
 
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css/animate.min.css';
+
 /**
  * 환자, 진료 선택 후 작업영역 탭으로 전환
  */
@@ -17,24 +21,47 @@ function Treatment(props){
   const dispatch = useDispatch();
 
   const client = useSelector((state) => state.mqttReducer.client);
+  const staff_id = useSelector((state) => state.authReducer.staff_id);
+
   const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
-  const [mattAlertMessage, SetmattAlertMessage] = useState("");
+  const [mqttAlertMessage, SetmqttAlertMessage] = useState("");
 
   const MqttBroker = () => {
     client.onMessageArrived = (msg) => {
       let message = JSON.parse(msg.payloadString);
-      message = message.content.split('/');
-      if(message[0] === "rerender")
-        SetMqttRerenderMessage({message});
-      if(message[0] === "alert")
-        SetmattAlertMessage({message});
+      console.log(message);
+      let topic = message.topic.split('/');
+     if(topic[3] === staff_id ){
+        message = message.content.split('/');
+        if(message[0] === "rerender" && message[1] === "Treatment_Patients")
+          SetMqttRerenderMessage({message});
+        if(message[0] === "alert" && message[1] === "Treatment")
+          SetmqttAlertMessage(message[2]);
+      }
     }
   };
-  
+
   useEffect(()=>{
     if(client!=="") MqttBroker();
   },[client])
 
+  useEffect(()=>{
+      if(mqttAlertMessage !=""){
+        store.addNotification({
+          title: mqttAlertMessage,
+          message: " ",
+          type: "info",                     
+          container: 'bottom-right',              
+          animationIn: ["animate__animated", "animate__bounceIn"],     
+          animationOut: ["animate__animated", "animate__bounceOut"],   
+          dismiss: {
+            duration: 0,
+            click: true
+          }
+        })
+      }
+  },[mqttAlertMessage])
+  
   useEffect(() => {
     setWork("TreatmentRecord");
   },[]);

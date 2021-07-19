@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,6 @@ function Patients(props){
 
   const staff_id = useSelector((state) => state.authReducer.staff_id);
   const patient = useSelector(state => state.treatmentReducer.patient);
-  const editBlock = useSelector(state => state.treatmentReducer.editBlock);
 
   const [curPatient, setCurPatient] = useState({patient_id:patient});
   const [listState, setListState] = useState("all");
@@ -26,40 +25,38 @@ function Patients(props){
 
   const mqttRerenderMessage = props.mqttRerenderMessage;
   
-  //const[rerender, setRerender] = useState(new Date().getMilliseconds());
-
   const dispatch = useDispatch();
 
   useEffect(()=>{
     if(mqttRerenderMessage !== ""){
-      if(mqttRerenderMessage.message[1] === "Treatment_Patients"){
-        console.log("환자 메시지 수신")
         getPateints();
-      }
     }
   },[mqttRerenderMessage])
 
-  const getPateints = async() => {
+  const getPateints = useCallback(async() => {
     try{
       const response = await getPateintList(staff_id);
       let newPatients = response.data;
 
       if(newPatients){
-        newPatients.map( async (item, index) => {
-          let isComplete = await isTreatmentComplete(item.patient_id, staff_id);
+        let isComplete;
+        await newPatients.forEach( async (item, index) => {
+          isComplete = await isTreatmentComplete(item.patient_id, staff_id)
           newPatients[index] = {
             ...newPatients[index]
             ,patient_state : isComplete.data
           }
         })
-        setPateints(newPatients);
+        setTimeout(() => setPateints(newPatients), 1000);
+        
       }
     } catch (error){
       console.log(error);
     }
-  }
+  },[])
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     getPateints();
   },[]);
 
@@ -85,7 +82,8 @@ function Patients(props){
 
       <div className={style.patients}>
 
-      {listState === "all" &&
+      {
+        listState === "all" &&
           patients && patients.length > 0 && patients.map((item) => { 
             return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                       onClick={() => {
@@ -94,21 +92,10 @@ function Patients(props){
                       key={item.patient_id}> 
                       {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
                     </div>); })
-      
-      }
-      {listState === "before" &&
-            patients && patients.length > 0 && patients.filter( item => { return item.patient_state === "before"} ).map((item) => { 
-              return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
-                        onClick={() => {
-                          setCurPatient(item); 
-                        }} 
-                        key={item.patient_id}> 
-                        {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
-                      </div>); })
-
-        }
-        {listState === "complete" &&
-              patients && patients.length > 0 && patients.filter( item => { return item.patient_state === "complete"} ).map((item) => { 
+       }
+       {
+        listState === "before" &&
+        patients && patients.length > 0 && patients.filter( item => item.patient_state === "before").map(item => { 
                 return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
                           onClick={() => {
                             setCurPatient(item); 
@@ -117,7 +104,17 @@ function Patients(props){
                           {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
                         </div>); })
         }
-    
+        {
+        listState === "complete" &&
+        patients && patients.length > 0 && patients.filter( item =>  item.patient_state === "complete" ).map((item) => { 
+                return (<div className={ item.patient_id === patient ? `${style.selectpatient}` : `${style.patientItem}` }
+                          onClick={() => {
+                            setCurPatient(item); 
+                          }} 
+                          key={item.patient_id}> 
+                          {item.patient_name} ( {item.patient_gender} {item.patient_birth} ) 
+                        </div>); })
+        }
       </div>
       <div className={style.patient}>
         <i className={`far fa-user-circle ${style.profileIcon}`}></i>

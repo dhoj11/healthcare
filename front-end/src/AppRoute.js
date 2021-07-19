@@ -13,8 +13,10 @@ import { useSelector } from "react-redux";
 function AppRoute(){
 
   const role = useSelector(state => state.authReducer.authority);
+  const staff_id = useSelector(state => state.authReducer.staff_id);
 
   const access_role = (page) => {
+    if(page=== "dashboard" ) if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_NURSE" || role === "ROLE_TESTER") return true; else return false;
     if(page=== "treatment" ) if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR") return true; else return false;
     if(page=== "test") if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_TESTER") return true; else return false;
     if(page=== "appointment") if (role === "ROLE_ADMIN" || role === "ROLE_DOCTOR" || role === "ROLE_NURSE") return true; else return false;
@@ -24,27 +26,32 @@ function AppRoute(){
 
   const RouteIf = (
     { path, component: Component}) => { 
-      if(path === "/treatment")
-        return ( <Route  render={ () => {  if (access_role("treatment")) {  return <Component /> } else { return <Error /> } }} />)
-      if(path === "/test")
-        return ( <Route  render={ () => {  if (access_role("test")) {  return <Component /> } else { return <Error /> } }} />)
-      if(path === "/appointment")
-        return ( <Route  render={ () => {  if (access_role("appointment")) {  return <Component /> } else { return <Error /> } }} />)
-      if(path === "/administration")
-        return ( <Route  render={ () => {  if (access_role("administration")) {  return <Component /> } else { return <Error /> } }} />)
-      if(path === "/setting")
-        return ( <Route  render={ () => {  if (access_role("setting")) {  return <Component /> } else { return <Error /> } }} />)
+      if(staff_id == "") return (<Redirect to="/"/>)
+      else{
+        if(path === "/dashboard")
+           return ( <Route  render={ () => {  if (access_role("dashboard")) {  return <Component /> } else { return <Error /> } }} />)
+        if(path === "/treatment")
+          return ( <Route  render={ () => {  if (access_role("treatment")) {  return <Component /> } else { return <Error /> } }} />)
+        if(path === "/test")
+          return ( <Route  render={ () => {  if (access_role("test")) {  return <Component /> } else { return <Error /> } }} />)
+        if(path === "/appointment")
+          return ( <Route  render={ () => {  if (access_role("appointment")) {  return <Component /> } else { return <Error /> } }} />)
+        if(path === "/administration")
+          return ( <Route  render={ () => {  if (access_role("administration")) {  return <Component /> } else { return <Error /> } }} />)
+        if(path === "/setting")
+          return ( <Route  render={ () => {  if (access_role("setting")) {  return <Component /> } else { return <Error /> } }} />)
+      }
   }
   return(
     <Switch>
       <Route path="/" exact component={Home}/>
-      <Route path="/dashBoard" exact component={DashBoard}/>
+      <RouteIf path="/dashboard" component={DashBoard}/>
+      {/* <Route path="/dashBoard" exact component={DashBoard}/> */}
       <RouteIf path="/treatment" component={Treatment}/>
       <RouteIf path="/appointment" component={Appointment}/>
       <RouteIf path="/administration" component={Administration}/>
       <RouteIf path="/test" component={Test}/>
       <RouteIf path="/setting" component={Setting}/>
-      <Route path="/setting" exact component={Setting}/>
       <Route path="/noticeeditor"  component={NoticeEditor}/>
       <Route path="/error" exact component={Error}/>
       <Redirect to="/"/>

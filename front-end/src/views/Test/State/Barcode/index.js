@@ -20,7 +20,7 @@ function Barcode(props){
    */
   useEffect(() => {
     const canvas = document.createElement('canvas')
-    JsBarcode(canvas, testList, { height: 100, displayValue: true })
+    JsBarcode(canvas, testList.test_list_id, { height: 100, displayValue: true })
     setImageUrl(canvas.toDataURL('image/png'))
   }, [testList])
 

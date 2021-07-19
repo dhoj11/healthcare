@@ -8,6 +8,7 @@ const auth = axios.create({
 })
 
 export function addAuthHeader(authToken) {
+  console.log(authToken);
   auth.defaults.headers.common["authToken"] = authToken;
 }
 
