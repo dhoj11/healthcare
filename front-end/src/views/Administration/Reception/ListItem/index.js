@@ -24,9 +24,17 @@ function ListItem(props) {
           topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
           content : "alert/Treatment/" + reception.patient_name + "님 진료실 들어가십니다."
         })
+        await sendMqttMessage({
+          topic : "/"+hospital_code +"/ROLE_ADMIN/" + reception.staff_id,
+          content : "alert/Treatment/" + reception.patient_name + "님 진료실 들어가십니다."
+        })
       }else if(event.target.value === "취소") {
         await sendMqttMessage({
           topic : "/"+hospital_code +"/ROLE_DOCTOR/" + reception.staff_id,
+          content : "rerender/Treatment_Patients"
+          })
+        await sendMqttMessage({
+          topic : "/"+hospital_code +"/ROLE_ADMIN/" + reception.staff_id,
           content : "rerender/Treatment_Patients"
           })
       }

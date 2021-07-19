@@ -52,6 +52,10 @@ function ReceptionOfTreatmentModal(props) {
         content : "rerender/Treatment_Patients"
       })
       await sendMqttMessage({
+        topic : "/"+hospital_code+"/ROLE_ADMIN/" + receptionPatient.staff_id,
+        content : "rerender/Treatment_Patients"
+      })
+      await sendMqttMessage({
         topic : "/"+hospital_code,
         content : "rerender/Administration_Reception"
       })
