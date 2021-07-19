@@ -6,7 +6,7 @@ import {checkPatientTel, modifyPatientInfo} from "../../../../apis/administratio
 
 function ModifyPatientModal(props) {
 
-  const {isOpen, close, patient} = props;
+  const {modifyPatientRenderer, isOpen, close, patient} = props;
   const [isChecked, setIsChecked] = useState("");
   const [gender, setGender] = useState("");
   const [medicine, setMedicine] = useState("");
@@ -119,6 +119,7 @@ function ModifyPatientModal(props) {
     }
     try{
       await modifyPatientInfo({...modify, patient_gender: gender, patient_disease: disease, patient_medicine: medicine, patient_comment: comment});
+      modifyPatientRenderer();
     }catch(error) {
       console.log(error.message);
     }

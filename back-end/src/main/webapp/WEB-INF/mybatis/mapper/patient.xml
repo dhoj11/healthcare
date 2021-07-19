@@ -41,4 +41,11 @@
 		from patient
 		where patient_tel = #{patient_tel}		
 	</select>
+	<update id="updatePatientInfo">
+		update patient
+		set patient_name = #{patient_name}, patient_tel = #{patient_tel}
+			, patient_birth=#{patient_birth}, patient_medicine=#{patient_medicine}
+			, patient_disease=#{patient_disease}, patient_comment=#{patient_comment}, patient_gender=#{patient_gender}
+		where patient_id = #{patient_id}
+	</update>
 </mapper>

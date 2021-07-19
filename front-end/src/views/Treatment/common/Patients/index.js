@@ -33,6 +33,7 @@ function Patients(props){
   useEffect(()=>{
     if(mqttRerenderMessage !== ""){
       if(mqttRerenderMessage.message[1] === "Treatment_Patients"){
+        console.log("환자 메시지 수신")
         getPateints();
       }
     }
