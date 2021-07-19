@@ -3,6 +3,7 @@ package com.team4.healthcare.controller;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,14 +17,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team4.healthcare.security.JwtUtil;
+import com.team4.healthcare.dto.DZNotice;
 import com.team4.healthcare.dto.Staff;
 import com.team4.healthcare.mqtt.MqttTemplate;
+import com.team4.healthcare.security.JwtUtil;
+import com.team4.healthcare.service.HomeService;
 import com.team4.healthcare.service.StaffService;
 import com.team4.healthcare.service.TestService;
 
@@ -42,6 +46,9 @@ public class HomeController {
     
     @Autowired 
 	private MqttTemplate mqttTemplate;
+    
+    @Autowired
+    private HomeService homeService;
     
     @PostMapping("/auth/login")
     public Map<String,String> login(@RequestBody Staff staff){
@@ -85,6 +92,11 @@ public class HomeController {
        } catch(Exception e) {
           e.printStackTrace();
        }
+    }
+    @GetMapping("/dz/notice")
+    public List<DZNotice> getDZNotice() {
+    	List<DZNotice> noticeList = homeService.getDZNotice();
+    	return noticeList;
     }
 }
 

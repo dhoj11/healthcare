@@ -4,7 +4,7 @@ import Barcode from "./Barcode";
 import style from "./State.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarcode, faVial, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { changeTestListState } from "../../../apis/test";
+import { changeTestListState, getPateint } from "../../../apis/test";
 import { useSelector } from "react-redux";
 import { sendMqttMessage } from "../../../apis/message";
 
@@ -60,12 +60,15 @@ function State(props){
           content : "rerender/Administration_TestList/" + testList.reception_id
         })
 
-
         // 검사완료 alert 보내기
         if(state === "완료"){
+          console.log(testList.patient_id);
+
+          const patient = await getPateint(testList.patient_id);
+
           await sendMqttMessage({
             topic : "/"+ hospital_code,
-            content : "alert/Administration/test/" + " 환자 검사완료완료"
+            content : "alert/Administration/test/" + patient.data.patient_name + " 환자 검사 완료"
           })
        }
         

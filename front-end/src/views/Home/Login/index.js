@@ -9,6 +9,7 @@ import { createSetAuthorityAction, createSetAuthTokenAction, createSetHospitalCo
 import { addAuthHeader } from "../../../apis/axiosConfig";
 import Paho from "paho-mqtt";
 import { sendMqttMessage } from "../../../apis/message";
+import { Link } from "react-router-dom";
 
 function Login(props){
   const [staff,setStaff] = useState({
@@ -77,6 +78,16 @@ function Login(props){
       <div className={style.loginWrapper}>
         <img className={style.loginImg} src="../../resources\img\login_dz_logo2.jpg" />
         <span className={style.title}>WELCOME</span>
+        {sessionStorage.getItem("staff_id") ? (<>
+        <div className={style.idWrapper}>
+          <label>{sessionStorage.getItem("staff_id")}님! 환영합니다.</label>
+        </div>
+        <div className={style.loginButtonArea}>
+          <Link to="/dashBoard"><button className={style.appoint_btn}>
+            DashBoard
+          </button></Link>
+        </div>
+        </>) : (<>
         <div className={style.idWrapper}>
           <div className={style.iconBox}><FontAwesomeIcon icon={faUser} className={style.idIcon}/></div>
           <input className={`form-control ${style.staffId}`} type="text" placeholder="user id" name="staff_id" onChange={handleChange}></input>
@@ -90,6 +101,7 @@ function Login(props){
             Login
           </button>
         </div>
+        </>)}
       </div>
     </div>
   );
