@@ -17,10 +17,14 @@ function RequestTest(props) {
         topic : "/"+hospital_code,
         content : "rerender/Test"
         })
-        await sendMqttMessage({
-          topic : "/"+hospital_code,
-          content : "rerender/Administration_TestList/"+testCodes[0].reception_id
-          })
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "alert/Test/" + testCodes[0].patient_name + "님 검사 요청이 들어왔습니다."
+        })
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Administration_TestList/"+testCodes[0].reception_id
+        })
     }catch(error) {
       console.log(error.message);
     }

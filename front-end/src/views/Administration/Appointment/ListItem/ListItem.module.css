@@ -14,6 +14,19 @@
  
 }
 
+.select_box {
+  width: 60px;
+  height: 40px;
+  padding-left: 0.4rem;
+  border: 1px solid #999;
+  background: url('../../../../resources/chevron-down.svg') no-repeat 95% 50% #ffff;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+}
+
 .select_box:hover {
   border-color: #888;
 }

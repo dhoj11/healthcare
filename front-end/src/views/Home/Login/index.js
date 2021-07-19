@@ -46,16 +46,16 @@ function Login(props){
               client.subscribe("/"+sessionStorage.getItem("hospital_code"));
               client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority"));
               client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("authority")+"/"+sessionStorage.getItem("staff_id"));
-              (async function() {
-                try{
-                  await sendMqttMessage({
-                    topic : "/"+response.data.hospital_code+"/ROLE_ADMIN",
-                    content : "메세지 보낸거 오나요"
-                  });
-                } catch(error){
-                  throw error;
-                }
-              })();
+              // (async function() {
+              //   try{
+              //     await sendMqttMessage({
+              //       topic : "/"+response.data.hospital_code+"/ROLE_ADMIN",
+              //       content : "메세지 보낸거 오나요"
+              //     });
+              //   } catch(error){
+              //     throw error;
+              //   }
+              // })();
               history.push("/dashboard");
             })         
             .catch(() => {

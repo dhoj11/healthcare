@@ -62,20 +62,35 @@ useEffect(()=>{
 },[client])
 
 useEffect(()=>{
-  if(mqttMessage !== "" && mqttMessage.message[0] === "alert") {
+  if(mqttMessage !== "" && mqttMessage.message[0] === "alert" && mqttMessage.message[1] === "Administration") {
     //toast 메시지
-    store.addNotification({
-      title: mqttMessage.message[2],
-      message: " ",
-      type: "info",                         // 'default', 'success', 'info', 'warning'
-      container: 'bottom-right',                // where to position the notifications
-      animationIn: ["animate__animated", "animate__bounceIn"],     // animate.css classes that's applied
-      animationOut: ["animate__animated", "animate__bounceOut"],   // animate.css classes that's applied
-      dismiss: {
-        duration: 0,
-        click: true
-      }
-    })
+    if(mqttMessage.message[2] === "treatment") {
+      store.addNotification({
+        title: mqttMessage.message[3],
+        message: " ",
+        type: "info",                         // 'default', 'success', 'info', 'warning'
+        container: 'bottom-right',                // where to position the notifications
+        animationIn: ["animate__animated", "animate__bounceIn"],     // animate.css classes that's applied
+        animationOut: ["animate__animated", "animate__bounceOut"],   // animate.css classes that's applied
+        dismiss: {
+          duration: 0,
+          click: true
+        }
+      })
+    } else if(mqttMessage.message[2] === "test") {
+      store.addNotification({
+        title: mqttMessage.message[3],
+        message: " ",
+        type: "warning",                         // 'default', 'success', 'info', 'warning'
+        container: 'bottom-right',                // where to position the notifications
+        animationIn: ["animate__animated", "animate__bounceIn"],     // animate.css classes that's applied
+        animationOut: ["animate__animated", "animate__bounceOut"],   // animate.css classes that's applied
+        dismiss: {
+          duration: 0,
+          click: true
+        }
+      })
+    }
   }
 },[mqttMessage])
 

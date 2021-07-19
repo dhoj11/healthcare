@@ -17,7 +17,7 @@ function App() {
     setChatShow(!chatShow);
   }
   useEffect(() => {
-    const client = new Paho.Client("localhost", 61614, "client-" + new Date().getMilliseconds);
+    const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
       console.log("연결");

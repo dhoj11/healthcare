@@ -26,12 +26,10 @@ function AppRoute(){
 
   const RouteIf = (
     { path, component: Component}) => { 
-      if(staff_id===""){
-        return (<Redirect to="/"/>)
-      }
-      else {
-        if(path === "/dashBoard")
-          return ( <Route  render={ () => {  if (access_role("dashboard")) {  return <Component /> } else { return <Error /> } }} />)
+      if(staff_id == "") return (<Redirect to="/"/>)
+      else{
+        if(path === "/dashboard")
+           return ( <Route  render={ () => {  if (access_role("dashboard")) {  return <Component /> } else { return <Error /> } }} />)
         if(path === "/treatment")
           return ( <Route  render={ () => {  if (access_role("treatment")) {  return <Component /> } else { return <Error /> } }} />)
         if(path === "/test")
@@ -47,7 +45,8 @@ function AppRoute(){
   return(
     <Switch>
       <Route path="/" exact component={Home}/>
-      <RouteIf path="/dashBoard" component={DashBoard}/>
+      <RouteIf path="/dashboard" component={DashBoard}/>
+      {/* <Route path="/dashBoard" exact component={DashBoard}/> */}
       <RouteIf path="/treatment" component={Treatment}/>
       <RouteIf path="/appointment" component={Appointment}/>
       <RouteIf path="/administration" component={Administration}/>

@@ -29,11 +29,12 @@ function Treatment(props){
   const MqttBroker = () => {
     client.onMessageArrived = (msg) => {
       let message = JSON.parse(msg.payloadString);
+      console.log(message);
       let topic = message.topic.split('/');
-      if(topic[3] == staff_id ){
+     if(topic[3] === staff_id ){
         message = message.content.split('/');
         if(message[0] === "rerender" && message[1] === "Treatment_Patients")
-          SetMqttRerenderMessage(message);
+          SetMqttRerenderMessage({message});
         if(message[0] === "alert" && message[1] === "Treatment")
           SetmqttAlertMessage(message[2]);
       }
