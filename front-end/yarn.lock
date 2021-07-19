@@ -9548,6 +9548,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-notifications-component@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-3.1.0.tgz#c676b7897a3fb10c554b69dba25fe2a9da6170e2"
+  integrity sha512-qq+zgqVIa2zhlw+RvO2QSPk7xHLvZWTHl9VKRO56sMUef/UrcUTqOswL0DSJtRIpZYZhclquQUfDxD6H2w8aWA==
+
 react-onclickoutside@^6.10.0:
   version "6.11.2"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.11.2.tgz#790e2100b9a3589eefca1404ecbf0476b81b7928"

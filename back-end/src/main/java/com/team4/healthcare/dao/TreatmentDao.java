@@ -79,20 +79,14 @@ public interface TreatmentDao {
 							  ,@Param("test_details_id")List<Integer> test_details_id
 							  );
 	
-	public int getPatiendId(int treatment_id);
-	public String getStaffId(int treatment_id);
+//	public int getPatiendId(int treatment_id);
+//	public String getStaffId(int treatment_id);
 	
-	public void insertReception(
-								@Param("patient_id") int patient_id
-							   ,@Param("staff_id") String staff_id
-								);
+	public void insertReception(int treatment_id);
 	
 	public int getLatelyReceptionId();
 	
-	public void updateReceptionId(
-								@Param("test_list_id") int test_list_id
-							   ,@Param("latelyReceptionId") int latelyReceptionId
-								);
+	public void updateReceptionId(int test_list_id);
 	
 	
 	public List<Integer> getTestListId(int treatment_id);

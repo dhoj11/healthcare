@@ -209,7 +209,7 @@ select treatment_id
    	</foreach>
    </insert>
    
-   <select id="getPatiendId" parameterType="int" resultType="int">
+<!--    <select id="getPatiendId" parameterType="int" resultType="int">
    	select patient_id
    	from treatment
    	where treatment_id = #{treatment_id}
@@ -219,7 +219,7 @@ select treatment_id
    	select staff_id
    	from treatment
    	where treatment_id = #{treatment_id}
-   </select>
+   </select> -->
 
    <select id="getTestListId" parameterType="int" resultType="int">
    	select distinct(test_list_id) 
@@ -227,19 +227,22 @@ select treatment_id
    	where treatment_id = #{treatment_id}
    </select>
    
-   <insert id="insertReception">
-   	insert into reception (reception_date, reception_time, patient_id, staff_id, reception_kind)
-   	values(NOW(), NOW(), #{patient_id}, #{staff_id}, '검사')
+   <insert id="insertReception" parameterType="int">
+   	INSERT INTO reception(reception_date, reception_time, patient_id, staff_id, reception_kind)
+	SELECT date_format(NOW(), '%Y-%m-%d') AS reception_date , NOW() AS reception_time, patient_id, staff_id, '검사' AS reception_kind
+	FROM treatment
+	WHERE treatment_id = #{treatment_id}
    </insert>
    
-   <select id="getLatelyReceptionId" resultType="int">
-   	select max(reception_id)
-   	from reception
-   </select>
+<!--    <select id="getLatelyReceptionId" resultType="int">
+   	(select max(reception_id)
+   	from reception)
+   </select> -->
    
-   <update id="updateReceptionId">
+   <update id="updateReceptionId" parameterType="int">
    	update tests_list
-   	set reception_id = #{latelyReceptionId}
+   	set reception_id = (select max(reception_id)
+   						from reception)
    	where test_list_id = #{test_list_id}
    </update>
    

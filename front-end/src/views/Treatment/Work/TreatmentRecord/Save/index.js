@@ -40,7 +40,6 @@ function Save(props){
 
       const testListObj = { treatment_id : treatment, treatment_tests : curTests };
   
-      await saveTreatment(treatmentObj);
       await insertTestList(testListObj);
       await updateAppointmentAndReceptionState(treatment);
 
@@ -79,14 +78,12 @@ function Save(props){
         content : "alert/Administration/" + patientName.data + " 환자 진료완료"
       })
 
-
+      await saveTreatment(treatmentObj);
 
     }catch(error){
       console.log(error);
     }
   }
-
-
   const getDoctorName = useCallback(async() => {
     try{
       const response = await getPrevDoctorName(treatment);

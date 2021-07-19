@@ -37,5 +37,6 @@ export function updateOptime(hospitalObj){
 }
 
 export function checkDuplicateId(staff_id){
-  auth.get("/account/checkid/" +  staff_id);
+  const promise = auth.get("/account/checkid/" +  staff_id);
+  return promise;
 }

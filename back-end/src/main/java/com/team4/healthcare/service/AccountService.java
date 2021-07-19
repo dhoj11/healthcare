@@ -117,10 +117,10 @@ public class AccountService {
 		accountDao.updateHospital(hospital);
 	}
 	
-	public int checkDuplicateId(String staff_id) {
+	public Boolean checkDuplicateId(String staff_id) {
 		int result = accountDao.checkDuplicateId(staff_id);
-		if(result == 1) return 0;
-		else return 1;
+		if(result == 1) return false;
+		else return true;
 	}
 
 }

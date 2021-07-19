@@ -120,11 +120,7 @@ public class TreatmentService {
       
       int treatment_id = testList.getTreatment_id();
       List<TestList> treatment_tests = testList.getTreatment_tests(); 
-      
-      Date date = new Date();
-      SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.KOREA);
-      String today = sdf.format(date);
-      int test_list_id = Integer.parseInt(today+treatment_id);
+      int test_list_id = Integer.parseInt( new SimpleDateFormat("yyMMdd", Locale.KOREA).format(new Date()) + treatment_id);
             
       if(treatment_tests.size()>0) treatmentDao.insertTestList(treatment_id, test_list_id, treatment_tests);
       
@@ -135,13 +131,11 @@ public class TreatmentService {
             treatmentDao.insertTestResult(test_list_id, test_code, test_details_id);
          }
          
-         int patient_id = treatmentDao.getPatiendId(treatment_id);
-         String staff_id = treatmentDao.getStaffId(treatment_id);
+         //int patient_id = treatmentDao.getPatiendId(treatment_id);
+         // String staff_id = treatmentDao.getStaffId(treatment_id);
          
-         treatmentDao.insertReception(patient_id, staff_id);
-         // tests_list 테이블에서 방금 생긴 접수 번호로 test_list_id 의 접수번호 update. 
-         int latelyReceptionId = treatmentDao.getLatelyReceptionId();
-         treatmentDao.updateReceptionId(test_list_id, latelyReceptionId);
+         treatmentDao.insertReception(treatment_id);
+         treatmentDao.updateReceptionId(test_list_id);
       }
    }
    

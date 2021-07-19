@@ -7,6 +7,7 @@ import SearchPatient from "./SearchPatient";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
+
 function Administration(props) {
 
   // console.log(client);

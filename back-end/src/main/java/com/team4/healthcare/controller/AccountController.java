@@ -68,7 +68,7 @@ public class AccountController {
     }
     
     @GetMapping("/checkid/{staff_id}")
-    public int checkDuplicateId(@PathVariable("staff_id") String staff_id) {
+    public Boolean checkDuplicateId(@PathVariable("staff_id") String staff_id) {
     	return accountService.checkDuplicateId(staff_id);
     }
 	   
