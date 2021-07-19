@@ -1,5 +1,5 @@
 .appointmentItem {
-  width: 90px;
+  width: 94px;
   height: 40px;
   text-align: center;
   line-height: 40px;
@@ -10,11 +10,7 @@
 }
 
 .select_box {
-  margin-left: 32px;
- 
-}
-
-.select_box {
+  margin-left: 15px;
   width: 60px;
   height: 40px;
   padding-left: 0.4rem;
