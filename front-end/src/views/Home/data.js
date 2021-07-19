@@ -1,7 +1,7 @@
 let noticeData = [];
 noticeData = [
   {"dz_notice_no": 1, "dz_notice_title": "유선상담 20일 하루 일시중단 안내", "dz_notice_content": "", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-03"},
-  {"dz_notice_no": 2, "dz_notice_title": "더존 온라인 고객센터 개편 안내", "dz_notice_content": "", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-08"},
+  {"dz_notice_no": 2, "dz_notice_title": "더존 온라인 고객센터 개편 안내", "dz_notice_content": "안녕하세요! \n 더존비즈온의 온라인 고객센터가 새롭게 개편됩니다. \n 고객님들께 좀 더 편리하고 정확한 정보를 전달해드리도록 하겠습니다. \n감사합니다.", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-08"},
   {"dz_notice_no": 3, "dz_notice_title": "온라인 고객센터 변경 예정 안내", "dz_notice_content": "", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-09"},
   {"dz_notice_no": 4, "dz_notice_title": "더존ICT그룹, 2021년 6월 17일(월) 임시공휴일 휴무 안내", "dz_notice_content": "", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-10"},
   {"dz_notice_no": 5, "dz_notice_title": "더존ICT그룹, 2021년 6월 휴무일 안내", "dz_notice_content": "", "dz_notice_writer":"더존 관리자", "dz_notice_date": "2021-06-12"},

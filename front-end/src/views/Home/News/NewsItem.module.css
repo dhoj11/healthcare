@@ -1,6 +1,5 @@
 .link_border {
-  border-radius: 10px;
-  border-color: black;
+  border-bottom: black;
   padding: 5px;
   height: 100px;
   margin-bottom: 5px;
@@ -10,6 +9,10 @@
   font-size: 16px;
 }
 
+.link_item:hover{
+   color: black; 
+   text-decoration: underline;
+  }
 
 .link_title {
   margin-bottom: 5px;

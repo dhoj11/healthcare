@@ -24,10 +24,6 @@ function PrescriptionTab(props) {
    work();
   },[props]);
 
-  useEffect(() => {
-    console.log(prescriptionList);
-  },[prescriptionList])
-
   const rowRenderer = ({index, key, style}) => {
     if(index !== 0 ) {
       curr = prescriptionList[index-1].treatment_id;

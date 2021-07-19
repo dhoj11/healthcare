@@ -6,6 +6,9 @@ import TestList from "./TestList";
 import SearchPatient from "./SearchPatient";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css/animate.min.css';
 
 function Administration(props) {
 
@@ -61,6 +64,18 @@ useEffect(()=>{
 useEffect(()=>{
   if(mqttMessage !== "" && mqttMessage.message[0] === "alert") {
     //toast 메시지
+    store.addNotification({
+      title: mqttMessage.message[2],
+      message: " ",
+      type: "awesome",                         // 'default', 'success', 'info', 'warning'
+      container: 'bottom-right',                // where to position the notifications
+      animationIn: ["animate__animated", "animate__bounceIn"],     // animate.css classes that's applied
+      animationOut: ["animate__animated", "animate__bounceOut"],   // animate.css classes that's applied
+      dismiss: {
+        duration: 0,
+        click: true
+      }
+    })
   }
 },[mqttMessage])
 

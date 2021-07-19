@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.DZNoticeDao">
+	<select id="selectNoticeList" resultType="DZNotice">
+		select dz_notice_id, dz_notice_title, dz_notice_content
+				,dz_notice_writer, dz_notice_date
+		from dz_notice
+		order by dz_notice_id desc
+	</select>
+</mapper>

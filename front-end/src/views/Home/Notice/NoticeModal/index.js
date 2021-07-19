@@ -16,12 +16,14 @@ function NoticeModal(props) {
     {isOpen ? (
       <Modal show={isOpen} onHide={close} size="lg" centered="true" className="modal">
       <Modal.Header closeButton>
-        <Modal.Title>공지사항</Modal.Title>
+        <Modal.Title>
+          <div>
+            <label className={styles.title}>{notice.dz_notice_title}</label>
+          </div>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className={styles.title_wrapper}>
-          <label className={styles.title}>{notice.dz_notice_title}</label>
-        </div>
+        
         <div className={styles.writer_wrapper}>
           <span className={styles.writer}>작성자 : {notice.dz_notice_writer}</span>
         </div>
@@ -40,9 +42,9 @@ function NoticeModal(props) {
        
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={close}>
+        <button className={styles.confirm_btn} onClick={close}>
           확인
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
     ) : null}
