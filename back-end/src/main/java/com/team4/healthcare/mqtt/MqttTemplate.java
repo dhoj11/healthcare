@@ -43,7 +43,7 @@ public class MqttTemplate {
          message.setPayload(json.getBytes());
          
          message.setQos(1); 
-         
+         System.out.println("메시지 도착");
          mqttClient.publish(topic, message);
       } catch (Exception e) {
          e.printStackTrace();

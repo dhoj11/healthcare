@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team4.healthcare.dao.ParticipantDao">
+	<select id="selectRoomId" resultType="int" parameterType="list">
+		select room_id
+		from participant
+		where staff_id in
+		<foreach collection ='staffArr' index='index' item='item' open='(' close=')' separator=','>
+			#{item}
+		</foreach>
+		group by room_id
+		having count(room_id) =#{staffArrNum}
+	</select>
+	
+	<insert id="insertNewParticipant">
+		insert into participant(staff_id,room_id,participant_room_name,participant_not_read_chat_num,participant_create_date,participant_update_date,participant_update_time)
+		values(#{staff_id},#{room_id},#{participant_room_name},0,curdate(),curdate(),curtime())
+	</insert>
+		
+	<select id="selectByRoomId" parameterType="int" resultType="participant">
+		select *
+		from participant
+		where room_id = #{room_id};
+	</select>
+	
+	<select id="selectByRoomIdAndStaffId" resultType="participant">
+		select *
+		from participant
+		where room_id =#{room_id} and staff_id =#{staff_id}
+	</select>
+	
+	<select id="selectByStaffId" parameterType="string" resultType="participant">
+		select *
+		from participant
+		where staff_id = #{staff_id}
+		order by participant_update_date DESC,participant_update_time DESC
+	</select>
+</mapper>
