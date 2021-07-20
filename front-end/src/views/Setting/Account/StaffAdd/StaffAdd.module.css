@@ -5,13 +5,14 @@
 }
 
 .button{
-  width: 150px;
+  width: 130px;
   background-color: #00253d;
   border-radius: 20px;
-  padding: 10px 30px;
+  padding: 6px 20px;
   color: #fff;
   font-weight: 700;
   margin: 5px;
+  font-size: 15px;
 }
 
 .button:hover{
@@ -20,13 +21,14 @@
 }
 
 .button2{
-  width: 150px;
+  width: 130px;
   background-color: #965500;
   border-radius: 20px;
-  padding: 10px 30px;
+  padding: 6px 20px;
   color: #fff;
   font-weight: 700;
   margin: 5px;
+  font-size: 15px;
 }
 
 .button2:hover{

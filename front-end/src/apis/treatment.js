@@ -66,7 +66,6 @@ export function getTreatmentSympton(treatment_id){
 }
 
 export function saveTreatment(treatmentObj){
-  console.log(">>>>>");
   auth.post('/treatment/save', treatmentObj);
 }
 
@@ -91,4 +90,14 @@ export function insertTestList(testListObj){
 
 export function updateAppointmentAndReceptionState(treatment_id){
   auth.put('/treatment/appointment-and-reception-state/' + treatment_id);
+}
+
+export function getSearchPatients(patient_name){
+  const promise = auth.get('/treatment/patients/' + patient_name);
+  return promise;
+}
+
+export function getPatient(patient_id){
+  const promise = auth.get('/treatment/patientinfo/' + patient_id);
+  return promise;
 }

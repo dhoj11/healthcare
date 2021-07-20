@@ -85,6 +85,16 @@ public class TestService {
 		return testDao.selectByCode(test_code);
 	}
 	
+	public Boolean getTestSaved(int test_list_id) {
+		List<Integer> results = testDao.selectTestSaved(test_list_id);
+		for(int r : results) {
+			if(r==0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }
 
 

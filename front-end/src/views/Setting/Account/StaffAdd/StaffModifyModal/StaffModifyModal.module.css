@@ -76,6 +76,12 @@
   text-align: center;
   font-weight: 600;
   color: #616161;
+  text-align: center;
+}
+
+.cancel{
+  vertical-align: middle;
+  padding: 10px 30px;
 }
 
 .cancel:hover{

@@ -68,8 +68,12 @@ function StaffModifyModal(props){
     });
   }
 
+  useEffect(()=>{
+    console.log(newAccount);
+  },[newAccount])
+
   const handleClose = () => {
-    init();
+    //init();
     close();
   }
 

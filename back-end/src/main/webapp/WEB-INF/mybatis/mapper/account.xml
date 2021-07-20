@@ -37,12 +37,13 @@
     	select *
     	from staff
     	where staff_enabled = 1
+    	order by staff_join
     </select>
     
     <select id="selectOne" parameterType="string" resultType="staff">
     	select hospital_code
         				  ,staff_id
-        				  ,staff_password
+        				  <!-- ,staff_password -->
         				  ,staff_authority
         				  ,staff_name
         				  ,staff_tel
@@ -58,7 +59,7 @@
     <update id="updateStaff" parameterType="staff">
     	update staff
     	 <trim prefix="SET" suffixOverrides=",">
-    		<if test="staff_password != null">
+    		<if test="staff_password != 'null' and staff_password != ''">
              	staff_password = #{staff_password},
             </if>
             <if test="staff_pic != null">

@@ -1,10 +1,14 @@
 .save{
   background-color: #066b53;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: 5px 20px;
   color: #fff;
-  font-weight: 700;
-  margin: 5px;
+  font-weight: 500;
+  font-size: 15px;
+  vertical-align: middle;
+  text-align: center;
+  height: 32px;
+  margin: 3px;
 }
 
 
@@ -14,5 +18,6 @@
 }
 
 .addIcon{
-  margin-right: 10px;
+  margin-right: 5px;
+  font-weight: 400;
 }

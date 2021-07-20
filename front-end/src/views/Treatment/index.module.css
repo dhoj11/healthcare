@@ -9,6 +9,16 @@
   padding: 10px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.selectWork .select{
+  display: flex;
+  align-items: center;
+}
+
+.search{
+  margin-right: 5px;
 }
 
 .item{

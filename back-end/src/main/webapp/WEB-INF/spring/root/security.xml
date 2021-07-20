@@ -31,14 +31,33 @@
 		<!-- 요청 경로 권한 설정 -->
 
 
-<!-- 	 	<security:intercept-url pattern="/account/*" access="hasRole('ROLE_ADMIN')" method="GET"/>
- 		<security:intercept-url pattern="/treatment/*" access="hasRole('ROLE_DOCTOR')" method="GET"/>
-		<security:intercept-url pattern="/administration/*" access="hasRole('ROLE_NURSE')" method="GET"/>
-		<security:intercept-url pattern="/appointment/*" access="hasRole('ROLE_NURSE')" method="GET"/>
-		<security:intercept-url pattern="/test/*" access="hasRole('ROLE_TESTER')" method="GET"/> 
- -->
+		<security:intercept-url pattern="/account*" access="hasRole('ROLE_ADMIN')" method="GET"/>
+		<security:intercept-url pattern="/account*" access="hasRole('ROLE_ADMIN')" method="POST"/>
+		<security:intercept-url pattern="/account*" access="hasRole('ROLE_ADMIN')" method="PUT"/>
+		<security:intercept-url pattern="/account*" access="hasRole('ROLE_ADMIN')" method="DELETE"/>
+		
+ 		<security:intercept-url pattern="/treatment*" access="hasRole('ROLE_DOCTOR')" method="GET"/>
+ 		<security:intercept-url pattern="/treatment*" access="hasRole('ROLE_DOCTOR')" method="POST"/>
+ 		<security:intercept-url pattern="/treatment*" access="hasRole('ROLE_DOCTOR')" method="PUT"/>
+ 		<security:intercept-url pattern="/treatment*" access="hasRole('ROLE_DOCTOR')" method="DELETE"/>
+		
+		<security:intercept-url pattern="/administration*" access="hasRole('ROLE_NURSE')" method="GET"/>
+		<security:intercept-url pattern="/administration*" access="hasRole('ROLE_NURSE')" method="POST"/>
+		<security:intercept-url pattern="/administration*" access="hasRole('ROLE_NURSE')" method="PUT"/>
+		<security:intercept-url pattern="/administration*" access="hasRole('ROLE_NURSE')" method="DELETE"/>
+		
+		<security:intercept-url pattern="/appointment*" access="hasRole('ROLE_NURSE')" method="GET"/>
+		<security:intercept-url pattern="/appointment*" access="hasRole('ROLE_NURSE')" method="POST"/>
+		<security:intercept-url pattern="/appointment*" access="hasRole('ROLE_NURSE')" method="PUT"/>
+		<security:intercept-url pattern="/appointment*" access="hasRole('ROLE_NURSE')" method="DELETE"/>
+		
+		<security:intercept-url pattern="/test*" access="hasRole('ROLE_TESTER')" method="GET"/> 
+		<security:intercept-url pattern="/test*" access="hasRole('ROLE_TESTER')" method="POST"/> 
+		<security:intercept-url pattern="/test*" access="hasRole('ROLE_TESTER')" method="PUT"/> 
+		<security:intercept-url pattern="/test*" access="hasRole('ROLE_TESTER')" method="DELETE"/> 
 		
 		<security:intercept-url pattern="/**" access="permitAll"/>
+		
 	</security:http>
 	
 	<bean id="corsSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
