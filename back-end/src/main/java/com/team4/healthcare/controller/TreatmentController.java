@@ -128,5 +128,14 @@ public class TreatmentController {
    public void updateAppointmentAndReceptionState(@PathVariable int treatment_id) {
       treatmentService.updateAppointmentAndReceptionState(treatment_id);
    }
+   
+   @GetMapping("/patients/{patient_name}")
+   public List<Patient> getSearchedPatients(@PathVariable String patient_name) {
+	   return treatmentService.getSearchedPatients(patient_name);
+   }
 
+   @GetMapping("/patientinfo/{patient_id}")
+   public Patient getPatient(@PathVariable int patient_id) {
+	   return treatmentService.getPatient(patient_id);
+   }
 }

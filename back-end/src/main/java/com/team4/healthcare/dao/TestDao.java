@@ -41,5 +41,6 @@ public interface TestDao{
 
     public Test selectByCode(String test_code);
 	public void updateTestListReq(TestList test);
+	public List<Integer> selectTestSaved(int test_list_id);
 
 }

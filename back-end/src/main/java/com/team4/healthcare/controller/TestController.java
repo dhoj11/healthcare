@@ -60,4 +60,9 @@ public class TestController {
 	public void updateTestResult( @RequestBody List<TestResult> testResults) {
 		testService.updateTestResult(testResults);
 	}
+	
+	@GetMapping("/issaved/{test_list_id}")
+	public Boolean isSaved(@PathVariable int test_list_id) {
+		return testService.getTestSaved(test_list_id);
+	}
 }

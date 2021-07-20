@@ -32,3 +32,8 @@ export function changeTestListState(test_list_id, reception_id, state){
 export function saveTestResult(testResults){
   auth.put('/test/testresult/', testResults);
 }
+
+export function getTestSaved(test_list_id){
+  const promise = auth.get('/test/issaved/'+ test_list_id);
+  return promise;
+}
