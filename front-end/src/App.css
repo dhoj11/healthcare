@@ -112,4 +112,12 @@ body{
 }
 
 
-
+.appRoute{
+  z-index: 1;
+}
+.chat{
+  z-index: 6;
+  position: absolute;
+  left: 20;
+  bottom: 0;
+}
