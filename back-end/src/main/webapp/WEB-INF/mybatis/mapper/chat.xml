@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.healthcare.dao.ChatDao">
-
+	<insert id="insertChat">
+		insert into chat(room_id,staff_id,chat_content,chat_not_read_num,chat_date,chat_time)
+		values(#{room_id},#{staff_id},#{chat_content},1,curdate(),curtime())
+	</insert>
+	
+	<select id="selectByRoomId" resultType="chat" parameterType="int">
+		select *
+		from chat,staff
+		where room_id=#{room_id} and chat.staff_id = staff.staff_id
+		order by chat_id
+	</select>
+	
+	<select id="selecLastChat" resultType="chat" parameterType="int">
+		select *
+		from chat
+		where chat_id in (select max(chat_id)
+						  from chat
+						  where room_id =#{room_id})
+	</select>
 </mapper>

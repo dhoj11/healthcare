@@ -16,4 +16,5 @@ public interface AccountDao {
 	public void deleteStaff(String staff_id);
 	public Hospital getHospital(String hospital_code);
 	public void updateHospital(Hospital hospital);
+	public int checkDuplicateId(String staff_id);
 }

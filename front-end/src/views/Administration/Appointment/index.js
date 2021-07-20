@@ -7,7 +7,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 function Appointment(props) {
 
-  const {sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
+  const {mqttMessage, sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
   const [appointmentList, setAppointmentList] = useState([]);
   const [state, setState] = useState("");
   const client = useSelector((state) => state.mqttReducer.client);
@@ -20,23 +20,27 @@ function Appointment(props) {
       3. state(예약,내원,완료,취소) => listWithState() 호출
     by 운호
   */ 
-  const MqttBroker = () => {
-    if(client!==""){
-      client.onMessageArrived = (msg) => {
-        let message = JSON.parse(msg.payloadString);
-        message = message.content.split('/');
-        if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
-          if(state ==="전체"){
-            getAllList();
-          } else{
-            listWithState(state);
-          }
-        }
-      }
-    }
-  }
-  // useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
-  MqttBroker();
+  // const MqttBroker = () => {
+  //   if(client!==""){
+  //     client.onMessageArrived = (msg) => {
+  //       console.log("예약 메시지 수신");
+  //       let message = JSON.parse(msg.payloadString);
+  //       message = message.content.split('/');
+  //       if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
+  //         if(state ==="전체"){
+  //           getAllList();
+  //         } else{
+  //           listWithState(state);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // //useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
+  // MqttBroker();
+  // useEffect(() => {
+  //   if(client !== "") MqttBroker();
+  // },[client])
 
   useEffect(() => {
     //비동기 통신
@@ -51,6 +55,18 @@ function Appointment(props) {
     };
     work();  
   },[sameDayAppointment]);
+
+  useEffect(() => {
+    if(mqttMessage !== "") {
+      if(mqttMessage.message[0] === "rerender" && mqttMessage.message[1] === "Administration_Appointment") {
+        if(state === "전체") {
+          getAllList();
+        }else {
+          listWithState(state);
+        }
+      }
+  }
+  },[mqttMessage])
 
   const getLength = () => {  //예약 리스트의 건 수를 반환
     return appointmentList.length;

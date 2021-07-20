@@ -4,7 +4,7 @@ import style from "./Save.module.css";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createSetEditBlockActoin } from "../../../../../redux/treatment-reducer";
-import { getPrevDoctorName, saveTreatment } from "../../../../../apis/treatment";
+import { getPatientName, getPrevDoctorName, insertTestList, saveTreatment, updateAppointmentAndReceptionState } from "../../../../../apis/treatment";
 import { sendMqttMessage } from "../../../../../apis/message";
 
 /**
@@ -38,21 +38,52 @@ function Save(props){
                             ,treatment_prescriptions : curPrescriptions
                             ,treatment_tests : curTests }
 
-      await saveTreatment(treatmentObj);
+      const testListObj = { treatment_id : treatment, treatment_tests : curTests };
+  
+      await insertTestList(testListObj);
+      await updateAppointmentAndReceptionState(treatment);
 
       // MQTT 메세지 보내기
+
+      // 접수 페이지 접수 테이블
       await sendMqttMessage({
-        topic : "/"+ hospital_code +"/ROLE_NURSE",
-        content : ""
+        topic : "/"+ hospital_code,
+        content : "rerender/Administration_Reception"
       })
 
+      // 예약 페이지 진료 타임 테이블
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "rerender/Appointment_TimeTable_Treatment"
+      })
+
+      // 접수 페이지 예약 테이블
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "rerender/Administration_Appointment"
+      })
+
+      // 검사 있을 시, 접수 페이지 검사 테이블
+      if(curTests.length > 0){
+        await sendMqttMessage({
+          topic : "/"+ hospital_code,
+          content : "rerender/Administration_TestList"
+        })
+      }
+
+      //진료완료 alert 보내기
+      const patientName = await getPatientName(treatment);
+      await sendMqttMessage({
+        topic : "/"+ hospital_code,
+        content : "alert/Administration/" + patientName.data + " 환자 진료완료"
+      })
+
+      await saveTreatment(treatmentObj);
 
     }catch(error){
       console.log(error);
     }
   }
-
-
   const getDoctorName = useCallback(async() => {
     try{
       const response = await getPrevDoctorName(treatment);

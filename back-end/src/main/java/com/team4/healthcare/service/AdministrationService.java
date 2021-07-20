@@ -144,6 +144,15 @@ public class AdministrationService {
 		return patientList;
 	}
 	
+	public boolean checkTel(String patient_tel) {
+		List<Patient> list = patientDAO.selectPatientByTel(patient_tel);
+		if(list.size() == 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public boolean addNewPatient(Patient newPatient) {
 		int row = patientDAO.insertNewPatient(newPatient);
 		
@@ -320,7 +329,7 @@ public class AdministrationService {
 	}
 	
 	public void appointmentTestList(List<TestList> testList, List<TestList> testCodes) {
-		int appointment_id = appointmentDAO.selectAppointmentId(testList.get(0));
+		int appointment_id = appointmentDAO.selectMaxAppointmentId();
 		for(TestList test : testCodes) {
 			testDAO.updateTestList(testList.get(0), appointment_id, test.getTest_code());
 		}
@@ -334,17 +343,29 @@ public class AdministrationService {
 //		}
 //	}
 	
-	public void changeTestStateToAppointment(int reception_id) {
+	public void changeTestStateToAppointment(TestList testList) {
+		
+		int reception_id = testList.getReception_id();
+		int appointment_id = testList.getAppointment_id();
 		
 		List<String> testStateList2 = testDAO.selectTestState2(reception_id);
+		logger.info(testStateList2.toString());
 		if(testStateList2.size() ==0) {
 			receptionDAO.updateReceptionState(reception_id, "완료");
+			if(appointment_id != 0) {
+				appointmentDAO.updateAppointmentState(appointment_id, "완료");
+			}
 		}
 		
 		List<String> testStateList = testDAO.selectTestState(reception_id);
 		logger.info(testStateList.toString());
 		if(testStateList.size() == 0) {
+			logger.info("접수 상태 예약으로 바꿔줌");
 			receptionDAO.updateReceptionState(reception_id, "예약");
+			if(appointment_id != 0) {
+				logger.info("예약 상태 완료로 바꿔줌");
+				appointmentDAO.updateAppointmentState(appointment_id, "완료");
+			}
 		}
 	}
 	
@@ -357,5 +378,10 @@ public class AdministrationService {
 	public List<Reception> getTestReceptionListByState(String reception_state) {
 		List<Reception> receptionList = receptionDAO.selectTestReceptionListByState(reception_state);
 		return receptionList;
+	}
+
+	public void modifyPatientInfo(Patient patient) {
+		int row = patientDAO.updatePatientInfo(patient);
+		
 	}
 }

@@ -27,7 +27,7 @@
 				and reception_date = curdate()
 				and reception_state = #{reception_state}
 				and reception_kind = '진료'
-		order by reception_time;
+		order by reception_id;
 	</select>
 	<update id="updateReceptionState">
 		update reception 

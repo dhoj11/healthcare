@@ -99,7 +99,13 @@ public class AdministrationController {
 		List<Patient> patientList = administrationService.getSearchedPatientList(patient_name);
 		return patientList;
 	}
-
+	
+	@GetMapping("patient/check/tel")
+	public boolean checkTel(@RequestParam("patient_tel") String patient_tel) {
+		boolean isExisted = administrationService.checkTel(patient_tel);
+		return isExisted;
+	}
+	
 	@PostMapping("/patient/new")
 	public void addNewPatient(@RequestBody Patient newPatient) {
 		administrationService.addNewPatient(newPatient);
@@ -174,19 +180,19 @@ public class AdministrationController {
 
 	}
 	
-//	@PutMapping("/appointment/test/state")
-//	public void changeTestStateToAppointment(@RequestBody TestList testList) {
-//		logger.info(testList.toString());
-//		administrationService.changeTestStateToAppointment(testList);
-//		
-//	}
-	
-	@PutMapping("/appointment/test/state/{reception_id}")
-	public void changeTestStateToAppointment(@PathVariable int reception_id) {
-		logger.info(String.valueOf(reception_id));
-		administrationService.changeTestStateToAppointment(reception_id);
+	@PutMapping("/appointment/test/state")
+	public void changeTestStateToAppointment(@RequestBody TestList testList) {
+		logger.info(testList.toString());
+		administrationService.changeTestStateToAppointment(testList);
 		
 	}
+	
+//	@PutMapping("/appointment/test/state/{reception_id}")
+//	public void changeTestStateToAppointment(@PathVariable int reception_id) {
+//		logger.info(String.valueOf(reception_id));
+//		administrationService.changeTestStateToAppointment(reception_id);
+//		
+//	}
 	@PutMapping("/test/request")
 	public void requestTest(@RequestBody List<TestList> testCodes) {
 		administrationService.requestTest(testCodes);
@@ -196,5 +202,9 @@ public class AdministrationController {
 	public List<Reception> getTestReceptionListByState(@RequestParam() String reception_state) {
 		List<Reception> receptionList = administrationService.getTestReceptionListByState(reception_state);
 		return receptionList;
+	}
+	@PutMapping("/patient/modify")
+	public void modifyPatientInfo(@RequestBody Patient patient) {
+		administrationService.modifyPatientInfo(patient);
 	}
 }

@@ -3,8 +3,9 @@ import style from "./StaffAddModal.module.css";
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { useRef, useState } from "react";
-import { createAccouont } from "../../../../../apis/account";
+import { checkDuplicateId, createAccouont } from "../../../../../apis/account";
 import { useSelector } from "react-redux";
+import { createChainedFunction } from "@material-ui/core";
 
 function StaffAddModal(props) {
 
@@ -23,6 +24,8 @@ function StaffAddModal(props) {
       staff_authority:"의사",
   })
 
+  const[validId, setValidId] = useState(false);
+
   const handleChange = (event) => {
     setAccount({...account,
                 [event.target.name]: event.target.value
@@ -33,13 +36,28 @@ function StaffAddModal(props) {
     setAccount({...account, staff_authority});
   }
 
+  const checkId = async () => {
+    try{
+      const response = await checkDuplicateId(account.staff_id);
+      console.log(response);
+      if(response.data==="true"){
+        setValidId(response.data);
+        alert("사용가능한 ID 입니다.");
+      }
+      else{
+        alert("다른 ID를 사용해주세요.");
+      }
+    }catch(error){
+      console.log(error);
+    }
+  }
+
 
   /**
    * 직원을 추가한다. 
    */
   const handleAdd = async(evnet) => {
     evnet.preventDefault();
-
 
     if(account.staff_name == "" || account.staff_id == "" || account.staff_password == "" || account.staff_tel == ""){
       alert("직원정보를 모두 입력해주세요");
@@ -61,9 +79,7 @@ function StaffAddModal(props) {
         console.log(error);
       }
   }
-
     props.handleAddStaff(account);
-
     init();
     close();
   }
@@ -98,8 +114,11 @@ function StaffAddModal(props) {
               <input type="text" name="staff_name" className={`form-control ${style.addInput}`} value={account.staff_name} onChange={handleChange} />
             </div>
             <div className={style.item}>
-              <span className={style.title}>아이디</span>
-              <input type="text" name="staff_id" className={`form-control ${style.addInput}`} value={account.staff_id} onChange={handleChange}/>
+                <span className={style.title}>아이디</span>
+                <div class={style.id}>
+                <input type="text" name="staff_id" className={`form-control ${style.addInputId}`} value={account.staff_id} onChange={handleChange}/>
+                <span className={style.idcheck} onClick={checkId}>중복확인</span>
+              </div>
             </div>
             <div className={style.item}>
             <span className={style.title}>비밀번호</span>

@@ -2,6 +2,7 @@ import styles from "./PatientInformation.module.css";
 import PatientInformationCard from "./PatientInformationCard";
 import AppointmentModal from "./AppointmentWithTreatmentModal";
 import ReceptionModal from "./ReceptionOfTreatmentModal";
+import ModifyModal from "./ModifyPatientModal";
 import PatientInformationTab from "./PatientInformationTab";
 import { useState, useEffect } from "react";
 import {getPatient} from "../../../apis/administration";
@@ -15,6 +16,8 @@ function PatientInformation(props) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [receptionRerenderer, setreceptionRerenderer] = useState("");
   const [appointmentRerenderer, setAppointemntRerenderer] = useState("");
+  const [modifyModalOpen, setModifyModalOpen] = useState(false);
+  const [modifyRenderer, setModifyRenderer] = useState("");
 
   const openReceptionModal = () => {
     setReceptionModalOpen(true);
@@ -32,6 +35,17 @@ function PatientInformation(props) {
     setAppointmentModalOpen(false);
   };
 
+  const openModifyModal = () => {
+    setModifyModalOpen(true);
+  };
+
+  const closeModifyModal = () => {
+    setModifyModalOpen(false);
+  };
+
+  const modifyPatient = () => {
+    setModifyRenderer(new Date());
+  }
   useEffect(() => {
     if(selectedPatientId !== undefined) {
       //비동기 통신
@@ -64,32 +78,20 @@ function PatientInformation(props) {
       };
       work();
     }
-  },[receptionRerenderer]);
-
-  useEffect(() => {
-    
-    if(selectedPatientId !== undefined) {
-      //비동기 통신
-      const work = async () => {
-        try {
-          const response = await getPatient(selectedPatientId);
-          setPatient(response.data);
-          console.log(response.data);
-        } catch (error) {
-          console.log(error.message);
-          //history.push("./error"); 에러 컴포넌트로 이동
-        }
-      };
-      work();
-    }
-  },[appointmentRerenderer]);
+  },[appointmentRerenderer, modifyRenderer, receptionRerenderer]);
 
   return (
     <>
       {patient !== undefined ? 
       (<div className={styles.patient_information}>
-      <div>
-        <PatientInformationCard patient={patient}/>
+      <div className="d-flex">
+        <div>
+          <PatientInformationCard patient={patient}/>
+        </div>
+        <div className={styles.patient_modify}>
+          <button className="btn btn-sm btn-secondary" onClick={openModifyModal}> 수정 </button>
+          <ModifyModal modifyPatientRenderer={modifyPatient} patient={patient} isOpen={modifyModalOpen} close={closeModifyModal}/>
+        </div>
       </div>
       <div className={styles.patient_information_tab}>
         <PatientInformationTab patient={patient}/>

@@ -6,33 +6,11 @@ import {getReceptionList, getReceptionListByState} from "../../../apis/administr
 import { useDispatch, useSelector } from "react-redux";
 
 function Reception(props) {
-  const {selectedPatient, receptionAppointmentId, visitReception, finished} = props;
+  const {mqttMessage, selectedPatient, receptionAppointmentId, visitReception, finished} = props;
   const [receptionList, setReceptionList] = useState([]);
   const [state, setState] = useState("");
 
   const client = useSelector((state) => state.mqttReducer.client);
-  
-  const MqttBroker = () => {
-    client.onMessageArrived = (msg) => {
-        let message = JSON.parse(msg.payloadString);
-        message = message.content.split('/');
-        //#1
-        // message[0] : type  : alert || rerender  ex)alert
-        // message[1] : component_name             ex)Administration
-        // message[2] : content                    ex)조운호 진료완료
-
-        //#2
-        // message[0] : type  : alert || rerender  ex)rerender
-        // message[1] : component_name             ex)Administration_Reception
-        // message[2] : content                    ex)
-        console.log(message);
-      }
-    };
-  
-  useEffect(()=>{
-    if(client!=="") MqttBroker();
-  },[client])
-
 
   //예약 후 접수
   useEffect(() => {
@@ -49,6 +27,19 @@ function Reception(props) {
     };
     work();
   },[receptionAppointmentId]);
+
+  useEffect(() => {
+    if(mqttMessage !=="") {
+      if(mqttMessage.message[0] === "rerender" && mqttMessage.message[1] === "Administration_Reception") {
+        console.log("접수 메시지 받았니?");
+        if(state === "전체") {
+          getAllList();
+        }else {
+          listWithState(state);
+        }
+      }
+  }
+  },[mqttMessage])
 
   //방문 접수 : props로 받아온 객체를 receptionList에 concat해줌
   useEffect(() => {
@@ -68,8 +59,10 @@ function Reception(props) {
 
   const getAllList = async() => {
     try {
+      console.log("getAllLit 실행")
       const response = await getReceptionList("진료");
       setReceptionList(response.data);
+      console.log("--------데이터",response.data);
       setState("전체");
     } catch (error) {
       console.log(error.message);

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team4.healthcare.dao.RoomDao">
-	<select id="selectRoomId" resultType="int" parameterType="list">
-		select room_id
-		from participant
-		where staff_id in
-		<foreach collection ='staffArr' index='index' item='item' open='(' close=')' separator=','>
-			#{item}
-		</foreach>
+	<insert id="insertNewRoom">
+		insert into room(room_type,room_date)
+		values('그룹',curdate())
+	</insert>
+	<select id="selectMaxRoomId" resultType="int">
+		select max(room_id)
+		from room
 	</select>
 </mapper>

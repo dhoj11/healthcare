@@ -11,7 +11,7 @@ import styles from "./index.module.css";
   Author : 조운호
 */
 function Staff(props) {
-  const {setRoomClick} = props;
+  const {setRoomClick,setClickRoomId} = props;
   const staff_id = useSelector(state => state.authReducer.staff_id);
   const [staffList,setStaffList] = useState([]); //직원리스트
   const [loginStaff,setLoginStaff] = useState({});  //현재 로그인 정보
@@ -42,9 +42,8 @@ function Staff(props) {
   const roomClickTrue = async(clickStaff_id) =>{
     try{
       const staffArr = [staff_id,clickStaff_id];
-      console.log(JSON.stringify({list:staffArr}));
       const response = await getRoomId(staffArr);
-
+      setClickRoomId(response.data);
       setRoomClick(true);
     } catch(error){
       throw error;

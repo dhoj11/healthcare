@@ -2,20 +2,25 @@ import { useState, useEffect } from "react";
 import {Modal, Button} from "react-bootstrap";
 import { requestTest } from "../../../../apis/administration";
 import styles from "./RequestTest.module.css";
+import {sendMqttMessage} from "../../../../apis/message";
+import { useSelector } from "react-redux";
 
 function RequestTest(props) {
 
   const {setSelectedTestCodes, setRerenderer, testCodes, isOpen, close} = props;
-
-  useEffect(() => {
-
-    console.log("--------------------------",testCodes);
-  }, [testCodes])
+  const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
   const handleReqTest = async() => {
-    
     try{
       await requestTest(testCodes);
+      await sendMqttMessage({
+        topic : "/"+hospital_code,
+        content : "rerender/Test"
+        })
+        await sendMqttMessage({
+          topic : "/"+hospital_code,
+          content : "rerender/Administration_TestList/"+testCodes[0].reception_id
+          })
     }catch(error) {
       console.log(error.message);
     }

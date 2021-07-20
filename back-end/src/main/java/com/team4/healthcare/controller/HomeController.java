@@ -74,7 +74,7 @@ public class HomeController {
     public void sendMqttMessage(String topic, String content, HttpServletResponse res) {
        try {
           mqttTemplate.sendMessage(topic, content);
-       
+          System.out.println("들어옴");
           JSONObject json = new JSONObject();
           json.put("result", "success");
           res.setContentType("application/json; charset=UTF-8");

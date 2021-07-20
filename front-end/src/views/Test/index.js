@@ -10,6 +10,8 @@ import TestList from "./TestList";
 import { getPateint, getPateintByTestListId, getTestList } from "../../apis/test";
 import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
+import { sendMqttMessage } from "../../apis/message";
 
 function Test(props){
 
@@ -19,12 +21,41 @@ function Test(props){
   const[isSaved, setIsSaved] = useState(false);
   const[buttonAllow, setButtonAllow] = useState(false);
 
+  const client = useSelector((state) => state.mqttReducer.client);
+  const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
+  const [mattAlertMessage, SetmattAlertMessage] = useState("");
+
+  const MqttBroker = () => {
+    client.onMessageArrived = (msg) => {
+      let message = JSON.parse(msg.payloadString);
+      message = message.content.split('/');
+      if(message[0] === "rerender")
+        SetMqttRerenderMessage({message});
+      if(message[0] === "alert")
+        SetmattAlertMessage({message});
+    }
+  };
+  
+  useEffect(()=>{
+    if(client!=="") MqttBroker();
+  },[client])
+
+  useEffect(()=>{
+    if(mqttRerenderMessage!==""){
+      if(mqttRerenderMessage.message[1] === "Test"){
+        getList();
+      }
+    }
+  },[mqttRerenderMessage])
+
+
   /** 
   * 검색컴포넌트에 프롭으로 함수를 전달하고 검사번호를 입력받고 arg를 전달받아 아래 동작을 처리한다.
   *
   * setPatient  - 검사리스트에서 검사번호로 환자 아이디를 찾고, 환자리스트에서 환자 정보를 가져와 환자상태 업데이트
   * setTestList - 검사번호로 검사상태변수 업데이트
   */
+ 
   const getList = async () => {
     try{
       const response = await getTestList();
@@ -42,7 +73,7 @@ function Test(props){
     try{
       if(arg && arg !== ""){
         const response = await getPateintByTestListId(arg);
-        setTestList(arg); 
+        setTestList({test_list_id:arg, reception_id:0}); 
         setPatient(response.data);
         setButtonAllow(false);
       }
@@ -93,7 +124,7 @@ function Test(props){
         setIsSaved(false);   
     }
   },[testList])
-  
+
   return(
     <div className={style.test}>
       <div className={style.left}>

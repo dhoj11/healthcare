@@ -37,14 +37,13 @@ public class MqttTemplate {
          
          JSONObject jsonObject = new JSONObject();
          jsonObject.put("topic", topic);
-         
          jsonObject.put("content", content);
          
          String json = jsonObject.toString();
          message.setPayload(json.getBytes());
          
-         message.setQos(0); 
-         
+         message.setQos(1); 
+         System.out.println("메시지 도착");
          mqttClient.publish(topic, message);
       } catch (Exception e) {
          e.printStackTrace();

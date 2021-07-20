@@ -18,11 +18,11 @@ function App() {
     setChatShow(!chatShow);
   }
   useEffect(() => {
-    const client = new Paho.Client("kosa3.iptime.org", 61614 , "client-" + new Date().getTime());
+    const client = new Paho.Client("localhost",61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
+      console.log("흠냐");
       client.subscribe("/");
-
       if(sessionStorage.getItem("staff_id")){
         client.unsubscribe("/");
         client.subscribe("/"+sessionStorage.getItem("hospital_code"));
@@ -34,7 +34,7 @@ function App() {
       client.disconnect();
     });
   },[]);
-  
+
   return (
     <div className="main">
         <div className="header">
@@ -48,8 +48,8 @@ function App() {
             <Chat chatShow={chatShow} chatToggle={chatToggle}></Chat>
             <AppRoute className="approute"/>
           </div>
-        </div>    
-        
+        </div>
+
     </div>
   );
 }

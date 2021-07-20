@@ -48,6 +48,7 @@
 		from appointment
 		where staff_id = #{staff_id}
 			and appointment_date = #{appointment_date}
+			and appointment_kind = "진료"
 			and appointment_state not in('취소')
 	</select>
 	<insert id="insertNewAppointment" parameterType="appointment" >

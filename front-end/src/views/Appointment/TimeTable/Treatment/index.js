@@ -120,8 +120,10 @@ function Treatment(props) {
      1. 현재페이지 리렌더링 메세지 도착시 list 다시 뿌려줌
   */
   const MqttBroker = () => {
+    console.log("브로커 실행");
+
     client.onMessageArrived = (msg) => {
-      console.log("메세지 도착");
+      console.log("메세지 도sss착");
       let message = JSON.parse(msg.payloadString);
 
       message = message.content.split('/');

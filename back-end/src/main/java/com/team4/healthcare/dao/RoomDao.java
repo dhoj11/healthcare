@@ -7,5 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface RoomDao {
-	public List<Integer> selectRoomId(@Param("staffArr") List<Integer> staffArr);
+	public void insertNewRoom();
+	public int selectMaxRoomId();
 }

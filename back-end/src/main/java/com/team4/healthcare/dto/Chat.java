@@ -4,12 +4,19 @@ public class Chat {
 	private int chat_id;
 	private int room_id;
 	private String staff_id;
+	private String staff_name;
 	private String chat_content;
 	private int chat_not_read_num;
 	private String chat_date;
 	private String chat_time;
 	public int getChat_id() {
 		return chat_id;
+	}
+	public String getStaff_name() {
+		return staff_name;
+	}
+	public void setStaff_name(String staff_name) {
+		this.staff_name = staff_name;
 	}
 	public void setChat_id(int chat_id) {
 		this.chat_id = chat_id;
@@ -50,6 +57,7 @@ public class Chat {
 	public void setChat_time(String chat_time) {
 		this.chat_time = chat_time;
 	}
+	
 	
 
 }
