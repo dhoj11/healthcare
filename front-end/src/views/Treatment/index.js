@@ -10,6 +10,7 @@ import Work from "./Work";
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css/animate.min.css';
+import Search from "./Search";
 
 /**
  * 환자, 진료 선택 후 작업영역 탭으로 전환
@@ -82,8 +83,13 @@ function Treatment(props){
   return(
     <div className={style.treatmentMain}>
       <div className={style.selectWork}>
-        <div className={work === "TreatmentRecord" ? `${style.record}` : `${style.item}` } onClick={() => changeWork("TreatmentRecord")}>진료</div>
-        <div className={work === "TestResult" ? `${style.TestResult}` : `${style.item}` } onClick={() => changeWork("TestResult")}>검사결과</div>
+        <div className={style.select}>
+          <div className={work === "TreatmentRecord" ? `${style.record}` : `${style.item}` } onClick={() => changeWork("TreatmentRecord")}>진료</div>
+          <div className={work === "TestResult" ? `${style.TestResult}` : `${style.item}` } onClick={() => changeWork("TestResult")}>검사결과</div>
+        </div>
+        <div className={style.search}>
+          <Search/>
+        </div>
       </div>
       <div className={style.treatmentContent}>
         <Date/>

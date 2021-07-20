@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getOptime, updateOptime } from "../../../apis/account";
 import style from "./Custom.module.css";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Custom(props){
 
@@ -54,7 +56,7 @@ function Custom(props){
     <div className={style.custom}>
       <div className={style.top}>
         <span className={style.title}>병원진료 시간</span>
-        <span className={style.save} onClick={updateOp}>저장</span>
+        <span className={style.save} onClick={updateOp}><FontAwesomeIcon icon={faSave} className={style.addIcon}/>저장</span>
       </div>
       <div className={style.input}>
           <span className={style.optime}>진료시작</span>

@@ -136,8 +136,8 @@ function Test(props){
 
   useEffect(()=>{
     if(testLists){
-      let test = testLists.find((item)=>item.test_list_id == testList)
-      if( test && test.test_list_saved === 1)
+      let test = testLists.find((item)=>item.test_list_id == testList.test_list_id)
+      if( test && test.test_list_saved == 1)
         setIsSaved(true);
       else
         setIsSaved(false);   
@@ -169,7 +169,7 @@ function Test(props){
         </div>
       </div>
       <div className={style.testResult}>
-        <TestResult testList={testList} isSaved={isSaved}/>
+        <TestResult testList={testList} isSaved={isSaved} patient={patient}/>
       </div>
     </div>
   );
