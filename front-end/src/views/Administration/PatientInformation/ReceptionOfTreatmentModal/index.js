@@ -48,7 +48,11 @@ function ReceptionOfTreatmentModal(props) {
     try{
       await addReceptionAfterVisit(newReception);
       await sendMqttMessage({
-        topic : "/"+hospital_code,
+        topic : "/"+hospital_code+"/ROLE_DOCTOR/" + receptionPatient.staff_id,
+        content : "rerender/Treatment_Patients"
+      })
+      await sendMqttMessage({
+        topic : "/"+hospital_code+"/ROLE_ADMIN/" + receptionPatient.staff_id,
         content : "rerender/Treatment_Patients"
       })
       await sendMqttMessage({

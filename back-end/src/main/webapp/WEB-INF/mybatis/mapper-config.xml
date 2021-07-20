@@ -29,7 +29,6 @@
 	<typeAlias alias="room" type="com.team4.healthcare.dto.Room"/>
 	<typeAlias alias="participant" type="com.team4.healthcare.dto.Participant"/>
 	<typeAlias alias="chat" type="com.team4.healthcare.dto.Chat"/>
-	
-	
+	<typeAlias alias="dzNotice" type="com.team4.healthcare.dto.DZNotice"/>
 	</typeAliases>
 </configuration>

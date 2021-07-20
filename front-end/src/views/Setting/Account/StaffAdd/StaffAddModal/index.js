@@ -38,20 +38,21 @@ function StaffAddModal(props) {
 
   const checkId = async () => {
     try{
-      const response = await checkDuplicateId(account.staff_id);
-      console.log(response);
-      if(response.data==="true"){
-        setValidId(response.data);
-        alert("사용가능한 ID 입니다.");
-      }
-      else{
-        alert("다른 ID를 사용해주세요.");
+      if(account.staff_id !="") {
+        let response = await checkDuplicateId(account.staff_id);
+        if(response.data){
+          setValidId(response.data);
+          alert("사용가능한 ID 입니다.");
+        }
+        else{
+          setValidId(false);
+          alert("다른 ID를 사용해주세요.");
+        }
       }
     }catch(error){
       console.log(error);
     }
   }
-
 
   /**
    * 직원을 추가한다. 
@@ -61,27 +62,33 @@ function StaffAddModal(props) {
 
     if(account.staff_name == "" || account.staff_id == "" || account.staff_password == "" || account.staff_tel == ""){
       alert("직원정보를 모두 입력해주세요");
-    } else{
-      try{
-        const formData = new FormData();
-        formData.append("hospital_code", hospital_code)
-        formData.append("staff_name", account.staff_name);
-        formData.append("staff_id", account.staff_id);
-        formData.append("staff_password", account.staff_password);
-        formData.append("staff_tel", account.staff_tel);
-        formData.append("staff_authority", account.staff_authority);
-        if(account.staff_authority == '의사') formData.append("authority", "ROLE_DOCTOR");
-        if(account.staff_authority == '간호') formData.append("authority", "ROLE_NURSE");
-        if(account.staff_authority == '임상') formData.append("authority", "ROLE_TESTER");
-        if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
-        await createAccouont(formData);
-      } catch (error){
-        console.log(error);
+    } 
+    else {
+
+      if (!validId) alert("ID를 확인해주세요.");
+      else{
+        try{
+          const formData = new FormData();
+          formData.append("hospital_code", hospital_code)
+          formData.append("staff_name", account.staff_name);
+          formData.append("staff_id", account.staff_id);
+          formData.append("staff_password", account.staff_password);
+          formData.append("staff_tel", account.staff_tel);
+          formData.append("staff_authority", account.staff_authority);
+          if(account.staff_authority == '의사') formData.append("authority", "ROLE_DOCTOR");
+          if(account.staff_authority == '간호') formData.append("authority", "ROLE_NURSE");
+          if(account.staff_authority == '임상') formData.append("authority", "ROLE_TESTER");
+          if(inputFile.current.files[0]) formData.append("staff_pic", inputFile.current.files[0]);
+          await createAccouont(formData);
+        } catch (error){
+          console.log(error);
+        }
+        init();
+        close();
+        props.handleAddStaff(account);
       }
-  }
-    props.handleAddStaff(account);
-    init();
-    close();
+    }
+    
   }
 
   const init = () => {
@@ -115,7 +122,7 @@ function StaffAddModal(props) {
             </div>
             <div className={style.item}>
                 <span className={style.title}>아이디</span>
-                <div class={style.id}>
+                <div className={style.id}>
                 <input type="text" name="staff_id" className={`form-control ${style.addInputId}`} value={account.staff_id} onChange={handleChange}/>
                 <span className={style.idcheck} onClick={checkId}>중복확인</span>
               </div>

@@ -121,13 +121,11 @@ public class TreatmentController {
    
    @PostMapping("/testlist")
    public void insertTestList(@RequestBody TreatmentSave testList) {
-      System.out.println("호출");
       treatmentService.insertTestList(testList);
    }
    
    @PutMapping("/appointment-and-reception-state/{treatment_id}")
    public void updateAppointmentAndReceptionState(@PathVariable int treatment_id) {
-      System.out.println("호출");
       treatmentService.updateAppointmentAndReceptionState(treatment_id);
    }
 

@@ -1,17 +1,28 @@
 import styles from "./Notice.module.css";
-import {getNoticeList} from "../data";
+import { getDZNotice } from "../../../apis/home";
 import { useEffect, useState, Fragment } from "react";
 import NoticeModal from "./NoticeModal";
 import { faFlagCheckered } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
 
 function Notice(props) {
 
-  const staticNoticeList = getNoticeList();
-  staticNoticeList.sort((a, b) => b.dz_notice_no - a.dz_notice_no);
-  
+  const [noticeList, setNoticeList] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNo, setSelectedNo] = useState(-1);
+  
+  useEffect(() => {
+    const work = async() => {
+      try{
+        const response = await getDZNotice();
+        setNoticeList(response.data);
+      }catch(error) {
+        console.log(error);
+      }
+    }
+    work();
+  },[])
 
   const openModal = (noticeNo) => {
     setIsOpen(true);
@@ -37,19 +48,30 @@ function Notice(props) {
         </div>
       </div>
       <div className={styles.notice_items}>
-        {staticNoticeList.map((notice, index) => (
-          <Fragment key={notice.dz_notice_no}><div className={styles.rows} onClick={() => openModal(notice.dz_notice_no)}>
-            <div className={styles.notice_no_item}><span >{index+1}</span></div>
-            <div className={styles.notice_title_item}><span >{notice.dz_notice_title}</span></div>
-          {notice.dz_notice_date === "2021-06-30" ? 
-            (<div className={styles.notice_badge}><span className={`${styles.notice_badge_item} badge badge-primary`}>new</span></div>) 
-            : 
-            (<div className={styles.notice_badge}><span ></span></div>)}
-            <div className={styles.notice_writer_item}><span >{notice.dz_notice_writer}</span></div>
-            <div className={styles.notice_date_item}><span >{notice.dz_notice_date}</span></div>
+        {noticeList !== "" ? (
+          <>
+            {noticeList.map((notice, index) => (
+              <Fragment key={notice.dz_notice_id}><div className={styles.rows} onClick={() => openModal(notice.dz_notice_id)}>
+                <div className={styles.notice_no_item}><span >{index+1}</span></div>
+                <div className={styles.notice_title_item}><span >{notice.dz_notice_title}</span></div>
+              {notice.dz_notice_date === moment().format("YYYY-MM-DD") ? 
+                (<div className={styles.notice_badge}><span className={`${styles.notice_badge_item} badge badge-primary`}>new</span></div>) 
+                : 
+                (<div className={styles.notice_badge}><span ></span></div>)}
+                <div className={styles.notice_writer_item}><span >{notice.dz_notice_writer}</span></div>
+                <div className={styles.notice_date_item}><span >{notice.dz_notice_date}</span></div>
+              </div>
+              </Fragment>
+          ))}
+        </>
+        ) : (<div className={styles.spinner_wrapper}>
+          <div className="d-flex justify-content-center align-items-center">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           </div>
-          </Fragment>
-        ))}
+        </div>)}
+        
         <NoticeModal isOpen={isOpen} close={closeModal} selectedNo={selectedNo}/>
       </div>
     </div>

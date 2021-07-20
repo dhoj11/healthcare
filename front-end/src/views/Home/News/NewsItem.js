@@ -18,8 +18,8 @@ function NewsItem(props) {
 
   return (
     <>
-      <div className={`${styles.link_border} border`}>
-        <a href={article.link} className={styles.link_item}>
+      <div className={`${styles.link_border}`}>
+        <a href={article.originallink} target="_blank" className={styles.link_item}>
           <div className={styles.item_wrapper}>
             <div ref={titleRef} className={styles.link_title}>
             </div>
@@ -27,7 +27,9 @@ function NewsItem(props) {
             </div>
           </div>
         </a>
+        <hr/>
         </div>
+        
     </>
   );
 }

@@ -13,6 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { sendMqttMessage } from "../../apis/message";
 
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css/animate.min.css';
+
 function Test(props){
 
   const[testList, setTestList] = useState({test_list_id:"", patient_id: "", reception_id:""}); // testListId
@@ -23,16 +27,16 @@ function Test(props){
 
   const client = useSelector((state) => state.mqttReducer.client);
   const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
-  const [mattAlertMessage, SetmattAlertMessage] = useState("");
+  const [mqttAlertMessage, SetmqttAlertMessage] = useState("");
 
   const MqttBroker = () => {
     client.onMessageArrived = (msg) => {
       let message = JSON.parse(msg.payloadString);
       message = message.content.split('/');
-      if(message[0] === "rerender")
+      if(message[0] === "rerender" && message[1] === "Test")
         SetMqttRerenderMessage({message});
-      if(message[0] === "alert")
-        SetmattAlertMessage({message});
+      if(message[0] === "alert" && message[1] === "Test")
+        SetmqttAlertMessage(message[2]);
     }
   };
   
@@ -42,11 +46,26 @@ function Test(props){
 
   useEffect(()=>{
     if(mqttRerenderMessage!==""){
-      if(mqttRerenderMessage.message[1] === "Test"){
         getList();
-      }
     }
   },[mqttRerenderMessage])
+
+  useEffect(()=>{
+    if(mqttAlertMessage!=""){
+      store.addNotification({
+        title: mqttAlertMessage,
+        message: " ",
+        type: "warning",                     
+        container: 'bottom-right',              
+        animationIn: ["animate__animated", "animate__bounceIn"],     
+        animationOut: ["animate__animated", "animate__bounceOut"],   
+        dismiss: {
+          duration: 0,
+          click: true
+        }
+      })
+    }
+},[mqttAlertMessage])
 
 
   /** 

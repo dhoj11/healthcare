@@ -75,7 +75,7 @@ function Save(props){
       const patientName = await getPatientName(treatment);
       await sendMqttMessage({
         topic : "/"+ hospital_code,
-        content : "alert/Administration/" + patientName.data + " 환자 진료완료"
+        content : "alert/Administration/treatment/" + patientName.data + " 환자 진료 완료"
       })
 
       await saveTreatment(treatmentObj);
