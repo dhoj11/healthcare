@@ -89,6 +89,10 @@ function Appoint(props) {
             topic : "/"+hospital_code,
             content : "rerender/Administration_Appointment"
           })
+          await sendMqttMessage({
+            topic : "/"+hospital_code,
+            content : "rerender/Adiministration_TestList"
+          })
         } catch(error){
           throw error;
         }

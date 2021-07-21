@@ -3,7 +3,7 @@ import NoticeModal from "../Modal/NoticeModal";
 import { Modal } from "react-bootstrap";
 import styles from "./index.module.css";
 import { getNoticeList } from "../../../apis/dashboard";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 
@@ -35,7 +35,7 @@ function Notice(props) {
     <div className={styles.Notice_contain}>
       <div className={`${styles.Notice_header} d-flex justify-content-between`}>
         <div>
-          <i class="fas fa-bullhorn"></i>
+          <i className="fas fa-bullhorn"></i>
           <span>공지사항</span>
         </div>
         <div>
