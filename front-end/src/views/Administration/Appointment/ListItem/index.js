@@ -7,14 +7,15 @@ import { useSelector } from "react-redux";
 
 function ListItem(props) {
 
-  const {index, appointment, selectPatient, receptionPatient, appointmentTest, isFinished} = props;
+  const {index, appointment, selectPatient, receptionPatient, appointmentTest, isCanceled} = props;
   const [state, setState] = useState(appointment.appointment_state);
   const hospital_code = useSelector(state => state.authReducer.hospital_code);
+  
   useEffect(() => {
-    if(appointment.appointment_id === isFinished) {
+    if(appointment.appointment_id === isCanceled) {
       const work = async () => {
         try{
-          await changeAppointmentState(isFinished, "취소");
+          await changeAppointmentState(isCanceled, "취소");
           setState("취소");
           await sendMqttMessage({
             topic : "/"+hospital_code,
@@ -26,7 +27,7 @@ function ListItem(props) {
       }
       work();
     }
-  },[isFinished]);
+  },[isCanceled]);
 
   //appointment가 변경되면 state도 appointment_state로 다시 세팅해줌.
   useEffect(()=> {
@@ -146,4 +147,4 @@ function ListItem(props) {
   );
 }
 
-export default ListItem;
+export default React.memo(ListItem);

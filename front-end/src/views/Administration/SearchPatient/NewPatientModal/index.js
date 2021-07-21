@@ -152,7 +152,7 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_medicine" value={newPatient.patient_medicine} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_medicine" value="" onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
                   <input type="text" name="patient_medicine" className="form-control" placeholder="" value={newPatient.patient_medicine} onChange={handleChange}/>
@@ -168,7 +168,7 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_disease" value={newPatient.patient_disease} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_disease" value="" onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
                   <input type="text" name="patient_disease" className="form-control" placeholder="" value={newPatient.patient_disease} onChange={handleChange}/>
@@ -184,7 +184,7 @@ function NewPatientModal(props) {
               </div>
               <div className={`${styles.medicine} d-flex`}>
                 <div>
-                  <input className="mr-1" type="radio" name="patient_comment" value={newPatient.patient_comment} onChange={handleChange}/><label className="mr-1">기타</label>
+                  <input className="mr-1" type="radio" name="patient_comment" value="" onChange={handleChange}/><label className="mr-1">기타</label>
                 </div>
                 <div>
                   <input type="text" name="patient_comment" className="form-control" placeholder="" value={newPatient.patient_comment} onChange={handleChange}/>
@@ -195,12 +195,12 @@ function NewPatientModal(props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={close}>
-          취소
-        </Button>
-        <Button variant="primary" onClick={addNewPatient}>
+        <button className={styles.cancel_btn} onClick={close}>
+            취소
+        </button>
+        <button className={styles.confirm_btn} onClick={addNewPatient}>
           등록
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
     ) : null}

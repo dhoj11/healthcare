@@ -17,6 +17,10 @@ function Home(props) {
         <div className={styles.poster_area}>
           <News />
         </div>
+        <div className={styles.dz_tel}>
+        TEL: 02.6233.3000 &nbsp;  FAX: 02.6233.3030 &nbsp;  고객센터 : 1688-6000 &nbsp;
+        온라인 고객센터 : <a href="https://help.douzone.com/main/index.jsp" target="_blank">https://help.douzone.com/main/index.jsp</a>
+        </div>
       </div>
     </div>
   );

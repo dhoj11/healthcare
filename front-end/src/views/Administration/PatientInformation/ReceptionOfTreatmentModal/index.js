@@ -44,6 +44,13 @@ function ReceptionOfTreatmentModal(props) {
   };
 
   const addReception = async() => {
+    if(receptionPatient.staff_id === "") {
+      alert("담당의를 선택해주세요.");
+      return;
+    }else if(receptionPatient.reception_content ===""){
+      alert("진료 내용을 입력해주세요.");
+      return;
+    }
     const newReception = {...receptionPatient};
     try{
       await addReceptionAfterVisit(newReception);
@@ -95,7 +102,7 @@ function ReceptionOfTreatmentModal(props) {
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료내용</div>
             <div className={styles.reception_content}>
-              <input type="text" className="form-control" placeholder="7자 이내로 적어주세요." name="reception_content" onChange={handleChange}/>
+              <input type="text" className="form-control" placeholder="6자 이내로 적어주세요." maxLength={6} name="reception_content" onChange={handleChange}/>
             </div>
           </div>
         </div>
