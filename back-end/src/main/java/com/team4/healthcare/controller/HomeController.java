@@ -36,7 +36,7 @@ import com.team4.healthcare.service.TestService;
 
 @CrossOrigin(origins ="*")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class HomeController {
 	
 	@Resource(name="daoAuthenticationManager")
