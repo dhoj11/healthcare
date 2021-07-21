@@ -138,15 +138,14 @@ function Test(props){
   }
 
   useEffect(()=>{
-
     IsSaved();
-    // if(testLists){
-    //   let test = testLists.find((item)=>item.test_list_id == testList.test_list_id)
-    //   if( test && test.test_list_saved == 1)
-    //     setIsSaved(true);
-    //   else
-    //     setIsSaved(false);   
-    // }
+    if(testLists){
+      let test = testLists.find((item)=>item.test_list_id == testList.test_list_id)
+      if( test && test.test_list_saved == 1)
+        setIsSaved(true);
+      else
+        setIsSaved(false);   
+    }
   },[testList])
 
   return(
