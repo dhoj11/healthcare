@@ -35,3 +35,13 @@
 .lastchat{
   color: #808080;
 }
+.not_read_chat_num{
+  padding: 0.125rem 0.3125rem;
+  border: 1px solid tomato;
+  background-color: tomato;
+  border-radius: 10px;
+  font-size: 5px;
+  color: white;
+  margin-right: 10px;
+  margin-top: 10px;
+}

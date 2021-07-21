@@ -35,4 +35,25 @@
 		where staff_id = #{staff_id}
 		order by participant_update_date DESC,participant_update_time DESC
 	</select>
+	<update id="updateParticipantDate" parameterType="int">
+		update participant
+		set participant_update_date = curdate(),participant_update_time = curtime()
+		where room_id = #{room_id}
+	</update>
+	<update id="updateParticipantNotReadNumPlus" parameterType="participant">
+		update participant
+		set participant_not_read_chat_num =participant_not_read_chat_num+1
+		where room_id = #{room_id} and staff_id not in (#{staff_id});
+	</update>
+	<update id="updateParticipantNotReadNumZero" parameterType="participant">
+		update participant
+		set participant_not_read_chat_num =0
+		where room_id = #{room_id} and staff_id = #{staff_id}
+	</update>
+	
+	<select id="selectCountNotreadNum" parameterType="string" resultType="int">
+		select sum(participant_not_read_chat_num)
+		from participant
+		where staff_id=#{staff_id}
+	</select>
 </mapper>

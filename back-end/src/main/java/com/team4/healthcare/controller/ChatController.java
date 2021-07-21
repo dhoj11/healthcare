@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +63,21 @@ public class ChatController {
 	public List<Participant> getParticipantListByStaffId(@RequestParam("staff_id") String staff_id){
 		return participantService.getParticipantListByStaffId(staff_id);
 	}
-	
+	@PutMapping("/participantdate/{room_id}")
+	public void updateParticipantDate(@PathVariable("room_id") int room_id) {
+		participantService.updateParticipantDate(room_id);
+	}
+	@PutMapping("/participantnotreadnumplus")
+	public void updateParticipantNotReadNumPlus(@RequestBody Participant participant) {
+		participantService.updateParticipantNotReadNumPlus(participant);
+	}
+	@PutMapping("/participantnotreadnumzero")
+	public void updateParticipantNotReadNumZero(@RequestBody Participant participant) {
+		participantService.updateParticipantNotReadNumZero(participant);
+	}
+	@GetMapping("/countnotreadnum")
+	public int getCountNotReadNum(@RequestParam("staff_id") String staff_id) {
+		return participantService.getCountNotReadNum(staff_id);
+	}
 
 }

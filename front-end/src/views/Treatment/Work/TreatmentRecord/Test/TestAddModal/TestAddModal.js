@@ -68,7 +68,8 @@ function TestAddModal(props){
                   </thead>
                   <tbody>
                     {
-                      tests.map((item, index)=>{
+                    tests && tests.length > 0 ?
+                      tests && tests.map((item, index)=>{
                         return(
                           <tr key={index}>
                             <td>{item.test_code}</td>
@@ -79,6 +80,18 @@ function TestAddModal(props){
                           </tr>
                         )
                       })
+                      :
+                      <>
+                      <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                        </tr>
+                        <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}>검사를 검색해주세요.</td>
+                          
+                        </tr>
+                      </>
                     }
                   </tbody>
                 </table>
