@@ -38,7 +38,13 @@ function AppMenu(props){
       <div>
         <button onClick={() =>chatToggle()} className="nav-link chaticon">
           <i className="far fa-comment"></i>
-          <span className="alert-ballon">{notReadNum}</span>
+          {
+            notReadNum === 0 || notReadNum === null?
+            null
+            :
+            <span className="alert-ballon">{notReadNum}</span>
+          }
+          
         </button>
       </div>
     </>
