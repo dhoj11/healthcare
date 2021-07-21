@@ -70,7 +70,6 @@ function Patients(props){
   },[]);
 
   const changePatient = async() => {
-    console.log(patient);
     if(patient!=""){
       try{
         const response = await getPatient(patient);
