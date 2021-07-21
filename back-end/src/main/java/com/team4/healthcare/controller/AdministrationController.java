@@ -29,7 +29,7 @@ import com.team4.healthcare.service.AdministrationService;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/administration")
+@RequestMapping("/api/administration")
 public class AdministrationController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationController.class);

@@ -20,7 +20,7 @@ import com.team4.healthcare.service.TestService;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 public class TestController {
 
 	@Autowired

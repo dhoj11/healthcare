@@ -32,7 +32,7 @@ import com.team4.healthcare.service.TestService;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("/api/appointment")
 public class AppointmentController {
 	private static final Logger logger = LoggerFactory.getLogger(AppointmentController.class);
 	

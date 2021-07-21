@@ -21,7 +21,7 @@ import com.team4.healthcare.service.AccountService;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 public class AccountController {
 	
 	@Autowired
