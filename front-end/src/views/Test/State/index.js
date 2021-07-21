@@ -57,13 +57,16 @@ function State(props){
         // 접수페이지 검사 테이블
         await sendMqttMessage({
           topic : "/"+ hospital_code,
-          content : "rerender/Administration_TestList/" + testList.reception_id
+          content : "rerender/Administration_TestList"
+        })
+
+        await sendMqttMessage({
+          topic : "/"+ hospital_code,
+          content : "rerender/Test"
         })
 
         // 검사완료 alert 보내기
         if(state === "완료"){
-          console.log(testList.patient_id);
-
           const patient = await getPateint(testList.patient_id);
 
           await sendMqttMessage({

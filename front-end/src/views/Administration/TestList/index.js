@@ -73,22 +73,17 @@ function TestList(props) {
         }else {
           listWithState(state);
         }
-        console.log(selectedReceptionId);
-        console.log(mqttMessage.message[2]);
-        if(mqttMessage.message[2] !== undefined && mqttMessage.message[2] === String(selectedReceptionId)) {
-          console.log("reception_id 들어오고 현재 보고 있는 사람이구")
-          const work = async () => {
-            try {
-              let response = await getTestCodesByReception(mqttMessage.message[2]);
-              setTestCodeList(response.data);
-              //setState("전체");
-            } catch (error) {
-              console.log(error.message);
-            }
-          };
-          work();
+        const work = async () => {
+          try {
+            let response = await getTestCodesByReception(selectedReceptionId);
+            setTestCodeList(response.data);
+            //setState("전체");
+          } catch (error) {
+            console.log(error.message);
+          }
+        };
+        work();
         }
-      }
     }
   },[mqttMessage])
 
