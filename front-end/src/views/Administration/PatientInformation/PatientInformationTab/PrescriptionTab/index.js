@@ -10,7 +10,6 @@ function PrescriptionTab(props) {
   const { patientId } = props;
   const [prescriptionList, setPrescriptionList] = useState([]);
   let curr = 0;
-  //const [curr, setCurr] = useState(0);
 
   useEffect(() => {
     const work = async() => {

@@ -18,9 +18,7 @@ function ModifyPatientModal(props) {
     patient_name: "",
     patient_birth: "",
     patient_tel: "",
-    patient_medicine: "",
-    patient_disease: "",
-    patient_comment: ""
+    patient_gender:""
   })
 
   useEffect(() => {
@@ -29,10 +27,7 @@ function ModifyPatientModal(props) {
       patient_name: patient.patient_name,
       patient_gender: patient.patient_gender,
       patient_birth: patient.patient_birth,
-      patient_tel: patient.patient_tel,
-      patient_medicine: patient.patient_medicine,
-      patient_disease: patient.patient_disease,
-      patient_comment: patient.patient_comment
+      patient_tel: patient.patient_tel
     })
     setGender(patient.patient_gender);
     setMedicine(patient.patient_medicine);
@@ -80,6 +75,7 @@ function ModifyPatientModal(props) {
   }
   const handleMedicineChange = (event) => {
     setMedicine(event.target.value);
+    console.log(event.target.value);
   }
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -98,13 +94,13 @@ function ModifyPatientModal(props) {
     }else if(modify.patient_tel === "") {
       alert("환자의 연락처를 입력해주세요.")
       return;
-    }else if(modify.patient_medicine === "") {
+    }else if(medicine === "") {
       alert("환자의 복용약물을 입력해주세요.")
       return;
-    }else if(modify.patient_disease === "") {
+    }else if(disease === "") {
       alert("환자의 만성질환을 입력해주세요.")
       return;
-    }else if(modify.patient_comment === "") {
+    }else if(comment === "") {
       alert("환자의 특이사항을 입력해주세요.")
       return;
     }
@@ -223,12 +219,12 @@ function ModifyPatientModal(props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={close}>
-          취소
-        </Button>
-        <Button variant="primary" onClick={modifyPatient}>
+        <button className={styles.cancel_btn} onClick={close}>
+            취소
+        </button>
+        <button className={styles.confirm_btn} onClick={modifyPatient}>
           등록
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
     ) : null}

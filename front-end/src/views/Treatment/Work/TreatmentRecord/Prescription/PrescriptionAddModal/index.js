@@ -104,7 +104,8 @@ function PrescriptionAddModal(props){
                   </thead>
                   <tbody>
                     {
-                      medicines.map((item, index)=>{
+                    medicines && medicines.length > 0 ?
+                      medicines && medicines.map((item, index)=>{
                         return(
                           <tr key={index}>
                             <td>{item.medicine_code}</td>
@@ -117,6 +118,21 @@ function PrescriptionAddModal(props){
                           </tr>
                         )
                       })
+                      :
+                      <>
+                        <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                        </tr>
+                        <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}>약을 검색해주세요.</td>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                        </tr>
+                      </>
                     }
                   </tbody>
                 </table>

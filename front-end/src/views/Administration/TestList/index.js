@@ -22,6 +22,8 @@ function TestList(props) {
   const [rerenderer, setRerenderer] = useState();
   const [state, setState] = useState("");
   const [selectedReceptionId, setSelectedReceptionId] = useState("");   //검사 페이지에서 상태가 바뀔 때 현재 보고 있는 환자의 검사 목록과 같을 때만 리렌더링 해주게끔 하기 위해
+  const [searchedPatientName, setSearchedPatientName] = useState("");
+  const [searchedList, setSearchedList] = useState([]);
 
   //예약 후 검사 접수
   useEffect(() => {
@@ -30,6 +32,7 @@ function TestList(props) {
       try {
         const response = await getReceptionList("검사");
         setTestPatientList(response.data);
+        setSearchedList(response.data);
         setState("전체");
       } catch (error) {
         console.log(error.message);
@@ -38,7 +41,8 @@ function TestList(props) {
     };
     work();
   },[testAppointmentId]);
-
+  
+  //검사 요청 시 리렌더링
   useEffect(() => {
     //비동기 통신
     if(rerenderer !== undefined) {
@@ -46,6 +50,7 @@ function TestList(props) {
         try {
           let response = await getReceptionList("검사");
           setTestPatientList(response.data);
+          setSearchedList(response.data);
           response = await getTestCodesByReception(rerenderer.reception_id);
           setTestCodeList(response.data);
           setSelectedTestCodes([]);
@@ -112,7 +117,8 @@ function TestList(props) {
       console.log("getAllList 실행")
         const response = await getReceptionList("검사");
         setTestPatientList(response.data);
-        console.log(response.data);
+        setSearchedList(response.data);
+        setSearchedPatientName("");
         setState("전체");
       } catch (error) {
         console.log(error.message);
@@ -123,6 +129,8 @@ function TestList(props) {
     try{
       const response = await getTestReceptionListByState(testReceptionState);
       setTestPatientList(response.data);
+      setSearchedList(response.data);
+      setSearchedPatientName("");
       setState(testReceptionState);
     }catch(error) {
       console.log(error.message);
@@ -151,18 +159,32 @@ function TestList(props) {
     }
   }
 
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setSearchedPatientName(event.target.value);
+  }
+
+  const search = () => {
+    setTestPatientList(searchedList.filter(testPatient => testPatient.patient_name === searchedPatientName));
+    setState("전체");
+  }
+
   return (
     <div className={styles.test_list}>
       <div className={styles.test_patient_list}>
           {/* <div className="mb-2 ml-2 d-flex"> */}
           <div className={styles.test_patient_list_title}>
-            <img className="mr-3" src="/resources/svg/clipboard-data.svg"></img><span className="mr-3">검사</span>
-            <div className={styles.reception_state} onClick={getAllList} >전체 &nbsp;| </div>
-            <div className={styles.reception_state} onClick={()=> listWithState("예약")}>예약 &nbsp;| </div>
-            <div className={styles.reception_state} onClick={()=> listWithState("대기")}>대기 &nbsp;| </div>
-            <div className={styles.reception_state} onClick={()=> listWithState("진행")}>진행 &nbsp;| </div>
-            <div className={styles.reception_state} onClick={()=> listWithState("완료")}>완료</div>
-            <div className={styles.length} >{state} : 총 {getLength()} 건</div>
+            <img className="mr-2" src="/resources/svg/clipboard-data.svg"></img><span className="mr-1">검사</span>
+            <div className={state === "전체" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={getAllList} >전체 </div><div>|</div>
+            <div className={state === "예약" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("예약")}>예약</div><div>|</div>
+            <div className={state === "대기" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("대기")}>대기</div><div>|</div>
+            <div className={state === "진행" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("진행")}>진행</div><div>|</div>
+            <div className={state === "완료" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("완료")}>완료</div><div>|</div>
+            <div className={styles.length} >총 {getLength()} 건</div>
+            <div className={styles.patient_name_wrapper}>
+              <input className={styles.patient_name} placeholder="name" type="text" value={searchedPatientName} onChange={handleChange}/>
+              <button type="button" className={styles.patient_name_button} onClick={search}>검색</button>
+          </div>
           </div>
           <div className="d-flex bg-light">
           <span className={`border ${styles.test_border}`}>
@@ -184,7 +206,7 @@ function TestList(props) {
         <div className={styles.patient_list_content}>
           {
             testPatientList.map((testPatient, index) => (
-              <TestPatientListItem testCodeList={testCodeList} key={index} index={index} testPatient={testPatient} showAppointmentTestList={showAppointmentTestList}/>
+              <TestPatientListItem key={index} testCodeList={testCodeList} index={index} testPatient={testPatient} showAppointmentTestList={showAppointmentTestList}/>
             ))
           }
         </div>
@@ -218,7 +240,7 @@ function TestList(props) {
       <div className={styles.patient_list_content}>
           {
             testCodeList.map((testCodes, index) => (
-                <TestListItem testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
+              <TestListItem key={index} testCodeList={testCodes} changeCheckedList={changeCheckedList} selectedTestCodes={selectedTestCodes} />
             ))
           }
       </div>

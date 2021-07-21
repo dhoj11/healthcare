@@ -1,46 +1,16 @@
-import { getPatientList} from "../data";
 import styles from "./Appointment.module.css";
-import { useCallback, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import { getAppointmentList, getAppointmentListByState } from "../../../apis/administration";
 import React from "react";
 import { useSelector } from "react-redux";
 function Appointment(props) {
 
-  const {mqttMessage, sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isFinished} = props;
+  const {mqttMessage, sameDayAppointment, selectedPatient, receptionPatient, appointmentTest, isCanceled} = props;
   const [appointmentList, setAppointmentList] = useState([]);
   const [state, setState] = useState("");
-  const client = useSelector((state) => state.mqttReducer.client);
-
-
-  /*
-    # 예약 or 취소 시 Mqtt 메세지 도착
-      1. 현재 보고 있는 state(전체,예약,내원,완료,취소) 에 따라 appointmentList 다름
-      2. state(전체) => getAllList() 호출
-      3. state(예약,내원,완료,취소) => listWithState() 호출
-    by 운호
-  */ 
-  // const MqttBroker = () => {
-  //   if(client!==""){
-  //     client.onMessageArrived = (msg) => {
-  //       console.log("예약 메시지 수신");
-  //       let message = JSON.parse(msg.payloadString);
-  //       message = message.content.split('/');
-  //       if(message[0] === "rerender" && message[1] === "Administration_Appointment"){
-  //         if(state ==="전체"){
-  //           getAllList();
-  //         } else{
-  //           listWithState(state);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // //useEffect에 작성시 MqttBroker() 사라지고 onMessageArrived 인식 X (미해결) by 운호
-  // MqttBroker();
-  // useEffect(() => {
-  //   if(client !== "") MqttBroker();
-  // },[client])
+  const [patientName, setPatientName] = useState("");
+  const [searchedList, setSearchedList] = useState([]);
 
   useEffect(() => {
     //비동기 통신
@@ -48,6 +18,7 @@ function Appointment(props) {
       try {
         const response = await getAppointmentList();
         setAppointmentList(response.data);
+        setSearchedList(response.data);
         setState("전체");
       } catch (error) {
         //history.push("./error"); 에러 컴포넌트로 이동
@@ -77,6 +48,7 @@ function Appointment(props) {
         const response = await getAppointmentList();
         setAppointmentList(response.data);
         setState("전체");
+        setPatientName("");
       } catch (error) {
       }
   };
@@ -86,6 +58,7 @@ function Appointment(props) {
       const response = await getAppointmentListByState(appointmentState);
       setAppointmentList(response.data);
       setState(appointmentState);
+      setPatientName("");
     }catch(error) {
     }
   }
@@ -94,17 +67,31 @@ function Appointment(props) {
     selectedPatient(patientId);
   }
 
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setPatientName(event.target.value);
+  }
+
+  const search = () => {
+    setAppointmentList(searchedList.filter(appointment => appointment.patient_name === patientName));
+    setState("전체");
+  }
+
   return (
     <>
       <div className={styles.appointment}>
         <div className="mb-1 ml-2 d-flex">
-          <img className="mr-3" src="/resources/svg/person-check.svg"></img><span className="mr-3">예약</span>
-          <div className={styles.appointment_state} onClick={getAllList} >전체 &nbsp;| </div>
-          <div className={styles.appointment_state} onClick={()=> listWithState("예약")}>예약 &nbsp;| </div>
-          <div className={styles.appointment_state} onClick={()=> listWithState("내원")}>내원 &nbsp;| </div>
-          <div className={styles.appointment_state} onClick={()=> listWithState("완료")}>완료 &nbsp;| </div>
-          <div className={styles.appointment_state} onClick={()=> listWithState("취소")}>취소 </div>
-          <div className={styles.length} >{state} : 총 {getLength()} 건</div>
+          <img className="mr-2" src="/resources/svg/person-check.svg"></img><span className="mr-2">예약</span>
+          <div className={state === "전체" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={getAllList} >전체 </div><div>|</div>
+          <div className={state === "예약" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("예약")}>예약</div><div>|</div>
+          <div className={state === "내원" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("내원")}>내원</div><div>|</div>
+          <div className={state === "완료" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("완료")}>완료</div><div>|</div>
+          <div className={state === "취소" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("취소")}>취소</div><div>|</div>
+          <div className={styles.length} >총 {getLength()} 건</div>
+          <div className={styles.patient_name_wrapper}>
+            <input className={styles.patient_name} placeholder="name" type="text" value={patientName} onChange={handleChange}/>
+            <button type="button" className={styles.patient_name_button} onClick={search}>검색</button>
+          </div>
         </div>
         <div className="d-flex bg-light">
           <span className={`border ${styles.appointment_border}`}>
@@ -128,9 +115,7 @@ function Appointment(props) {
         </div>
         <div className={styles.appointment_content}>
           {appointmentList.map((appointment, index)=>(
-            <>
-            <ListItem key={index} index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished}/>
-            </>
+            <ListItem key={index} index={index} appointment={appointment} selectPatient={selectPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isCanceled={isCanceled}/>
           ))}
         </div>
       </div>

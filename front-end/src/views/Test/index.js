@@ -7,7 +7,7 @@ import State from "./State";
 import style from "./test.module.css";
 import TestResult from "./TestResult";
 import TestList from "./TestList";
-import { getPateint, getPateintByTestListId, getTestList } from "../../apis/test";
+import { getPateint, getPateintByTestListId, getTestList, getTestSaved } from "../../apis/test";
 import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
@@ -129,15 +129,19 @@ function Test(props){
       }
     }
     setTestLists(newTestLists);
-
-          // DB 접수 테이블에서 상태 바꿔주는 코드 작성
-
   },[testLists]);
 
+
+  const IsSaved = async() => {
+    const response = await getTestSaved(testList.test_list_id);
+    setIsSaved(response.data);
+  }
+
   useEffect(()=>{
+    IsSaved();
     if(testLists){
-      let test = testLists.find((item)=>item.test_list_id == testList)
-      if( test && test.test_list_saved === 1)
+      let test = testLists.find((item)=>item.test_list_id == testList.test_list_id)
+      if( test && test.test_list_saved == 1)
         setIsSaved(true);
       else
         setIsSaved(false);   
@@ -169,7 +173,7 @@ function Test(props){
         </div>
       </div>
       <div className={style.testResult}>
-        <TestResult testList={testList} isSaved={isSaved}/>
+        <TestResult testList={testList} isSaved={isSaved} patient={patient}/>
       </div>
     </div>
   );

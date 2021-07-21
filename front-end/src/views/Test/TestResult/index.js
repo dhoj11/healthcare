@@ -3,15 +3,18 @@ import React from "react";
 import { useEffect, useState } from "react";
 import style from "./TestResult.module.css";
 
-// 후에는 검사번호로 불러오기
 import { getTestResult, saveTestResult } from "../../../apis/test";
+
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 function TestResult(props){
 
   const[testList, setTestList] = useState();         // 선택/검색한 검사번호
   const[testResults, setTestResults] = useState([]); // 왼쪽 테이블에서 하나의 검사를 선택했을 때 오른쪽에 표시되는 검사 목록
   const[isSaved, setIsSaved] = useState();
+  let patient = props.patient;
   let prevItem;  
+
 
   /**
    * 
@@ -68,7 +71,34 @@ function TestResult(props){
   return(
     <div className={style.testResult}>
       <div>
-       <table className={`table table-hover ${style.testResultTable}`}>
+          <div className={style.xlsbutton}>
+            <div className={style.testid}>검사번호 : 
+            {
+                (testList != null && testList != undefined && testList.test_list_id !="")&&
+                `  ${testList.test_list_id}`
+            }
+            </div>
+            {
+            (testList != null && testList != undefined && testList.test_list_id !="" && isSaved && patient)&&
+            <ReactHTMLTableToExcel
+                          className={style.exportxls}
+                          table="result"
+                          filename={`${patient.patient_name}-${testList.test_list_id}`}
+                          sheet="tablexls"
+                          buttonText="XLS 내보내기"/>
+            }
+          </div>
+       <table className={`table table-hover ${style.testResultTable}`} id="result">
+         { 
+         (testList != null && testList != undefined && testList.test_list_id !="" && patient) && 
+         <div className={style.testinfo}>
+           <span className={style.no}>검사번호 : {testList.test_list_id}</span>
+           <br/>
+           <span className={style.patientinfo}>검사자 : {patient.patient_name}/{patient.patient_gender}/{patient.patient_birth}</span>
+           <span>{"  "}</span>
+           <span>{"  "}</span>
+          </div>
+        }
               <thead className={style.thead}>
                 <tr>
                   <th scope="col" className="col-1">검사코드</th>
@@ -93,7 +123,7 @@ function TestResult(props){
                                 <td>{item.test_details_name}</td>
                                 <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
-                                           //readOnly={isSaved && true}
+                                           readOnly={isSaved && true}
                                            type="text"
                                            name={item.test_details_id}
                                            value={item.test_result_value || ""} 
@@ -112,7 +142,7 @@ function TestResult(props){
                               <td>{item.test_details_name}</td>
                               <td>{item.test_details_min} - {item.test_details_max}{item.test_details_unit}</td>
                                 <td><input className={`form-control ${style.input}`}
-                                           //readOnly={isSaved && true}
+                                           readOnly={isSaved && true}
                                            type="text"
                                            name={item.test_details_id}
                                            value={item.test_result_value || ""} 
@@ -128,7 +158,10 @@ function TestResult(props){
               </tbody>
             </table>
             </div>
-          { testList && <div className={style.saveButton} onClick={saveResult}>저장</div> }
+          { testList && testList.test_list_id !="" ? 
+            !isSaved && <div className={style.saveButton} onClick={saveResult}>저장</div> 
+            : null
+          }
     </div>
   );
 }

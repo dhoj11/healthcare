@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Patients.module.css";
 import { createSetEditBlockActoin, createSetListStateActoin, createSetPatientAction } from "../../../../redux/treatment-reducer";
 
-import { getPateintList, isTreatmentComplete } from "../../../../apis/treatment";
+import { getPateintList, getPatient, isTreatmentComplete } from "../../../../apis/treatment";
 
 /**
  * 오늘 진료대기/완료된 환자를 오른쪽 리스트에 표시한다.
@@ -68,6 +68,22 @@ function Patients(props){
   const selectListState = useCallback((state) => {
     setListState(state);
   },[]);
+
+  const changePatient = async() => {
+    console.log(patient);
+    if(patient!=""){
+      try{
+        const response = await getPatient(patient);
+        setCurPatient(response.data);
+      }catch(error){
+        console.log(error);
+      }
+    }
+  }
+
+  useEffect(()=>{
+    changePatient();
+  },[patient])
 
   return(
     <div className={style.wrapper}>

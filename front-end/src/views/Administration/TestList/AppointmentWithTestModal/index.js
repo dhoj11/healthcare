@@ -47,23 +47,19 @@ function AppointmentWithTestModal(props) {
         try{
           const response = await CountbyAppointment(hospital_code, appointmentDate);
           setTimeAndCount(response.data);
-          console.log(response.data);
         }catch(error) {
           console.log(error.message);
         }
       }
       work();
     }
-    console.log("testCodes",testCodes);
   },[isOpen]);
 
   useEffect(() => {
-    console.log(appointmentDate);
     const work = async() => {
       try{
         const response = await CountbyAppointment(hospital_code, appointmentDate);
         setTimeAndCount(response.data);
-        console.log(response.data);
       }catch(error) {
         console.log(error.message);
       }
@@ -98,6 +94,11 @@ function AppointmentWithTestModal(props) {
   }
 
   const newTestAppointment = async() => {
+
+    if(appointmentTime === "") {
+      alert("예약 시간을 선택해주세요.");
+      return;
+    }
     //appointment추가, test_list_id,test_list_date,appointment_id update
     const newAppointment = {...appointment, appointment_date: appointmentDate, appointment_time: appointmentTime}
     const newTestList = {testList: [testList], testCodes: testCodes};

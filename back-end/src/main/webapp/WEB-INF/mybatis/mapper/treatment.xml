@@ -275,4 +275,24 @@ select treatment_id
       from treatment, patient
       where treatment.treatment_id = #{treatment_id} and treatment.patient_id = patient.patient_id
    </select>
+   
+   <select id="getSearchedPatients" parameterType="string" resultType="patient">
+    select *
+    from patient
+    where patient_name like CONCAT('%',#{patient_name},'%')
+   </select>
+   
+   <select id="getPatient" parameterType="int" resultType="patient">
+   	 select patient_id
+           ,patient_name
+           ,patient_tel
+           ,FLOOR((CAST(REPLACE(CURRENT_DATE,'-','') AS UNSIGNED) - CAST(REPLACE(date_format(patient_birth, '%Y-%m-%d'),'-','') AS UNSIGNED)) / 10000 ) AS patient_birth
+           ,patient_medicine
+           ,patient_disease
+           ,patient_comment
+           ,patient_gender
+           ,patient_recent_visit
+      from patient
+   	  where patient_id=#{patient_id}
+   </select>
 </mapper>

@@ -7,4 +7,10 @@
 		from dz_notice
 		order by dz_notice_id desc
 	</select>
+	<select id="selectNoticeById" resultType="DZNotice">
+		select dz_notice_id, dz_notice_title, dz_notice_content
+				,dz_notice_writer, dz_notice_date
+		from dz_notice
+		where dz_notice_id = #{dz_notice_id}
+	</select>
 </mapper>

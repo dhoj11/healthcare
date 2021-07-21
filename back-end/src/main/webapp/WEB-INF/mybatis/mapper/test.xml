@@ -8,7 +8,7 @@
     </select>
     
     <select id="selectTestList" resultType="testlist">
-   		select test_list_id
+    		select test_list_id
    			 , test_code
 				 , test_list_state
    			 , test_list_time
@@ -22,6 +22,7 @@
     	  And tests_list.test_list_req = 1
     	  And date_format(tests_list.test_list_date, '%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
     	  And treatment.patient_id = patient.patient_id
+    	ORDER BY test_list_time
     </select>
     
     <select id="selectPatient" parameterType="int" resultType="patient">
@@ -107,6 +108,12 @@
     	select *
     	from tests
     	where test_code=#{test_code}
+    </select>
+    
+    <select id="selectTestSaved" parameterType="int" resultType="int">
+    	select test_list_saved
+    	from tests_list
+    	where test_list_id = #{test_list_id}
     </select>
     
 </mapper>

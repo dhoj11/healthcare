@@ -69,7 +69,7 @@ public class AccountService {
 			staff_pic_oname = new String(staff_pic_oname.getBytes("UTF-8"), "ISO-8859-1");
 			response.setHeader("Content-Disposition", "inline; filename=\"" + staff_pic_oname + "\";");
 	
-			InputStream is = new FileInputStream("C:/dz_uploadfiles/account/" + staff.getStaff_pic_sname());
+			InputStream is = new FileInputStream("D:/healthcarepic/" + staff.getStaff_pic_sname());
 			OutputStream os = response.getOutputStream();
 			FileCopyUtils.copy(is, os);
 			os.flush();
@@ -97,7 +97,9 @@ public class AccountService {
 			}
 		}
 		
-		if(staff.getStaff_password() != null) {
+		System.out.println(staff.getStaff_password());
+		
+		if(!staff.getStaff_password().equals("null") && !staff.getStaff_password().equals("")) {
 			BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 			staff.setStaff_password(bpe.encode(staff.getStaff_password()));
 		}

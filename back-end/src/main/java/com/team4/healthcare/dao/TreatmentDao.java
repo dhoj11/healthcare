@@ -79,9 +79,6 @@ public interface TreatmentDao {
                        ,@Param("test_details_id")List<Integer> test_details_id
                        );
    
-//   public int getPatiendId(int treatment_id);
-//   public String getStaffId(int treatment_id);
-   
    public void insertReception(int treatment_id);
    
    public int getLatelyReceptionId();
@@ -96,5 +93,9 @@ public interface TreatmentDao {
    public String selectStaffNameByTreatmentId(int treatment_id);
    
    public String selectPatientNameByTreatmentId(int treatment_id);
+   
+   public List<Patient> getSearchedPatients(String patient_name);
+   
+   public Patient getPatient(int patient_id);
 
 }
