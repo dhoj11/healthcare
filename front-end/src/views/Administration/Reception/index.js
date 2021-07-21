@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import ListItem from "./ListItem";
 import {getReceptionList, getReceptionListByState} from "../../../apis/administration";
 import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 function Reception(props) {
-  const {mqttMessage, selectedPatient, receptionAppointmentId, visitReception, finished} = props;
+  const {mqttMessage, selectedPatient, receptionAppointmentId, visitReception, canceled} = props;
   const [receptionList, setReceptionList] = useState([]);
   const [state, setState] = useState("");
-
-  const client = useSelector((state) => state.mqttReducer.client);
+  const [patientName, setPatientName] = useState("");
+  const [searchedList, setSearchedList] = useState([]);
 
   //예약 후 접수
   useEffect(() => {
@@ -19,6 +20,7 @@ function Reception(props) {
       try {
         const response = await getReceptionList("진료");
         setReceptionList(response.data);
+        setSearchedList(response.data);
         setState("전체");
       } catch (error) {
         console.log(error.message);
@@ -31,7 +33,6 @@ function Reception(props) {
   useEffect(() => {
     if(mqttMessage !=="") {
       if(mqttMessage.message[0] === "rerender" && mqttMessage.message[1] === "Administration_Reception") {
-        console.log("접수 메시지 받았니?");
         if(state === "전체") {
           getAllList();
         }else {
@@ -48,6 +49,7 @@ function Reception(props) {
       try {
         const response = await getReceptionList("진료");
         setReceptionList(response.data);
+        setSearchedList(response.data);
         setState("전체");
       } catch (error) {
         console.log(error.message);
@@ -59,11 +61,10 @@ function Reception(props) {
 
   const getAllList = async() => {
     try {
-      console.log("getAllLit 실행")
       const response = await getReceptionList("진료");
       setReceptionList(response.data);
-      console.log("--------데이터",response.data);
       setState("전체");
+      setPatientName("");
     } catch (error) {
       console.log(error.message);
     }
@@ -78,6 +79,7 @@ const listWithState = async(receptionState) => {
     const response = await getReceptionListByState(receptionState);
     setReceptionList(response.data);
     setState(receptionState);
+    setPatientName("");
   }catch(error) {
     console.log(error.message);
   }
@@ -87,17 +89,31 @@ const selectPatient = (patientId) => {
   selectedPatient(patientId);
 }
 
+const handleChange = (event) => {
+  console.log(event.target.value);
+  setPatientName(event.target.value);
+}
+
+const search = () => {
+  setReceptionList(searchedList.filter(reception => reception.patient_name === patientName));
+  setState("전체");
+}
+
 return (
   <>
   <div className={styles.reception}>
   <div className="mb-1 ml-2 d-flex">
-    <img className="mr-3" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-3">접수</span>
-    <div className={styles.reception_state} onClick={getAllList} >전체 &nbsp;| </div>
-    <div className={styles.reception_state} onClick={()=> listWithState("대기")}>대기 &nbsp;| </div>
-    <div className={styles.reception_state} onClick={()=> listWithState("진료")}>진료 &nbsp;| </div>
-    <div className={styles.reception_state} onClick={()=> listWithState("완료")}>완료 &nbsp;| </div>
-    <div className={styles.reception_state} onClick={()=> listWithState("취소")}>취소 </div>
-    <div className={styles.length} >{state} : 총 {getLength()} 건</div>
+    <img className="mr-2" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-2">접수</span>
+    <div className={state === "전체" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={getAllList} >전체 </div><div>|</div>
+    <div className={state === "대기" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("대기")}>대기</div><div>|</div>
+    <div className={state === "진료" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("진료")}>진료</div><div>|</div>
+    <div className={state === "완료" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("완료")}>완료</div><div>|</div>
+    <div className={state === "취소" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("취소")}>취소</div><div>|</div>
+    <div className={styles.length} >총 {getLength()} 건</div>
+    <div className={styles.patient_name_wrapper}>
+      <input className={styles.patient_name} placeholder="name" type="text" value={patientName} onChange={handleChange}/>
+      <button type="button" className={styles.patient_name_button} onClick={search}>검색</button>
+    </div>
   </div>
   <div className="d-flex bg-light">
     <span className={`border ${styles.reception_border}`}>
@@ -121,7 +137,7 @@ return (
   </div>
   <div className={styles.reception_content}>
     {receptionList.map((reception, index)=>(
-      <ListItem key={index} index={index} reception={reception} selectPatient={selectPatient} finished={finished}/>
+      <ListItem key={index} index={index} reception={reception} selectPatient={selectPatient} finished={canceled}/>
     ))}
   </div>
 </div>
@@ -129,4 +145,4 @@ return (
   );
 }
 
-export default Reception;
+export default React.memo(Reception);

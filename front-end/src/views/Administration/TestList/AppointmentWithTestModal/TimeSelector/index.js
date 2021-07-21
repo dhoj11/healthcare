@@ -22,12 +22,14 @@ function TimeSelector(props) {
         <div>
           {
             timeAndCount.map((time, index) => (
-              <>
-              {moment(appointmentDate+" "+time.appointment_time).format("YYYY-MM-DD HH:mm") > moment().format("YYYY-MM-DD HH:mm") ? (
-                <Fragment key={index}>
+              <Fragment key={index}>
+              {moment(appointmentDate+" "+time.appointment_time).format("YYYY-MM-DD HH:mm") > moment().format("YYYY-MM-DD HH:mm") ? 
+                (
                 <button className={ timeSelect === time.appointment_time ? `${styles.selected_time_box}` : `${styles.time_box}`} value={time.appointment_time} onClick={() => selectTime(time.appointment_time)}>{time.appointment_time} <span className={styles.count}>{time.count}건</span></button>
-              </Fragment>) : (null) }
-            </>
+                ) 
+                : 
+                (null) }
+            </Fragment>
             ))
           }
         </div>

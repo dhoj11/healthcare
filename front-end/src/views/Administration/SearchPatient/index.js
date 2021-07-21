@@ -93,7 +93,7 @@ function SearchPatient(props) {
           <div className="input-group col-7 d-flex">
             <input type="text" className="form-control" placeholder="name" onChange={changePatientName} />
             <div>
-              <button type="button" className="btn btn-secondary" onClick={search}>search</button>
+              <button type="button" className="btn btn-secondary" onClick={search}>검색</button>
             </div>
           </div>
           <div className="search-button col-2 d-flex justify-content-center">

@@ -3,10 +3,11 @@ import {useEffect, useState} from "react";
 import {changeReceptionState} from "../../../../apis/administration";
 import { sendMqttMessage } from "../../../../apis/message";
 import { useSelector } from "react-redux";
+import React from "react";
 
 function ListItem(props) {
   
-  const {index, reception, selectPatient, finished} = props;
+  const {index, reception, selectPatient, canceled} = props;
   const [state, setState] = useState(reception.reception_state);
   const hospital_code = useSelector(state => state.authReducer.hospital_code);
 
@@ -42,8 +43,7 @@ function ListItem(props) {
       console.log(error.message);
     }
     if(event.target.value === "취소" && appointment_id !== null) {
-      console.log(appointment_id);
-      finished(appointment_id);
+      canceled(appointment_id);
     }
     await sendMqttMessage({
       topic : "/"+hospital_code,
@@ -100,4 +100,4 @@ function ListItem(props) {
   );
 }
 
-export default ListItem;
+export default React.memo(ListItem);

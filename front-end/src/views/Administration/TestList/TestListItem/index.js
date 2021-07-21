@@ -10,7 +10,6 @@ function TestListItem(props) {
 
   useEffect(()=> {
     setIsChecked(false);
-    console.log(testCodeList);
   },[testCodeList]);
 
   useEffect(() => {
