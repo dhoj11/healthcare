@@ -49,7 +49,45 @@ body{
   background: #0d4467;
   color: #e9e9e9;
 }
+.chaticon{
+  background: none;
+  color: #e9e9e9;
+  text-align: center;
+  font-size: 25px;
+  border: hidden;
+  margin-top: 410px;
+}
 
+.notReadNum{
+  color: white;
+}
+
+.alert-ballon{
+  padding:0.125rem 0.3125rem;
+  border: 1px solid tomato;
+  background-color: tomato;
+  border-radius: 10px;
+  font-size: 5px;
+  color:white;
+  position:absolute;
+  top:870px;
+  left:30px;
+}
+
+@media (max-width:1820px){
+  .alert-ballon{
+    padding:0.125rem 0.3125rem;
+    border: 1px solid tomato;
+    background-color: tomato;
+    border-radius: 10px;
+    font-size: 5px;
+    color:white;
+    position:absolute;
+    top:-50px;
+    left:-50px;
+
+  }
+}
 /* 헤더 ========== */
 
 .appHeader{

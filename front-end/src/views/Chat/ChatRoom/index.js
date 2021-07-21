@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { getChatListByRoomId, getParticipant, getParticipantList, insertChat } from "../../../apis/chat";
+import { getChatListByRoomId, getParticipant, getParticipantList, insertChat, updateParticipantDate, updateParticipantNotReadNumPlus, updateParticipantNotReadNumZero } from "../../../apis/chat";
 import { useEffect } from "react";
 import { sendMqttMessage } from "../../../apis/message";
 import { getPatient } from "../../../apis/administration";
@@ -42,6 +42,13 @@ function ChatRoom(props) {
         chat_content : chatContent
       }
       await insertChat(chat);
+      //update_date 변경
+      await updateParticipantDate(clickRoomId);
+      // 본인 아이디 제외 안 읽은 메세지 수 count+1씩 하기
+      await updateParticipantNotReadNumPlus({
+        room_id:clickRoomId,
+        staff_id:staff_id
+      });
     } catch(error){
       throw error;
     }
@@ -103,14 +110,31 @@ function ChatRoom(props) {
       throw error;
     }
   }
+  const axiosUpdateParticipantNotReadNumZero = async() => {
+    try{
+      await updateParticipantNotReadNumZero({
+        room_id:clickRoomId,
+        staff_id:staff_id
+      });
+    } catch(error){
+      throw error;
+    }
+  }
   useEffect(() => {
     getChatList(clickRoomId);
     axiosGetParticipant();
+    if(clickRoomId !==null){
+      axiosUpdateParticipantNotReadNumZero();
+    }
   },[setRoomClick])
   
   useEffect(() => {
     if(mqttMessage[0]==="rerender" && mqttMessage[1] ==="Chat_ChatRoom"){
+      if(clickRoomId !==null){
+        axiosUpdateParticipantNotReadNumZero();
+      }
       getChatList(clickRoomId);
+      console.log("ddddd",clickRoomId);
     }
   },[mqttMessage])
   useEffect(() => {

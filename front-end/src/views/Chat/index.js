@@ -32,7 +32,6 @@ function Chat(props) {
   const MqttBroker = () => {
     client = new Paho.Client("localhost",61614, "chatclient-"+new Date().getTime());
     client.connect({onSuccess: () => {
-      console.log("접속성고오옹");
       client.unsubscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("staff_id"));
       client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("staff_id"));
     }
@@ -62,8 +61,8 @@ function Chat(props) {
       <>
       <Toast.Header className={styles.chat_header}>
         <div>
-          <button onClick={handleTabStaff}>직원</button>
-          <button onClick={handleTabChat}>채팅</button>
+          <button onClick={handleTabStaff} className={styles.staffIcon}><i className="fas fa-user-alt"></i></button>
+          <button onClick={handleTabChat} className={styles.chatIcon}><i className="far fa-comment"></i></button>
         </div>
       </Toast.Header>
       <Toast.Body className={styles.chat_body}>

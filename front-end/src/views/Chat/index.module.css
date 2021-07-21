@@ -14,3 +14,14 @@
 .chat_body{
   height: 600px;
 }
+.staffIcon,.chatIcon{
+  background: none;
+  color: #e9e9e9;
+  text-align: center;
+  font-size: 25px;
+  border: hidden;
+  margin-right: 20px;
+}
+.staffIcon:hover ,.chatIcon:hover{
+  color: rgba(238, 238, 238, 0.726);
+}
