@@ -1,5 +1,4 @@
 import './App.css';
-import './reset.css';
 import AppMenu from "./AppMenu";
 import AppRoute from "./AppRoute";
 import AppHeader from './AppHeader';
