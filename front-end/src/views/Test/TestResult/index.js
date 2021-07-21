@@ -158,7 +158,10 @@ function TestResult(props){
               </tbody>
             </table>
             </div>
-          { !isSaved && testList && <div className={style.saveButton} onClick={saveResult}>저장</div> }
+          { testList && testList.test_list_id !="" ? 
+            !isSaved && <div className={style.saveButton} onClick={saveResult}>저장</div> 
+            : null
+          }
     </div>
   );
 }
