@@ -16,7 +16,7 @@ function News(props) {
       setLoading(true);
       try {
         const response = await axios.get(
-          "https://openapi.naver.com/v1/search/news.json",{
+          "https://cors-anywhere.herokuapp.com/https://openapi.naver.com/v1/search/news.json",{
             params: {
               query: query,
               display: 10,
