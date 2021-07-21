@@ -39,3 +39,6 @@ export function updateParticipantNotReadNumZero(participant){
 export function getCountNotReadNum(staff_id) {
   return auth.get('/chat/countnotreadnum',{params:{staff_id}});
 }
+export function getOtherStaffId(room_id,staff_id) {
+  return auth.get('/chat/participant/otherstaffid',{params:{room_id,staff_id}})
+}

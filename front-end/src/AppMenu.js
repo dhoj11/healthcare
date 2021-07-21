@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import { getCountNotReadNum } from "./apis/chat";
 
 function AppMenu(props){
-
+  const message = props;
   const location = useLocation().pathname;
-  console.log(location);
 
   const {chatToggle} = props;
   const staff_id = useSelector(state => state.authReducer.staff_id);
   const [notReadNum,setNotReadNum] = useState(null);
+  console.log(message);
   const getCountNotRead = async() => {
     try{
       const response = await getCountNotReadNum(staff_id);
@@ -22,10 +22,12 @@ function AppMenu(props){
   }
   useEffect(() => {
     if(staff_id !== ""){
+      console.log("메뉴 재실행");
       getCountNotRead();
     }
   },[staff_id,props])
-  console.log(staff_id);
+  
+  console.log("fdsafdsadsdsds",notReadNum);
   return(
     <>
       <ul className="nav flex-column" >

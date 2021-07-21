@@ -14,11 +14,14 @@ import ReactNotifications from 'react-notifications-component'
 function App() {
   const dispatch = useDispatch();
   const [chatShow,setChatShow] = useState(false);
+  const [message,setMessage] = useState(null);
+
   const chatToggle = () => {
     setChatShow(!chatShow);
   }
   useEffect(() => {
-    const client = new Paho.Client("kosa3.iptime.org",50014 , "client-" + new Date().getTime());
+    // const client = new Paho.Client("kosa3.iptime.org",50014 , "client-" + new Date().getTime());
+    const client = new Paho.Client("localhost",61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
       client.subscribe("/");
@@ -42,10 +45,10 @@ function App() {
         </div>
         <div className="body">
           <div className="sidebar">
-            <AppMenu chatToggle={chatToggle}/>
+            <AppMenu chatToggle={chatToggle} message={message}/>
           </div>
           <div className="content">
-            <Chat chatShow={chatShow} chatToggle={chatToggle}></Chat>
+            <Chat chatShow={chatShow} chatToggle={chatToggle} setMessage={setMessage}></Chat>
             <AppRoute className="approute"/>
           </div>
         </div>

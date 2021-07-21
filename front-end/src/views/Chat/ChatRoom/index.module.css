@@ -72,3 +72,19 @@
   display: flex;
   align-items: flex-end;
 }
+.chat_date_style{
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+.chat_date_style  > div{
+  border: 1px solid #cfcfcf;
+  background-color: #cfcfcf;
+  width: 130px;
+  border-radius: 20px;
+  color: white;
+
+}
