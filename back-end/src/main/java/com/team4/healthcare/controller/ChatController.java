@@ -79,5 +79,9 @@ public class ChatController {
 	public int getCountNotReadNum(@RequestParam("staff_id") String staff_id) {
 		return participantService.getCountNotReadNum(staff_id);
 	}
+	@GetMapping("/participant/otherstaffid")
+	public List<String> getOtherStaffId(@RequestParam("room_id") int room_id, @RequestParam("staff_id") String staff_id){
+		return participantService.getOtherStaffId(room_id, staff_id);
+	}
 
 }

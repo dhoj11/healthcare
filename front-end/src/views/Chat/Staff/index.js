@@ -61,9 +61,9 @@ function Staff(props) {
       </div>
 
       <div className={styles.staff_List}>
-        <div className={`d-flex ${styles.staff_item}`} onDoubleClick={()=>roomClickTrue(staff_id)}>
+        <div className={`d-flex`} >
           <div className={styles.staff_img_contain}>
-            <img src={`http://localhost:8080/dashboard/staff/downloadAttach/${loginStaff.staff_id}`} className={styles.staff_img} ></img>
+            <img src={`${process.env.REACT_APP_URL}/dashboard/staff/downloadAttach/${loginStaff.staff_id}`} className={styles.staff_img} ></img>
           </div>
           <div className={styles.staff_content_contain}>
             <div className={styles.staff_name}>{loginStaff.staff_name}</div>
@@ -80,7 +80,7 @@ function Staff(props) {
               return(
                 <div key={index} className={`d-flex ${styles.staff_item}`} onDoubleClick={()=>roomClickTrue(staff.staff_id)}>
                   <div className={styles.staff_img_contain}>
-                    <img src={`http://localhost:8080/dashboard/staff/downloadAttach/${staff.staff_id}`} className={styles.staff_img} ></img>
+                    <img src={`${process.env.REACT_APP_URL}/dashboard/staff/downloadAttach/${staff.staff_id}`} className={styles.staff_img} ></img>
                   </div>
                   <div className={styles.staff_content_contain}>
                     <div className={styles.staff_name}>{staff.staff_name}</div>

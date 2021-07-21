@@ -56,4 +56,10 @@
 		from participant
 		where staff_id=#{staff_id}
 	</select>
+	
+	<select id="selectOtherStaffId" resultType="string">
+		select staff_id
+		from participant
+		where room_id=#{room_id} and staff_id not in(#{staff_id})
+	</select>
 </mapper>

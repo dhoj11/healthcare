@@ -6,6 +6,8 @@ function Staff(props) {
   // const staffList = getStaffList();
   const [staffList,setStaffList] = useState([]);
   const [clickAuthority,setClickAuthority] = useState("전체");
+
+
   useEffect(() => {
     (async function() {
       const response = await getStaffList();
@@ -44,7 +46,7 @@ function Staff(props) {
                 <div 
                 className={styles.staff_img}
                 >
-                  <img src={`http://localhost:8080/dashboard/staff/downloadAttach/${data.staff_id}`} className={styles.staff_img_img}></img>
+                  <img src={`${process.env.REACT_APP_URL}/dashboard/staff/downloadAttach/${data.staff_id}`} className={styles.staff_img_img}></img>
                 </div>
                   <span>{data.staff_name}</span>
               </div>
@@ -68,7 +70,7 @@ function Staff(props) {
                   <div 
                   className={styles.staff_img}
                   >
-                    <img src={`http://localhost:8080/dashboard/staff/downloadAttach/${data.staff_id}`} className={styles.staff_img_img}></img>
+                    <img src={`${process.env.REACT_APP_URL}/dashboard/staff/downloadAttach/${data.staff_id}`} className={styles.staff_img_img}></img>
                   </div>
                     <span>{data.staff_name}</span>
                 </div>

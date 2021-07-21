@@ -62,7 +62,7 @@ function ImgNotice(props) {
               <div key={index} className={styles.imgItem}>
                 <div className={styles.Item} onClick={() =>openImgNoticeModal(data)}>
                   <div className={styles.img_contain}>
-                    <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${data.img_notice_id}`} width="300px" height="160px"></img>
+                    <img src={`${process.env.REACT_APP_URL}/dashboard/imgnotice/downloadAttach/${data.img_notice_id}`} width="300px" height="160px"></img>
                   </div>
                   <div className={styles.ImgNoticeItem}>
                     <div className={styles.ImgNotice_title}>

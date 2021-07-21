@@ -69,7 +69,7 @@ function ImgNoticeModal(props) {
             </Modal.Header>
             <Modal.Body>
               <div className={styles.img_notice_content}>
-              <img src={`http://localhost:8080/dashboard/imgnotice/downloadAttach/${imgNoticeItem.img_notice_id}`} width="100%" className="mb-4"></img>
+              <img src={`${process.env.REACT_APP_URL}/dashboard/imgnotice/downloadAttach/${imgNoticeItem.img_notice_id}`} width="100%" className="mb-4"></img>
                 <span ref={contentRef}></span>
               </div>
               
