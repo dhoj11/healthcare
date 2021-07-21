@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { getCountNotReadNum } from "./apis/chat";
 
 function AppMenu(props){
+
+  const location = useLocation().pathname;
+  console.log(location);
+
   const {chatToggle} = props;
   const staff_id = useSelector(state => state.authReducer.staff_id);
   const [notReadNum,setNotReadNum] = useState(null);
@@ -26,8 +30,8 @@ function AppMenu(props){
     <>
       <ul className="nav flex-column" >
         <li className="nav-item mt-5">
-          <Link to="/" className="nav-link mt-2"><i className="fas fa-sign-in-alt"></i></Link>
-          <Link to="/dashBoard" className="nav-link mt-2"><i className="fas fa-home"></i></Link>
+          <Link to="/" className="nav-link mt-2"><i className="fas fa-home"></i></Link>
+          <Link to="/dashBoard" className="nav-link"><i className="fas fa-desktop"></i></Link>
           <Link to="/appointment" className="nav-link"><i className="far fa-calendar"></i></Link>
           <Link to="/administration" className="nav-link"><i className="far fa-file-alt"></i></Link>
           <Link to="/treatment" className="nav-link"><i className="fas fa-stethoscope"></i></Link>

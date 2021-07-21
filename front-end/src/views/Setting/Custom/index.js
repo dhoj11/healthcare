@@ -44,7 +44,6 @@ function Custom(props){
     else{
       try{
         const hospitalObj = {...opTime, hospital_code : hospital_code}
-        console.log(hospitalObj);
         await updateOptime(hospitalObj);
       }catch(error){
         console.log(error);
