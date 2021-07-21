@@ -73,7 +73,8 @@ function DiagnoseAddModal(props){
                     </tr>
                   </thead>
                   <tbody>
-                    {
+
+                  { diseases && diseases.length > 0  ?
                       diseases.map((item, index)=>{
                         return(
                           <tr key={index}>
@@ -85,7 +86,20 @@ function DiagnoseAddModal(props){
                           </tr>
                         )
                       })
-                    }
+                      :
+                      <>
+                        <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                          <td className={style.no}></td>
+                        </tr>
+                        <tr className={style.nosearch}>
+                          <td className={style.no}></td>
+                          <td className={style.no}>질병을 검색해주세요.</td>
+                          <td className={style.no}></td>
+                        </tr>
+                      </>
+                  }
                   </tbody>
                 </table>
               </div>
