@@ -27,7 +27,7 @@ import com.team4.healthcare.service.TreatmentService;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/treatment")
+@RequestMapping("/api/treatment")
 public class TreatmentController {
 
    @Autowired

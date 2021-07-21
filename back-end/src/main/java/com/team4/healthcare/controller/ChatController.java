@@ -20,7 +20,7 @@ import com.team4.healthcare.service.ParticipantService;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/chat")
+@RequestMapping("/api/chat")
 public class ChatController {
 	
 	@Autowired

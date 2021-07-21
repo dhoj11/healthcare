@@ -32,7 +32,7 @@ import com.team4.healthcare.service.StaffService;
 
 @CrossOrigin(origins ="*")
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/api/dashboard")
 public class DashBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(DashBoardController.class);
 	@Autowired
