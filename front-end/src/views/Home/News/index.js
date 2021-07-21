@@ -12,7 +12,6 @@ function News(props) {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    console.log("gdgd");
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -37,8 +36,6 @@ function News(props) {
     };
     fetchData();
   },[query]);
-
-  console.log(articles);
 
   //대기중
   if(loading) {

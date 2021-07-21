@@ -22,4 +22,9 @@ public class HomeService {
 		List<DZNotice> noticeList = dzNoticeDao.selectNoticeList();
 		return noticeList;
 	}
+
+	public DZNotice getDZNoticeById(int dz_notice_id) {
+		DZNotice notice = dzNoticeDao.selectNoticeById(dz_notice_id);
+		return notice;
+	}
 }

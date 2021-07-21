@@ -14,8 +14,8 @@
 }
 
 .test_patient_list_title {
-  margin-bottom: 11px;
-  margin-left: 20px;
+  margin-bottom: 0.45rem;
+  margin-left: 10px;
   display: flex;
 }
 
@@ -69,11 +69,61 @@
 }
 
 .length {
-  margin-left: 120px;
+  color: #fcc419;
+  margin-left: 0.5rem;
+  width: 90px;
+}
+
+.test_state {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.test_state_selected {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
   color: #fcc419;
 }
 
-.reception_state {
-  margin-left: 0.5rem;
-  cursor: pointer;
+.patient_name_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.patient_name {
+  text-indent: 10px;
+  width: 100px;
+  border: 0.5px solid #ced4da;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.patient_name::-webkit-input-placeholder {
+   font-size: 80%; 
+  }
+
+.patient_name:focus {
+  outline:none;
+}
+
+.patient_name_button {
+  width: 40px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  background-color: #6c757d;
+  color: white;
+  font-weight: 300;
+  font-size: 13px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.patient_name_button:hover{
+  background-color: #4d5359;
+  color: white;
 }

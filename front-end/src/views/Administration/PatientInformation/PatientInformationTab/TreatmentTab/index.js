@@ -2,6 +2,7 @@ import { AutoSizer, List } from "react-virtualized";
 import {useState, useEffect} from "react";
 import { checkTreatmentList } from "../../../../../apis/administration";
 import styles from "./TreatmentTab.module.css";
+import React from "react";
 
 function TreatmentTab(props) {
   
@@ -85,4 +86,4 @@ function TreatmentTab(props) {
   );
 }
 
-export default TreatmentTab;
+export default React.memo(TreatmentTab);

@@ -35,9 +35,9 @@ function Administration(props) {
     console.log(reception);
   };
 
-  const [isFinished, setIsFinished] = useState();
-  const finished = (appointment_id) => {
-    setIsFinished(appointment_id);
+  const [isCanceled, setIsCanceled] = useState();
+  const canceled = (appointment_id) => {
+    setIsCanceled(appointment_id);
   };
 
   const [sameDayAppointment, setSameDayAppointment] = useState(false);
@@ -98,8 +98,8 @@ useEffect(()=>{
     <div className={styles.first_content}>
       <div>
         <div className={styles.second_content}>
-          <div className={styles.appointment_component}><Appointment mqttMessage={mqttMessage} sameDayAppointment={sameDayAppointment} selectedPatient={selectedPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isFinished={isFinished}/></div>
-          <div className={styles.reception_component}><Reception mqttMessage={mqttMessage} selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} finished={finished}/></div>
+          <div className={styles.appointment_component}><Appointment mqttMessage={mqttMessage} sameDayAppointment={sameDayAppointment} selectedPatient={selectedPatient} receptionPatient={receptionPatient} appointmentTest={appointmentTest} isCanceled={isCanceled}/></div>
+          <div className={styles.reception_component}><Reception mqttMessage={mqttMessage} selectedPatient={selectedPatient} receptionAppointmentId={receptionAppointmentId} visitReception={reception} canceled={canceled}/></div>
         </div>
         <div className={styles.testlist_component}>
           <TestList mqttMessage={mqttMessage} dayAppointment={dayAppointment} testAppointmentId={testAppointmentId} selectedPatient={selectedPatient}/>
@@ -108,7 +108,6 @@ useEffect(()=>{
       <div>
         <div className={styles.search_patient_component}><SearchPatient mqttMessage={mqttMessage} selectedPatient={selectedPatient}/></div>
         <div className={styles.patient_information_component}><PatientInformation mqttMessage={mqttMessage} dayAppointment={dayAppointment} selectedPatientId={globalPatientId} visitReception={visitReception}/></div>
-        
       </div>
     </div>
     

@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.DZNotice;
@@ -38,6 +41,8 @@ public class HomeController {
 	
 	@Resource(name="daoAuthenticationManager")
 	private AuthenticationManager authenticationManager;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
     @Autowired
     private TestService testService;
@@ -97,6 +102,12 @@ public class HomeController {
     public List<DZNotice> getDZNotice() {
     	List<DZNotice> noticeList = homeService.getDZNotice();
     	return noticeList;
+    }
+    @GetMapping("/dz/notice/detail")
+    public DZNotice getDZNoticeById(@RequestParam("dz_notice_id") int dz_notice_id) {
+    	logger.info(String.valueOf(dz_notice_id));
+    	DZNotice notice = homeService.getDZNoticeById(dz_notice_id);
+    	return notice;
     }
 }
 

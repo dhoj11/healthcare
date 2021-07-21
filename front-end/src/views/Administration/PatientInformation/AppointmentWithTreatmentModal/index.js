@@ -1,5 +1,5 @@
 import {Modal} from "react-bootstrap";
-import {useState, useEffect} from "react";
+import {Fragment, useState, useEffect} from "react";
 import styles from "./AppointmentWithTreatmentModal.module.css";
 import Calendar from "../../../Appointment/Calendar";
 import {getDoctorNameList, addNewAppointment, isReserved} from "../../../../apis/administration";
@@ -172,25 +172,25 @@ function AppointmentModal(props) {
             <div className={`${styles.border_title} border`}>진료의</div>
             <div className="d-flex">
               {doctorList.map((doctor, key, index)=>(
-                <>
-                  <div key={key}>
+                <Fragment key={key}>
+                  <div>
                   <input className="mr-2" type="radio" name="staff_id" value={doctor.staff_id} checked={doctor.staff_id === staff} onChange={handleRadioChange}/>
                   <label className="form-check-label mr-2">{doctor.staff_name}</label>
                   </div>
-                </>
+                </Fragment>
               ))}
             </div>
           </div>
           <div className={styles.register_form_row}>
             <div className={`${styles.border_title} border`}>진료내용</div>
             <div>
-              <input type="text" className="form-control" name="appointment_content" onChange={handleChange}/>
+              <input type="text" className="form-control" name="appointment_content" placeholder="6자 이내로 적어주세요." maxLength={6} onChange={handleChange}/>
             </div>
           </div>
           <div className="d-flex">
             <div><Calendar startDate={startDate} changeDate={changeDate}></Calendar></div>
             <div>
-              <TimeSelector possibleTime={possibleTime} appointmentDate={appointmentDate} staffId={staff} changeTime={changeTime}/>
+              <TimeSelector possibleTime={possibleTime} appointmentDate={appointmentDate} changeTime={changeTime}/>
             </div>
           </div>
         </div>

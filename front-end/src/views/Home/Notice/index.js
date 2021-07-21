@@ -1,5 +1,5 @@
 import styles from "./Notice.module.css";
-import { getDZNotice } from "../../../apis/home";
+import { getDZNotice, getDzNoticeById } from "../../../apis/home";
 import { useEffect, useState, Fragment } from "react";
 import NoticeModal from "./NoticeModal";
 import { faFlagCheckered } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import moment from "moment";
 function Notice(props) {
 
   const [noticeList, setNoticeList] = useState("");
+  const [notice, setNotice] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNo, setSelectedNo] = useState(-1);
   
@@ -24,9 +25,16 @@ function Notice(props) {
     work();
   },[])
 
-  const openModal = (noticeNo) => {
+  const openModal = async(noticeNo) => {
+    console.log(noticeNo);
+    try{
+      const response = await getDzNoticeById(noticeNo);
+      setNotice(response.data);
+      console.log(response.data);
+    }catch(error){
+      console.log(error);
+    }
     setIsOpen(true);
-    setSelectedNo(noticeNo);
   }
   const closeModal = () => {
     setIsOpen(false);
@@ -71,8 +79,7 @@ function Notice(props) {
             </div>
           </div>
         </div>)}
-        
-        <NoticeModal isOpen={isOpen} close={closeModal} selectedNo={selectedNo}/>
+        <NoticeModal isOpen={isOpen} close={closeModal} notice={notice}/>
       </div>
     </div>
   );
