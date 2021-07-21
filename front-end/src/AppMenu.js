@@ -1,7 +1,27 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getCountNotReadNum } from "./apis/chat";
 
 function AppMenu(props){
   const {chatToggle} = props;
+  const staff_id = useSelector(state => state.authReducer.staff_id);
+  const [notReadNum,setNotReadNum] = useState(null);
+  const getCountNotRead = async() => {
+    try{
+      const response = await getCountNotReadNum(staff_id);
+      console.log(response.data);
+      setNotReadNum(response.data);
+    } catch(error){
+      throw error;
+    }
+  }
+  useEffect(() => {
+    if(staff_id !== ""){
+      getCountNotRead();
+    }
+  },[staff_id,props])
+  console.log(staff_id);
   return(
     <>
       <ul className="nav flex-column" >
@@ -14,10 +34,12 @@ function AppMenu(props){
           <Link to="/setting" className="nav-link"><i className="fas fa-user-cog"></i></Link>
         </li>
       </ul>
-      <div className="mt-5">
-        <button onClick={() =>chatToggle()}>채팅</button>
+      <div>
+        <button onClick={() =>chatToggle()} className="nav-link chaticon">
+          <i className="far fa-comment"></i>
+          <span className="alert-ballon">{notReadNum}</span>
+        </button>
       </div>
-
     </>
   );
 }

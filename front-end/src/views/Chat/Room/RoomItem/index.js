@@ -23,7 +23,6 @@ function RoomItem(props) {
   },[])
   useEffect(() => {
     if(mqttMessage[0]==="rerender" && mqttMessage[1] ==="Chat_Room"){
-      console.log("요기 실행??");
       selectLasChat();
     }
   },[mqttMessage])
@@ -40,7 +39,14 @@ function RoomItem(props) {
         </div>
       </div>
       <div className="d-flex">
-        <div></div>
+        <span >
+          {
+            participant.participant_not_read_chat_num ===0 ?
+            null
+            :
+            <div className={styles.not_read_chat_num}>{participant.participant_not_read_chat_num}</div>
+          }
+        </span>
         <div className={styles.update_date}>
           <div>{participant.participant_update_date}</div>
           <div>{participant.participant_update_time.substring(0,5)}</div>

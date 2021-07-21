@@ -57,7 +57,7 @@ function Staff(props) {
     <div>
       <div className="mb-4">
         <div className={styles.title}>직원</div>
-        <div><input type="test" placeholder="이름검색" onChange={searchStaff}></input></div>
+        <div><input type="test" placeholder="이름검색" onChange={searchStaff} className={styles.searchStaff}></input></div>
       </div>
 
       <div className={styles.staff_List}>

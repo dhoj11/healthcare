@@ -15,7 +15,11 @@ function Room(props) {
       throw error;
     }
   }
-
+  useEffect(() => {
+    if(mqttMessage[0]==="rerender" && mqttMessage[1] ==="Chat_Room"){
+      selectParticipantByStaffId();
+    }
+  },[mqttMessage])
   useEffect(() => {
     selectParticipantByStaffId();
   },[])

@@ -63,4 +63,16 @@ public class ParticipantService {
 	public List<Participant> getParticipantListByStaffId(String staff_id){
 		return participantDao.selectByStaffId(staff_id);
 	}
+	public void updateParticipantDate(int room_id) {
+		participantDao.updateParticipantDate(room_id);
+	}
+	public void updateParticipantNotReadNumPlus(Participant participant) {
+		participantDao.updateParticipantNotReadNumPlus(participant);
+	}
+	public void updateParticipantNotReadNumZero(Participant participant) {
+		participantDao.updateParticipantNotReadNumZero(participant);
+	}
+	public int getCountNotReadNum(String staff_id) {
+		return participantDao.selectCountNotreadNum(staff_id);
+	}
 }
