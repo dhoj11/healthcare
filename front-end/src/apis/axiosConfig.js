@@ -7,7 +7,7 @@ import axios from "axios";
 //   baseURL : "http://localhost:8080"
 // })
 const auth = axios.create({
-  baseURL : "http://kosa3.iptime.org:50004/api"
+  baseURL : "http://localhost:8080/api"
 })
 
 export function addAuthHeader(authToken) {

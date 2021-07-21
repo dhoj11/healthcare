@@ -24,6 +24,13 @@
   height: 76.8vh;
 }
 
+.testList thead tr th{
+  font-weight: 500;
+}
+
+.testList .testResultBody th{
+  font-weight: 400;
+}
 
 .thead{
   background: #F8FAFF;
