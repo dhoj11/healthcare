@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSetEditBlockActoin, createSetPatientAction, createSetTreatmentAction } from "../../../../redux/treatment-reducer";
 import { useEffect, useState } from "react";
 import { getNowTreatment, getTreatmentList } from "../../../../apis/treatment";
+import moment from "moment";
 
 /**
  * 현재 선택된 환자의 과거 진료내역 리스트를 왼쪽에 표시한다.
@@ -56,12 +57,16 @@ function Date(props){
           dispatch(createSetEditBlockActoin(true));  
 
       const prevTreatment = treatments.find(item => item.treatment_id === treatment);
+      if (prevTreatment && prevTreatment.staff_id != staff_id)
+        dispatch(createSetEditBlockActoin(true)); 
       if (prevTreatment && prevTreatment.treatment_saved === 0)
           dispatch(createSetEditBlockActoin(false));
       if (prevTreatment && prevTreatment.treatment_saved === 1)
           dispatch(createSetEditBlockActoin(true));  
+      if (prevTreatment && prevTreatment.treatment_date != moment().format('YYYY-MM-DD'))
+          dispatch(createSetEditBlockActoin(true)); 
 
-
+          
     }
   },[treatment]);
 

@@ -74,7 +74,6 @@ function Diagnose(props){
    * 한진료에서 중복진단을 막음
    * 진단은 자식 모달컴포넌트에서 이루어지며 이 함수가 props으로 전달됨
    */
-
   const addDiagnoses = (diagnose) => {
     if((!editBlock) && diagnose){ 
       let able = true;
@@ -107,9 +106,9 @@ function Diagnose(props){
        <table className={`table table-sm table-hover ${style.diagnoseTable}`}>
             <thead className={style.thead}>
               <tr>
-                <th scope="col" className="col-2">질병코드</th>
-                <th scope="col" className="col-5">질병명</th>
-                <th scope="col" className="col-1"></th>
+                <th scope="col" className={`col-2 ${style.tablethead}`}>질병코드</th>
+                <th scope="col" className={`col-5 ${style.tablethead}`}>질병명</th>
+                <th scope="col" className={`col-1 ${style.tablethead}`}></th>
               </tr>
             </thead>
             <tbody>

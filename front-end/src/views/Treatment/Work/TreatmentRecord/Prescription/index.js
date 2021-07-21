@@ -112,13 +112,13 @@ function Prescription(props){
       <table className={`table table-sm table-hover ${style.prescriptionTable}`}>
             <thead className={style.thead}>
               <tr>
-                <th scope="col" className="col-1">약코드</th>
-                <th scope="col" className="col-4">약명</th>
-                <th scope="col" className="col-2">구분</th>
-                <th scope="col" className="col-2">타입</th>
-                <th scope="col" className="col-2">처방일수</th>
-                <th scope="col" className="col-2">투약량</th>
-                <th scope="col" className="col-1"></th>
+                <th scope="col" className={`col-1 ${style.tablethead}`}>약코드</th>
+                <th scope="col" className={`col-4 ${style.tablethead}`}>약명</th>
+                <th scope="col" className={`col-2 ${style.tablethead}`}>구분</th>
+                <th scope="col" className={`col-2 ${style.tablethead}`}>타입</th>
+                <th scope="col" className={`col-2 ${style.tablethead}`}>처방일수</th>
+                <th scope="col" className={`col-2 ${style.tablethead}`}>투약량</th>
+                <th scope="col" className={`col-1 ${style.tablethead}`}></th>
               </tr>
             </thead>
             <tbody>
