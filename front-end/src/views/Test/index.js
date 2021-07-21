@@ -138,7 +138,7 @@ function Test(props){
   }
 
   useEffect(()=>{
-    IsSaved();
+    if(testList.test_list_id != "") IsSaved();
     if(testLists){
       let test = testLists.find((item)=>item.test_list_id == testList.test_list_id)
       if( test && test.test_list_saved == 1)
