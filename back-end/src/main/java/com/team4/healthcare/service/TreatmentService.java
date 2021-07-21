@@ -165,5 +165,15 @@ public class TreatmentService {
       return patient_name;
    }
    
+   public List<Patient> getSearchedPatients(String patient_name){
+	   List<Patient> searchedPatients = treatmentDao.getSearchedPatients(patient_name);
+	   return searchedPatients;
+   }
+   
+   public Patient getPatient(int patient_id) {
+	   Patient patient = treatmentDao.getPatient(patient_id);
+	   return patient;
+   }
+   
    
 }

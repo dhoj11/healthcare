@@ -9,6 +9,8 @@ import { createSetClientAction } from './redux/mqtt-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMqttMessage } from './apis/message';
 import { createMasonryCellPositioner } from 'react-virtualized';
+import { Toast } from 'react-bootstrap';
+import Chat from './views/Chat';
 import ReactNotifications from 'react-notifications-component'
 function App() {
   const dispatch = useDispatch();
@@ -17,12 +19,10 @@ function App() {
     setChatShow(!chatShow);
   }
   useEffect(() => {
-    const client = new Paho.Client("localhost", 61614 , "client-" + new Date().getTime());
+    const client = new Paho.Client("localhost",61614 , "client-" + new Date().getTime());
     dispatch(createSetClientAction(client));
     client.connect({onSuccess: () => {
-      console.log("연결");
       client.subscribe("/");
-
       if(sessionStorage.getItem("staff_id")){
         client.unsubscribe("/");
         client.subscribe("/"+sessionStorage.getItem("hospital_code"));
@@ -46,6 +46,7 @@ function App() {
             <AppMenu chatToggle={chatToggle}/>
           </div>
           <div className="content">
+            <Chat chatShow={chatShow} chatToggle={chatToggle}></Chat>
             <AppRoute className="approute"/>
           </div>
         </div>

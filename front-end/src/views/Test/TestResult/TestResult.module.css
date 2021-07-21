@@ -65,3 +65,43 @@
 .testResultTable tbody tr > td {
   border: none !important;
 }
+
+.xlsbutton{
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.testid{
+  margin:11px;
+  font-weight: 600;
+}
+
+.exportxls{
+  background-color: #427203;
+  border-radius: 20px;
+  padding: 6px 20px;
+  color: #fff;
+  font-weight: 500;
+  margin:11px;
+  border: 0px;
+}
+
+.exportxls:hover{
+  background-color: #57920a;
+}
+
+
+.testinfo{
+  display: none;
+}
+
+.no{
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.patientinfo{
+  font-size: 28px;
+  font-weight: 700;
+}
