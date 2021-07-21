@@ -56,7 +56,8 @@ function Login(props){
               //     throw error;
               //   }
               // })();
-              history.push("/dashboard");
+              //history.push("/dashboard");
+              window.location.replace("/dashBoard")
             })         
             .catch(() => {
               alert("로그인 실패");

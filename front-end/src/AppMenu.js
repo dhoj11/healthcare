@@ -30,13 +30,13 @@ function AppMenu(props){
     <>
       <ul className="nav flex-column" >
         <li className="nav-item mt-5">
-          <Link to="/" className="nav-link mt-2"><i className="fas fa-home"></i></Link>
-          <Link to="/dashBoard" className="nav-link"><i className="fas fa-desktop"></i></Link>
-          <Link to="/appointment" className="nav-link"><i className="far fa-calendar"></i></Link>
-          <Link to="/administration" className="nav-link"><i className="far fa-file-alt"></i></Link>
-          <Link to="/treatment" className="nav-link"><i className="fas fa-stethoscope"></i></Link>
-          <Link to="/test" className="nav-link"><i className="fas fa-vial"></i></Link>
-          <Link to="/setting" className="nav-link"><i className="fas fa-user-cog"></i></Link>
+          <Link to="/" className={location === "/" ? `selected nav-link mt-2` : `unselected nav-link mt-2`}><i className="fas fa-home"></i></Link>
+          <Link to="/dashBoard" className={location === "/dashBoard" ? `selected nav-link` : `unselected nav-link`}><i className="fas fa-desktop"></i></Link>
+          <Link to="/appointment" className={location === "/appointment" ? `selected nav-link` : `unselected nav-link`}><i className="far fa-calendar"></i></Link>
+          <Link to="/administration" className={location === "/administration" ? `selected nav-link` : `unselected nav-link`}><i className="far fa-file-alt"></i></Link>
+          <Link to="/treatment" className={location === "/treatment" ? `selected nav-link` : `unselected nav-link`}><i className="fas fa-stethoscope"></i></Link>
+          <Link to="/test" className={location === "/test" ? `selected nav-link` : `unselected nav-link`}><i className="fas fa-vial"></i></Link>
+          <Link to="/setting" className={location === "/setting" ? `selected nav-link` : `unselected nav-link`}><i className="fas fa-user-cog"></i></Link>
         </li>
       </ul>
       <div>
