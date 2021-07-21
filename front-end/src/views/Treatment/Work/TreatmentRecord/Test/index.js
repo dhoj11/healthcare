@@ -102,9 +102,9 @@ function Test(props){
         <table className={`table table-sm table-hover ${style.testTable}`}>
               <thead className={style.thead}>
                 <tr>
-                  <th scope="col" className="col-4">검사코드</th>
-                  <th scope="col" className="col-6">검사명</th>
-                  <th scope="col" className="col-1"></th>
+                  <th scope="col" className={`col-4 ${style.tablethead}`}>검사코드</th>
+                  <th scope="col" className={`col-5 ${style.tablethead}`}>검사명</th>
+                  <th scope="col" className={`col-1 ${style.tablethead}`}></th>
                 </tr>
               </thead>
               <tbody>

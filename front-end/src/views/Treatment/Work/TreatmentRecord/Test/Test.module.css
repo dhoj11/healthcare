@@ -42,6 +42,10 @@
 	top: 0;
 }
 
+.tablethead{
+  font-weight: 500;
+}
+
 .add{
   padding-top: 10px;
   display: flex;
