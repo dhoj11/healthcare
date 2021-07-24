@@ -11,6 +11,10 @@
   width: 50%;
 }
 
+.title {
+  font: 600;
+}
+
 .appointment_border {
   width: 100px;
   height: 40px;
