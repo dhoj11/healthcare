@@ -81,7 +81,7 @@ function Login(props){
         <span className={style.title}>WELCOME</span>
         {sessionStorage.getItem("staff_id") ? (<>
         <div className={style.idWrapper}>
-          <label>{sessionStorage.getItem("staff_id")}님! 환영합니다.</label>
+          <label className={style.login_letter}>{sessionStorage.getItem("staff_id")}님! <br/>오늘도 좋은 하루 보내세요.</label>
         </div>
         <div className={style.loginButtonArea}>
           <Link to="/dashBoard"><button className={style.appoint_btn}>

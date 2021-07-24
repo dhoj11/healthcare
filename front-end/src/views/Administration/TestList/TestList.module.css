@@ -8,6 +8,10 @@
   display: flex;
 }
 
+.title {
+  font-weight: 500;
+}
+
 .test_patient_list {
   width: 35rem;
   height: 100%;
@@ -27,6 +31,7 @@
 
 .test_code_list_title {
   width:80px;
+  font-weight: 500;
 }
 
 .test_patient_name {

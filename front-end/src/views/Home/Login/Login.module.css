@@ -55,6 +55,12 @@
   height: 80%;
 }
 
+.login_letter {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
 .loginButtonArea{
   width: 60%;
   text-align: center;
