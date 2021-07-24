@@ -6,6 +6,11 @@
   width: 37rem;
   height: 250px;
 }
+
+.title {
+  font-weight: 500;
+}
+
 .search_first_content {
   display: flex;
 }

@@ -47,6 +47,7 @@ function Appointment(props) {
     try {
         const response = await getAppointmentList();
         setAppointmentList(response.data);
+        setSearchedList(response.data);
         setState("전체");
         setPatientName("");
       } catch (error) {
@@ -81,7 +82,7 @@ function Appointment(props) {
     <>
       <div className={styles.appointment}>
         <div className="mb-1 ml-2 d-flex">
-          <img className="mr-2" src="/resources/svg/person-check.svg"></img><span className="mr-2">예약</span>
+          <img className="mr-2" src="/resources/svg/person-check.svg"></img><span className={`${styles.title} mr-2`}>예약</span>
           <div className={state === "전체" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={getAllList} >전체 </div><div>|</div>
           <div className={state === "예약" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("예약")}>예약</div><div>|</div>
           <div className={state === "내원" ? `${styles.appointment_state_selected}` : `${styles.appointment_state}`} onClick={()=> listWithState("내원")}>내원</div><div>|</div>
