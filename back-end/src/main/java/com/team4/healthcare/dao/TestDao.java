@@ -36,6 +36,7 @@ public interface TestDao{
     public int getReceptionIdByTestListId(int test_list_id);
     public List<String> getTestStateList(int test_list_id);
     public void updateTestReceptionState(@Param("reception_id") int reception_id, @Param("state") String state);
+    public void updateTestAppointmentState(@Param("reception_id") int reception_id, @Param("state") String state);
     public void updateTestResult(TestResult testResults);
     public void updateTestResultSave(int test_list_id);
 

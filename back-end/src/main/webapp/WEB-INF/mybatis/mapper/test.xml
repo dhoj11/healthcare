@@ -98,6 +98,12 @@
     	where reception_id = #{reception_id}
     </update>
     
+    <update id ="updateTestAppointmentState">
+    	update appointment, reception
+    	set appointment_state = #{state}
+    	where appointment.appointment_id = reception.appointment_id and reception_id = #{reception_id}
+    </update>
+    
     <update id="updateTestResultSave" parameterType="int">
     	update tests_list
     	set test_list_saved = 1

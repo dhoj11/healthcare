@@ -73,6 +73,11 @@ function State(props){
             topic : "/"+ hospital_code,
             content : "alert/Administration/test/" + patient.data.patient_name + " 환자 검사 완료"
           })
+
+          await sendMqttMessage({
+            topic : "/"+ hospital_code,
+            content : "rerender/Administration_Appointment"
+          })
        }
         
         
