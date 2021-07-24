@@ -47,7 +47,7 @@ function Patients(props){
             ,patient_state : isComplete.data
           }
         })
-        setTimeout(() => setPateints(newPatients), 1000);
+        setTimeout(() => setPateints(newPatients), 500);
         
       }
     } catch (error){

@@ -4,7 +4,7 @@ import { getParticipantListByStaffId } from "../../../apis/chat";
 import RoomItem from "./RoomItem";
 import styles from "./index.module.css";
 function Room(props) {
-  const {setRoomClick,setClickRoomId,mqttMessage} = props;
+  const {setRoomClick,setClickRoomId,mqttMessage,roomClick} = props;
   const staff_id = useSelector(state=>state.authReducer.staff_id);  
   const [participantList,setParticipantList] = useState([]);
   const selectParticipantByStaffId = async() => {
@@ -22,15 +22,19 @@ function Room(props) {
   },[mqttMessage])
   useEffect(() => {
     selectParticipantByStaffId();
-  },[])
+  },[roomClick])
  
   return(
     <div>
-      <div className={styles.title}>채팅</div>
+      <div className="d-flex justify-content-between">
+        <div className={styles.title}>채팅</div>
+        <div className={styles.icon} ><i className="fas fa-comment-medical"></i></div>
+      </div>
+      
       {
         participantList.map((participant) => {
           return(
-            <RoomItem participant={participant} setRoomClick={setRoomClick} mqttMessage={mqttMessage} setClickRoomId={setClickRoomId} key={participant.participant_id}></RoomItem>
+            <RoomItem participant={participant} setRoomClick={setRoomClick} mqttMessage={mqttMessage} setClickRoomId={setClickRoomId} roomClick={roomClick} key={participant.participant_id}></RoomItem>
           )
         })
       }

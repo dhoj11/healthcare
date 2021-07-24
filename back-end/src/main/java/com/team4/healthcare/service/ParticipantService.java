@@ -75,4 +75,7 @@ public class ParticipantService {
 	public int getCountNotReadNum(String staff_id) {
 		return participantDao.selectCountNotreadNum(staff_id);
 	}
+	public List<String> getOtherStaffId(int room_id,String staff_id){
+		return participantDao.selectOtherStaffId(room_id, staff_id);
+	}
 }

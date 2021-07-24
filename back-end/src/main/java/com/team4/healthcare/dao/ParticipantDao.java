@@ -18,4 +18,5 @@ public interface ParticipantDao {
 	public void updateParticipantNotReadNumPlus(Participant participant);
 	public void updateParticipantNotReadNumZero(Participant participant);
 	public int selectCountNotreadNum(String staff_id);
+	public List<String> selectOtherStaffId(@Param("room_id") int room_id, @Param("staff_id") String staff_id);
 }

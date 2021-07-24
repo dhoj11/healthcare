@@ -7,6 +7,7 @@ import "./index.css";
 import ChatRoom from "./ChatRoom";
 import { useEffect } from "react";
 import Paho from "paho-mqtt";
+import { useSelector } from "react-redux";
 
 /*
   Title : Chat
@@ -16,12 +17,12 @@ import Paho from "paho-mqtt";
   Author : 조운호
 */
 function Chat(props) {
-  const {chatShow,chatToggle} =props;
+  const {chatShow,chatToggle,setMessage} =props;
   const [tab, setTab] =useState("staff");
   const [roomClick,setRoomClick] = useState(false);
   const [clickRoomId, setClickRoomId] = useState(null);
   const [mqttMessage, setMqttMessage] = useState("");
-
+  const staff_id = useSelector(state => state.authReducer.staff_id);
   const handleTabStaff = () => {
     setTab("staff")
   }
@@ -30,7 +31,9 @@ function Chat(props) {
   }
   let client = useRef(null);
   const MqttBroker = () => {
-    client = new Paho.Client("kosa3.iptime.org",50014, "chatclient-"+new Date().getTime());
+    
+    // client = new Paho.Client("kosa3.iptime.org",50014, "chatclient-"+new Date().getTime());
+    client = new Paho.Client("localhost",61614 , "chatclient-" + new Date().getTime());
     client.connect({onSuccess: () => {
       client.unsubscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("staff_id"));
       client.subscribe("/"+sessionStorage.getItem("hospital_code")+"/"+sessionStorage.getItem("staff_id"));
@@ -38,7 +41,6 @@ function Chat(props) {
     });
     client.onMessageArrived = (msg) => {
       let message = JSON.parse(msg.payloadString);
-      console.log("메세지 도착");
       message = message.content.split('/');
       setMqttMessage(message);
     };
@@ -52,8 +54,12 @@ function Chat(props) {
      return () => {
       client.disconnect();
      }
-  },[chatShow])
+  },[chatShow,staff_id])
 
+  useEffect(() => {
+    if(!roomClick)
+    setMessage(mqttMessage);
+  },[mqttMessage])
   return(
     <Toast show={chatShow} onClose={chatToggle}  className={styles.chat} > 
     {
@@ -71,13 +77,13 @@ function Chat(props) {
             tab ==="staff" ?
             <Staff setRoomClick={setRoomClick} setClickRoomId={setClickRoomId}></Staff>
             :
-            <Room setRoomClick={setRoomClick} setClickRoomId={setClickRoomId} mqttMessage={mqttMessage}></Room>
+            <Room setRoomClick={setRoomClick} setClickRoomId={setClickRoomId} mqttMessage={mqttMessage} roomClick={roomClick}></Room>
           }
         </div>
       </Toast.Body>
       </>
     :
-      <ChatRoom setRoomClick={setRoomClick} clickRoomId={clickRoomId} mqttMessage={mqttMessage}></ChatRoom>
+      <ChatRoom setRoomClick={setRoomClick} clickRoomId={clickRoomId} mqttMessage={mqttMessage} setMessage={setMessage}></ChatRoom>
     }
     
   </Toast>

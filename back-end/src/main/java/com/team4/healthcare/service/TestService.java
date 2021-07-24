@@ -69,8 +69,11 @@ public class TestService {
 				break;
 			}
 			// state_list가 예약이거나 완료이면 -> 완료
-			testDao.updateTestReceptionState(reception_id, "완료");	
+			testDao.updateTestReceptionState(reception_id, "완료");
 		}
+		
+		if(state.equals("완료"))
+			testDao.updateTestAppointmentState(reception_id, "완료");
 	}
 	
 	public void updateTestResult(List<TestResult> testResults) {
