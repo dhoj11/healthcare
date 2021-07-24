@@ -124,7 +124,6 @@ function TestList(props) {
     try{
       const response = await getTestReceptionListByState(testReceptionState);
       setTestPatientList(response.data);
-      setSearchedList(response.data);
       setSearchedPatientName("");
       setState(testReceptionState);
     }catch(error) {
@@ -169,7 +168,7 @@ function TestList(props) {
       <div className={styles.test_patient_list}>
           {/* <div className="mb-2 ml-2 d-flex"> */}
           <div className={styles.test_patient_list_title}>
-            <img className="mr-2" src="/resources/svg/clipboard-data.svg"></img><span className="mr-1">검사</span>
+            <img className="mr-2" src="/resources/svg/clipboard-data.svg"></img><span className={`${styles.title} mr-1`}>검사</span>
             <div className={state === "전체" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={getAllList} >전체 </div><div>|</div>
             <div className={state === "예약" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("예약")}>예약</div><div>|</div>
             <div className={state === "대기" ? `${styles.test_state_selected}` : `${styles.test_state}`} onClick={()=> listWithState("대기")}>대기</div><div>|</div>

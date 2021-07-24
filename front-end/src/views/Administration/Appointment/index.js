@@ -47,6 +47,7 @@ function Appointment(props) {
     try {
         const response = await getAppointmentList();
         setAppointmentList(response.data);
+        setSearchedList(response.data);
         setState("전체");
         setPatientName("");
       } catch (error) {

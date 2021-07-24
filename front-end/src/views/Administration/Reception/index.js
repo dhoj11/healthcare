@@ -63,6 +63,7 @@ function Reception(props) {
     try {
       const response = await getReceptionList("진료");
       setReceptionList(response.data);
+      setSearchedList(response.data);
       setState("전체");
       setPatientName("");
     } catch (error) {
@@ -103,7 +104,7 @@ return (
   <>
   <div className={styles.reception}>
   <div className="mb-1 ml-2 d-flex">
-    <img className="mr-2" src="/resources/svg/clipboard-check.svg"></img> <span className="mr-2">접수</span>
+    <img className="mr-2" src="/resources/svg/clipboard-check.svg"></img> <span className={`${styles.title} mr-2`}>접수</span>
     <div className={state === "전체" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={getAllList} >전체 </div><div>|</div>
     <div className={state === "대기" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("대기")}>대기</div><div>|</div>
     <div className={state === "진료" ? `${styles.reception_state_selected}` : `${styles.reception_state}`} onClick={()=> listWithState("진료")}>진료</div><div>|</div>
