@@ -24,6 +24,7 @@ function Test(props){
   const[testLists, setTestLists] = useState();
   const[isSaved, setIsSaved] = useState(false);
   const[buttonAllow, setButtonAllow] = useState(false);
+  const[searched, setSerched] = useState(false);
 
   const client = useSelector((state) => state.mqttReducer.client);
   const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
@@ -95,6 +96,7 @@ function Test(props){
         setTestList({test_list_id:arg, reception_id:0}); 
         setPatient(response.data);
         setButtonAllow(false);
+        setSerched(true);
       }
   }catch(error){
     console.log(error);
@@ -114,6 +116,7 @@ function Test(props){
       setPatient(response.data);
       setTestList({test_list_id : arg.test_list_id, patient_id: arg.patient_id, reception_id : arg.reception_id});
       setButtonAllow(true);
+      setSerched(false);
     }
   }catch(error){
     console.log(error);
@@ -129,6 +132,7 @@ function Test(props){
       }
     }
     setTestLists(newTestLists);
+    searched(false);
   },[testLists]);
 
 
@@ -169,11 +173,11 @@ function Test(props){
           </div>
         </div>
         <div className={style.testList}>
-          <TestList testLists={testLists} changeTestList={changeTestList}/>
+          <TestList testLists={testLists} changeTestList={changeTestList} />
         </div>
       </div>
       <div className={style.testResult}>
-        <TestResult testList={testList} isSaved={isSaved} patient={patient}/>
+        <TestResult testList={testList} isSaved={isSaved} patient={patient} searched={searched}/>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import style from "./Diagnose.module.css";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetCurDiagnosesActoin } from "../../../../../redux/treatment-reducer";
@@ -100,7 +100,7 @@ function Diagnose(props){
   return(
     <div className={style.diagnose}>
       <div className={style.title} onClick={openAddModal}>
-        진단
+      <FontAwesomeIcon icon={faSearch} className={style.searchIcon}/>진단
       </div>
       <div className={style.diagnoseList}>
        <table className={`table table-sm table-hover ${style.diagnoseTable}`}>

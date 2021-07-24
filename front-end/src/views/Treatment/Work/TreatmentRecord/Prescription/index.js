@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Prescription.module.css";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus,faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -106,7 +106,7 @@ function Prescription(props){
   return(
     <div className={style.prescription}>
       <div className={style.title} onClick={openAddModal}>
-        처방
+      <FontAwesomeIcon icon={faSearch} className={style.searchIcon}/>처방
       </div>
       <div className={style.prescriptionList}>
       <table className={`table table-sm table-hover ${style.prescriptionTable}`}>

@@ -12,6 +12,9 @@ function TestResult(props){
   const[testList, setTestList] = useState();         // 선택/검색한 검사번호
   const[testResults, setTestResults] = useState([]); // 왼쪽 테이블에서 하나의 검사를 선택했을 때 오른쪽에 표시되는 검사 목록
   const[isSaved, setIsSaved] = useState();
+  //const[searched, setSearched] = useState(false);
+
+  let searched = props.searched
   let patient = props.patient;
   let prevItem;  
 
@@ -40,6 +43,7 @@ function TestResult(props){
   useEffect(()=>{
     getResults();
     setIsSaved(props.isSaved);
+    //setSearched(props.searched);
   },[testList]);
 
   /**
@@ -149,7 +153,6 @@ function TestResult(props){
                                            onChange={(event) => handleChange(event, index)}>
                                           </input>
                                 </td>
-                          
                             </tr>
                             );
                     }
@@ -159,7 +162,7 @@ function TestResult(props){
             </table>
             </div>
           { testList && testList.test_list_id !="" ? 
-            !isSaved && <div className={style.saveButton} onClick={saveResult}>저장</div> 
+            !isSaved && searched && <div className={style.saveButton} onClick={saveResult}>저장</div> 
             : null
           }
     </div>
