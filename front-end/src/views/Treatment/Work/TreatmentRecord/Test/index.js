@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Test.module.css";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,7 +96,7 @@ function Test(props){
   return(
     <div className={style.test}>
       <div className={style.title} onClick={openAddModal}>
-        검사
+      <FontAwesomeIcon icon={faSearch} className={style.searchIcon}/>검사
       </div>
       <div className={style.testList}>
         <table className={`table table-sm table-hover ${style.testTable}`}>
