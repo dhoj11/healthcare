@@ -127,7 +127,6 @@ function Test(props){
       }
     }
     setTestLists(newTestLists);
-    searched(false);
   },[testLists]);
 
 
