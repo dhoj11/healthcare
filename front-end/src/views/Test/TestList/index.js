@@ -41,7 +41,6 @@ function TestList(props){
   },[]);
   
   useEffect(()=>{
-    // testList - // {test_list_id: "", patient_id: ""} + reception_id 추가해주자..
     props.changeTestList(testList); 
   },[testList])
 

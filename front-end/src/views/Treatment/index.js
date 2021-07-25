@@ -13,20 +13,25 @@ import 'animate.css/animate.min.css';
 import Search from "./Search";
 
 /**
- * 환자, 진료 선택 후 작업영역 탭으로 전환
+ * 진료 최상위 컴포넌트
  */
-
 function Treatment(props){
-
-  const [work, setWork] = useState({});
-  const dispatch = useDispatch();
 
   const client = useSelector((state) => state.mqttReducer.client);
   const staff_id = useSelector((state) => state.authReducer.staff_id);
 
+  const [work, setWork] = useState({});
   const [mqttRerenderMessage, SetMqttRerenderMessage] = useState("");
   const [mqttAlertMessage, SetmqttAlertMessage] = useState("");
 
+  const dispatch = useDispatch();
+
+  /**
+   * 진료 Mqtt 브로커
+   * 
+   * 메세지를 수신한후 rerender, alert 메세지를 구분하여 상태로 저장
+   * 리렌더 대상 컴포넌트에 프롭으로 전달 
+   */
   const MqttBroker = () => {
     client.onMessageArrived = (msg) => {
       let message = JSON.parse(msg.payloadString);
@@ -46,6 +51,12 @@ function Treatment(props){
     if(client!=="") MqttBroker();
   },[client])
 
+
+  /**
+   * Mqtt alert 메세지
+   * 
+   * 수신한 mqtt 메세지가 alert일 경우 내용을 표시함
+   */
   useEffect(()=>{
       if(mqttAlertMessage !=""){
         store.addNotification({
@@ -69,11 +80,11 @@ function Treatment(props){
 
   const changeWork = useCallback((work) => {
     setWork(work);
-  }, []);
+  },[]);
 
   useEffect(()=> {
     dispatch(createSetWorkActoin(work));
-  }, [work])
+  },[work])
 
   useEffect(()=>{
     dispatch(createSetTreatmentAction(""));

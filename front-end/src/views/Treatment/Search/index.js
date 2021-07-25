@@ -7,6 +7,10 @@ import { getSearchPatients } from "../../../apis/treatment";
 import { useDispatch, useSelector } from "react-redux";
 import { createSetPatientAction, createSetTreatmentAction } from "../../../redux/treatment-reducer";
 
+
+/**
+ * 환자검색
+ */
 function Search(props){
 
   const patient = useSelector(state => state.treatmentReducer.patient);
@@ -37,7 +41,6 @@ function Search(props){
     dispatch(createSetTreatmentAction(""));
   },[patient])
 
-
   const getOptionLabel = option => `${option.patient_name}: ${option.patient_birth}`;
   const getOptionValue = option => option.patient_id;
 
@@ -55,7 +58,6 @@ function Search(props){
     dispatch(createSetPatientAction(pateint.patient_id));
     setSearched("");
   }
-
 
   return(
     <div className={style.searchbox}>

@@ -9,7 +9,6 @@ import { getSearchTests } from "../../../../../../apis/treatment";
 /**
  * 검사를 검색하고 검사를 추가한다.
  */
-
 function TestAddModal(props){
 
   const {isOpen, close} = props;

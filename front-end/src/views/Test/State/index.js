@@ -8,7 +8,9 @@ import { changeTestListState, getPateint } from "../../../apis/test";
 import { useSelector } from "react-redux";
 import { sendMqttMessage } from "../../../apis/message";
 
-
+/**
+ * 검사의 진행상태를 변경
+ */
 function State(props){
 
   const [barcodeModalOpen, setBarcodeModalOpen] = useState(false);

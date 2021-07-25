@@ -6,9 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getTreatmentTestResults } from "../../../../../apis/treatment";
 
 /**
- * 선택한 진료에서 의뢰한 검사의 결과를 표시한다.
+ * 선택한 진료에서 의뢰한 검사의 결과를 표시.
  */
-
 function Blood(props){
 
   let prevItem; // 한 묶음코드 표시 위함 index 역할
@@ -18,6 +17,9 @@ function Blood(props){
 
   const [testResults, setTestResults] = useState([]);
 
+  /**
+   * 검사결과요청
+   */
   const getTestResult = useCallback( async () => {
     try{
       if(treatment!==""){
