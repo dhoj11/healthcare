@@ -162,7 +162,7 @@ function TestResult(props){
             </table>
             </div>
           { testList && testList.test_list_id !="" ? 
-            !isSaved && searched && <div className={style.saveButton} onClick={saveResult}>저장</div> 
+            !isSaved && searched == true && <div className={style.saveButton} onClick={saveResult}>저장</div> 
             : null
           }
     </div>
