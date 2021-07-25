@@ -4,6 +4,9 @@ import { useState } from "react";
 import style from "./Search.module.css"
 import { isValidTestListId } from "../../../apis/test";
 
+/**
+ * 바코드로 검사를 검색
+ */
 function Search(props){
 
   const pattern = /\s/g;

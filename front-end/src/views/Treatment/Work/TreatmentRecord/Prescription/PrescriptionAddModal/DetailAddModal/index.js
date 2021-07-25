@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
  * 처방손자컴포넌트
  * 선택된 약의 복용일수, 1회투약양을 지정하여 처방한다.
  */
-
 function DetailAddModal(props){
 
   const {isOpen, close} = props;

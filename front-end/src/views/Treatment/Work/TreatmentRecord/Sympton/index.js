@@ -5,9 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getTreatmentSympton } from "../../../../../apis/treatment";
 
 /**
- * 선택된 진료의 내원사유(예약, 접수시 작성)를 불러온다..
+ * 선택된 진료의 내원사유(예약, 접수시 작성)를 불러온다.
  */
-
 function Sympton(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);

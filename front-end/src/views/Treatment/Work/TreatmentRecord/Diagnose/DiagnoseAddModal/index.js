@@ -9,7 +9,6 @@ import { getSearchDiseases } from "../../../../../../apis/treatment";
 /**
  * 질병을 검색하고 진단을 추가한다.
  */
-
 function DiagnoseAddModal(props){
 
   const {isOpen, close} = props;

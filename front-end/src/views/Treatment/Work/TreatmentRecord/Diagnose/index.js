@@ -12,7 +12,6 @@ import { getTreatmentDiagnoses } from "../../../../../apis/treatment";
  * 현재선택된 진료의 과거 진단기록을 표시한다.
  * 자식컴포넌트에서 진단을 추가한다.
  */
-
 function Diagnose(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
@@ -25,6 +24,9 @@ function Diagnose(props){
 
   const dispatch = useDispatch();
 
+  /**
+   * 과거 진단 기록을 요청
+   */
   const getDiagnose = useCallback( async () => {
     try{
       const response = await getTreatmentDiagnoses(treatment);
@@ -72,7 +74,7 @@ function Diagnose(props){
    * 질병을 추가하는 함수
    * 
    * 한진료에서 중복진단을 막음
-   * 진단은 자식 모달컴포넌트에서 이루어지며 이 함수가 props으로 전달됨
+   * 진단은 자식 모달컴포넌트에서 이루어지며 상태변경함수가 props으로 전달됨
    */
   const addDiagnoses = (diagnose) => {
     if((!editBlock) && diagnose){ 
@@ -89,13 +91,15 @@ function Diagnose(props){
     }
   }
 
+  /**
+   * 질병을 삭제
+   */
   const deleteDiagnose = useCallback((code) => {
     if(!editBlock) {  
       const newDiagnoses = diagnoses.filter(diagnose => diagnose.disease_code !== code);
       setDiagnoses(newDiagnoses);
     }
   },[diagnoses]);
-
 
   return(
     <div className={style.diagnose}>

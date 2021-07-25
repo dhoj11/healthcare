@@ -10,7 +10,6 @@ import { getSearchMedicine } from "../../../../../../apis/treatment";
 /**
  * 약을 검색하고 처방을 추가한다.
  */
-
 function PrescriptionAddModal(props){
 
   const {isOpen, close} = props;
@@ -54,7 +53,6 @@ function PrescriptionAddModal(props){
    * 즉 할아버지 컴포넌트의 처방(배열)상태를 변경하는 함수가
    * 손자컴포넌트에게 전달된다.
    */
-  
   const addPrescriptions = (item) => {
     setMedicine({medicine_code: item.medicine_code, 
                  medicine_name: item.medicine_name, 

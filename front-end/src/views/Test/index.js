@@ -11,7 +11,6 @@ import { getPateint, getPateintByTestListId, getTestList, getTestSaved } from ".
 import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
-import { sendMqttMessage } from "../../apis/message";
 
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
@@ -75,7 +74,6 @@ function Test(props){
   * setPatient  - 검사리스트에서 검사번호로 환자 아이디를 찾고, 환자리스트에서 환자 정보를 가져와 환자상태 업데이트
   * setTestList - 검사번호로 검사상태변수 업데이트
   */
- 
   const getList = async () => {
     try{
       const response = await getTestList();
@@ -105,12 +103,9 @@ function Test(props){
 
   /**
    * 환자리스트에서 환자선택시, 환자번호와, 검사번호를 전달받음
-   * 
-   * arg : {test_list_id: "", patient_id: ""} 
    */
   const changeTestList = useCallback( async (arg) => {
     try{
-      //console.log(arg)
     if(arg && arg !== ""){
       const response = await getPateint(arg.patient_id);
       setPatient(response.data);

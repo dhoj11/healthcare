@@ -8,7 +8,6 @@ import { getTreatmentRecord } from "../../../../../apis/treatment";
 /**
  * 선택된 진료의 과거진료기록(의무기록)을 가져온다.
  */
-
 function Record(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);

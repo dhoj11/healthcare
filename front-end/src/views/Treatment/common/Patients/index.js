@@ -8,12 +8,10 @@ import { createSetEditBlockActoin, createSetListStateActoin, createSetPatientAct
 import { getPateintList, getPatient, isTreatmentComplete } from "../../../../apis/treatment";
 
 /**
- * 오늘 진료대기/완료된 환자를 오른쪽 리스트에 표시한다.
+ * 로그인된 의사의 당일 진료 환자 목록 표시
  * 
- * 접수테이블에 튜플이 추가 될 때 진료테이블에 튜플이 추가된다. 
- * 따라서 내원한 환자만 표시됨
+ * 접수테이블에 튜플이 추가 될 때 진료테이블에 튜플이 추가됨
  */
-
 function Patients(props){
 
   const staff_id = useSelector((state) => state.authReducer.staff_id);
@@ -33,11 +31,18 @@ function Patients(props){
     }
   },[mqttRerenderMessage])
 
+
+  /**
+   * 내원 환자의 목록을 불러옴
+   * 
+   * 1. 로그인된 정보(staff_id)로 내원 환자의 정보를 요청
+   * 2. 진료 진행상태를 요청하여 새로운 객체에 업데이트 
+   * 3. 환자리스트 상태 업데이트 
+   */
   const getPateints = useCallback(async() => {
     try{
       const response = await getPateintList(staff_id);
       let newPatients = response.data;
-
       if(newPatients){
         let isComplete;
         await newPatients.forEach( async (item, index) => {
@@ -46,15 +51,13 @@ function Patients(props){
             ...newPatients[index]
             ,patient_state : isComplete.data
           }
-        })
+        }) 
         setTimeout(() => setPateints(newPatients), 500);
-        
       }
     } catch (error){
       console.log(error);
     }
   },[])
-
 
   useLayoutEffect(() => {
     getPateints();
@@ -69,6 +72,12 @@ function Patients(props){
     setListState(state);
   },[]);
 
+  /**
+   * 환자 프로필 표시
+   * 
+   * 1. 선택된 환자에 따라 환자 번호로 환자 정보를 요청
+   * 2. 환자 상태 업데이트 
+   */
   const changePatient = async() => {
     if(patient!=""){
       try{

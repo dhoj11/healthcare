@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function StaffModifyModal(props){
 
-  const {isOpen, close, staff} = props;
+  const {isOpen, close, staff, handleRemoveStaff} = props;
 
   const[newAccount, setNewAccount] = useState();
 
@@ -51,6 +51,7 @@ function StaffModifyModal(props){
   const handleRemove = async() => {
     try{
       await deleteAccount(newAccount.staff_id);
+      handleRemoveStaff(newAccount.staff_id);
     }catch(error){
       
     }

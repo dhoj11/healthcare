@@ -50,6 +50,12 @@ function Account(props){
     setStaffs(newStaffs);                                
   } 
 
+  const handleRemoveStaff = (staff_id) => {
+    const newStaffs = staffs.filter((item) => item.staff_id != staff_id);
+    setStaffs(newStaffs);
+    setStaff();
+  }
+
   /**
    * 직원ID를 통해 직원정보상태를 초기화한다.
    */
@@ -72,7 +78,7 @@ function Account(props){
       <div className={style.body}>
         <div className={style.top}>
           <span className={style.title}>직원관리</span>
-          <StaffAdd staff={staff} handleAddStaff={handleAddStaff}/>
+          <StaffAdd staff={staff} handleAddStaff={handleAddStaff} handleRemoveStaff={handleRemoveStaff}/>
         </div>
         <div className={style.content}>
           <div className={style.left}>
