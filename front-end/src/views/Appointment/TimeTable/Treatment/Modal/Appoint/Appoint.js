@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactReduxContext } from "react-redux";
 import { useSelector } from "react-redux";
 import { AutoSizer, List } from "react-virtualized";
 import { createTretmentAppointment, getPatientList, getPatientListByName } from "../../../../../../apis/appointment";
@@ -46,7 +47,14 @@ function Appoint(props) {
       3. 예약 모달창 close
   */
   const makeAppointment = () => {
-    console.log(selectAppointInfo);
+    if(appointInfo.selectPatientId === ""){
+      alert("환자를 선택해주세요");
+      return ;
+    }
+    if(appointInfo.treatmentContent ===""){
+      alert("진료내용을 입력해주세요");
+      return ;
+    }
     const appointment = {
       appointment_date :  moment(startDate).format("YYYY-MM-DD"),
       appointment_time : selectAppointInfo.appointment_time,
@@ -140,6 +148,7 @@ function Appoint(props) {
   }
   return(
     <>
+    <div className={styles.treatment_appointment_title}>진료 예약</div>
     <div className="modal_body">
       
               <div className={`d-flex justify-content-between ${styles.search}`}>

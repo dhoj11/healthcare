@@ -22,12 +22,16 @@ function Chat(props) {
   const [roomClick,setRoomClick] = useState(false);
   const [clickRoomId, setClickRoomId] = useState(null);
   const [mqttMessage, setMqttMessage] = useState("");
+  const [opacity,setOpacity] = useState(false);
   const staff_id = useSelector(state => state.authReducer.staff_id);
   const handleTabStaff = () => {
     setTab("staff")
   }
   const handleTabChat = () => {
     setTab("chat")
+  }
+  const handleOpacity = () => {
+    setOpacity(!opacity);
   }
   let client = useRef(null);
   const MqttBroker = () => {
@@ -61,14 +65,15 @@ function Chat(props) {
     setMessage(mqttMessage);
   },[mqttMessage])
   return(
-    <Toast show={chatShow} onClose={chatToggle}  className={styles.chat} > 
+    <Toast show={chatShow} onClose={chatToggle}  className={opacity?  `${styles.chat} ${styles.opacity}` : `${styles.chat}` } > 
     {
       !roomClick ?
       <>
       <Toast.Header className={styles.chat_header}>
-        <div>
+        <div className="d-flex">
           <button onClick={handleTabStaff} className={styles.staffIcon}><i className="fas fa-user-alt"></i></button>
           <button onClick={handleTabChat} className={styles.chatIcon}><i className="far fa-comment"></i></button>
+          <button onClick={handleOpacity} className={styles.opacityIcon}><i class="fas fa-hand-sparkles"></i></button>
         </div>
       </Toast.Header>
       <Toast.Body className={styles.chat_body}>

@@ -86,5 +86,10 @@
   width: 130px;
   border-radius: 20px;
   color: white;
-
+}
+.room_name{
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

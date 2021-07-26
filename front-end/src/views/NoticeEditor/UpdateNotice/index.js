@@ -94,23 +94,17 @@ function UpdateNotice(props) {
       ['bold', 'italic', 'underline','strike', 'blockquote'],
       [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
       ['link', 'image'],
-      [{ 'align': [] }, { 'color': [] }, { 'background': [] }],      
+      [{ 'color': [] }, { 'background': [] }],      
       ['clean']
     ],
   }
   const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "list",
-    "bullet",
-    "align",
-    "color",
-    "background",
-    "image",
+    'font',
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'color', 'background',
   ];
   return(
     <>

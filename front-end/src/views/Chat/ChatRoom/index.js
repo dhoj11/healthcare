@@ -141,14 +141,14 @@ function ChatRoom(props) {
     chatContentDiv.current.scrollTop = scrollHeight -clientHeight;
   },[chatList])
   return(
-    <>
+    <> 
     <div className={`${styles.chat_header} d-flex`}>
       <div><FontAwesomeIcon icon={faChevronLeft} className={styles.arrowLeft} onClick={roomClickFalse}/></div>
       {
         participant ===null ?
         null
         :
-        <div>{participant.participant_room_name}</div>
+        <div className={styles.room_name}>{participant.participant_room_name}</div>
       }
       
     </div>
@@ -304,7 +304,6 @@ function ChatRoom(props) {
         </div>
       </div>
     </Toast.Body>
-    
     </>
   );
 }
