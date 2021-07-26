@@ -43,7 +43,7 @@ function Save(props){
       await insertTestList(testListObj);
       await updateAppointmentAndReceptionState(treatment);
 
-      // MQTT 메세지 보내기
+      // MQTT 메세지 
 
       // 접수 페이지 접수 테이블
       await sendMqttMessage({

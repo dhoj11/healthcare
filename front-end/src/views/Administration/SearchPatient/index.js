@@ -89,7 +89,7 @@ function SearchPatient(props) {
     <div className={styles.search_patient}>
       <div className={`${styles.search_first_content} row`}>
         <div className={styles.search_second_content}>
-          <div className="col-3"><img className="mr-3" src="/resources/svg/people.svg"></img><span>환자검색</span></div>
+          <div className="col-3"><img className="mr-3" src="/resources/svg/people.svg"></img><span className={styles.title}>환자검색</span></div>
           <div className="input-group col-7 d-flex">
             <input type="text" className="form-control" placeholder="name" onChange={changePatientName} />
             <div>

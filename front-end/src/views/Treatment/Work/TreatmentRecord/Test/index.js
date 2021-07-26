@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Test.module.css";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,6 @@ import { getTreatmentTestList } from "../../../../../apis/treatment";
  * 현재선택된 진료의 과거 검사의뢰기록을 표시한다.
  * 자식컴포넌트에서 검사의뢰를 추가한다.
  */
-
 function Test(props){
 
   const treatment = useSelector(state => state.treatmentReducer.treatment);
@@ -70,7 +69,6 @@ function Test(props){
    * 한진료에서 중복검사추가를 막음
    * 검사추가는 자식 모달컴포넌트에서 이루어지며 이 함수가 props으로 전달됨
    */
-
   const addTests  = (test) => {
     if( (!editBlock) && tests){
       let able = true;
@@ -96,7 +94,7 @@ function Test(props){
   return(
     <div className={style.test}>
       <div className={style.title} onClick={openAddModal}>
-        검사
+      <FontAwesomeIcon icon={faSearch} className={style.searchIcon}/>검사
       </div>
       <div className={style.testList}>
         <table className={`table table-sm table-hover ${style.testTable}`}>

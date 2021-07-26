@@ -45,7 +45,7 @@ function StaffAdd(props){
       </span>
 
       <StaffAddModal isOpen={addModalOpen} close={closeAddModal} handleAddStaff={props.handleAddStaff}/>
-      <StaffModifyModal isOpen={modifyModalOpen} close={closeModifyModal} staff={props.staff}/>
+      <StaffModifyModal isOpen={modifyModalOpen} close={closeModifyModal} staff={props.staff} handleRemoveStaff={props.handleRemoveStaff}/>
       
     </div>
   );

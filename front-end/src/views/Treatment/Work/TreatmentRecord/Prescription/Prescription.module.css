@@ -41,6 +41,10 @@
 	top: 0;
 }
 
+.searchIcon{
+  margin-right: 10px;
+}
+
 .tablethead{
   font-weight: 500;
 }
