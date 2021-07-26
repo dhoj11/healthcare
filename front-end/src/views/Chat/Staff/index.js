@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getRoomId } from "../../../apis/chat";
+import { getRoomId, getStaffListByName } from "../../../apis/chat";
 import { getStaffList } from "../../../apis/dashboard";
 import styles from "./index.module.css";
 /*
@@ -15,6 +15,7 @@ function Staff(props) {
   const staff_id = useSelector(state => state.authReducer.staff_id);
   const [staffList,setStaffList] = useState([]); //직원리스트
   const [loginStaff,setLoginStaff] = useState({});  //현재 로그인 정보
+  const [searchedName, setSearchedName] = useState("");
 
   const axiosStaffList = async() => {
     const response = await getStaffList();
@@ -27,21 +28,21 @@ function Staff(props) {
       }
     }
   }
-  const searchStaff = async(event) => {
+  const searchName = async(event) => {
     try{
-      let searchName = event.target.value;
-      const response = await getStaffList();
-      let temp = response.data;
-      temp = temp.filter((data) =>data.staff_name.includes(searchName) && data.staff_id !==staff_id);
-      setStaffList(temp);
+      const response = await getStaffListByName(searchedName,staff_id);
+      setStaffList(response.data);
     } catch(error){
       throw error;
     }
-    
   }
+  const changeName = (e) => {
+    setSearchedName(e.target.value);
+  } 
   const roomClickTrue = async(clickStaff_id) =>{
     try{
-      const staffArr = [staff_id,clickStaff_id];
+      let staffArr = [];
+      staffArr = [staff_id,clickStaff_id];
       const response = await getRoomId(staffArr);
       setClickRoomId(response.data);
       setRoomClick(true);
@@ -57,11 +58,15 @@ function Staff(props) {
     <div>
       <div className="mb-4">
         <div className={styles.title}>직원</div>
-        <div><input type="test" placeholder="이름검색" onChange={searchStaff} className={styles.searchStaff}></input></div>
+        <div className="d-flex">
+          <div><input type="test" placeholder="이름검색" onChange={changeName} className={styles.searchStaff}></input></div>
+          <button className="btn btn-secondary btn-sm" onClick={searchName}>검색</button>
+        </div>
+        
       </div>
 
       <div className={styles.staff_List}>
-        <div className={`d-flex`} >
+        <div className={`d-flex`}>
           <div className={styles.staff_img_contain}>
             <img src={`${process.env.REACT_APP_URL}/dashboard/staff/downloadAttach/${loginStaff.staff_id}`} className={styles.staff_img} ></img>
           </div>

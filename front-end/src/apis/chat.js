@@ -17,6 +17,9 @@ export function getLastChat(room_id){
   return auth.get('/chat/lastchat/'+room_id);
 }
 
+export function getStaffListByName(staff_name,staff_id){
+  return auth.get('/chat/staffList',{params:{staff_name,staff_id}});
+}
 //participant
 export function getParticipantList(room_id){
   return auth.get('/chat/participant/'+room_id);

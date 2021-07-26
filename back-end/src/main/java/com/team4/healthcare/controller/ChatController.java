@@ -2,6 +2,7 @@ package com.team4.healthcare.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team4.healthcare.dto.Chat;
 import com.team4.healthcare.dto.Participant;
+import com.team4.healthcare.dto.Staff;
 import com.team4.healthcare.service.ChatService;
 import com.team4.healthcare.service.ParticipantService;
+import com.team4.healthcare.service.StaffService;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -28,6 +31,9 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService chatService;
+	
+	@Autowired
+	private StaffService staffService;
 	
 	//chat
 	@PostMapping("")
@@ -50,6 +56,10 @@ public class ChatController {
 		return room_id;
 	}
 	
+	@GetMapping("/staffList")
+	public List<Staff> getStaffListByName(@Param("staff_name") String staff_name,@Param("staff_id") String staff_id){
+		return staffService.getStaffListByName(staff_name,staff_id);
+	}
 	//participant
 	@GetMapping("/participant/{room_id}")
 	public List<Participant> getParticipantList(@PathVariable("room_id") int room_id){

@@ -25,7 +25,14 @@ public class ParticipantService {
 	 Description: 이미 방이 있다면 select 없다면 create
 	*/
 	public int getRoomId(List<String> staffIdArr) {
-		Integer room_id = participantDao.selectRoomId(staffIdArr,staffIdArr.size());
+		List<Integer> room_idList = participantDao.selectRoomId(staffIdArr,staffIdArr.size());
+		Integer room_id=null;
+		for(int i=0;i<room_idList.size();i++) {
+			if(participantDao.selectCountByRoomId(room_idList.get(i))==staffIdArr.size()) {
+				room_id = room_idList.get(i);
+				break;
+			}
+		}
 		if(room_id == null) {	//방이 없으면
 			System.out.println("널값");
 			roomDao.insertNewRoom();

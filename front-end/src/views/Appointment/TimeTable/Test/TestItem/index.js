@@ -46,6 +46,12 @@ function TestItem(props) {
   }
   //예약 모달창 오픈
   const openAppointModal = () => {
+    const now=moment().format("YYYY-MM-DD HH:mm");
+    const click=moment(moment(startDate).format("YYYY-MM-DD")+ " "+time).format("YYYY-MM-DD HH:mm");
+    if(now>click){
+      alert("현재 날짜와 시간 이후만 예약할 수 있습니다.");
+      return;
+    }
     setAppointModal(true);
   }
   useEffect(() => {

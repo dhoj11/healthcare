@@ -11,6 +11,11 @@
 		group by room_id
 		having count(room_id) =#{staffArrNum}
 	</select>
+	<select id="selectCountByRoomId" resultType="int" parameterType="int">
+		select count(*)
+		from participant
+		where room_id=#{room_id};	
+	</select>
 	
 	<insert id="insertNewParticipant">
 		insert into participant(staff_id,room_id,participant_room_name,participant_not_read_chat_num,participant_create_date,participant_update_date,participant_update_time)

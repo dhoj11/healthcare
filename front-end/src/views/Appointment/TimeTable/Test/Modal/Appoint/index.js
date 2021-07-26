@@ -102,6 +102,7 @@ function Appoint(props) {
 
   return(
     <>
+    <div className={styles.test_appointment_title}>검사 예약</div>
     <div className="d-flex ml-5">
       <div>
         <SearchPatient selectedPatientId={selectedPatientId}></SearchPatient>
