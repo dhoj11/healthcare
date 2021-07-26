@@ -77,19 +77,24 @@ function ChatRoom(props) {
   };
 
   const sendMessage = (event) => {
-    if(event.type === "click"){
-      createChat();
-      setChatContent("");
-      publishTopic();
-    }else {
-      if(event.keyCode === 13 && event.shiftKey === false) {
-        if(chatContent!==""){
-          createChat();
-          setChatContent("");
-          publishTopic();
-        }     
+    if(chatContent===""){
+      return ;
+    }else{
+      if(event.type === "click"){
+        createChat();
+        setChatContent("");
+        publishTopic();
+      }else {
+        if(event.keyCode === 13 && event.shiftKey === false) {
+          if(chatContent!==""){
+            createChat();
+            setChatContent("");
+            publishTopic();
+          }     
+        }
       }
     }
+    
   }
   const getChatList= async(room_id) => {
     try{
