@@ -42,7 +42,7 @@ function Weather(props) {
     <div className={styles.Weather_contain}>
       <div className={`${styles.Weather_header} d-flex justify-content-between`}>
         <div>
-          <i class="fas fa-bullhorn"></i>
+        <i className="fas fa-cloud-sun"></i>
           <span className={styles.info}>날씨정보</span>
         </div>
 

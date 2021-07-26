@@ -12,6 +12,13 @@
 		from staff
 		where staff_id=#{staff_id}
 	</select>
+	<select id="selectStaffByName" resultType="Staff">
+		select *
+		from staff
+		where staff_name LIKE concat('%',#{staff_name},'%') and staff_enabled =1 and staff_id !=#{staff_id}
+	
+	</select>
+	
 	<select id="selectDoctorNameList" resultType="staff">
 		select staff_id, staff_name
 		from staff

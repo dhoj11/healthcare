@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { deleteImgNotice } from "../../../../apis/dashboard";
 import DeleteModal from "../DeleteModal";
 import styles from "./index.module.css";
+
 function ImgNoticeModal(props) {
   const {showImgNoticeModal,closeImgNoticeModal,imgNoticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
@@ -46,6 +47,7 @@ function ImgNoticeModal(props) {
           onHide={closeImgNoticeModal}
           size="lg"
           centered="true"
+          className={styles.modal_total}
           >
             <Modal.Header closeButton className={styles.img_notice_header}>
                 <div className={styles.img_notice_top}>

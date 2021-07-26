@@ -76,7 +76,7 @@ function FreeBoard(props) {
     <div className={styles.FreeBoard_contain}>
       <div className={`${styles.FreeBoard_header} d-flex justify-content-between`}>
         <div>
-          <i class="fas fa-bullhorn"> </i>
+         <i className="fas fa-chalkboard-teacher"></i>
           <span>자유게시판</span>
         </div>
         <button onClick={openWriteBoardModal}><i class="fas fa-pencil-alt"></i>글 쓰기</button>

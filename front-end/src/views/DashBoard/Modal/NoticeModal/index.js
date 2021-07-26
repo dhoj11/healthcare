@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { deleteNotice } from "../../../../apis/dashboard";
 import DeleteModal from "../DeleteModal";
 import styles from "./index.module.css";
-
 function NoticeModal(props) {
   const {showNoticeModal,closeNoticeModal,noticeItem} = props;
   const [showDeleteModal,setShowDeleteModal] = useState(false);
@@ -48,6 +47,7 @@ function NoticeModal(props) {
       onHide={closeNoticeModal}
       size="lg"
       centered="true"
+      className = {styles.modal_total}
       >
         <Modal.Header closeButton className={styles.notice_header}>
             <div className={styles.notice_top}>

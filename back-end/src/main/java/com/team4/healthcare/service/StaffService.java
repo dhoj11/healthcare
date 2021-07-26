@@ -51,4 +51,7 @@ public class StaffService {
 			e.printStackTrace();
 		}
 	}
+	public List<Staff> getStaffListByName(String staff_name,String staff_id){
+		return staffDao.selectStaffByName(staff_name,staff_id);
+	}
 }

@@ -109,3 +109,11 @@ input:focus::-webkit-input-placeholder {color:transparent; }
   border-radius: 0.25rem;
 }
 
+.treatment_appointment_title{
+  font-size: 25px;
+  font-weight: 600;
+  padding-left: 35px;
+  padding-bottom: 15px;
+  margin-top: 15px;
+  border-bottom: 1px solid #dee2e6;
+}

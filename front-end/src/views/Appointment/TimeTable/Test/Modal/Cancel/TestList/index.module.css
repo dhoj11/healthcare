@@ -14,10 +14,16 @@
 }
 .tr div:nth-child(2){
   width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tr div:nth-child(3){
   width: 200px;
 }
 .tr div:nth-child(4){
   width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

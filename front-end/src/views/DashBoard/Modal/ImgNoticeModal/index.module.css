@@ -51,3 +51,8 @@
 .img_notice_info >span:nth-child(4){
   cursor: pointer;
 }
+
+.modal_total > div > div{
+  width: 702px !important;
+  margin-left: 71px !important;
+}
