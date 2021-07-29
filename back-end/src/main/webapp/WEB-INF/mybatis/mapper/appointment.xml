@@ -107,7 +107,7 @@
 	<select id="selectCountByAppointment" resultType="appointment">
 		select DATE_FORMAT(appointment_time,'%H:%i') as appointment_time, COUNT(appointment_time) as count
 		from appointment
-		where appointment_date = #{appointment_date} and appointment_kind = '검사'
+		where appointment_date = #{appointment_date} and appointment_kind = '검사' and appointment_state = '예약'
 		group by appointment_time
 	</select>
 	<select id="selectAppointmentId" resultType="int">
